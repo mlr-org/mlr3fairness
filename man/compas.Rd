@@ -1,0 +1,47 @@
+\name{compas}
+\alias{compas}
+\title{Two-years COMPAS Scores Dataset}
+\usage{
+data(compas)
+}
+\source{
+\url{https://github.com/propublica/compas-analysis}
+}
+\description{
+This dataset include the processed COMPAS datas between 2013-2014. The data cleaning process followed the guidance in the original COMPAS repo.
+
+Contains 6172 observations and 14 features.
+}
+\section{Pre-processing}{
+
+\itemize{
+\item Identication columns are removed
+\item Removed the outliers for abs(days_b_screening_arrest) >= 30.
+\item Removed observations where is_recid != -1.
+\item Removed observations where c_charge_degree != "O".
+\item Removed observations where score_text != 'N/A'.
+\item Factorize the features that are categorical.
+\item Add length of stay (c_jail_out - c_jail_in) in the dataset.
+}
+}
+\section{Metadata}{
+\itemize{
+\item (integer) Age : The age of defendants
+\item (factor) c_charge_degree : The charge degree of defendants. F: Felony M: Misdemanor
+\item (factor) race: The race of defendants.
+\item (facotr) age: The age category of defendants.
+\item (factor) score_text: The score category of defendants.
+\item (factor) sex: The sex of defendants.
+\item (integer) priors_count: The prior criminal records of defendants.
+\item (integer) days_b_screening_arrest: The count of days between screening date and (original) arrest date. If they are too far apart, that may indicate an error. If the value is negative, that indicate the screening date happened before the arrest date.
+\item (integer) decile_score: Indicate the risk of recidivism (Min=1, Max=10)
+\item (integer) is_recid: Binary variable indicate whether defendant is rearrested at any time.
+\item (two_year_recid): Binary variable indicate whether defendant is rearrested at within two years.
+\item (character) c_jail_in: The date in the jail.
+\item (character) c_jain_out: The date leave the jail.
+\item (numeric) length_of_stay: The count of days stay in jail.
+}
+}
+\examples{
+data(compas)
+}

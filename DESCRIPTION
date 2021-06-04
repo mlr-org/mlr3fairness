@@ -1,0 +1,13 @@
+Package: mlr3fairness
+Type: Package
+Title: Fairness Package in mlr3 family
+Version: 0.1.0
+Author:
+Maintainer: The package maintainer <weisiyi2@gmail.com>
+Description: This new package could be used by many other mlr3 subsystems like mlr3pipelines, 
+    mlr3tuning and mlr3proba. Then further help the researchers and industrial users to detect
+    the fairness of datasets or algorithmic bias more easily, which could benefit the accuracy
+    and impartiality of their models built by mlr3.
+License: LGPL-3
+Encoding: UTF-8
+LazyData: true
