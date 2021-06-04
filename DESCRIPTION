@@ -2,7 +2,6 @@ Package: mlr3fairness
 Type: Package
 Title: Fairness Package in mlr3 family
 Version: 0.1.0
-Author:
 Authors@R:
     person(given = "Wei",
            family = "Siyi",
