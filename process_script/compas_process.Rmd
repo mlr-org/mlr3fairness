@@ -1,0 +1,44 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+raw_data <- read.csv("~/Desktop/mlr3fairness/process_script/compas-scores-two-years.csv")
+```
+
+```{r}
+head(raw_data)
+```
+
+
+```{r}
+df <- dplyr::select(raw_data, age, c_charge_degree, race, age_cat, score_text, sex, priors_count, 
+                    days_b_screening_arrest, decile_score, is_recid, two_year_recid, c_jail_in, c_jail_out) %>% 
+        filter(days_b_screening_arrest <= 30) %>%
+        filter(days_b_screening_arrest >= -30) %>%
+        filter(is_recid != -1) %>%
+        filter(c_charge_degree != "O") %>%
+        filter(score_text != 'N/A')
+nrow(df)
+```
+
+```{r}
+df$length_of_stay <- as.numeric(as.Date(df$c_jail_out) - as.Date(df$c_jail_in))
+cor(df$length_of_stay, df$decile_score)
+```
+
+```{r}
+df$c_charge_degree <- factor(df$c_charge_degree)
+df$race <- factor(df$race)
+df$age_cat <- factor(df$age_cat)
+df$score_text <- factor(df$score_text)
+df$sex <- factor(df$sex)
+```
+
+
+```{r}
+write.csv(df, file = "/Users/siyiwei/Desktop/mlr3fairness/data-raw/compas-scores-two-years.csv", row.names = F)
+save(df, file = "/Users/siyiwei/Desktop/mlr3fairness/data/compas.rda")
+```
+
