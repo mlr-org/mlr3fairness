@@ -3,7 +3,8 @@
 \docType{data}
 \name{adult}
 \alias{adult}
-\alias{adult_dataset}
+\alias{adult_test}
+\alias{adult_train}
 \title{Adult Dataset}
 \source{
 @misc{Dua:2019 ,
@@ -29,7 +30,8 @@ Target column is "Target".
 }
 
 \examples{
-data("adult", package = "mlr3fairness")
+data("adult_test", package = "mlr3fairness")
+data("adult_train", package = "mlr3fairness")
 
 }
 \keyword{data}

@@ -1,7 +1,8 @@
 #' @title Adult Dataset
 #'
 #' @name adult
-#' @aliases adult_dataset
+#' @aliases adult_test
+#' @aliases adult_train
 #'
 #' @description
 #' Dataset used to predict whether income exceeds $50K/yr based on census data. Also known as "Census Income" dataset
@@ -24,7 +25,8 @@
 #' @docType data
 #' @keywords data
 #' @examples
-#' data("adult", package = "mlr3fairness")
+#' data("adult_test", package = "mlr3fairness")
+#' data("adult_train", package = "mlr3fairness")
 #'
 NULL
 
