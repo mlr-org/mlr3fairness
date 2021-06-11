@@ -26,7 +26,7 @@
 #' @keywords data
 #' @examples
 #' data("adult_test", package = "mlr3fairness")
-#' data("adult_train", package = "mlr3fairness")
+#' data("adult_train", package = "mlr3fairness")å
 #'
 NULL
 
