@@ -3,14 +3,15 @@
 \docType{data}
 \name{adult}
 \alias{adult}
-\alias{get_adult_task}
 \alias{adult_dataset}
 \title{Adult Dataset}
 \source{
-\url{https://archive.ics.uci.edu/ml/datasets/adult}
-}
-\usage{
-get_adult_task()
+@misc{Dua:2019 ,
+author = "Dua, Dheeru and Graff, Casey",
+year = "2017",
+title = "{UCI} Machine Learning Repository",
+url = "http://archive.ics.uci.edu/ml",
+institution = "University of California, Irvine, School of Information and Computer Sciences" }
 }
 \description{
 Dataset used to predict whether income exceeds $50K/yr based on census data. Also known as "Census Income" dataset

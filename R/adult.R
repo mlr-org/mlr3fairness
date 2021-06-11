@@ -14,15 +14,30 @@
 #' * fnlwgt column has been removed since we expect them have no predictive power.
 #' * Rows contain NA in Workclass and Occupation has been removed.
 #'
-#' @source \url{https://archive.ics.uci.edu/ml/datasets/adult}
+#' @source  @misc{Dua:2019 ,
+#' author = "Dua, Dheeru and Graff, Casey",
+#' year = "2017",
+#' title = "{UCI} Machine Learning Repository",
+#' url = "http://archive.ics.uci.edu/ml",
+#' institution = "University of California, Irvine, School of Information and Computer Sciences" }
 #'
 #' @docType data
 #' @keywords data
 #' @examples
 #' data("adult", package = "mlr3fairness")
 #'
+NULL
 
+get_adult_task_train = function() {
+  b = as_backend("adult_train")
+  task = mlr3::TaskRegr$new("adult_train", b, target = "Target")
+  b$hash = task$man = "mlr3fairness::mlr_tasks_adult_train"
+  task
+}
 
-get_adult_task = function() {
-  #Not sure if this need to be implemented. For now only add the documents
+get_adult_task_test = function() {
+  b = as_backend("adult_test")
+  task = mlr3::TaskRegr$new("adult_test", b, target = "Target")
+  b$hash = task$man = "mlr3fairness::mlr_tasks_adult_test"
+  task
 }
