@@ -1,3 +1,5 @@
 root = rprojroot::find_root(rprojroot::is_git_root)
 compas = data.table::fread(file.path(root, "data-raw", "compas-scores-two-years.csv"))
+compas$two_year_recid = as.factor(compas$two_year_recid)
+compas$is_recid = as.factor(compas$is_recid)
 usethis::use_data(compas, overwrite = TRUE)

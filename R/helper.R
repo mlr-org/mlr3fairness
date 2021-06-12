@@ -3,6 +3,6 @@ as_backend = function(id) {
   # this looks a bit funny, but is required because of strange
   # behavior with roxygen2/pkgload
   ee = new.env(hash = FALSE, parent = emptyenv())
-  data(list = id, package = "mlr3data", envir = ee)
+  data(list = id, package = "mlr3fairness", envir = ee)
   mlr3::as_data_backend(ee[[id]])
 }

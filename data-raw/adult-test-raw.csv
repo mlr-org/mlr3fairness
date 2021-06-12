@@ -1,4 +1,4 @@
-Age,Workclass,Education,Education_Num,Martial_Status,Occupation,Relationship,Race,Sex,Capital_Gain,Capital_Loss,Hours_per_week,Target
+age,workclass,education,education_num,martial_status,occupation,relationship,race,sex,capital_gain,capital_loss,hours_per_week,target
 25, Private, 11th,7, Never-married, Machine-op-inspct, Own-child, Black, Male,0,0,40, <=50K.
 38, Private, HS-grad,9, Married-civ-spouse, Farming-fishing, Husband, White, Male,0,0,50, <=50K.
 28, Local-gov, Assoc-acdm,12, Married-civ-spouse, Protective-serv, Husband, White, Male,0,0,40, >50K.

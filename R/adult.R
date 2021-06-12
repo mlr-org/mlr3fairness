@@ -26,20 +26,20 @@
 #' @keywords data
 #' @examples
 #' data("adult_test", package = "mlr3fairness")
-#' data("adult_train", package = "mlr3fairness")å
+#' data("adult_train", package = "mlr3fairness")
 #'
 NULL
 
 get_adult_task_train = function() {
   b = as_backend("adult_train")
-  task = mlr3::TaskRegr$new("adult_train", b, target = "Target")
+  task = mlr3::TaskClassif$new("adult_train", b, target = "target")
   b$hash = task$man = "mlr3fairness::mlr_tasks_adult_train"
   task
 }
 
 get_adult_task_test = function() {
   b = as_backend("adult_test")
-  task = mlr3::TaskRegr$new("adult_test", b, target = "Target")
+  task = mlr3::TaskClassif$new("adult_test", b, target = "target")
   b$hash = task$man = "mlr3fairness::mlr_tasks_adult_test"
   task
 }
