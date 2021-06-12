@@ -18,7 +18,7 @@ institution = "University of California, Irvine, School of Information and Compu
 Dataset used to predict whether income exceeds $50K/yr based on census data. Also known as "Census Income" dataset
 Train dataset contains 13 features and 30178 observations.
 Test dataset contains 13 features and 15315 observations.
-Target column is "Target".
+Target column is "Target". A binary factor where 1: <=50K and 2: >50K for annual income.
 }
 \section{Pre-processing}{
 

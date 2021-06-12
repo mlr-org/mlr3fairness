@@ -10,7 +10,7 @@
 }
 \description{
 This dataset include the processed COMPAS datas between 2013-2014. The data cleaning process followed the guidance in the original COMPAS repo.
-Contains 6172 observations and 14 features.
+Contains 6172 observations and 14 features. The target column could either be "is_recid" or "two_year_recid", but often "two_year_recid" is prefered.
 }
 \section{Pre-processing}{
 
@@ -38,7 +38,7 @@ Contains 6172 observations and 14 features.
 \item (integer) days_b_screening_arrest: The count of days between screening date and (original) arrest date. If they are too far apart, that may indicate an error. If the value is negative, that indicate the screening date happened before the arrest date.
 \item (integer) decile_score: Indicate the risk of recidivism (Min=1, Max=10)
 \item (integer) is_recid: Binary variable indicate whether defendant is rearrested at any time.
-\item (two_year_recid): Binary variable indicate whether defendant is rearrested at within two years.
+\item (factor) two_year_recid: Binary variable indicate whether defendant is rearrested at within two years.
 \item (character) c_jail_in: The date in the jail.
 \item (character) c_jain_out: The date leave the jail.
 \item (numeric) length_of_stay: The count of days stay in jail.
