@@ -61,13 +61,17 @@ https://github.com/mlr-org/mlr3measures/blob/main/R/binary_fn.R
 
 ## Introduced Dependencies
 This solution would introduce dependencies on the following (additional) packages:
+
 mlr3measures
+
 Those packages either depend on or import the following other (additional) packages:
+```
 Depends:
     R (>= 3.1.0)
 Imports:
     checkmate,
     PRROC
+```
 Using this package would allow us to use some basic fairness metrics instead of re-implementing and maintining
 N loc ourselves.
 
