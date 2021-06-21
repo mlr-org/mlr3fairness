@@ -19,6 +19,7 @@ Dataset used to predict whether income exceeds $50K/yr based on census data. Als
 Train dataset contains 13 features and 30178 observations.
 Test dataset contains 13 features and 15315 observations.
 Target column is "Target". A binary factor where 1: <=50K and 2: >50K for annual income.
+The column \code{"sex"} is set as protected attribute.
 }
 \section{Pre-processing}{
 

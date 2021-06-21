@@ -9,6 +9,7 @@
 #' Train dataset contains 13 features and 30178 observations.
 #' Test dataset contains 13 features and 15315 observations.
 #' Target column is "Target". A binary factor where 1: <=50K and 2: >50K for annual income.
+#' The column `"sex"` is set as protected attribute.
 #'
 #' @section Pre-processing:
 #' * Country column has been removed since we expect them have no predictive power.
@@ -33,6 +34,7 @@ NULL
 get_adult_task_train = function() {
   b = as_backend("adult_train")
   task = mlr3::TaskClassif$new("adult_train", b, target = "target")
+  task$col_roles$pta = "sex"
   b$hash = task$man = "mlr3fairness::mlr_tasks_adult_train"
   task
 }
@@ -40,6 +42,7 @@ get_adult_task_train = function() {
 get_adult_task_test = function() {
   b = as_backend("adult_test")
   task = mlr3::TaskClassif$new("adult_test", b, target = "target")
+  task$col_roles$pta = "sex"
   b$hash = task$man = "mlr3fairness::mlr_tasks_adult_test"
   task
 }
