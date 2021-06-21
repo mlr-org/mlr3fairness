@@ -39,8 +39,6 @@ Contains 6172 observations and 14 features. The target column could either be "i
 \item (integer) decile_score: Indicate the risk of recidivism (Min=1, Max=10)
 \item (integer) is_recid: Binary variable indicate whether defendant is rearrested at any time.
 \item (factor) two_year_recid: Binary variable indicate whether defendant is rearrested at within two years.
-\item (character) c_jail_in: The date in the jail.
-\item (character) c_jain_out: The date leave the jail.
 \item (numeric) length_of_stay: The count of days stay in jail.
 }
 }
