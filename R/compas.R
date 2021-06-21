@@ -28,8 +28,6 @@
 #' * (integer) decile_score: Indicate the risk of recidivism (Min=1, Max=10)
 #' * (integer) is_recid: Binary variable indicate whether defendant is rearrested at any time.
 #' * (factor) two_year_recid: Binary variable indicate whether defendant is rearrested at within two years.
-#' * (character) c_jail_in: The date in the jail.
-#' * (character) c_jain_out: The date leave the jail.
 #' * (numeric) length_of_stay: The count of days stay in jail.
 #'
 #' @source  @url https://github.com/propublica/compas-analysis
