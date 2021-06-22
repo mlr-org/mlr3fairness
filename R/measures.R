@@ -12,10 +12,8 @@
 measures = new.env(parent = emptyenv())
 
 # adds items to registry
-#' @import checkmate
 add_measure = function(obj, title, type, lower, upper, minimize) {
   id = deparse(substitute(obj))
-
   assign(id, list(
     id = id,
     type = assert_choice(type, c("binary", "classif", "regr")),

@@ -1,4 +1,7 @@
 #' @import mlr3
+#' @import R6
+#' @import checkmate
+#' @import mlr3measures
 #' @importFrom utils getFromNamespace data
 "_PACKAGE"
 
