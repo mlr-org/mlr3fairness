@@ -11,7 +11,7 @@ stopifnotdataset = function(data) {
 
 data("compas", package = "mlr3fairness")
 stopifnotdataset(compas)
-stopifnot(nrow(compas) == 6172L, ncol(compas) == 14L)
+stopifnot(nrow(compas) == 6172L, ncol(compas) == 12L)
 
 data("adult_test", package = "mlr3fairness")
 stopifnotdataset(adult_test)
