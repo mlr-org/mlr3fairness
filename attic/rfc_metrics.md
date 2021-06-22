@@ -83,10 +83,14 @@ mlr3measures
 Those packages either depend on or import the following other (additional) packages:
 ```
 Depends:
-    R (>= 3.1.0)
+    R (>= 3.5.0)
 Imports:
+    mlr3,
     checkmate,
-    PRROC
+    paradox,
+    R6 (>= 2.4.1),
+    data.table (>= 1.13.6),
+    mlr3measures (>= 0.3.0)
 ```
 Using this package would allow us to use some basic fairness metrics instead of re-implementing and maintining
 N loc ourselves.
