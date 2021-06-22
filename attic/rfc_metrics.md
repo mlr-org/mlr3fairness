@@ -20,13 +20,19 @@ I propose when applying a metric method, what occurs should be ...
 
 Example:
 ```r
-#The true label of the observations
-truth = as.factor(c(1,1,1,0,0,1,1,0,0,0))
+#Initialize the data task
+adult_train = tsk("adult_train")
+adult_test = tsk("adult_test")
 
-#The predicted labels of the observations
-response = as.factor(c(1,1,0,0,1,1,0,0,0,1))
+#Train the model and make the prediction
+learner = lrn("classif.rpart", cp = .01)
+learner$train(adult_train)
+predictions = learner$predict(adult_test)
 
-fn(truth, response, positive = "1")
+#Create the Fairness Metrics, in this example. I want to measure the False Positive Rate Bias
+measure = MeasureFairnessSimple$new(msr("classif.fpr"))
+fprb = predictions$score(measure, adult_test, operation = "abs_diff")
+
 ```
 
 ## Reference-level explanation
@@ -36,14 +42,24 @@ Internally, the function would look the following:
 
 Example:
 ```r
-fn = function(truth, response, positive, ...) {
-  assert_binary(truth, response = response, positive = positive)
-  fn_cm(cm(truth, response, positive))
+MeasureFairnessSimple = R6Class(
+inherits = "Measure",
+initialize = function(measure) {
+  self$measure = measure
+  # here do some other thing setting task types etc.
+  # minimize, properties, ...
+  self$minimize = measure$minimize
 }
+...
 
-fn_cm = function(m, na_value = NaN) {
-  m[2L, 1L]
-}
+$.score = function(task, operation, ...) {
+m1 = self$measure$score(group1, )
+m2 = self$measure$score....
+
+if (opertation = "quotient) m1 /m2
+else if(operation = "abs_diff") abs(m1-m2)
+else if(operation = "diff") (m1-m2)
+...
 ```
 
 ## Rationale, drawbacks and alternatives
