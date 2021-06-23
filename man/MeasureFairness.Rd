@@ -4,16 +4,25 @@
 \alias{MeasureFairness}
 \title{Fairness Measure}
 \description{
-This measure specializes \link{Measure} for fairness measures:
-\itemize{
-\item Possible values for \code{predict_type} are \code{"response"} and \code{"prob"}.
-}
+This measure specializes \link{Measure} for Fairness Measure problems:
 
 Predefined measures can be found in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_measures}.
 The default measure for classification is \code{\link[=mlr_measures_classif.ce]{classif.ce}}.
 }
 \section{Super class}{
 \code{\link[mlr3:Measure]{mlr3::Measure}} -> \code{MeasureFairness}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{fun}}{(\code{function})\cr
+This function refered to the fairness measure opertion functions.}
+
+\item{\code{base_measure}}{(\code{environment(1)})\cr
+The measure need to be used by fairness measures.
+Some of examples would be \code{mlr3measures::msr("classif.fpr")}}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -44,8 +53,9 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{base_measure}}{(\code{character(1)})\cr
-The base measure needed to perform fairness measure operations.}
+\item{\code{name}}{The name of the fairnessMeasure (Will drop later)}
+
+\item{\code{base_measure}}{(\link{base_measure})}
 }
 \if{html}{\out{</div>}}
 }
