@@ -16,11 +16,16 @@ Those metrics could be used to evaluate the bias and accuracy of the dataset. Th
 ## Guide-level explanation
 [guide-level-explanation]: #guide-level-explanation
 
-I propose when applying a metric method, what occurs should be ...
+I propose when users need to aseess some groupwise metrics. Most likely to be some fairness metrics.
+
+In the following examples, we want to assess the False Positive Rate Bias of Classification Model between Male and Female on Adult Dataset.
+
+What occurs should be ...
 
 Example:
 ```r
-#Initialize the data task and learner task
+# Initialize the data task and learner task. 
+
 learner = lrn("classif.rpart", cp = .01)
 adult_train = tsk("adult_train")
 adult_test = tsk("adult_test")
@@ -61,7 +66,7 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
         minimize = info$minimize,
         predict_type = info$predict_type,
         packages = "mlr3fairness",
-        man = paste0("mlr3::mlr_measures_fairness.", name)
+        man = paste0("mlr_measures_fairness.", name)
       )
       self$fun = get(name, envir = asNamespace("mlr3fairness"), mode = "function")
       self$base_measure = measure
