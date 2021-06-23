@@ -1,4 +1,5 @@
 #' @import mlr3
+#' @import mlr3misc
 #' @import R6
 #' @import checkmate
 #' @import mlr3measures
