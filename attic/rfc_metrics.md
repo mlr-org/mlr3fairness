@@ -58,10 +58,10 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
     base_measure = NULL,
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(name, measure) {
-      info = mlr3fairness::measures[[name]]
+    initialize = function(name, base_measure) {
+      info = mlr3fairness::measures[["groupwise_abs_diff"]]
       super$initialize(
-        id = paste0("fairness.", name),
+        id = paste0("fairness.", base_measure$id),
         range = c(info$lower, info$upper),
         minimize = info$minimize,
         predict_type = info$predict_type,
@@ -69,7 +69,7 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
         man = paste0("mlr_measures_fairness.", name)
       )
       self$fun = get(name, envir = asNamespace("mlr3fairness"), mode = "function")
-      self$base_measure = measure
+      self$base_measure = base_measure
     }
   ),
 
