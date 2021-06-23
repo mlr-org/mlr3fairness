@@ -20,19 +20,23 @@ I propose when applying a metric method, what occurs should be ...
 
 Example:
 ```r
-#Initialize the data task
+#Initialize the data task and learner task
+learner = lrn("classif.rpart", cp = .01)
 adult_train = tsk("adult_train")
 adult_test = tsk("adult_test")
 
-#Train the model and make the prediction
-learner = lrn("classif.rpart", cp = .01)
+#adult_train$col_roles --> $pta [1] "sex"
+adult_train$col_roles
 learner$train(adult_train)
+
+#Create the fairness measure and its base measure
+me = MeasureFairness$new("groupwise_abs_diff", msr("classif.fpr"))
+
+#Get the fairness measure
 predictions = learner$predict(adult_test)
-
-#Create the Fairness Metrics, in this example. I want to measure the False Positive Rate Bias
-measure = MeasureFairnessSimple$new(msr("classif.fpr"))
-fprb = predictions$score(measure, adult_test, operation = "abs_diff")
-
+predictions$score(me, task = adult_test)
+>>>fairness.groupwise_abs_diff 
+                  0.0767116 
 ```
 
 ## Reference-level explanation
@@ -42,24 +46,37 @@ Internally, the function would look the following:
 
 Example:
 ```r
-MeasureFairnessSimple = R6Class(
-inherits = "Measure",
-initialize = function(measure) {
-  self$measure = measure
-  # here do some other thing setting task types etc.
-  # minimize, properties, ...
-  self$minimize = measure$minimize
-}
-...
+MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALSE,
+  public = list(
+    fun = NULL,
+    na_value = NaN,
+    base_measure = NULL,
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    initialize = function(name, measure) {
+      info = mlr3fairness::measures[[name]]
+      super$initialize(
+        id = paste0("fairness.", name),
+        range = c(info$lower, info$upper),
+        minimize = info$minimize,
+        predict_type = info$predict_type,
+        packages = "mlr3fairness",
+        man = paste0("mlr3::mlr_measures_fairness.", name)
+      )
+      self$fun = get(name, envir = asNamespace("mlr3fairness"), mode = "function")
+      self$base_measure = measure
+    }
+  ),
 
-$.score = function(task, operation, ...) {
-m1 = self$measure$score(group1, )
-m2 = self$measure$score....
+  private = list(
+    .score = function(prediction, task, ...) {
+      invoke(self$fun, prediction = prediction, na_value = self$na_value, data_task = task,
+           base_measure = self$base_measure)
+    }
+  )
+)
 
-if (opertation = "quotient) m1 /m2
-else if(operation = "abs_diff") abs(m1-m2)
-else if(operation = "diff") (m1-m2)
-...
+mlr_measures$add("fairness.groupwise_abs_diff", MeasureFairness, name = "groupwise_abs_diff")
 ```
 
 ## Rationale, drawbacks and alternatives
