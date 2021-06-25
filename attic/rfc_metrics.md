@@ -16,32 +16,17 @@ Those metrics could be used to evaluate the bias and accuracy of the dataset. Th
 ## Guide-level explanation
 [guide-level-explanation]: #guide-level-explanation
 
-I propose when users need to aseess some groupwise metrics. Most likely to be some fairness metrics.
-
-In the following examples, we want to assess the False Positive Rate Bias of Classification Model between Male and Female on Adult Dataset.
-
-What occurs should be ...
+I propose when applying a metric method, what occurs should be ...
 
 Example:
 ```r
-# Initialize the data task and learner task. 
+#The true label of the observations
+truth = as.factor(c(1,1,1,0,0,1,1,0,0,0))
 
-learner = lrn("classif.rpart", cp = .01)
-adult_train = tsk("adult_train")
-adult_test = tsk("adult_test")
+#The predicted labels of the observations
+response = as.factor(c(1,1,0,0,1,1,0,0,0,1))
 
-#adult_train$col_roles --> $pta [1] "sex"
-adult_train$col_roles
-learner$train(adult_train)
-
-#Create the fairness measure and its base measure
-me = MeasureFairness$new("groupwise_abs_diff", msr("classif.fpr"))
-
-#Get the fairness measure
-predictions = learner$predict(adult_test)
-predictions$score(me, task = adult_test)
->>>fairness.groupwise_abs_diff 
-                  0.0767116 
+fn(truth, response, positive = "1")
 ```
 
 ## Reference-level explanation
@@ -51,55 +36,14 @@ Internally, the function would look the following:
 
 Example:
 ```r
-MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALSE,
-  public = list(
-    fun = NULL,
-    na_value = NaN,
-    base_measure = NULL,
-    #' @description
-    #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(name, base_measure) {
-      info = mlr3fairness::measures[["groupwise_abs_diff"]]
-      super$initialize(
-        id = paste0("fairness.", base_measure$id),
-        range = c(info$lower, info$upper),
-        minimize = info$minimize,
-        predict_type = info$predict_type,
-        packages = "mlr3fairness",
-        man = paste0("mlr_measures_fairness.", name)
-      )
-      self$fun = get(name, envir = asNamespace("mlr3fairness"), mode = "function")
-      self$base_measure = base_measure
-    }
-  ),
-
-  private = list(
-    .score = function(prediction, task, ...) {
-      invoke(self$fun, prediction = prediction, na_value = self$na_value, data_task = task,
-           base_measure = self$base_measure)
-    }
-  )
-)
-
-mlr_measures$add("fairness.groupwise_abs_diff", MeasureFairness, name = "groupwise_abs_diff")
-```
-
-The groupwise operations are performed inside the Fairness Metric functions. See below:
-```r
-groupwise_abs_diff <- function(prediction, base_measure, positive, data_task, response = NULL, ...){
-  #Assert the status for all the parameters
-
-  subcol = data_task$col_roles$pta
-  prediction = split(as.data.table(prediction), data_task$data(cols = subcol))
-  prediction = lapply(prediction, as_prediction_classif)
-  msr1 = prediction[[1]]$score(base_measure)
-  msr2 = prediction[[2]]$score(base_measure)
-  return(abs(msr1 - msr2))
+fn = function(truth, response, positive, ...) {
+  assert_binary(truth, response = response, positive = positive)
+  fn_cm(cm(truth, response, positive))
 }
 
-#' @include measures.R
-add_measure(groupwise_abs_diff, "Groupwise Absolute Difference", "regr", 0, Inf, FALSE)
-
+fn_cm = function(m, na_value = NaN) {
+  m[2L, 1L]
+}
 ```
 
 ## Rationale, drawbacks and alternatives
@@ -123,14 +67,10 @@ mlr3measures
 Those packages either depend on or import the following other (additional) packages:
 ```
 Depends:
-    R (>= 3.5.0)
+    R (>= 3.1.0)
 Imports:
-    mlr3,
     checkmate,
-    paradox,
-    R6 (>= 2.4.1),
-    data.table (>= 1.13.6),
-    mlr3measures (>= 0.3.0)
+    PRROC
 ```
 Using this package would allow us to use some basic fairness metrics instead of re-implementing and maintining
 N loc ourselves.
