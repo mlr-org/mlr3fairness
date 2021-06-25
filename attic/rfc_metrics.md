@@ -105,9 +105,35 @@ add_measure(groupwise_abs_diff, "Groupwise Absolute Difference", "regr", 0, Inf,
 ## Rationale, drawbacks and alternatives
 [rationale-and-alternatives]: #rationale-and-alternatives
 
-This design seems fairly obvious choice in the design space.
-The main alternative to this proposal is not to implement it,
-and let users to calculate joined subslices from indexes or pointers.
+### Rationale
+The rationale for this implementation is rather simple. We need to implement multiple fairness measures. This MeasureFairness class would be the most basic infrustructures for those metrics.
+
+### Drawbacks
+* For the current implementation, we need to include the base measures from mlr3measures. This introduce some dependency on other packages.
+* The final design principles are not settled yet, so we cannot determine the main drawbacks.
+
+### alternatives
+There are two type of design for the fairness measure class. The first design would be the MeasureFairness Class shown above. The second design principle would be move the fairness operation to be inside the MeasureClass. The following examples could be more clear:
+
+First Design:
+```r
+me = MeasureFairness$new("groupwise_abs_diff", msr("classif.fpr"))
+
+predictions = learner$predict(adult_test)
+predictions$score(me, task = adult_test)
+>>>fairness.groupwise_abs_diff 
+                  0.0767116 
+```
+Second Design:
+```r
+me = MeasureFairness$new(msr("classif.fpr"))
+
+#Get the fairness measure
+predictions = learner$predict(adult_test)
+predictions$score(me, task = adult_test, ops = "groupwise_abs_diff)
+>>>fairness.groupwise_abs_diff 
+                  0.0767116 
+```
 
 ## Prior art
 [prior-art]: #prior-art
