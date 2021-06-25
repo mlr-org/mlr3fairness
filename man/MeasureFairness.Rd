@@ -7,7 +7,6 @@
 This measure specializes \link{Measure} for Fairness Measure problems:
 
 Predefined measures can be found in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_measures}.
-The default measure for classification is \code{\link[=mlr_measures_classif.ce]{classif.ce}}.
 }
 \section{Super class}{
 \code{\link[mlr3:Measure]{mlr3::Measure}} -> \code{MeasureFairness}
@@ -47,15 +46,15 @@ Some of examples would be \code{mlr3measures::msr("classif.fpr")}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MeasureFairness$new(name, base_measure)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MeasureFairness$new(base_measure)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{name}}{The name of the fairnessMeasure (Will drop later)}
-
 \item{\code{base_measure}}{(\link{base_measure})}
+
+\item{\code{name}}{The name of the fairnessMeasure (Will drop later)}
 }
 \if{html}{\out{</div>}}
 }
