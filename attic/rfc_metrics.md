@@ -123,12 +123,14 @@ The rationale for this implementation is rather simple. We need to implement mul
 
 ### Drawbacks
 * For the current implementation, we need to include the base measures from mlr3measures. This introduce some dependency on other packages.
-* The final design principles are not settled yet, so we cannot determine the main drawbacks.
+* The final design principles are not settled yet, so we cannot determine the main drawbacks. But for the following we will talk about those drawbacks.
 
 ### alternatives
 There are two type of design for the fairness measure class. The first design would be the MeasureFairness Class shown above. The second design principle would be move the fairness operation to be inside the MeasureClass. The following examples could be more clear:
 
 First Design:
+* We could implement each measure but this would need maintenance overhead
+* This will need more documentations and examples intend for user to understand how to use them.
 ```r
 me = MeasureFairness$new("groupwise_abs_diff", msr("classif.fpr"))
 
@@ -137,7 +139,10 @@ predictions$score(me, task = adult_test)
 >>>fairness.groupwise_abs_diff 
                   0.0767116 
 ```
+
 Second Design:
+* This might add difficulty to the users if they want to perform more complex operations.
+* It will also make the MetricFariness class more complex, we could potentially solve this problem by adding MetricFairnessComplex or other class to handle those operations. However, it will again need more documentation and mainteinance problems.
 ```r
 me = MeasureFairness$new(msr("classif.fpr"))
 
