@@ -119,7 +119,16 @@ add_measure(groupwise_abs_diff, "Groupwise Absolute Difference", "regr", 0, Inf,
 [rationale-and-alternatives]: #rationale-and-alternatives
 
 ### Rationale
-The rationale for this implementation is rather simple. We need to implement multiple fairness measures. This MeasureFairness class would be the most basic infrustructures for those metrics.
+The rationale for this implementation is to decompose complex fairness metrics to simple fairness metrics. For example, to implment the false discovery rate bias (FDR : FP / (FP + TP). We could implement the metric in the following functions, which could significantly simplify the operations. For more complex fairness measures this could work the same:
+
+```r
+false_discovery_rate_bias <- function(prediction, base_measure, positive, data_task, response = NULL, ...){
+  #Assert the status for all the parameters
+  
+  me = MeasureFairness$new("groupwise_abs_diff", msr("classif.fdr"))
+  predictions$score(me, task = data_task)
+}
+```
 
 ### Drawbacks
 * For the current implementation, we need to include the base measures from mlr3measures. This introduce some dependency on other packages.
