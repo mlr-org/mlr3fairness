@@ -7,7 +7,7 @@ Target Date: 2021-06-22
 ## Summary
 [summary]: #summary
 
-Add fairness related metrics to fairness package.
+Add Fairness Measures R6 Class, which is the foundation of all fairness measures to fairness package.
 
 ## Motivation
 [motivation]: #motivation
@@ -61,20 +61,19 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #' @param name The name of the fairnessMeasure (Will drop later)
-    #' @param base_measure ([base_measure])
-    initialize = function(base_measure) {
-      info = mlr3fairness::measures[["groupwise_abs_diff"]]
+    #' @param base_measure The measure used to perform fairness operations.
+    #' @param operation The operation name performed on the base measures.
+    #' @param ps The parameter sets.
+    initialize = function(operation, base_measure, ps = ps()) {
       super$initialize(
         id = paste0("fairness.", base_measure$id),
-        range = c(info$lower, info$upper),
-        minimize = info$minimize,
+        range = c(-Inf, Inf),
+        minimize = FALSE,
         predict_type = base_measure$predict_type,
         packages = "mlr3fairness",
-        man = paste0("mlr_measures_fairness.", base_measure$id),
-        properties = info$properties
+        man = paste0("mlr_measures_fairness")
       )
-      self$fun = get(name, envir = asNamespace("mlr3fairness"), mode = "function")
+      self$fun = get(operation, envir = asNamespace("mlr3fairness"), mode = "function")
       self$base_measure = base_measure
     }
   ),
@@ -82,7 +81,6 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
   private = list(
     .score = function(prediction, task, ...) {
       assert_prediction(prediction)
-      print(task$man)
       if ("requires_task" %in% self$properties && is.null(task)) {
         stopf("Measure '%s' requires a task", self$id)
       }
@@ -94,7 +92,7 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
 )
 
 
-mlr_measures$add("fairness.groupwise_abs_diff", MeasureFairness, name = "groupwise_abs_diff")
+mlr_measures$add("mlr_measures_fairness", MeasureFairness, name = "mlr_measures_fairness")
 ```
 
 The groupwise operations are performed inside the Fairness Metric functions. See below:
@@ -119,16 +117,7 @@ add_measure(groupwise_abs_diff, "Groupwise Absolute Difference", "regr", 0, Inf,
 [rationale-and-alternatives]: #rationale-and-alternatives
 
 ### Rationale
-The rationale for this implementation is to decompose complex fairness metrics to simple fairness metrics. For example, to implment the false discovery rate bias (FDR : FP / (FP + TP). We could implement the metric in the following functions, which could significantly simplify the operations. For more complex fairness measures this could work the same:
-
-```r
-false_discovery_rate_bias <- function(prediction, base_measure, positive, data_task, response = NULL, ...){
-  #Assert the status for all the parameters
-  
-  me = MeasureFairness$new("groupwise_abs_diff", msr("classif.fdr"))
-  predictions$score(me, task = data_task)
-}
-```
+The rationale for this implementation is to let the users decide which operation they want to perform. Moreover, it add more flexibility to the class so the developers could extend the functionality of the FairnessMeasures by adding more basic operations.
 
 ### Drawbacks
 * For the current implementation, we need to include the base measures from mlr3measures. This introduce some dependency on other packages.
