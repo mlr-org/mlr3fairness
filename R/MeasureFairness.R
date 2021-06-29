@@ -4,8 +4,12 @@
 #'
 #' @description
 #' This measure specializes [Measure] for Fairness Measure problems:
+#' Users could use ["groupwise_abs_diff", "groupwise_diff", "groupwise_quotient"] to evaluate
+#' the fairness measures based on base_measures. For example, the false positive rate bias or
+#' the equalized odds ratios.
 #'
 #' Predefined measures can be found in the [dictionary][mlr3misc::Dictionary] [mlr_measures].
+#' Predifined operations can be found in the [mlr3fairness].
 #'
 #' @export
 MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALSE,
@@ -19,18 +23,18 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param base_measure The measure used to perform fairness operations.
-    initialize = function(base_measure) {
-      info = mlr3fairness::measures[["groupwise_abs_diff"]]
+    #' @param operation The operation name performed on the base measures.
+    #' @param ps The parameter sets.
+    initialize = function(operation, base_measure, ps = ps()) {
       super$initialize(
         id = paste0("fairness.", base_measure$id),
-        range = c(info$lower, info$upper),
-        minimize = info$minimize,
+        range = c(-Inf, Inf),
+        minimize = FALSE,
         predict_type = base_measure$predict_type,
         packages = "mlr3fairness",
-        man = paste0("mlr_measures_fairness.", base_measure$id),
-        properties = info$properties
+        man = paste0("mlr_measures_fairness")
       )
-      self$fun = get(name, envir = asNamespace("mlr3fairness"), mode = "function")
+      self$fun = get(operation, envir = asNamespace("mlr3fairness"), mode = "function")
       self$base_measure = base_measure
     }
   ),
@@ -38,7 +42,6 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
   private = list(
     .score = function(prediction, task, ...) {
       assert_prediction(prediction)
-      print(task$man)
       if ("requires_task" %in% self$properties && is.null(task)) {
         stopf("Measure '%s' requires a task", self$id)
       }
@@ -49,4 +52,4 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
   )
 )
 
-mlr_measures$add("fairness.groupwise_abs_diff", MeasureFairness, name = "groupwise_abs_diff")
+mlr_measures$add("mlr_measures_fairness", MeasureFairness, name = "mlr_measures_fairness")

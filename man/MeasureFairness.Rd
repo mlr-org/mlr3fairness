@@ -5,8 +5,12 @@
 \title{Fairness Measure}
 \description{
 This measure specializes \link{Measure} for Fairness Measure problems:
+Users could use \link{"groupwise_abs_diff", "groupwise_diff", "groupwise_quotient"} to evaluate
+the fairness measures based on base_measures. For example, the false positive rate bias or
+the equalized odds ratios.
 
 Predefined measures can be found in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_measures}.
+Predifined operations can be found in the \link{mlr3fairness}.
 }
 \section{Super class}{
 \code{\link[mlr3:Measure]{mlr3::Measure}} -> \code{MeasureFairness}
@@ -46,15 +50,17 @@ Some of examples would be \code{mlr3measures::msr("classif.fpr")}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MeasureFairness$new(base_measure)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MeasureFairness$new(operation, base_measure, ps = ps())}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{base_measure}}{(\link{base_measure})}
+\item{\code{operation}}{The operation name performed on the base measures.}
 
-\item{\code{name}}{The name of the fairnessMeasure (Will drop later)}
+\item{\code{base_measure}}{The measure used to perform fairness operations.}
+
+\item{\code{ps}}{The parameter sets.}
 }
 \if{html}{\out{</div>}}
 }
