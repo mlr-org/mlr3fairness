@@ -20,13 +20,17 @@ I propose when applying a metric method, what occurs should be ...
 
 Example:
 ```r
-#The true label of the observations
-truth = as.factor(c(1,1,1,0,0,1,1,0,0,0))
+learner = lrn("classif.rpart", cp = .01)
+adult_train = tsk("adult_train")
+adult_test = tsk("adult_test")
+learner$train(adult_train)
+predictions = learner$predict(adult_test)
 
-#The predicted labels of the observations
-response = as.factor(c(1,1,0,0,1,1,0,0,0,1))
+me = MeasureFairness$new("groupwise_abs_diff", base_measure = msr("classif.fpr"))
+predictions$score(me, task = adult_test)
 
-fn(truth, response, positive = "1")
+>>>fairness.groupwise_abs_diff 
+                  0.0767116 
 ```
 
 ## Reference-level explanation
@@ -91,10 +95,6 @@ groupwise_abs_diff <- function(prediction, base_measure, positive, data_task, re
   msr1 = prediction[[1]]$score(base_measure)
   msr2 = prediction[[2]]$score(base_measure)
   return(abs(msr1 - msr2))
-
-fn_cm = function(m, na_value = NaN) {
-  m[2L, 1L]
-}
 ```
 
 ## Rationale, drawbacks and alternatives
