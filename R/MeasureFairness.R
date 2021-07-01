@@ -1,12 +1,11 @@
 #' @title Fairness Measure
-#'
-#' @importFrom mlr3 Measure
+#' @name mlr_measures_fairness
 #'
 #' @description
 #' This measure specializes [Measure] for Fairness Measure problems:
 #' Users could use ["groupwise_abs_diff", "groupwise_diff", "groupwise_quotient"] to evaluate
 #' the fairness measures based on base_measures. For example, the false positive rate bias or
-#' the equalized odds ratios.
+#' the equalized odds ratios. More examples could viewed on mlr3fairness wikipage.
 #'
 #' Predefined measures can be found in the [dictionary][mlr3misc::Dictionary] [mlr_measures].
 #' Predifined operations can be found in the [mlr3fairness].
