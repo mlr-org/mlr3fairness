@@ -3,12 +3,12 @@
 #'
 #' @description
 #' This measure specializes [Measure] for Fairness Measure problems:
-#' Users could use ["groupwise_abs_diff", "groupwise_diff", "groupwise_quotient"] to evaluate
+#' Users could use [groupwise_abs_diff()], [groupwise_diff()], or [groupwise_quotient()] to evaluate
 #' the fairness measures based on base_measures. For example, the false positive rate bias or
 #' the equalized odds ratios. More examples could viewed on mlr3fairness wikipage.
 #'
 #' Predefined measures can be found in the [dictionary][mlr3misc::Dictionary] [mlr_measures].
-#' Predifined operations can be found in the [mlr3fairness].
+#' Predefined operations can be found in the [mlr3fairness].
 #'
 #' @export
 MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALSE,

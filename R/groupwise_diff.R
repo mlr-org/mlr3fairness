@@ -4,12 +4,11 @@
 #' @param prediction The predictions of the learner.
 #' @param base_measure The base measures used to evaluate.
 #' @param data_task The data task for the fairness metric.
-#' @param ...
+#' @param ... Further arguments, currently ignored.
 #'
 #' @return Difference of base measues between binary protected groups.
 #' @export
-#'
-groupwise_diff = function(prediction, base_measure, data_task, ...){
+groupwise_diff = function(prediction, base_measure, data_task, ...) {
   #Assert the status for all the parameters
 
   subcol = data_task$col_roles$pta

@@ -13,7 +13,7 @@ groupwise_abs_diff(prediction, base_measure, data_task, ...)
 
 \item{data_task}{The data task for the fairness metric.}
 
-\item{...}{}
+\item{...}{Further arguments, currently ignored.}
 }
 \value{
 Absolute difference of base measues between binary protected groups.

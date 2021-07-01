@@ -6,12 +6,12 @@
 \title{Fairness Measure}
 \description{
 This measure specializes \link{Measure} for Fairness Measure problems:
-Users could use \link{"groupwise_abs_diff", "groupwise_diff", "groupwise_quotient"} to evaluate
+Users could use \code{\link[=groupwise_abs_diff]{groupwise_abs_diff()}}, \code{\link[=groupwise_diff]{groupwise_diff()}}, or \code{\link[=groupwise_quotient]{groupwise_quotient()}} to evaluate
 the fairness measures based on base_measures. For example, the false positive rate bias or
 the equalized odds ratios. More examples could viewed on mlr3fairness wikipage.
 
 Predefined measures can be found in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_measures}.
-Predifined operations can be found in the \link{mlr3fairness}.
+Predefined operations can be found in the \link{mlr3fairness}.
 }
 \section{Super class}{
 \code{\link[mlr3:Measure]{mlr3::Measure}} -> \code{MeasureFairness}
