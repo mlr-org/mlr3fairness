@@ -20,11 +20,11 @@ Predefined operations can be found in the \link{mlr3fairness}.
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{fun}}{(\code{function})\cr
-This function refered to the fairness measure opertion functions.}
+This function referred to the fairness measure operation functions.}
 
 \item{\code{base_measure}}{(\code{environment(1)})\cr
-The measure need to be used by fairness measures.
-Some of examples would be \code{mlr3measures::msr("classif.fpr")}}
+The base measure to be used by the fairness measures,
+e.g. \link{mlr_measures_classif.fpr} for the false positive rate.}
 }
 \if{html}{\out{</div>}}
 }
