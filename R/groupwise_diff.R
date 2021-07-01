@@ -4,7 +4,7 @@
 #' @param prediction The predictions of the learner.
 #' @param base_measure The base measures used to evaluate.
 #' @param data_task The data task for the fairness metric.
-#' @param ...
+#' @param ... Additional parameters
 #'
 #' @return Difference of base measues between binary protected groups.
 #' @export

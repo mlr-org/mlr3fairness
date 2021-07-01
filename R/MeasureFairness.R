@@ -3,7 +3,7 @@
 #'
 #' @description
 #' This measure specializes [Measure] for Fairness Measure problems:
-#' Users could use ["groupwise_abs_diff", "groupwise_diff", "groupwise_quotient"] to evaluate
+#' Users could use [groupwise_abs_diff(), groupwise_diff(), groupwise_quotient()] to evaluate
 #' the fairness measures based on base_measures. For example, the false positive rate bias or
 #' the equalized odds ratios. More examples could viewed on mlr3fairness wikipage.
 #'
