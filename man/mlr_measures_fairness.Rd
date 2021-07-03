@@ -5,13 +5,17 @@
 \alias{MeasureFairness}
 \title{Fairness Measure}
 \description{
-This measure specializes \link{Measure} for Fairness Measure problems:
-Users could use \code{\link[=groupwise_abs_diff(), groupwise_diff(), groupwise_quotient]{groupwise_abs_diff(), groupwise_diff(), groupwise_quotient()}} to evaluate
-the fairness measures based on base_measures. For example, the false positive rate bias or
-the equalized odds ratios. More examples could viewed on mlr3fairness wikipage.
+This measure specializes \link{Measure} to allow for measuring fairness:
+Users could use \code{\link[=groupwise_abs_diff]{groupwise_abs_diff()}}, \code{\link[=groupwise_diff]{groupwise_diff()}}, or \code{\link[=groupwise_quotient]{groupwise_quotient()}} to evaluate the fairness measures based on base_measures. For example, the false positive rate bias or the equalized odds ratios.
 
 Predefined measures can be found in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_measures}.
-Predifined operations can be found in the \link{mlr3fairness}.
+Predefined operations can be found in the \link{mlr3fairness}.
+}
+\examples{
+#Create MeasureFairness to measure the Predictive Parity.
+measure = MeasureFairness$new("groupwise_quotient", base_measure = msr("classif.ppv"))
+predictions$score(measure, task = data_task)
+
 }
 \section{Super class}{
 \code{\link[mlr3:Measure]{mlr3::Measure}} -> \code{MeasureFairness}
@@ -20,11 +24,11 @@ Predifined operations can be found in the \link{mlr3fairness}.
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{fun}}{(\code{function})\cr
-This function refered to the fairness measure opertion functions.}
+This function referred to the fairness measure operation functions.}
 
-\item{\code{base_measure}}{(\code{environment(1)})\cr
-The measure need to be used by fairness measures.
-Some of examples would be \code{mlr3measures::msr("classif.fpr")}}
+\item{\code{base_measure}}{(\code{Measure})\cr
+The base measure to be used by the fairness measures,
+e.g. \link{mlr_measures_classif.fpr} for the false positive rate.}
 }
 \if{html}{\out{</div>}}
 }
@@ -51,17 +55,25 @@ Some of examples would be \code{mlr3measures::msr("classif.fpr")}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MeasureFairness$new(operation, base_measure, ps = ps())}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MeasureFairness$new(operation = "groupwise_abs_diff", base_measure)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{operation}}{The operation name performed on the base measures.}
+\item{\code{operation}}{(\code{character})\cr
+The operation name performed on the base measures.
+\itemize{
+\item Possible inputs should be one of:
+\itemize{
+\item "groupwise_abs_diff"
+\item "groupwise_diff"
+\item "groupwise_quotient"
+}
+}}
 
-\item{\code{base_measure}}{The measure used to perform fairness operations.}
-
-\item{\code{ps}}{The parameter sets.}
+\item{\code{base_measure}}{(\code{Measure})\cr
+The measure used to perform fairness operations.}
 }
 \if{html}{\out{</div>}}
 }

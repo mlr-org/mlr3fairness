@@ -13,7 +13,7 @@ groupwise_diff(prediction, base_measure, data_task, ...)
 
 \item{data_task}{The data task for the fairness metric.}
 
-\item{...}{Additional parameters}
+\item{...}{Further arguments, currently ignored.}
 }
 \value{
 Difference of base measues between binary protected groups.

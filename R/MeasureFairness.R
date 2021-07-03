@@ -2,13 +2,16 @@
 #' @name mlr_measures_fairness
 #'
 #' @description
-#' This measure specializes [Measure] for Fairness Measure problems:
-#' Users could use [groupwise_abs_diff(), groupwise_diff(), groupwise_quotient()] to evaluate
-#' the fairness measures based on base_measures. For example, the false positive rate bias or
-#' the equalized odds ratios. More examples could viewed on mlr3fairness wikipage.
+#' This measure specializes [Measure] to allow for measuring fairness:
+#' Users could use [groupwise_abs_diff()], [groupwise_diff()], or [groupwise_quotient()] to evaluate the fairness measures based on base_measures. For example, the false positive rate bias or the equalized odds ratios.
 #'
 #' Predefined measures can be found in the [dictionary][mlr3misc::Dictionary] [mlr_measures].
-#' Predifined operations can be found in the [mlr3fairness].
+#' Predefined operations can be found in the [mlr3fairness].
+#'
+#' @examples
+#' #Create MeasureFairness to measure the Predictive Parity.
+#' measure = MeasureFairness$new("groupwise_quotient", base_measure = msr("classif.ppv"))
+#' predictions$score(measure, task = data_task)
 #'
 #' @export
 MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALSE,
@@ -21,10 +24,21 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #' @param base_measure The measure used to perform fairness operations.
-    #' @param operation The operation name performed on the base measures.
-    #' @param ps The parameter sets.
-    initialize = function(operation, base_measure, ps = ps()) {
+    #'
+    #' @param base_measure (`Measure`)\cr
+    #' The measure used to perform fairness operations.
+    #'
+    #' @param operation (`character`)\cr
+    #' The operation name performed on the base measures.
+    #' * Possible inputs should be one of:
+    #'   - "groupwise_abs_diff"
+    #'   - "groupwise_diff"
+    #'   - "groupwise_quotient"
+    initialize = function(operation = "groupwise_abs_diff", base_measure) {
+      assert_choice(operation, c("groupwise_abs_diff", "groupwise_diff", "groupwise_quotient"))
+      self$fun = get(operation, envir = asNamespace("mlr3fairness"), mode = "function")
+      self$base_measure = assert_measure(base_measure)
+
       super$initialize(
         id = paste0("fairness.", base_measure$id),
         range = c(-Inf, Inf),
@@ -33,22 +47,14 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
         packages = "mlr3fairness",
         man = paste0("mlr_measures_fairness")
       )
-      self$fun = get(operation, envir = asNamespace("mlr3fairness"), mode = "function")
-      self$base_measure = base_measure
     }
   ),
 
   private = list(
     .score = function(prediction, task, ...) {
-      assert_prediction(prediction)
-      if ("requires_task" %in% self$properties && is.null(task)) {
-        stopf("Measure '%s' requires a task", self$id)
-      }
-
-      invoke(self$fun, prediction = prediction, na_value = self$na_value, data_task = task,
-           base_measure = self$base_measure)
+      invoke(self$fun, prediction = prediction, data_task = task, base_measure = self$base_measure)
     }
   )
 )
 
-mlr_measures$add("mlr_measures_fairness", MeasureFairness, name = "mlr_measures_fairness")
+mlr_measures$add("fairness", MeasureFairness, name = "fairness")

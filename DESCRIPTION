@@ -20,14 +20,13 @@ Depends:
 Imports:
     mlr3,
     checkmate,
-    paradox,
     R6 (>= 2.4.1),
     data.table (>= 1.13.6),
     mlr3measures (>= 0.3.0),
     mlr3misc
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
-Collate: 
+Collate:
     'MeasureFairness.R'
     'adult.R'
     'compas.R'
