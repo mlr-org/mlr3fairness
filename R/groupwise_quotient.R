@@ -7,7 +7,6 @@
 #' @param ... Further arguments, currently ignored.
 #'
 #' @return Quotient of base measues between binary protected groups.
-#' @export
 groupwise_quotient = function(prediction, base_measure, data_task, ...) {
   #Assert the status for all the parameters
 

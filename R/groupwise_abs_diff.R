@@ -7,7 +7,6 @@
 #' @param ... Further arguments, currently ignored.
 #'
 #' @return Absolute difference of base measues between binary protected groups.
-#' @export
 groupwise_abs_diff <- function(prediction, base_measure, data_task, ...) {
   #Assert the status for all the parameters
 

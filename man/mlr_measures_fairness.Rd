@@ -5,14 +5,16 @@
 \alias{MeasureFairness}
 \title{Fairness Measure}
 \description{
-This measure specializes \link{Measure} to allow for measuring fairness:
-Users could use \code{\link[=groupwise_abs_diff]{groupwise_abs_diff()}}, \code{\link[=groupwise_diff]{groupwise_diff()}}, or \code{\link[=groupwise_quotient]{groupwise_quotient()}} to evaluate the fairness measures based on base_measures. For example, the false positive rate bias or the equalized odds ratios.
+This measure specializes \link{Measure} to allow for measuring statistical group fairness:
+A common approach to quantifying a model's fairness is to compute the difference between a protected and an unprotected group according to some performance metric such as \verb{classification error}, \verb{false positive rate} or others.
+This measure allows for the composition of a fairness-metric from such a \code{base_measure} by computing group-wise difference according to some strategy.
+Several options wrt. computing difference such as \code{\link[=groupwise_abs_diff]{groupwise_abs_diff()}}, \code{\link[=groupwise_diff]{groupwise_diff()}}, or \code{\link[=groupwise_quotient]{groupwise_quotient()}} are available.
 
 Predefined measures can be found in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_measures}.
 Predefined operations can be found in the \link{mlr3fairness}.
 }
 \examples{
-#Create MeasureFairness to measure the Predictive Parity.
+# Create MeasureFairness to measure the Predictive Parity.
 measure = MeasureFairness$new("groupwise_quotient", base_measure = msr("classif.ppv"))
 predictions$score(measure, task = data_task)
 
