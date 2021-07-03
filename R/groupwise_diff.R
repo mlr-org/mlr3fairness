@@ -8,7 +8,7 @@
 #'
 #' @return Difference of base measues between binary protected groups.
 groupwise_diff = function(prediction, base_measure, data_task, ...) {
-  #Assert the status for all the parameters
+  assert_binary_pta(data_task, "groupwise_diff")
 
   measure_list = binary_measure_score(prediction, base_measure, data_task)
   msr1 = measure_list[1]

@@ -15,6 +15,7 @@ Predefined operations can be found in the \link{mlr3fairness}.
 }
 \examples{
 # Create MeasureFairness to measure the Predictive Parity.
+library(mlr3)
 data_task = tsk("adult_train")
 learner = lrn("classif.rpart", cp = .01)
 learner$train(data_task)

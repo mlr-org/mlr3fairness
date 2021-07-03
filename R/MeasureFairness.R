@@ -12,6 +12,7 @@
 #'
 #' @examples
 #' # Create MeasureFairness to measure the Predictive Parity.
+#' library(mlr3)
 #' data_task = tsk("adult_train")
 #' learner = lrn("classif.rpart", cp = .01)
 #' learner$train(data_task)
@@ -44,6 +45,7 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
       super$initialize(
         id = paste0("fairness.", base_measure$id),
         range = c(-Inf, Inf),
+        properties = "reqiures_task",
         minimize = TRUE,
         predict_type = base_measure$predict_type,
         packages = "mlr3fairness",
