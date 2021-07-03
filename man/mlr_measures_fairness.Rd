@@ -23,10 +23,7 @@ predictions$score(measure, task = data_task)
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{fun}}{(\code{function})\cr
-This function referred to the fairness measure operation functions.}
-
-\item{\code{base_measure}}{(\code{Measure})\cr
+\item{\code{base_measure}}{(\code{Measure()})\cr
 The base measure to be used by the fairness measures,
 e.g. \link{mlr_measures_classif.fpr} for the false positive rate.}
 }
@@ -61,7 +58,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{operation}}{(\code{character})\cr
+\item{\code{operation}}{(\code{character()})\cr
 The operation name performed on the base measures.
 \itemize{
 \item Possible inputs should be one of:
@@ -72,7 +69,7 @@ The operation name performed on the base measures.
 }
 }}
 
-\item{\code{base_measure}}{(\code{Measure})\cr
+\item{\code{base_measure}}{(\code{Measure()})\cr
 The measure used to perform fairness operations.}
 }
 \if{html}{\out{</div>}}

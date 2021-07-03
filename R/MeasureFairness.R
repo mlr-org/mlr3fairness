@@ -16,19 +16,16 @@
 #' @export
 MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALSE,
   public = list(
-    #' @template field_fun
-    fun = NULL,
-
     #' @template field_base_measure
     base_measure = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
-    #' @param base_measure (`Measure`)\cr
+    #' @param base_measure (`Measure()`)\cr
     #' The measure used to perform fairness operations.
     #'
-    #' @param operation (`character`)\cr
+    #' @param operation (`character()`)\cr
     #' The operation name performed on the base measures.
     #' * Possible inputs should be one of:
     #'   - "groupwise_abs_diff"
@@ -36,23 +33,25 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
     #'   - "groupwise_quotient"
     initialize = function(operation = "groupwise_abs_diff", base_measure) {
       assert_choice(operation, c("groupwise_abs_diff", "groupwise_diff", "groupwise_quotient"))
-      self$fun = get(operation, envir = asNamespace("mlr3fairness"), mode = "function")
+      private$fun = get(operation, envir = asNamespace("mlr3fairness"), mode = "function")
       self$base_measure = assert_measure(base_measure)
 
       super$initialize(
         id = paste0("fairness.", base_measure$id),
         range = c(-Inf, Inf),
-        minimize = FALSE,
+        minimize = TRUE,
         predict_type = base_measure$predict_type,
         packages = "mlr3fairness",
-        man = paste0("mlr_measures_fairness")
+        man = "mlr_measures_fairness"
       )
     }
   ),
 
   private = list(
+    fun = NULL,
+
     .score = function(prediction, task, ...) {
-      invoke(self$fun, prediction = prediction, data_task = task, base_measure = self$base_measure)
+      invoke(private$fun, prediction = prediction, data_task = task, base_measure = self$base_measure)
     }
   )
 )

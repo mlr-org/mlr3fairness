@@ -7,18 +7,16 @@ as_backend = function(id) {
   mlr3::as_data_backend(ee[[id]])
 }
 
-#' Binary Measure Score
-#'
-#' @description
-#' This helper function returns a list of 2 measure scores based on a binary protected feature in datatask.
-#'
-#' @param prediction The predictions made by the learner
-#' @param datatask The datatask for groupwise operations
-#' @param base_measure The base measures
-#'
-#' @return c(measure_score_1, measure_score_2)
-#' @export
-#'
+# Binary Measure Score
+#
+# @description
+# This helper function returns a list of 2 measure scores based on a binary protected feature in datatask.
+#
+# @param prediction (`PredictionClassif()`)\cr The predictions of the learner.
+# @param base_measure (`Measure()`)\cr The base measures used to evaluate.
+# @param data_task (`TaskClassif()`)\cr The data task for the fairness metric.
+#
+# @return c(measure_score_1, measure_score_2)
 binary_measure_score = function(prediction, base_measure, data_task){
   subcol = data_task$col_roles$pta
   prediction = split(as.data.table(prediction), data_task$data(cols = subcol))
