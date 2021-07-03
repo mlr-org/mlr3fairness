@@ -1,13 +1,13 @@
-# Groupwise Quotient (Fairness Metrics)
-# @name groupwise_quotient
-#
-# @param prediction (`PredictionClassif()`)\cr The predictions of the learner.
-# @param base_measure (`Measure()`)\cr The base measures used to evaluate.
-# @param data_task (`TaskClassif()`)\cr The data task for the fairness metric.
-# @param ... Further arguments, currently ignored.
-#
-# @return Quotient of base measues between binary protected groups.
-# @export
+#' Groupwise Quotient (Fairness Metrics)
+#' @name groupwise_quotient
+#'
+#' @param prediction (`PredictionClassif()`)\cr The predictions of the learner.
+#' @param base_measure (`Measure()`)\cr The base measures used to evaluate.
+#' @param data_task (`TaskClassif()`)\cr The data task for the fairness metric.
+#' @param ... Further arguments, currently ignored.
+#'
+#' @return Quotient of base measues between binary protected groups.
+#' @export
 groupwise_quotient = function(prediction, base_measure, data_task, ...) {
   #Assert the status for all the parameters
 
