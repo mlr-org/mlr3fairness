@@ -24,6 +24,8 @@ Imports:
     data.table (>= 1.13.6),
     mlr3measures (>= 0.3.0),
     mlr3misc
+Suggests:
+    rpart
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Collate:
