@@ -45,7 +45,7 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
       super$initialize(
         id = paste0("fairness.", base_measure$id),
         range = c(-Inf, Inf),
-        properties = "reqiures_task",
+        properties = "requires_task",
         minimize = TRUE,
         predict_type = base_measure$predict_type,
         packages = "mlr3fairness",
