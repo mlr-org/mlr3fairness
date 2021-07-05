@@ -19,9 +19,9 @@ library(mlr3)
 data_task = tsk("adult_train")
 learner = lrn("classif.rpart", cp = .01)
 learner$train(data_task)
-measure = MeasureFairness$new("groupwise_quotient", base_measure = msr("classif.ppv"))
+measure = msr("fairness", base_measure = msr("classif.ppv"), operation = "groupwise_quotient")
+predictions = learner$predict(data_task)
 predictions$score(measure, task = data_task)
-
 }
 \section{Super class}{
 \code{\link[mlr3:Measure]{mlr3::Measure}} -> \code{MeasureFairness}

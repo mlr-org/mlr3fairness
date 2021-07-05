@@ -10,16 +10,16 @@
 #' Predefined measures can be found in the [dictionary][mlr3misc::Dictionary] [mlr_measures].
 #' Predefined operations can be found in the [mlr3fairness].
 #'
+#' @export
 #' @examples
 #' # Create MeasureFairness to measure the Predictive Parity.
 #' library(mlr3)
 #' data_task = tsk("adult_train")
 #' learner = lrn("classif.rpart", cp = .01)
 #' learner$train(data_task)
-#' measure = MeasureFairness$new("groupwise_quotient", base_measure = msr("classif.ppv"))
+#' measure = msr("fairness", base_measure = msr("classif.ppv"), operation = "groupwise_quotient")
+#' predictions = learner$predict(data_task)
 #' predictions$score(measure, task = data_task)
-#'
-#' @export
 MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALSE,
   public = list(
     #' @template field_base_measure
@@ -63,4 +63,4 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
   )
 )
 
-mlr_measures$add("fairness", MeasureFairness, name = "fairness")
+mlr_measures$add("fairness", MeasureFairness)
