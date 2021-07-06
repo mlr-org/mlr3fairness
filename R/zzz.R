@@ -22,4 +22,6 @@
   x = getFromNamespace("mlr_measures", ns = "mlr3")
   x$add("fairness", MeasureFairness)
 
+  # Define a set of widely used metrics. Documented in mlr_measures_fairness
+  x$add("fairness.fpr", MeasureFairness, base_measure = msr("classif.fpr"))
 }

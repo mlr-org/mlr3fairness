@@ -13,6 +13,21 @@ Several options wrt. computing difference such as \code{\link[=groupwise_abs_dif
 Predefined measures can be found in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_measures}.
 Predefined operations can be found in the \link{mlr3fairness}.
 }
+\section{Predefined measures}{
+
+\code{mlr3fairness} comes with a set of predefined fairness measures listed below.
+For full flexibility, \code{\link{MeasureFairness}} can be used to construct classical
+group fairness measures based on a difference between a performance metrics across groups
+by combining a performance measure with an operation for measuring differences.
+
+A set of widely used metrics is included in mlr3fairness.
+\itemize{
+\item \code{fairness.fpr} :: Abs. difference in false positive rates across groups
+\item \code{fairness.acc} :: Abs. difference in accuracy across groups
+....
+}
+}
+
 \examples{
 # Create MeasureFairness to measure the Predictive Parity.
 library(mlr3)
@@ -22,6 +37,8 @@ learner$train(data_task)
 measure = msr("fairness", base_measure = msr("classif.ppv"), operation = "groupwise_quotient")
 predictions = learner$predict(data_task)
 predictions$score(measure, task = data_task)
+# Predfined measures:
+msr("fairness.fpr")
 }
 \section{Super class}{
 \code{\link[mlr3:Measure]{mlr3::Measure}} -> \code{MeasureFairness}
