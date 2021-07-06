@@ -2,7 +2,7 @@
 #' @name mlr_measures_fairness
 #'
 #' @description
-#' This measure specializes [Measure] to allow for measuring statistical group fairness:
+#' This measure specializes [mlr3::Measure()] to allow for measuring statistical group fairness:
 #' A common approach to quantifying a model's fairness is to compute the difference between a protected and an unprotected group according to some performance metric such as `classification error`, `false positive rate` or others.
 #' This measure allows for the composition of a fairness-metric from such a `base_measure` by computing group-wise difference according to some strategy.
 #' Several options wrt. computing difference such as [groupwise_abs_diff()], [groupwise_diff()], or [groupwise_quotient()] are available.

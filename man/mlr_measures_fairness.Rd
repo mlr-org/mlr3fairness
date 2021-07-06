@@ -5,7 +5,7 @@
 \alias{MeasureFairness}
 \title{Fairness Measure}
 \description{
-This measure specializes \link{Measure} to allow for measuring statistical group fairness:
+This measure specializes \code{\link[mlr3:Measure]{mlr3::Measure()}} to allow for measuring statistical group fairness:
 A common approach to quantifying a model's fairness is to compute the difference between a protected and an unprotected group according to some performance metric such as \verb{classification error}, \verb{false positive rate} or others.
 This measure allows for the composition of a fairness-metric from such a \code{base_measure} by computing group-wise difference according to some strategy.
 Several options wrt. computing difference such as \code{\link[=groupwise_abs_diff]{groupwise_abs_diff()}}, \code{\link[=groupwise_diff]{groupwise_diff()}}, or \code{\link[=groupwise_quotient]{groupwise_quotient()}} are available.
