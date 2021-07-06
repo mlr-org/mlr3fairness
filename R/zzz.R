@@ -18,4 +18,8 @@
   x$task_col_roles$classif = union(x$task_col_roles$classif, "pta")
   x$task_col_roles$regr = union(x$task_col_roles$regr, "pta")
   # TODO: also do this for survival task in mlr3proba
+
+  x = getFromNamespace("mlr_measures", ns = "mlr3")
+  x$add("fairness", MeasureFairness)
+
 }
