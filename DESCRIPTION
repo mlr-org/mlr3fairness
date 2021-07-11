@@ -25,6 +25,8 @@ Imports:
     mlr3measures (>= 0.3.0),
     mlr3misc
 Suggests:
+    rmarkdown,
+    knitr,
     rpart
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
@@ -38,3 +40,4 @@ Collate:
     'groupwise_quotient.R'
     'helper.R'
     'zzz.R'
+VignetteBuilder: knitr
