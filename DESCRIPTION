@@ -36,9 +36,7 @@ Collate:
     'adult.R'
     'compas.R'
     'assertions.R'
-    'groupwise_abs_diff.R'
-    'groupwise_diff.R'
-    'groupwise_quotient.R'
+    'operations.R'
     'helper.R'
     'zzz.R'
 Config/testthat/edition: 3
