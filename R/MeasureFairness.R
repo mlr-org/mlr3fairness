@@ -64,3 +64,22 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
 )
 
 mlr_measures$add("fairness", MeasureFairness)
+
+
+#' @title Fairness Measures in mlr3
+#' @name mlr_measures_fairness
+#'
+#' @section Predefined measures:
+#' `mlr3fairness` comes with a set of predefined fairness measures listed below.
+#' For full flexibility, [`MeasureFairness`] can be used to construct classical
+#' group fairness measures based on a difference between a performance metrics across groups
+#' by combining a performance measure with an operation for measuring differences.
+#'
+#' A set of widely used metrics is included in mlr3fairness.
+#' * `fairness.fpr` :: Abs. difference in false positive rates across groups
+#' * `fairness.acc` :: Abs. difference in accuracy across groups
+#' ....
+#' @examples
+#' # Predfined measures:
+#' msr("fairness.fpr")
+NULL
