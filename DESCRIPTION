@@ -41,8 +41,4 @@ Collate:
     'groupwise_quotient.R'
     'helper.R'
     'zzz.R'
-<<<<<<< HEAD
-VignetteBuilder: knitr
-=======
 Config/testthat/edition: 3
->>>>>>> 8e0e4a4e12c88e4c5b1b9bb03c8d11dad712bc51
