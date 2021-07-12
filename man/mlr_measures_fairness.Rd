@@ -22,9 +22,14 @@ by combining a performance measure with an operation for measuring differences.
 
 A set of widely used metrics is included in mlr3fairness.
 \itemize{
-\item \code{fairness.fpr} :: Abs. difference in false positive rates across groups
-\item \code{fairness.acc} :: Abs. difference in accuracy across groups
-....
+\item \code{fairness.fpr} :: Abs. difference in false positive rates across groups (False positive error rate balance/Part of Equalized Odds)
+\item \code{fairness.acc} :: Abs. difference in accuracy across groups (Overall accuracy equality)
+\item \code{fairness.fnr} :: Abs. difference in False negative rates across groups (False negative error rate balance)
+\item \code{fairness.tpr} :: Abs. difference in True positive rates across groups (Part of Equalized Odds)
+\item \code{fairness.ppv} :: Abs. difference in Positive predictive values across groups (Part of Conditional use accuracy equality)
+\item \code{fairness.npv} :: Abs. difference in Negative predictive values across groups (Part of Conditional use accuracy equality)
+\item \code{fairness.fp} :: Abs. difference in False positives across groups (Part of Treatment equality)
+\item \code{fairness.fn} :: Abs. difference in False negatives values across groups (Part of Treatment equality)
 }
 }
 
@@ -39,6 +44,13 @@ predictions = learner$predict(data_task)
 predictions$score(measure, task = data_task)
 # Predfined measures:
 msr("fairness.fpr")
+msr("fairness.acc")
+msr("fairness.fnr")
+msr("fairness.tpr")
+msr("fairness.ppv")
+msr("fairness.npv")
+msr("fairness.fp")
+msr("fairness.fn")
 }
 \section{Super class}{
 \code{\link[mlr3:Measure]{mlr3::Measure}} -> \code{MeasureFairness}

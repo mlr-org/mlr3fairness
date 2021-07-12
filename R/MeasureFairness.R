@@ -65,7 +65,6 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
 
 mlr_measures$add("fairness", MeasureFairness)
 
-
 #' @title Fairness Measures in mlr3
 #' @name mlr_measures_fairness
 #'
@@ -76,10 +75,22 @@ mlr_measures$add("fairness", MeasureFairness)
 #' by combining a performance measure with an operation for measuring differences.
 #'
 #' A set of widely used metrics is included in mlr3fairness.
-#' * `fairness.fpr` :: Abs. difference in false positive rates across groups
-#' * `fairness.acc` :: Abs. difference in accuracy across groups
-#' ....
+#' * `fairness.fpr` :: Abs. difference in false positive rates across groups (False positive error rate balance/Part of Equalized Odds)
+#' * `fairness.acc` :: Abs. difference in accuracy across groups (Overall accuracy equality)
+#' * `fairness.fnr` :: Abs. difference in False negative rates across groups (False negative error rate balance)
+#' * `fairness.tpr` :: Abs. difference in True positive rates across groups (Part of Equalized Odds)
+#' * `fairness.ppv` :: Abs. difference in Positive predictive values across groups (Part of Conditional use accuracy equality)
+#' * `fairness.npv` :: Abs. difference in Negative predictive values across groups (Part of Conditional use accuracy equality)
+#' * `fairness.fp` :: Abs. difference in False positives across groups (Part of Treatment equality)
+#' * `fairness.fn` :: Abs. difference in False negatives values across groups (Part of Treatment equality)
 #' @examples
 #' # Predfined measures:
 #' msr("fairness.fpr")
+#' msr("fairness.acc")
+#' msr("fairness.fnr")
+#' msr("fairness.tpr")
+#' msr("fairness.ppv")
+#' msr("fairness.npv")
+#' msr("fairness.fp")
+#' msr("fairness.fn")
 NULL
