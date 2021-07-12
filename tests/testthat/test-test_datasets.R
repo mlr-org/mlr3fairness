@@ -1,7 +1,7 @@
 check_data_format = function(data) {
   expect_true(is.data.frame(data))
-  expect_true(sum(colnames(data) == tolower(colnames(data))) == length(colnames(data))) #Check all True
-  expect_true(sum(colnames(data) == make.names(colnames(data), unique = TRUE)) == length(colnames(data)))
+  expect_true(all( colnames(data) == tolower(colnames(data)) ))
+  expect_true(all( colnames(data) == make.names(colnames(data), unique = TRUE) ))
   expect_true(is.integer(attr(data, "row.names")))
 }
 
@@ -23,7 +23,7 @@ test_that("compas dataset can be loaded with correct format", {
   assert_col_type = (sapply(compas_data, class) == c("factor", "integer", "factor", "factor",
                                                     "integer", "integer", "factor", "integer",
                                                     "integer", "factor", "factor", "factor"))
-  expect_true(sum(assert_col_type) == 12L)
+  expect_true(all(assert_col_type))
 })
 
 test_that("adult_train dataset can be loaded with correct format", {
@@ -36,7 +36,7 @@ test_that("adult_train dataset can be loaded with correct format", {
   assert_col_type = (sapply(adult_train_data, class) == c("factor", "integer", "integer", "integer",
                                                      "factor", "integer", "integer", "factor",
                                                      "factor", "factor", "factor", "factor", "factor"))
-  expect_true(sum(assert_col_type) == 13L)
+  expect_true(all(assert_col_type))
 })
 
 test_that("adult_test dataset can be loaded with correct format", {
@@ -49,5 +49,5 @@ test_that("adult_test dataset can be loaded with correct format", {
   assert_col_type = (sapply(adult_test_data, class) == c("factor", "integer", "integer", "integer",
                                                           "factor", "integer", "integer", "factor",
                                                           "factor", "factor", "factor", "factor", "factor"))
-  expect_true(sum(assert_col_type) == 13L)
+  expect_true(all(assert_col_type))
 })
