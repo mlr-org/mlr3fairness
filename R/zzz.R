@@ -1,4 +1,8 @@
 #' @import mlr3
+#' @import mlr3misc
+#' @import R6
+#' @import checkmate
+#' @import mlr3measures
 #' @importFrom utils getFromNamespace data
 "_PACKAGE"
 
@@ -14,4 +18,17 @@
   x$task_col_roles$classif = union(x$task_col_roles$classif, "pta")
   x$task_col_roles$regr = union(x$task_col_roles$regr, "pta")
   # TODO: also do this for survival task in mlr3proba
+
+  x = getFromNamespace("mlr_measures", ns = "mlr3")
+  x$add("fairness", MeasureFairness)
+
+  # Define a set of widely used metrics. Documented in mlr_measures_fairness
+  x$add("fairness.fpr", MeasureFairness, base_measure = msr("classif.fpr"))
+  x$add("fairness.fnr", MeasureFairness, base_measure = msr("classif.fnr"))
+  x$add("fairness.tpr", MeasureFairness, base_measure = msr("classif.tpr"))
+  x$add("fairness.ppv", MeasureFairness, base_measure = msr("classif.ppv"))
+  x$add("fairness.npv", MeasureFairness, base_measure = msr("classif.npv"))
+  x$add("fairness.acc", MeasureFairness, base_measure = msr("classif.acc"))
+  x$add("fairness.fp", MeasureFairness, base_measure = msr("classif.fp"))
+  x$add("fairness.fn", MeasureFairness, base_measure = msr("classif.fn"))
 }
