@@ -1,0 +1,137 @@
+---
+title: "measures-vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{measures-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(mlr3fairness)
+library(mlr3)
+```
+# Why should we measure fairness?
+
+In machine learning, the problem of algorithmic bias and fairness problems are well known and well studied. Outcomes may be skewed by a range of factors and thus might be considered unfair to certain groups or individuals. An example would be the way social media sites deliver personalized news to consumers. The potential is always there to give undue weight to certain viewpoints. Thus, we want to deliver a fairness toolkit for mlr3 users so they could measure the fairness metrics when building the models. And moreover, correcting the algorithmic bias intends to ensure fairness for protected fields. 
+
+# Fairness Measures Demonstration
+
+In this vignette, users could see examples on how to create the most common fairness measures. Moreover, users could see how to customize their fairness measures using MeasureFairness classes.
+
+```{r}
+#Load the dataset, check the protected column has been set and make the predictions.
+adult_train = tsk("adult_train")
+adult_test = tsk("adult_test")
+adult_train$col_roles$pta
+
+learner_obj = lrn("classif.rpart")
+learner_obj$train(adult_train)
+predictions = learner_obj$predict(adult_test)
+```
+
+## Measures only require one metric
+
+Users could use the following codesto create simple fairness measures which only requires one metric.
+```{r}
+# False Positive Rate Bias
+me = MeasureFairness$new("groupwise_abs_diff", base_measure = msr("classif.fpr"))
+predictions$score(me, task = adult_test)
+
+# False Negative Rate Bias
+me = MeasureFairness$new("groupwise_abs_diff", base_measure = msr("classif.fnr"))
+predictions$score(me, task = adult_test)
+
+# False Positive Rate Ratios
+me = MeasureFairness$new("groupwise_quotient", base_measure = msr("classif.fpr"))
+predictions$score(me, task = adult_test)
+
+# True Positive Rate Ratios
+me = MeasureFairness$new("groupwise_quotient", base_measure = msr("classif.tpr"))
+predictions$score(me, task = adult_test)
+```
+
+Users could also the the following code to create some common fairness measures which only requires one metric. Those measures are created by default.
+```{r}
+# Predictive parity, also referred to as outcome test.
+# A classifier satisfies Predictive parity if the subjects in the protected and unprotected groups have equal PPV. We could use the following code to assess it:
+
+#me = MeasureFairness$new("groupwise_quotient", base_measure = msr("classif.ppv"))
+me = msr("fairness.ppv")
+predictions$score(me, task = adult_test) #Should close to 1
+
+# False positive error rate balance, also referred to as predictive equality.
+# A classifier satisfies predictive equality if the subjects in the protected and unprotected groups have equal FPR. We could use the following code to assess it:
+
+me = msr("fairness.fpr")
+predictions$score(me, task = adult_test) #Should close to 1
+
+# False negative error rate balance, also referred to as equal opportunity.
+# A classifier satisfies equal opportunity if the subjects in the protected and unprotected groups have equal FNR. We could use the following code to assess it:
+
+me = msr("fairness.fnr")
+predictions$score(me, task = adult_test) #Should close to 1
+
+# Overall accuracy equality
+# A classifier satisfies Overall accuracy equality if the subject in the protected and unprotected groups have equal prediction accuracy. We could use the following code to assess it:
+
+me = msr("fairness.acc")
+predictions$score(me, task = adult_test) #Should close to 1
+```
+
+## Measures require two or more metrics:
+Users could use the following code to create fairness measures that requires two or more metrics.
+
+```{r}
+# Equalized Odds
+# Users are expected to evaluate Equalized Odds by ratio or absolute difference. A classifier satisfies Equalized Odds if the subjects in the protected and unprotected groups have equal TPR and equal FPR. So we could use the following code to assess Equalized Odds:
+
+me = msrs(c("fairness.tpr", "fairness.fpr"))
+predictions$score(me, task = adult_test) #Both should close to 1
+
+# Conditional use accuracy equality
+# A classifier satisfies Conditional use accuracy equality if the subjects in the protected and unprotected groups have equal PPV and equal NPV. We could use ratio or absolute difference to assess it:
+
+me = msrs(c("fairness.ppv", "fairness.npv"))
+predictions$score(me, task = adult_test) #Both should close to 1
+
+# Treatment equality
+# A classifier satisfies this definition if the subjects in the protected and unprotected groups have an equal ratio of FN and FP, satisfying the formula:
+# 
+# Assume A is the protected field with binary variable. Then FN{A=a}/FP{A=a} = FN{A=b}/FP{A=b}
+# 
+# However, we could do a simple transformation and assess FN{A=a}/FN{A=b} = FP{A=a}/FP{A=b}. Then we could use the following code:
+
+me = msrs(c("fairness.fp", "fairness.fn"))
+predictions$score(me, task = adult_test) #Measures should be close
+
+```
+
+# How to customize measures
+Users could see how to customize their measures from the following examples. Parameters users could define are base measures and operations.
+* To add a measure which only requires single metric, just create the MeasureFariness object
+* To add a measure which requires more metric, users are expected to add the base measures to mlr3_measures library first. Then create the fairness measure using `msrs()`.
+```{r}
+# False negative error rate balance, also referred to as equal opportunity.
+# A classifier satisfies equal opportunity if the subjects in the protected and unprotected groups have equal FNR. We could use the following code to assess it:
+
+me = MeasureFairness$new(operation = "groupwise_quotient", base_measure = msr("classif.fnr"))
+predictions$score(me, task = adult_test) #Should close to 1
+
+# Equalized Odds
+# Users are expected to evaluate Equalized Odds by ratio or absolute difference. A classifier satisfies Equalized Odds if the subjects in the protected and unprotected groups have equal TPR and equal FPR. So we could use the following code to assess Equalized Odds:
+
+x = getFromNamespace("mlr_measures", ns = "mlr3")
+x$add("fairness.fpr", MeasureFairness, base_measure = msr("classif.fpr"), operation = "groupwise_quotient")
+x$add("fairness.tpr", MeasureFairness, base_measure = msr("classif.tpr"), operation = "groupwise_quotient")
+predictions$score(msrs(c("fairness.fpr", "fairness.tpr")), task = adult_test) #Should close to 1
+```
+
+
