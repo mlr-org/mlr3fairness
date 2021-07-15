@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(mlr3fairness)
+library(mlr3verse)
 library(mlr3)
 ```
 # Why should we measure fairness?
@@ -24,7 +25,11 @@ In machine learning, the problem of algorithmic bias and fairness problems are w
 
 # Fairness Measures Demonstration
 
-In this vignette, users could see examples on how to create the most common fairness measures. Moreover, users could see how to customize their fairness measures using MeasureFairness classes.
+In this vignette, users could see examples on 
+
+* How to create the most common fairness measures.
+* How to customize their fairness measures using MeasureFairness classes.
+* How to compare different learners fairness levels using Benchmarks.
 
 ```{r}
 #Load the dataset, check the protected column has been set and make the predictions.
@@ -40,6 +45,7 @@ predictions = learner_obj$predict(adult_test)
 ## Measures only require one metric
 
 Users could use the following codesto create simple fairness measures which only requires one metric.
+
 ```{r}
 # False Positive Rate Bias
 me = MeasureFairness$new("groupwise_abs_diff", base_measure = msr("classif.fpr"))
@@ -87,6 +93,7 @@ predictions$score(me, task = adult_test) #Should close to 1
 ```
 
 ## Measures require two or more metrics:
+
 Users could use the following code to create fairness measures that requires two or more metrics.
 
 ```{r}
@@ -115,6 +122,7 @@ predictions$score(me, task = adult_test) #Measures should be close
 ```
 
 # How to customize measures
+
 Users could see how to customize their measures from the following examples. Parameters users could define are base measures and operations.
 * To add a measure which only requires single metric, just create the MeasureFariness object
 * To add a measure which requires more metric, users are expected to add the base measures to mlr3_measures library first. Then create the fairness measure using `msrs()`.
@@ -134,4 +142,24 @@ x$add("fairness.tpr", MeasureFairness, base_measure = msr("classif.tpr"), operat
 predictions$score(msrs(c("fairness.fpr", "fairness.tpr")), task = adult_test) #Should close to 1
 ```
 
+# How to compare the fairness performance between different learners using Benchmarks
+
+In this example, users could see how to create a benchmark object which compare the fairness measures between different learners and data tasks.
+
+```{r}
+design = benchmark_grid(
+  tasks = tsks(c("adult_train", "compas")),
+  learners = lrns(c("classif.ranger", "classif.rpart"),
+    predict_type = "prob", predict_sets = c("train", "test")),
+  resamplings = rsmps("cv", folds = 3)
+)
+
+bmr = benchmark(design)
+
+# Operations have been set to `groupwise_quotient()`
+measures = list( msr("fairness.tpr"), msr("fairness.npv"), msr("fairness.acc") )
+
+tab = bmr$aggregate(measures)
+print(tab)
+```
 

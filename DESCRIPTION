@@ -40,3 +40,4 @@ Collate:
     'helper.R'
     'zzz.R'
 Config/testthat/edition: 3
+VignetteBuilder: knitr
