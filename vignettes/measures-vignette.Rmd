@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 library(mlr3fairness)
 library(mlr3verse)
 library(mlr3)
+library(ranger)
 ```
 # Why should we measure fairness?
 
