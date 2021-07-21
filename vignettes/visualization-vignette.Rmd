@@ -17,103 +17,51 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(mlr3fairness)
 library(mlr3)
-library(reshape2)
 library(ggplot2)
 library(ggsci)
 ```
 
-```{r visualization_functions}
-fairness_accuracy_tradeoff <- function(predcitions, fairness_measure, data_task){
-  data = data.frame(accuracy = predictions$score(msr("classif.acc")), fairness = predictions$score(fairness_measure, data_task))
-  ggplot(data, aes(x = accuracy, y=fairness)) + geom_point()
-}
-
-fairness_compare <- function(predcitions, ...){
-  UseMethod("fairness_compare")
-}
-
-fairness_compare.Prediction <- function(predcitions, fairness_measure, data_task){
-  measures = predictions$score(fairness_measure, data_task)
-  data <- melt(data.frame(names = names(measures), data = measures))
-  ggplot(data, aes(x=names, y=value, fill = names)) + 
-    geom_bar(stat = "identity",  width=0.4/length(unique(data$names))) + 
-    xlab("metrics") + 
-    ylab("values") +
-    theme(legend.position = "none") + 
-    scale_fill_hue(c=100, l=60)
-}
-
-fairness_compare.BenchmarkResult <- function(predictions, fairness_measure){
-  null
-}
-
-fairness_compare.ResampleResult <- function(predictions, fairness_measure, data_task){
-  metric_values = rep(0, times = length(predictions$predictions()))
-  for(index in c(1:length(metric_values))){
-    metric_values[index] = predictions$predictions()[[index]]$score(fairness_measure, data_task)
-  }
-  
-  data <- data.frame(value = metric_values)
-  ggplot(data, aes(value)) +
-    geom_boxplot(width=0.5)
-}
-
-fairness_prediction_density <- function(predictions){
-  data <- melt(data.frame(predictions$truth, predictions$prob), id = "predictions.truth")
-  ggplot(data, aes(x = predictions.truth, y=value)) +
-    geom_boxplot(aes(fill = predictions.truth), width=0.4/length(unique(data$predictions.truth))) +
-    geom_violin(alpha = 0.3, width=1/length(unique(data$predictions.truth)), fill = "grey") + 
-    xlab("protected variable") + 
-    ylab("predicted probability") +
-    theme(legend.position = "none") +
-    scale_fill_hue(c=100, l=100) +
-    ylim(c(0,1)) +
-    coord_flip()
-}
-```
 
 # Setup Data tasks, learner and predictions
 
 ```{r}
-data_task = tsk("compas")
+data_task = tsk("adult_train")
 learner = lrn("classif.ranger", predict_type = "prob")
 learner$train(data_task)
 predictions = learner$predict(data_task)
 
 design = benchmark_grid(
-  tasks = tsks(c("adult_train", "compas")),
+  tasks = tsk("adult_train"),
   learners = lrns(c("classif.ranger", "classif.rpart"),
                   predict_type = "prob", predict_sets = c("train", "test")),
   resamplings = rsmps("cv", folds = 3)
 )
 
 bmr = benchmark(design)
-# Operations have been set to `groupwise_quotient()`
-benchmark_measure = msr("fairness.tpr")
+fairness_measure = msr("fairness.tpr")
+fairness_measures = msrs(c("fairness.tpr", "fairness.fnr"))
 ```
 
 
 # Fairness Prediction Density Plot
 
 ```{r}
-fairness_prediction_density(predictions)
+fairness_prediction_density(predictions, data_task)
 ```
 
 # Fairness Accuracy Tradeoff Plot
 
 ```{r}
-fairness_measure = msr("fairness.tpr")
 fairness_accuracy_tradeoff(predictions, fairness_measure, data_task)
+fairness_accuracy_tradeoff(bmr, fairness_measure)
 ```
 
 # Fairness Comparison Plot
 
 ```{r}
-fairness_measure = msrs(c("fairness.tpr", "fairness.fn"))
 fairness_compare(predictions, fairness_measure, data_task)
-
-tab = bmr$aggregate()
-resample_result = tab[task_id == "adult_train" & learner_id == "classif.ranger"]$resample_result[[1]]
-fairness_compare(resample_result, msr("fairness.tpr"), data_task)
+fairness_compare(predictions, fairness_measures, data_task)
+fairness_compare(bmr, fairness_measure)
+fairness_compare(bmr, fairness_measures)
 ```
 

@@ -39,5 +39,6 @@ Collate:
     'operations.R'
     'helper.R'
     'zzz.R'
+    'visualize.R'
 Config/testthat/edition: 3
 VignetteBuilder: knitr
