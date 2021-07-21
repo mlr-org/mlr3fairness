@@ -42,7 +42,7 @@ NULL
 get_compas_task = function() {
   b = as_backend("compas")
   task = mlr3::TaskClassif$new("compas", b, target = "two_year_recid")
-  task$col_roles$pta = "sex"
+  task$col_roles$pta = "race"
   b$hash = task$man = "mlr3fairness::mlr_tasks_compas"
   task
 }

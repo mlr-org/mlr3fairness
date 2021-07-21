@@ -1,0 +1,80 @@
+---
+title: "visualization-vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{visualization-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(mlr3fairness)
+library(mlr3)
+```
+
+```{r visualization_functions}
+fairness_accuracy_tradeoff <- function(predcitions, fairness_measure, data_task){
+  data = data.frame(accuracy = predictions$score(msr("classif.acc")), fairness = predictions$score(fairness_measure, data_task))
+  ggplot(data, aes(x = accuracy, y=fairness)) + geom_point()
+}
+
+fairness_compare <- function(predcitions, fairness_measure, data_task){
+  data = data.frame(type = c("model1", "model2","model3"), fairness = c(predictions$score(fairness_measure, data_task), 0.32, 0.63))
+  
+  ggplot(data, aes(x = type, y=fairness, fill = type)) + 
+    geom_bar(stat = "identity",  width=1/length(unique(data$type))) + 
+    xlab("model") + 
+    ylab("fairness metrics") +
+    theme(legend.position = "none") +
+    coord_flip()
+}
+
+fairness_prediction_density <- function(predictions){
+  data <- melt(data.frame(predictions$truth, predictions$prob), id = "predictions.truth")
+  ggplot(data, aes(x = predictions.truth, y=value)) +
+    geom_boxplot(aes(fill = predictions.truth), width=0.4/length(unique(data$predictions.truth))) +
+    geom_violin(alpha = 0.3, width=1/length(unique(data$predictions.truth)), fill = "grey") + 
+    xlab("protected variable") + 
+    ylab("predicted probability") +
+    theme(legend.position = "none") +
+    ylim(c(0,1)) +
+    coord_flip()
+}
+```
+
+# Setup Data tasks, learner and predictions
+
+```{r}
+data_task = tsk("compas")
+learner = lrn("classif.ranger", predict_type = "prob")
+learner$train(data_task)
+predictions = learner$predict(data_task)
+```
+
+
+# Fairness Prediction Density Plot
+
+```{r}
+fairness_prediction_density(predictions)
+```
+
+# Fairness Accuracy Tradeoff Plot
+
+```{r}
+fairness_measure = msr("fairness.tpr")
+fairness_accuracy_tradeoff(predictions, fairness_measure, data_task)
+```
+
+# Fairness Comparison Plot
+
+```{r}
+fairness_compare(predictions, fairness_measure, data_task)
+```
+
