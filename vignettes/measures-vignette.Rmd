@@ -14,11 +14,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(mlr3fairness)
-library(mlr3)
-library(ranger)
-```
 # Why should we measure fairness?
 
 In machine learning, the problem of algorithmic bias and fairness problems are well known and well studied. Outcomes may be skewed by a range of factors and thus might be considered unfair to certain groups or individuals. An example would be the way social media sites deliver personalized news to consumers. The potential is always there to give undue weight to certain viewpoints. Thus, we want to deliver a fairness toolkit for mlr3 users so they could measure the fairness metrics when building the models. And moreover, correcting the algorithmic bias intends to ensure fairness for protected fields. 
@@ -28,6 +23,13 @@ In machine learning, the problem of algorithmic bias and fairness problems are w
 The fairness measures (or metrics) are the foundations of fairness packages. Users can not only use those metrics to diagnose the datasets. We also need those measures to build fairness visualizations so users could detect the fairness problems more easily. Those measures will be further used in bias mitigation algorithms. 
 
 # Fairness Measures Demonstration
+
+```{r setup}
+library(mlr3fairness)
+library(mlr3learners)
+library(mlr3)
+library(ranger)
+```
 
 In this vignette, users could see examples on 
 
@@ -124,12 +126,16 @@ me = MeasureFairness$new(operation = "groupwise_quotient", base_measure = msr("c
 predictions$score(me, task = adult_test) #Should close to 1
 
 # Equalized Odds
-# Users are expected to evaluate Equalized Odds by ratio or absolute difference. A classifier satisfies Equalized Odds if the subjects in the protected and unprotected groups have equal TPR and equal FPR. So we could use the following code to assess Equalized Odds:
+# Users are expected to evaluate Equalized Odds by ratio or absolute difference. A classifier satisfies Equalized Odds if the subjects in the protected and unprotected groups have equal TPR and equal FPR. So we could use the following code to assess Equalized Odds, keep in mind users are expected to add the customized measures to mlr_measures library:
 
 me1 = MeasureFairness$new(operation = "groupwise_quotient", base_measure = msr("classif.fnr"))
 me2 = MeasureFairness$new(operation = "groupwise_quotient", base_measure = msr("classif.fpr"))
 
-# predictions$score(msrs(c(me1, me2)), task = adult_test) #Should close to 1
+#Add created measures to library
+mlr_measures$add("fairness.fnr", me1)
+mlr_measures$add("fairness.fpr", me2)
+
+predictions$score(msrs(c("fairness.fnr", "fairness.fpr")), task = adult_test) #Should close to 1
 ```
 
 # How to compare the fairness performance between different learners using Benchmarks
