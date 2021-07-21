@@ -23,8 +23,7 @@ Imports:
     R6 (>= 2.4.1),
     data.table (>= 1.13.6),
     mlr3measures (>= 0.3.0),
-    mlr3misc,
-    mlr3verse
+    mlr3misc
 Suggests:
     rmarkdown,
     knitr,

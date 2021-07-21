@@ -16,13 +16,16 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(mlr3fairness)
-library(mlr3verse)
 library(mlr3)
 library(ranger)
 ```
 # Why should we measure fairness?
 
 In machine learning, the problem of algorithmic bias and fairness problems are well known and well studied. Outcomes may be skewed by a range of factors and thus might be considered unfair to certain groups or individuals. An example would be the way social media sites deliver personalized news to consumers. The potential is always there to give undue weight to certain viewpoints. Thus, we want to deliver a fairness toolkit for mlr3 users so they could measure the fairness metrics when building the models. And moreover, correcting the algorithmic bias intends to ensure fairness for protected fields. 
+
+# Motivation of Fairness Measures:
+
+The fairness measures (or metrics) are the foundations of fairness packages. Users can not only use those metrics to diagnose the datasets. We also need those measures to build fairness visualizations so users could detect the fairness problems more easily. Those measures will be further used in bias mitigation algorithms. 
 
 # Fairness Measures Demonstration
 
@@ -45,7 +48,7 @@ predictions = learner_obj$predict(adult_test)
 
 ## Measures only require one metric
 
-Users could use the following codesto create simple fairness measures which only requires one metric.
+Users could use the following codes to create simple fairness measures which only requires one metric.
 
 ```{r}
 # False Positive Rate Bias
@@ -54,14 +57,6 @@ predictions$score(me, task = adult_test)
 
 # False Negative Rate Bias
 me = MeasureFairness$new("groupwise_abs_diff", base_measure = msr("classif.fnr"))
-predictions$score(me, task = adult_test)
-
-# False Positive Rate Ratios
-me = MeasureFairness$new("groupwise_quotient", base_measure = msr("classif.fpr"))
-predictions$score(me, task = adult_test)
-
-# True Positive Rate Ratios
-me = MeasureFairness$new("groupwise_quotient", base_measure = msr("classif.tpr"))
 predictions$score(me, task = adult_test)
 ```
 
@@ -72,12 +67,6 @@ Users could also the the following code to create some common fairness measures 
 
 #me = MeasureFairness$new("groupwise_quotient", base_measure = msr("classif.ppv"))
 me = msr("fairness.ppv")
-predictions$score(me, task = adult_test) #Should close to 1
-
-# False positive error rate balance, also referred to as predictive equality.
-# A classifier satisfies predictive equality if the subjects in the protected and unprotected groups have equal FPR. We could use the following code to assess it:
-
-me = msr("fairness.fpr")
 predictions$score(me, task = adult_test) #Should close to 1
 
 # False negative error rate balance, also referred to as equal opportunity.
@@ -137,10 +126,10 @@ predictions$score(me, task = adult_test) #Should close to 1
 # Equalized Odds
 # Users are expected to evaluate Equalized Odds by ratio or absolute difference. A classifier satisfies Equalized Odds if the subjects in the protected and unprotected groups have equal TPR and equal FPR. So we could use the following code to assess Equalized Odds:
 
-x = getFromNamespace("mlr_measures", ns = "mlr3")
-x$add("fairness.fpr", MeasureFairness, base_measure = msr("classif.fpr"), operation = "groupwise_quotient")
-x$add("fairness.tpr", MeasureFairness, base_measure = msr("classif.tpr"), operation = "groupwise_quotient")
-predictions$score(msrs(c("fairness.fpr", "fairness.tpr")), task = adult_test) #Should close to 1
+me1 = MeasureFairness$new(operation = "groupwise_quotient", base_measure = msr("classif.fnr"))
+me2 = MeasureFairness$new(operation = "groupwise_quotient", base_measure = msr("classif.fpr"))
+
+# predictions$score(msrs(c(me1, me2)), task = adult_test) #Should close to 1
 ```
 
 # How to compare the fairness performance between different learners using Benchmarks
@@ -158,7 +147,7 @@ design = benchmark_grid(
 bmr = benchmark(design)
 
 # Operations have been set to `groupwise_quotient()`
-measures = list( msr("fairness.tpr"), msr("fairness.npv"), msr("fairness.acc") )
+measures = list( msr("fairness.tpr"), msr("fairness.npv"), msr("fairness.acc"), msr("classif.acc") )
 
 tab = bmr$aggregate(measures)
 print(tab)

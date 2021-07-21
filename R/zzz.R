@@ -1,6 +1,5 @@
 #' @import mlr3
 #' @import mlr3misc
-#' @import mlr3verse
 #' @import R6
 #' @import checkmate
 #' @import mlr3measures
