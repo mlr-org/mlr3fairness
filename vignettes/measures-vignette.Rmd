@@ -13,17 +13,31 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+# mlr3fairness: FairnessMeasures
 
-# Why should we measure fairness?
+mlr3fairness is a fairness toolkit for mlr3 users to measure the fairness metrics when building the machine learning models. And moreover, they could use this toolkit to visualize, compare the metrics and correct the algorithmic bias to ensure fairness among protected fields.
 
-In machine learning, the problem of algorithmic bias and fairness problems are well known and well studied. Outcomes may be skewed by a range of factors and thus might be considered unfair to certain groups or individuals. An example would be the way social media sites deliver personalized news to consumers. The potential is always there to give undue weight to certain viewpoints. Thus, we want to deliver a fairness toolkit for mlr3 users so they could measure the fairness metrics when building the models. And moreover, correcting the algorithmic bias intends to ensure fairness for protected fields. 
+# Why should we care fairness?
 
-# Motivation of Fairness Measures:
+In machine learning, the problem of algorithmic bias and fairness problems are well known. Outcomes may be skewed by a range of factors and thus might be considered unfair to certain groups or individuals. An example would be the way social media sites deliver personalized news to consumers. The potential is always there to give undue weight to certain viewpoints. Thus, fairness becomes crucial for the Machine Learning community. Which is the very first reason we want to develop this toolkit for the mlr3 family.
 
-The fairness measures (or metrics) are the foundations of fairness packages. Users can not only use those metrics to diagnose the datasets. We also need those measures to build fairness visualizations so users could detect the fairness problems more easily. Those measures will be further used in bias mitigation algorithms. 
+# Introduction to Fairness Measures
 
-# Fairness Measures Demonstration
+The fairness measures (or metrics) are the foundations for fairness packages. Users can not only use those metrics to diagnose the datasets. They also need those measures to build fairness visualizations or bias mitigation algorithms so users could detect the fairness problems and correct them more easily.
 
+# Pre-requsite: Data Tasks
+
+In this example, we will use the very famous COMPAS dataset and choose the protected field to be "sex". Then we will show the basic usages of FairnessMeasures in COMPAS dataset. There are three steps we want to demonstrate:
+
+* How to create the most common fairness measures.
+* How to customize their fairness measures using MeasureFairness classes.
+* How to compare different learners' fairness levels using Benchmarks.
+
+## Download and Import the required packages
+
+Other than the main package ```mlr3``` and the fairness package ```mlr3fairness```. We also need the machine learning model package and the random forest package ```mlr3learners``` and ```ranger``` for measures in Benchmark Results. You can find them at [mlr-org github](https://github.com/mlr-org).
+
+After the installation of the required packages, we could use the following commands to import the required packages.
 ```{r setup}
 library(mlr3fairness)
 library(mlr3learners)
@@ -31,26 +45,64 @@ library(mlr3)
 library(ranger)
 ```
 
-In this vignette, users could see examples on 
+## Create the Data Tasks and create the protected field
 
-* How to create the most common fairness measures.
-* How to customize their fairness measures using MeasureFairness classes.
-* How to compare different learners fairness levels using Benchmarks.
+Here we used the pre-build data tasks in the fairness package. However, users are expected to create mlr3 data tasks for their data tasks. There are some requirements for data tasks such as all the features need to be factor or numerical values. Moreover, the data task for fairness operations needs to contain one important field : "protected field". Which is the field for calculating metrics.
+
+Here we have the name of our protected field to be "sex". It is a binary variable for levels "Male" and "Female". So all of the following fairness measures will compare the difference of normal measures between "Male" and "Female" either by quotient or absolute difference.
+
+```{r pta}
+#Load the dataset, check the protected column has been set and make the predictions.
+compas = tsk("compas")
+paste0("The protected for COMPAS dataset is : ", adult_train$col_roles$pta)
+
+```
+
+We could then see some basic information for compas data task. Keep in mind, users are expected to do some data cleansing process like NULL imputations and data type transformations before create the data tasks.
+
+```{r eda}
+compas
+```
+
+# Basic: MeasureFairness Class
+
+After we set up the data tasks, we could use fairness measures to evaluate data tasks. There are two parameters we care for each MeasureFairness Class. The operation and base_measure.
+
+For the base_measure, it is a measure object with class ```MeasureClassif()``` that will be applied on the subset of datasets for each factor level in the protected field. Some common examples will be
+
+* False Negative Rates
+* False Positive Rates
 
 ```{r}
-#Load the dataset, check the protected column has been set and make the predictions.
-adult_train = tsk("adult_train")
-adult_test = tsk("adult_test")
-adult_train$col_roles$pta
+# Binary Class false negative rates
+msr("classif.fnr")
 
-learner_obj = lrn("classif.rpart")
-learner_obj$train(adult_train)
-predictions = learner_obj$predict(adult_test)
+#Binary Class false positive rates
+msr("classif.fpr")
 ```
+
+Then for the operations, they are the operations that will be performed on the value of the base measures. Since the FairnessMeasures only support binary protected fields. There will be only three operations.
+
+* Quotient
+* Absolute Difference
+* Difference
+
+By assuming a female false positive rate and male false positive rate, here are how those three operations work:
+
+```{r}
+female_fpr = 0.4
+male_fpr = 0.6
+
+quotient = female_fpr / male_fpr
+absolute_difference = abs(female_fpr - male_fpr)
+difference = (female_fpr - male_fpr)
+```
+
+Once we have a MeasureFairness Class, we could calculate the most popular fairness metrics.
 
 ## Measures only require one metric
 
-Users could use the following codes to create simple fairness measures which only requires one metric.
+Basic fairness measures could be evaluated using only one metric. Like False Positive Rate Bias and False Negative Rate Bias. From the following example we could see the false positive rate bias for COMPAS ```sex``` is 0.077 and the false negative rate bias for COMPAS ```sex``` is about 0.06.
 
 ```{r}
 # False Positive Rate Bias
@@ -62,72 +114,81 @@ me = MeasureFairness$new("groupwise_abs_diff", base_measure = msr("classif.fnr")
 predictions$score(me, task = adult_test)
 ```
 
-Users could also the the following code to create some common fairness measures which only requires one metric. Those measures are created by default.
-```{r}
-# Predictive parity, also referred to as outcome test.
-# A classifier satisfies Predictive parity if the subjects in the protected and unprotected groups have equal PPV. We could use the following code to assess it:
+Users could also use the following code to create some common fairness measures which only require one metric. Those measures are created by default. So users could use measure library ```msr()``` to access those measures:
 
+* Predictive parity, also referred to as outcome test.
+
+A classifier satisfies Predictive parity if the subjects in the protected and unprotected groups have equal PPV. We could use the following code to assess it:
+
+```{r}
 #me = MeasureFairness$new("groupwise_quotient", base_measure = msr("classif.ppv"))
 me = msr("fairness.ppv")
 predictions$score(me, task = adult_test) #Should close to 1
+```
+* False negative error rate balance, also referred to as equal opportunity.
+A classifier satisfies equal opportunity if the subjects in the protected and unprotected groups have equal FNR. We could use the following code to assess it:
 
-# False negative error rate balance, also referred to as equal opportunity.
-# A classifier satisfies equal opportunity if the subjects in the protected and unprotected groups have equal FNR. We could use the following code to assess it:
-
+```{r}
+#me = MeasureFairness$new("groupwise_quotient", base_measure = msr("classif.fnr"))
 me = msr("fairness.fnr")
 predictions$score(me, task = adult_test) #Should close to 1
+```
+* Overall accuracy equality
+A classifier satisfies Overall accuracy equality if the subject in the protected and unprotected groups have equal prediction accuracy. We could use the following code to assess it:
 
-# Overall accuracy equality
-# A classifier satisfies Overall accuracy equality if the subject in the protected and unprotected groups have equal prediction accuracy. We could use the following code to assess it:
-
+```{r}
+#me = MeasureFairness$new("groupwise_quotient", base_measure = msr("classif.acc"))
 me = msr("fairness.acc")
 predictions$score(me, task = adult_test) #Should close to 1
 ```
 
 ## Measures require two or more metrics:
 
-Users could use the following code to create fairness measures that requires two or more metrics.
+However, some fairness measures require two or more metrics. For those measures we have created some of them in the measure libraries. Users could use ```msrs()```, which could take multiple measures as input, to create them more efficiently:
+
+* Equalized Odds
+Users are expected to evaluate Equalized Odds by ratio or absolute difference. A classifier satisfies Equalized Odds if the subjects in the protected and unprotected groups have equal TPR and equal FPR. So we could use the following code to assess Equalized Odds:
 
 ```{r}
-# Equalized Odds
-# Users are expected to evaluate Equalized Odds by ratio or absolute difference. A classifier satisfies Equalized Odds if the subjects in the protected and unprotected groups have equal TPR and equal FPR. So we could use the following code to assess Equalized Odds:
-
 me = msrs(c("fairness.tpr", "fairness.fpr"))
 predictions$score(me, task = adult_test) #Both should close to 1
-
-# Conditional use accuracy equality
-# A classifier satisfies Conditional use accuracy equality if the subjects in the protected and unprotected groups have equal PPV and equal NPV. We could use ratio or absolute difference to assess it:
-
-me = msrs(c("fairness.ppv", "fairness.npv"))
-predictions$score(me, task = adult_test) #Both should close to 1
-
-# Treatment equality
-# A classifier satisfies this definition if the subjects in the protected and unprotected groups have an equal ratio of FN and FP, satisfying the formula:
-# 
-# Assume A is the protected field with binary variable. Then FN{A=a}/FP{A=a} = FN{A=b}/FP{A=b}
-# 
-# However, we could do a simple transformation and assess FN{A=a}/FN{A=b} = FP{A=a}/FP{A=b}. Then we could use the following code:
-
-me = msrs(c("fairness.fp", "fairness.fn"))
-predictions$score(me, task = adult_test) #Measures should be close
-
 ```
 
-# How to customize measures
+* Conditional use accuracy equality
+A classifier satisfies Conditional use accuracy equality if the subjects in the protected and unprotected groups have equal PPV and equal NPV. We could use ratio or absolute difference to assess it:
 
-Users could see how to customize their measures from the following examples. Parameters users could define are base measures and operations.
-* To add a measure which only requires single metric, just create the MeasureFariness object
-* To add a measure which requires more metric, users are expected to add the base measures to mlr3_measures library first. Then create the fairness measure using `msrs()`.
 ```{r}
-# False negative error rate balance, also referred to as equal opportunity.
-# A classifier satisfies equal opportunity if the subjects in the protected and unprotected groups have equal FNR. We could use the following code to assess it:
+me = msrs(c("fairness.ppv", "fairness.npv"))
+predictions$score(me, task = adult_test) #Both should close to 1
+```
 
+* Treatment equality
+A classifier satisfies this definition if the subjects in the protected and unprotected groups have an equal ratio of FN and FP, satisfying the formula:
+
+Assume A is the protected field with a binary variable. Then FN{A=a}/FP{A=a} = FN{A=b}/FP{A=b}
+
+However, we could do a simple transformation and assess FN{A=a}/FN{A=b} = FP{A=a}/FP{A=b}. Then we could use the following code:
+
+
+```{r}
+me = msrs(c("fairness.fp", "fairness.fn"))
+predictions$score(me, task = adult_test) #Measures should be close
+```
+
+## How to customize measures
+
+Not all measures are created in measure libraries. Most often users want to customize their measures. The following examples will show how to do that. There are two types of fairness measures.
+
+* To add a measure which only requires single metric, just create the Measure Fairness object.
+
+```{r}
 me = MeasureFairness$new(operation = "groupwise_quotient", base_measure = msr("classif.fnr"))
 predictions$score(me, task = adult_test) #Should close to 1
+```
 
-# Equalized Odds
-# Users are expected to evaluate Equalized Odds by ratio or absolute difference. A classifier satisfies Equalized Odds if the subjects in the protected and unprotected groups have equal TPR and equal FPR. So we could use the following code to assess Equalized Odds, keep in mind users are expected to add the customized measures to mlr_measures library:
+* To add a measure which requires more metrics, users are expected to add the base measures to mlr3_measures library first. Then create the fairness measure using `msrs()`.
 
+```{r}
 me1 = MeasureFairness$new(operation = "groupwise_quotient", base_measure = msr("classif.fnr"))
 me2 = MeasureFairness$new(operation = "groupwise_quotient", base_measure = msr("classif.fpr"))
 
@@ -138,9 +199,9 @@ mlr_measures$add("fairness.fpr", me2)
 predictions$score(msrs(c("fairness.fnr", "fairness.fpr")), task = adult_test) #Should close to 1
 ```
 
-# How to compare the fairness performance between different learners using Benchmarks
+## How to compare the fairness performance between different learners using Benchmarks
 
-In this example, users could see how to create a benchmark object which compare the fairness measures between different learners and data tasks.
+If users want to compare fairness measures between different models. They could create the BenchmarkResults first. Then by using ```aggregate()``` function they could access the fairness measures easily. The following example demonstrates the process to evaluate the fairness metrics on Benchmark Results:
 
 ```{r}
 design = benchmark_grid(
