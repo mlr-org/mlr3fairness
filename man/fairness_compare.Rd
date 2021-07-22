@@ -2,16 +2,16 @@
 % Please edit documentation in R/visualize.R
 \name{fairness_compare}
 \alias{fairness_compare}
-\title{Title}
+\title{Fairness Comparison}
 \usage{
 fairness_compare(predcitions, ...)
 }
 \arguments{
-\item{...}{}
-}
-\value{
-
+\item{predcitions}{TODO: fill it}
 }
 \description{
-Title
+Fairness Comparison
+}
+\examples{
+NULL
 }

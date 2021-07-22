@@ -18,7 +18,7 @@ This function specializes in visualizing the plots that will demonstrate the pre
 Which will potentially reveal the fairness problems in the dataset if the density differs significantly for each level.
 The plot is a combination of boxplot and violin plot. So users could use the plot to detect both the outliers and distribution problems.
 The y-axis shows the levels in protected columns. And the x-axis shows the predicted probability.
-The title will demonstrate which class for predicted probability.
+The title for the plot will demonstrate which class for predicted probability.
 }
 \examples{
 data_task = tsk("adult_train")

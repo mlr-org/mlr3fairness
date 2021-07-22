@@ -2,16 +2,51 @@
 % Please edit documentation in R/visualize.R
 \name{fairness_accuracy_tradeoff}
 \alias{fairness_accuracy_tradeoff}
-\title{Title}
+\title{Fairness Accuracy Tradeoff Visualization}
 \usage{
 fairness_accuracy_tradeoff(predcitions, ...)
 }
 \arguments{
-\item{...}{}
-}
-\value{
+\item{predcitions}{(\code{Prediction()}) (\code{BenchmarkResult()}) (\code{ResampleResult()})\cr
+The binary class prediction object that will be evaluated.
+\itemize{
+\item If provided as (\code{Prediction()}). Then only one point will indicate the accuracy and fairness metrics for the current predictions.
+\item If provided as (\code{ResampleResult()}). Then the plot will compare the accuracy and fairness metrics for the same model, but different rasampling iterations.
+\item If provided as (\code{BenchmarkResult()}). Then the plot will compare the accuracy and fairness metrics for all models and all rasampling iterations.
+}}
 
+\item{fairness_measure}{(\code{Measure()})\cr
+The fairness measures that will evaluated on predictions.}
+
+\item{data_task}{(\code{TaskClassif()})\cr
+The data task that contains the protected column, only required when the class of predcitions is (\code{Prediction()})}
 }
 \description{
-Title
+This function specialize in comparing the Fairness vs Accuracy between learners through visualizations.
+From the visualization, users could see the tradeoff between fairness metrics and accuracy.
+Those insights could help the users to choose the optimum model from their model sets.
+And the fairness consistency of the learners by visualizing the tradeoff for different resampling iterations.
+It could take multiple type of inputs, like (\code{Prediction()}) (\code{BenchmarkResult()}) and (\code{ResampleResult()}).
+}
+\examples{
+
+# Setup the Fairness Measures and tasks
+data_task = tsk("adult_train")
+learner = lrn("classif.ranger", predict_type = "prob")
+learner$train(data_task)
+predictions = learner$predict(data_task)
+design = benchmark_grid(
+  tasks = tsk("adult_train"),
+  learners = lrns(c("classif.ranger", "classif.rpart"),
+                 predict_type = "prob", predict_sets = c("train", "test")),
+  resamplings = rsmps("cv", folds = 3)
+)
+
+bmr = benchmark(design)
+fairness_measure = msr("fairness.tpr")
+fairness_measures = msrs(c("fairness.tpr", "fairness.fnr"))
+
+fairness_accuracy_tradeoff(predictions, fairness_measure, data_task)
+fairness_accuracy_tradeoff(bmr, fairness_measure)
+
 }

@@ -1,12 +1,48 @@
-#' Title
+#' Fairness Accuracy Tradeoff Visualization
 #'
-#' @param predcitions
-#' @param ...
+#' @description
+#' This function specialize in comparing the Fairness vs Accuracy between learners through visualizations.
+#' From the visualization, users could see the tradeoff between fairness metrics and accuracy.
+#' Those insights could help the users to choose the optimum model from their model sets.
+#' And the fairness consistency of the learners by visualizing the tradeoff for different resampling iterations.
+#' It could take multiple type of inputs, like (`Prediction()`) (`BenchmarkResult()`) and (`ResampleResult()`).
 #'
-#' @return
+#'
+#' @param predcitions (`Prediction()`) (`BenchmarkResult()`) (`ResampleResult()`)\cr
+#' The binary class prediction object that will be evaluated.
+#' * If provided as (`Prediction()`). Then only one point will indicate the accuracy and fairness metrics for the current predictions.
+#' * If provided as (`ResampleResult()`). Then the plot will compare the accuracy and fairness metrics for the same model, but different rasampling iterations.
+#' * If provided as (`BenchmarkResult()`). Then the plot will compare the accuracy and fairness metrics for all models and all rasampling iterations.
+#'
+#' @param fairness_measure (`Measure()`)\cr
+#' The fairness measures that will evaluated on predictions.
+#'
+#' @param data_task (`TaskClassif()`)\cr
+#' The data task that contains the protected column, only required when the class of predcitions is (`Prediction()`)
+#'
 #' @export
 #'
 #' @examples
+#'
+#' # Setup the Fairness Measures and tasks
+#' data_task = tsk("adult_train")
+#' learner = lrn("classif.ranger", predict_type = "prob")
+#' learner$train(data_task)
+#' predictions = learner$predict(data_task)
+#' design = benchmark_grid(
+#'   tasks = tsk("adult_train"),
+#'   learners = lrns(c("classif.ranger", "classif.rpart"),
+#'                  predict_type = "prob", predict_sets = c("train", "test")),
+#'   resamplings = rsmps("cv", folds = 3)
+#' )
+#'
+#' bmr = benchmark(design)
+#' fairness_measure = msr("fairness.tpr")
+#' fairness_measures = msrs(c("fairness.tpr", "fairness.fnr"))
+#'
+#' fairness_accuracy_tradeoff(predictions, fairness_measure, data_task)
+#' fairness_accuracy_tradeoff(bmr, fairness_measure)
+#'
 fairness_accuracy_tradeoff <- function(predcitions, ...){
   UseMethod("fairness_accuracy_tradeoff")
 }
@@ -33,15 +69,15 @@ fairness_accuracy_tradeoff.ResampleResult <- function(predictions, fairness_meas
 }
 
 
-#' Title
+#' Fairness Comparison
 #'
 #' @param predcitions
-#' @param ...
+#' TODO: fill it
 #'
-#' @return
 #' @export
 #'
 #' @examples
+#' NULL
 fairness_compare <- function(predcitions, ...){
   UseMethod("fairness_compare")
 }
@@ -84,7 +120,7 @@ fairness_compare.ResampleResult <- function(predictions, fairness_measure){
 #' Which will potentially reveal the fairness problems in the dataset if the density differs significantly for each level.
 #' The plot is a combination of boxplot and violin plot. So users could use the plot to detect both the outliers and distribution problems.
 #' The y-axis shows the levels in protected columns. And the x-axis shows the predicted probability.
-#' The title will demonstrate which class for predicted probability.
+#' The title for the plot will demonstrate which class for predicted probability.
 #'
 #' @param predictions (`PredictionClassif()`)\cr
 #' The binary class prediction object that will be evaluated

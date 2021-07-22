@@ -19,6 +19,7 @@ library(mlr3fairness)
 library(mlr3)
 library(ggplot2)
 library(ggsci)
+library(data.table)
 ```
 
 
