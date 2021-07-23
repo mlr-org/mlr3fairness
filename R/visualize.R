@@ -53,12 +53,14 @@ fairness_accuracy_tradeoff <- function(object, ...){
   UseMethod("fairness_accuracy_tradeoff")
 }
 
+#' @export
 fairness_accuracy_tradeoff.PredictionClassif <- function(object, fairness_measure, task, acc_measure = msr("classif.acc")){
   data = data.table(accuracy = object$score(acc_measure),
                     fairness = object$score(fairness_measure, task))
   ggplot(data, aes(x = accuracy, y=fairness)) + geom_point()
 }
 
+#' @export
 fairness_accuracy_tradeoff.BenchmarkResult <- function(object, fairness_measure, acc_measure = msr("classif.acc")){
   data = data.table(model = object$score(fairness_measure)[,6],
                     accuracy = object$score(acc_measure)[,11],
@@ -68,6 +70,7 @@ fairness_accuracy_tradeoff.BenchmarkResult <- function(object, fairness_measure,
     geom_point()
 }
 
+#' @export
 fairness_accuracy_tradeoff.ResampleResult <- function(object, fairness_measure){
   object = as_benchmark_result(object)
   fairness_accuracy_tradeoff(predcitions, fairness_measure)
@@ -126,6 +129,7 @@ fairness_compare <- function(object, ...){
   UseMethod("fairness_compare")
 }
 
+#' @export
 fairness_compare.PredictionClassif <- function(object, fairness_measure, task){
   measures = object$score(fairness_measure, task)
   data <- melt(data.table(names = names(measures), data = measures), id.vars = "names")
@@ -137,6 +141,7 @@ fairness_compare.PredictionClassif <- function(object, fairness_measure, task){
     scale_fill_hue(c=100, l=60)
 }
 
+#' @export
 fairness_compare.BenchmarkResult <- function(object, fairness_measure){
   fairness_data = object$score(fairness_measure)
   data = melt(data.table(model = fairness_data$learner_id,
@@ -151,6 +156,7 @@ fairness_compare.BenchmarkResult <- function(object, fairness_measure){
     facet_wrap(~variable)
 }
 
+#' @export
 fairness_compare.ResampleResult <- function(object, fairness_measure){
   object = as_benchmark_result(object)
   fairness_compare(object, fairness_measure)
@@ -188,6 +194,7 @@ fairness_prediction_density <- function(object, task){
   UseMethod("fairness_prediction_density")
 }
 
+#' @export
 fairness_prediction_density.PredictionClassif<- function(object, task){
   data <- melt(data.table(task$data(cols = task$col_roles$pta),
                           object$prob[,1]),
@@ -205,10 +212,12 @@ fairness_prediction_density.PredictionClassif<- function(object, task){
     coord_flip()
 }
 
+#' @export
 fairness_prediction_density.BenchmarkResult <- function(object){
   NULL
 }
 
+#' @export
 fairness_prediction_density.ResampleResult <- function(object){
   object = as_benchmark_result(object)
   fairness_compare(object, fairness_measure)
