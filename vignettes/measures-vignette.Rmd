@@ -27,7 +27,7 @@ The fairness measures (or metrics) are the foundations for fairness packages. Us
 
 # Pre-requsite: Data Tasks
 
-In this example, we will use the very famous COMPAS dataset and choose the protected field to be "sex". Then we will show the basic usages of FairnessMeasures in COMPAS dataset. There are three steps we want to demonstrate:
+In this example, we will use the very famous Adult dataset and choose the protected field to be "sex". The predictions are a binary variable indicate whether the selected people have income more than 50K or less than 50K. Then we will show the basic usages of FairnessMeasures in Adult dataset. There are three steps we want to demonstrate:
 
 * How to create the most common fairness measures.
 * How to customize their fairness measures using MeasureFairness classes.
@@ -45,7 +45,7 @@ library(mlr3)
 library(ranger)
 ```
 
-## Create the Data Tasks and create the protected field
+## Create the Data Tasks, the protected field, the learner and the predictions
 
 Here we used the pre-build data tasks in the fairness package. However, users are expected to create mlr3 data tasks for their data tasks. There are some requirements for data tasks such as all the features need to be factor or numerical values. Moreover, the data task for fairness operations needs to contain one important field : "protected field". Which is the field for calculating metrics.
 
@@ -53,16 +53,26 @@ Here we have the name of our protected field to be "sex". It is a binary variabl
 
 ```{r pta}
 #Load the dataset, check the protected column has been set and make the predictions.
-compas = tsk("compas")
-paste0("The protected for COMPAS dataset is : ", adult_train$col_roles$pta)
-
+adult_train = tsk("adult_train")
+adult_test = tsk("adult_test")
+paste0("The protected for adult train dataset is : ", adult_train$col_roles$pta)
+paste0("The protected for adult train dataset is : ", adult_test$col_roles$pta)
 ```
 
-We could then see some basic information for compas data task. Keep in mind, users are expected to do some data cleansing process like NULL imputations and data type transformations before create the data tasks.
+We could then see some basic information for Adult data task. Keep in mind, users are expected to do some data cleansing process like NULL imputations and data type transformations before create the data tasks.
 
 ```{r eda}
-compas
+adult_train
 ```
+
+Once we have the data task ready. We could train our model and make the predictions. Here we create a decision tree and predict on the same Adult dataset. Keep in mind, predictions is an object for ```Predictions()``` class.
+
+```{r}
+model = lrn("classif.rpart")
+model$train(adult_train)
+predictions = model$predict(adult_test)
+```
+
 
 # Basic: MeasureFairness Class
 
@@ -102,11 +112,11 @@ Once we have a MeasureFairness Class, we could calculate the most popular fairne
 
 ## Measures only require one metric
 
-Basic fairness measures could be evaluated using only one metric. Like False Positive Rate Bias and False Negative Rate Bias. From the following example we could see the false positive rate bias for COMPAS ```sex``` is 0.077 and the false negative rate bias for COMPAS ```sex``` is about 0.06.
+Basic fairness measures could be evaluated using only one metric. Like False Positive Rate Bias and False Negative Rate Bias. From the following example we could see the false negative cases difference for Adult ```sex``` is 470 and the false negative rate bias for Adult ```sex``` is about 0.06.
 
 ```{r}
 # False Positive Rate Bias
-me = MeasureFairness$new("groupwise_abs_diff", base_measure = msr("classif.fpr"))
+me = MeasureFairness$new("groupwise_abs_diff", base_measure = msr("classif.fn"))
 predictions$score(me, task = adult_test)
 
 # False Negative Rate Bias
@@ -205,7 +215,7 @@ If users want to compare fairness measures between different models. They could 
 
 ```{r}
 design = benchmark_grid(
-  tasks = tsks(c("adult_train", "compas")),
+  tasks = tsks(c("adult_test")),
   learners = lrns(c("classif.ranger", "classif.rpart"),
     predict_type = "prob", predict_sets = c("train", "test")),
   resamplings = rsmps("cv", folds = 3)
