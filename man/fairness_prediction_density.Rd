@@ -4,13 +4,13 @@
 \alias{fairness_prediction_density}
 \title{Fairness Prediction Density Visualization}
 \usage{
-fairness_prediction_density(predictions, data_task)
+fairness_prediction_density(object, task)
 }
 \arguments{
-\item{predictions}{(\code{PredictionClassif()})\cr
-The binary class prediction object that will be evaluated}
+\item{object}{(\link{PredictionClassif})\cr (\link{ResampleResult})\cr (\link{BenchmarkResult})\cr
+The binary class prediction object that will be evaluated. Only one data task is allowed for Resample Result and Benchmark Result.}
 
-\item{data_task}{(\code{TaskClassif()})\cr
+\item{task}{(\link{TaskClassif})\cr
 The data task that contains the protected column.}
 }
 \description{
@@ -21,9 +21,9 @@ The y-axis shows the levels in protected columns. And the x-axis shows the predi
 The title for the plot will demonstrate which class for predicted probability.
 }
 \examples{
-data_task = tsk("adult_train")
+task = tsk("adult_train")
 learner = lrn("classif.ranger", predict_type = "prob")
-learner$train(data_task)
-predictions = learner$predict(data_task)
-fairness_prediction_density(predictions, data_task)
+learner$train(task)
+predictions = learner$predict(task)
+fairness_prediction_density(predictions, task)
 }

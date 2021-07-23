@@ -4,37 +4,37 @@
 \alias{fairness_accuracy_tradeoff}
 \title{Fairness Accuracy Tradeoff Visualization}
 \usage{
-fairness_accuracy_tradeoff(predcitions, ...)
+fairness_accuracy_tradeoff(object, ...)
 }
 \arguments{
-\item{predcitions}{(\code{Prediction()}) (\code{BenchmarkResult()}) (\code{ResampleResult()})\cr
-The binary class prediction object that will be evaluated.
+\item{object}{(\code{PredictionClassif})\cr (\link{BenchmarkResult})\cr (\link{ResampleResult})\cr
+The binary class prediction object that will be evaluated. Only one data task is allowed for BenchmarkResult or ResampleResult
 \itemize{
-\item If provided as (\code{Prediction()}). Then only one point will indicate the accuracy and fairness metrics for the current predictions.
-\item If provided as (\code{ResampleResult()}). Then the plot will compare the accuracy and fairness metrics for the same model, but different rasampling iterations.
-\item If provided as (\code{BenchmarkResult()}). Then the plot will compare the accuracy and fairness metrics for all models and all rasampling iterations.
+\item If provided as (\link{PredictionClassif}). Then only one point will indicate the accuracy and fairness metrics for the current predictions.
+\item If provided as (\link{ResampleResult}). Then the plot will compare the accuracy and fairness metrics for the same model, but different rasampling iterations.
+\item If provided as (\link{BenchmarkResult}). Then the plot will compare the accuracy and fairness metrics for all models and all rasampling iterations.
 }}
 
-\item{fairness_measure}{(\code{Measure()})\cr
-The fairness measures that will evaluated on predictions.}
+\item{fairness_measure}{(\link{Measure})\cr
+The fairness measures that will evaluated on object}
 
-\item{data_task}{(\code{TaskClassif()})\cr
-The data task that contains the protected column, only required when the class of predcitions is (\code{Prediction()})}
+\item{task}{(\link{TaskClassif})\cr
+The data task that contains the protected column, only required when the class of object is (\link{PredictionClassif})}
 }
 \description{
 This function specialize in comparing the Fairness vs Accuracy between learners through visualizations.
 From the visualization, users could see the tradeoff between fairness metrics and accuracy.
 Those insights could help the users to choose the optimum model from their model sets.
 And the fairness consistency of the learners by visualizing the tradeoff for different resampling iterations.
-It could take multiple type of inputs, like (\code{Prediction()}) (\code{BenchmarkResult()}) and (\code{ResampleResult()}).
+It could take multiple type of inputs, like (\link{PredictionClassif}), (\link{BenchmarkResult}) and (\link{ResampleResult}).
 }
 \examples{
 
 # Setup the Fairness Measures and tasks
-data_task = tsk("adult_train")
+task = tsk("adult_train")
 learner = lrn("classif.ranger", predict_type = "prob")
-learner$train(data_task)
-predictions = learner$predict(data_task)
+learner$train(task)
+predictions = learner$predict(task)
 design = benchmark_grid(
   tasks = tsk("adult_train"),
   learners = lrns(c("classif.ranger", "classif.rpart"),
@@ -46,7 +46,7 @@ bmr = benchmark(design)
 fairness_measure = msr("fairness.tpr")
 fairness_measures = msrs(c("fairness.tpr", "fairness.fnr"))
 
-fairness_accuracy_tradeoff(predictions, fairness_measure, data_task)
+fairness_accuracy_tradeoff(predictions, fairness_measure, task)
 fairness_accuracy_tradeoff(bmr, fairness_measure)
 
 }

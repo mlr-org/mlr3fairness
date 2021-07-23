@@ -4,13 +4,28 @@
 \alias{fairness_compare}
 \title{Fairness Comparison}
 \usage{
-fairness_compare(predcitions, ...)
+fairness_compare(object, ...)
 }
 \arguments{
-\item{predcitions}{TODO: fill it}
+\item{object}{(\link{PredictionClassif})\cr (\link{BenchmarkResult})\cr (\link{ResampleResult})\cr
+The binary class prediction object that will be evaluated. Only one data task is allowed for BenchmarkResult or ResampleResult
+\itemize{
+\item If provided as (\link{PredictionClassif}). Then the visualization will compare the fairness metrics among the binary level from protected field through bar plots.
+\item If provided as (\link{ResampleResult}). Then the visualization will generate the boxplots for fairness metrics, and compare them among the binary level from protected field.
+\item If provided as (\link{BenchmarkResult}). Then the visualization will generate the boxplots for fairness metrics, and compare them among both the binary level from protected field and the models implemented.
+}}
+
+\item{fairness_measure}{(\link{Measure})\cr
+The fairness measures that will evaluated on object}
+
+\item{task}{(\link{TaskClassif})\cr
+The data task that contains the protected column, only required when the class of object is (\link{PredictionClassif})}
 }
 \description{
-Fairness Comparison
+This function specialize in comparing the Fairness metrics between learners and levels in protected columns through visualizations.
+From the visualization, users could see the fairness metrics difference between learners and levels in protected fields.
+Those visualizations could help the users to detect the fairness problems and choose the optimum model.
+It could take multiple type of inputs, like (\link{PredictionClassif}), (\link{BenchmarkResult}) and (\link{ResampleResult}).
 }
 \examples{
 NULL
