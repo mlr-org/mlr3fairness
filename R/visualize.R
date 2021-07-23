@@ -1,4 +1,6 @@
 #' Fairness Accuracy Tradeoff Visualization
+#' @import ggplot2
+#' @import data.table
 #'
 #' @description
 #' This function specialize in comparing the Fairness vs Accuracy between learners through visualizations.
@@ -78,6 +80,8 @@ fairness_accuracy_tradeoff.ResampleResult <- function(object, fairness_measure){
 
 
 #' Fairness Comparison
+#' @import ggplot2
+#' @import data.table
 #'
 #' @description
 #' This function specialize in comparing the Fairness metrics between learners and levels in protected columns through visualizations.
@@ -163,6 +167,8 @@ fairness_compare.ResampleResult <- function(object, fairness_measure){
 }
 
 #' Fairness Prediction Density Visualization
+#' @import ggplot2
+#' @import data.table
 #'
 #' @description
 #' This function specializes in visualizing the plots that will demonstrate the predicted probability density for each level in the protected column.
