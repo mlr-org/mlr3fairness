@@ -7,16 +7,19 @@
 fairness_accuracy_tradeoff(object, ...)
 }
 \arguments{
-\item{object}{(\code{PredictionClassif})\cr (\link{BenchmarkResult})\cr (\link{ResampleResult})\cr
+\item{object}{(\link{PredictionClassif})\cr (\link{BenchmarkResult})\cr (\link{ResampleResult})\cr
 The binary class prediction object that will be evaluated. Only one data task is allowed for BenchmarkResult or ResampleResult
 \itemize{
-\item If provided as (\link{PredictionClassif}). Then only one point will indicate the accuracy and fairness metrics for the current predictions.
-\item If provided as (\link{ResampleResult}). Then the plot will compare the accuracy and fairness metrics for the same model, but different rasampling iterations.
-\item If provided as (\link{BenchmarkResult}). Then the plot will compare the accuracy and fairness metrics for all models and all rasampling iterations.
+\item If provided a (\link{PredictionClassif}). Then only one point will indicate the accuracy and fairness metrics for the current predictions.
+\item If provided a (\link{ResampleResult}). Then the plot will compare the accuracy and fairness metrics for the same model, but different resampling iterations.
+\item If provided a (\link{BenchmarkResult}). Then the plot will compare the accuracy and fairness metrics for all models and all resampling iterations.
 }}
 
 \item{fairness_measure}{(\link{Measure})\cr
 The fairness measures that will evaluated on object}
+
+\item{accuracy_measure}{(\link{Measure})\cr
+The accuracy measure that will evaluated on object, set default to be (\link{msr("classif.acc")})}
 
 \item{task}{(\link{TaskClassif})\cr
 The data task that contains the protected column, only required when the class of object is (\link{PredictionClassif})}
@@ -29,6 +32,11 @@ And the fairness consistency of the learners by visualizing the tradeoff for dif
 It could take multiple type of inputs, like (\link{PredictionClassif}), (\link{BenchmarkResult}) and (\link{ResampleResult}).
 }
 \examples{
+library(mlr3fairness)
+library(mlr3learners)
+library(mlr3)
+library(ggplot2)
+library(data.table)
 
 # Setup the Fairness Measures and tasks
 task = tsk("adult_train")
@@ -48,5 +56,4 @@ fairness_measures = msrs(c("fairness.tpr", "fairness.fnr"))
 
 fairness_accuracy_tradeoff(predictions, fairness_measure, task)
 fairness_accuracy_tradeoff(bmr, fairness_measure)
-
 }

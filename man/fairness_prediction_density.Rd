@@ -21,6 +21,12 @@ The y-axis shows the levels in protected columns. And the x-axis shows the predi
 The title for the plot will demonstrate which class for predicted probability.
 }
 \examples{
+library(mlr3fairness)
+library(mlr3learners)
+library(mlr3)
+library(ggplot2)
+library(data.table)
+
 task = tsk("adult_train")
 learner = lrn("classif.ranger", predict_type = "prob")
 learner$train(task)

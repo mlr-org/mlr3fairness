@@ -10,9 +10,9 @@ fairness_compare(object, ...)
 \item{object}{(\link{PredictionClassif})\cr (\link{BenchmarkResult})\cr (\link{ResampleResult})\cr
 The binary class prediction object that will be evaluated. Only one data task is allowed for BenchmarkResult or ResampleResult
 \itemize{
-\item If provided as (\link{PredictionClassif}). Then the visualization will compare the fairness metrics among the binary level from protected field through bar plots.
-\item If provided as (\link{ResampleResult}). Then the visualization will generate the boxplots for fairness metrics, and compare them among the binary level from protected field.
-\item If provided as (\link{BenchmarkResult}). Then the visualization will generate the boxplots for fairness metrics, and compare them among both the binary level from protected field and the models implemented.
+\item If provided a (\link{PredictionClassif}). Then the visualization will compare the fairness metrics among the binary level from protected field through bar plots.
+\item If provided a (\link{ResampleResult}). Then the visualization will generate the boxplots for fairness metrics, and compare them among the binary level from protected field.
+\item If provided a (\link{BenchmarkResult}). Then the visualization will generate the boxplots for fairness metrics, and compare them among both the binary level from protected field and the models implemented.
 }}
 
 \item{fairness_measure}{(\link{Measure})\cr
@@ -28,5 +28,30 @@ Those visualizations could help the users to detect the fairness problems and ch
 It could take multiple type of inputs, like (\link{PredictionClassif}), (\link{BenchmarkResult}) and (\link{ResampleResult}).
 }
 \examples{
-NULL
+library(mlr3fairness)
+library(mlr3learners)
+library(mlr3)
+library(ggplot2)
+library(data.table)
+
+# Setup the Fairness Measures and tasks
+task = tsk("adult_train")
+learner = lrn("classif.ranger", predict_type = "prob")
+learner$train(task)
+predictions = learner$predict(task)
+design = benchmark_grid(
+  tasks = tsk("adult_train"),
+  learners = lrns(c("classif.ranger", "classif.rpart"),
+                 predict_type = "prob", predict_sets = c("train", "test")),
+  resamplings = rsmps("cv", folds = 3)
+)
+
+bmr = benchmark(design)
+fairness_measure = msr("fairness.tpr")
+fairness_measures = msrs(c("fairness.tpr", "fairness.fnr"))
+
+fairness_compare(predictions, fairness_measure, data_task)
+fairness_compare(predictions, fairness_measures, data_task)
+fairness_compare(bmr, fairness_measure)
+fairness_compare(bmr, fairness_measures)
 }

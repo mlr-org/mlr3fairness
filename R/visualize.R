@@ -25,7 +25,10 @@
 #'
 #' @examples
 #' library(mlr3fairness)
+#' library(mlr3learners)
 #' library(mlr3)
+#' library(ggplot2)
+#' library(data.table)
 #'
 #' # Setup the Fairness Measures and tasks
 #' task = tsk("adult_train")
@@ -93,7 +96,10 @@ fairness_accuracy_tradeoff.ResampleResult <- function(object, fairness_measure){
 #'
 #' @examples
 #' library(mlr3fairness)
+#' library(mlr3learners)
 #' library(mlr3)
+#' library(ggplot2)
+#' library(data.table)
 #'
 #' # Setup the Fairness Measures and tasks
 #' task = tsk("adult_train")
@@ -166,8 +172,11 @@ fairness_compare.ResampleResult <- function(object, fairness_measure){
 #' The data task that contains the protected column.
 #'
 #' @examples
-#' library(mlr3)
 #' library(mlr3fairness)
+#' library(mlr3learners)
+#' library(mlr3)
+#' library(ggplot2)
+#' library(data.table)
 #'
 #' task = tsk("adult_train")
 #' learner = lrn("classif.ranger", predict_type = "prob")
