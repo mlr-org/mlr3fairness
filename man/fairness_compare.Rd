@@ -15,11 +15,13 @@ The binary class prediction object that will be evaluated. Only one data task is
 \item If provided a (\link{BenchmarkResult}). Then the visualization will generate the boxplots for fairness metrics, and compare them among both the binary level from protected field and the models implemented.
 }}
 
-\item{fairness_measure}{(\link{Measure})\cr
-The fairness measures that will evaluated on object}
-
-\item{task}{(\link{TaskClassif})\cr
-The data task that contains the protected column, only required when the class of object is (\link{PredictionClassif})}
+\item{...}{The arguments to be passed to methods, such as:
+\itemize{
+\item \code{fairness_measure} (\link{Measure})\cr
+The fairness measures that will evaluated on object, could be single measure \link{msr} or measures \link{msrs}.
+\item \code{task} (\link{TaskClassif})\cr
+The data task that contains the protected column, only required when the class of object is (\link{PredictionClassif})
+}}
 }
 \description{
 This function specialize in comparing the Fairness metrics between learners and levels in protected columns through visualizations.
@@ -50,8 +52,8 @@ bmr = benchmark(design)
 fairness_measure = msr("fairness.tpr")
 fairness_measures = msrs(c("fairness.tpr", "fairness.fnr"))
 
-fairness_compare(predictions, fairness_measure, data_task)
-fairness_compare(predictions, fairness_measures, data_task)
+fairness_compare(predictions, fairness_measure, task)
+fairness_compare(predictions, fairness_measures, task)
 fairness_compare(bmr, fairness_measure)
 fairness_compare(bmr, fairness_measures)
 }

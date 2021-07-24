@@ -33,4 +33,7 @@
   x$add("fairness.acc", MeasureFairness, base_measure = msr("classif.acc"))
   x$add("fairness.fp", MeasureFairness, base_measure = msr("classif.fp"))
   x$add("fairness.fn", MeasureFairness, base_measure = msr("classif.fn"))
+
+  #Create the global variables for visualization S3 methods:
+  utils::globalVariables(c("accuracy", "metrics", "model", "fairness", "value", "probability", "protected_variable"))
 }

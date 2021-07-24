@@ -4,14 +4,17 @@
 \alias{fairness_prediction_density}
 \title{Fairness Prediction Density Visualization}
 \usage{
-fairness_prediction_density(object, task)
+fairness_prediction_density(object, ...)
 }
 \arguments{
 \item{object}{(\link{PredictionClassif})\cr (\link{ResampleResult})\cr (\link{BenchmarkResult})\cr
 The binary class prediction object that will be evaluated. Only one data task is allowed for Resample Result and Benchmark Result.}
 
-\item{task}{(\link{TaskClassif})\cr
-The data task that contains the protected column.}
+\item{...}{The arguments to be passed to methods, such as:
+\itemize{
+\item \code{task} (\link{TaskClassif})\cr
+The data task that contains the protected column.
+}}
 }
 \description{
 This function specializes in visualizing the plots that will demonstrate the predicted probability density for each level in the protected column.

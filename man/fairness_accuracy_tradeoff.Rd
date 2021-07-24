@@ -15,14 +15,15 @@ The binary class prediction object that will be evaluated. Only one data task is
 \item If provided a (\link{BenchmarkResult}). Then the plot will compare the accuracy and fairness metrics for all models and all resampling iterations.
 }}
 
-\item{fairness_measure}{(\link{Measure})\cr
-The fairness measures that will evaluated on object}
-
-\item{accuracy_measure}{(\link{Measure})\cr
-The accuracy measure that will evaluated on object, set default to be (\link{msr("classif.acc")})}
-
-\item{task}{(\link{TaskClassif})\cr
-The data task that contains the protected column, only required when the class of object is (\link{PredictionClassif})}
+\item{...}{Arguments to be passed to methods. Such as:
+\itemize{
+\item \code{fairness_measure} (\link{Measure})\cr
+The fairness measures that will evaluated on object, could be single measure (\code{msr}) or list of measures (\code{msrs}), check \link[mlr3:Measure]{mlr3::Measure}
+\item \code{accuracy_measure} (\link{Measure})\cr
+The accuracy measure that will evaluated on object, could be single measure \link{msr} or measures \link{msrs}. Default measure set to be \code{\link[mlr3:MeasureClassif]{msr("classif.acc")}}
+\item \code{task} (\link{TaskClassif})\cr
+The data task that contains the protected column, only required when the class of object is (\link{PredictionClassif})
+}}
 }
 \description{
 This function specialize in comparing the Fairness vs Accuracy between learners through visualizations.
