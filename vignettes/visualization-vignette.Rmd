@@ -22,8 +22,14 @@ library(ggplot2)
 library(data.table)
 ```
 
+# Why we need fairness visualizations:
+
+Fairness Visualizations are the communications. Most of the users are not expected to understand fairness problems from fairness metrics. They are just numbers for non-experts. However, through fairness visualizations we could provide a clear, thorough and understandable way to understand the fairness problems. More than that, users could quickly diagnose their models through visualizations and locate the fairness problems. In this vignette we will showcase some of the pre build fairness visualization functions.
 
 # Setup Data tasks, learner and predictions
+
+For this example, we used the Adult dataset. Since mlr3fairness provide the adult datasets in adult_train and adult_test. We will load those two datasets separately. Keep in mind all the datasets from mlr3fairness package already set protected attributes:
+Then we choose Random Forest as our model. For comparison, we introduce both Random Forest and Decision Tree for benchmark results.
 
 ```{r}
 data_task = tsk("adult_train")
@@ -39,12 +45,27 @@ design = benchmark_grid(
 )
 
 bmr = benchmark(design)
+
+paste0("Adult train have protected attributes: ", adult_train$col_roles$pta)
+paste0("Adult test have protected attributes: ", adult_test$col_roles$pta)
+```
+We could then check the predictions and the benchmark_results.
+```{r}
+predictions$confusion
+print(bmr)
+```
+
+Since we want to show some of our visualization functions could take both single and multiple measures, we create one single measure to be ```fairness.tpr```, and the multiple measures to be ```c("fairness,tpr", "fairness.fnr")```.
+
+```{r}
 fairness_measure = msr("fairness.tpr")
 fairness_measures = msrs(c("fairness.tpr", "fairness.fnr"))
 ```
 
 
 # Fairness Prediction Density Plot
+
+If we want to compare the predictions for protected attributes for the same model. Then Fairness Prediction Density Plot would be the optimum solution. By using fairness prediction density plot we could see the model predicted probability about whether the observations have income <=50K or not. Then by comparing the predicted probability for male and female. We could see male have a much higher probability to have income higher than females. This plot then indicates some potential fairness problems in our model.
 
 ```{r}
 fairness_prediction_density(predictions, data_task)
