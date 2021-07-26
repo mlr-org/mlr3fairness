@@ -56,7 +56,7 @@ Here we have the name of our protected field to be "sex". It is a binary variabl
 adult_train = tsk("adult_train")
 adult_test = tsk("adult_test")
 paste0("The protected for adult train dataset is : ", adult_train$col_roles$pta)
-paste0("The protected for adult train dataset is : ", adult_test$col_roles$pta)
+paste0("The protected for adult test dataset is : ", adult_test$col_roles$pta)
 ```
 
 We could then see some basic information for Adult data task. Keep in mind, users are expected to do some data cleansing process like NULL imputations and data type transformations before create the data tasks.
