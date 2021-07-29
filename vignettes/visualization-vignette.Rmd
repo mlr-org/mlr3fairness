@@ -73,12 +73,16 @@ fairness_prediction_density(predictions, data_task)
 
 # Fairness Accuracy Tradeoff Plot
 
+Since fairness metrics usually associated with the total accuracy of the model. There is a hidden tradeoff between accuracy and fairness metrics. Users could use ```fairness_accuracy_tradeoff``` function to visualize such tradeoff. For example, with one single measure the visualization will contrain one single point indicate the relation between fairness and accuracy. However, with ```BenchmarkResults``` or ```ResamplingResults```. Users could compare such tradeoff between different models and resamplings.
+
 ```{r}
 fairness_accuracy_tradeoff(predictions, fairness_measure, data_task)
 fairness_accuracy_tradeoff(bmr, fairness_measure)
 ```
 
 # Fairness Comparison Plot
+
+Then finally, if user want to compare fairness metrics either from single model or multiple models. They could use ```fairness_compare``` functions. Such functions could compare either one metric or multiple metrics. In the following we compared the fairness performance between decision trees and random forests.
 
 ```{r}
 fairness_compare(predictions, fairness_measure, data_task)
