@@ -18,7 +18,7 @@ The binary class prediction object that will be evaluated. Only one data task is
 \item{...}{The arguments to be passed to methods, such as:
 \itemize{
 \item \code{fairness_measure} (\link{Measure})\cr
-The fairness measures that will evaluated on object, could be single measure \link{msr} or measures \link{msrs}.
+The fairness measures that will evaluated on object, could be single measure \link{msr} or measures \link{msrs}.  Default measure set to be \code{msr("fairness.acc")}
 \item \code{task} (\link{TaskClassif})\cr
 The data task that contains the protected column, only required when the class of object is (\link{PredictionClassif})
 }}

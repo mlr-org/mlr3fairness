@@ -18,7 +18,7 @@ The binary class prediction object that will be evaluated. Only one data task is
 \item{...}{Arguments to be passed to methods. Such as:
 \itemize{
 \item \code{fairness_measure} (\link{Measure})\cr
-The fairness measures that will evaluated on object, could be single measure (\code{msr}) or list of measures (\code{msrs}), check \link[mlr3:Measure]{mlr3::Measure}
+The fairness measures that will evaluated on object, could be single measure (\code{msr}) or list of measures (\code{msrs}), check \link[mlr3:Measure]{mlr3::Measure}. Default measure set to be \code{msr("fairness.fpr")}
 \item \code{accuracy_measure} (\link{Measure})\cr
 The accuracy measure that will evaluated on object, could be single measure \link{msr} or measures \link{msrs}. Default measure set to be \code{\link[mlr3:MeasureClassif]{msr("classif.acc")}}
 \item \code{task} (\link{TaskClassif})\cr

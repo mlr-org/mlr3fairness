@@ -18,7 +18,7 @@
 #' Arguments to be passed to methods. Such as:
 #'
 #' * `fairness_measure` ([Measure])\cr
-#' The fairness measures that will evaluated on object, could be single measure (`msr`) or list of measures (`msrs`), check [mlr3::Measure]
+#' The fairness measures that will evaluated on object, could be single measure (`msr`) or list of measures (`msrs`), check [mlr3::Measure]. Default measure set to be \code{msr("fairness.fpr")}
 #'
 #' * `accuracy_measure` ([Measure])\cr
 #' The accuracy measure that will evaluated on object, could be single measure \link{msr} or measures \link{msrs}. Default measure set to be \code{\link[mlr3:MeasureClassif]{msr("classif.acc")}}
@@ -59,24 +59,25 @@ fairness_accuracy_tradeoff <- function(object, ...){
 }
 
 #' @export
-fairness_accuracy_tradeoff.PredictionClassif <- function(object, fairness_measure, task, acc_measure = msr("classif.acc"), ...){
+fairness_accuracy_tradeoff.PredictionClassif <- function(object, fairness_measure = msr("fairness.fpr"), task, acc_measure = msr("classif.acc"), ...){
   data = data.table(accuracy = object$score(acc_measure),
                     fairness = object$score(fairness_measure, task))
   ggplot(data, aes(x = accuracy, y=fairness)) + geom_point()
 }
 
 #' @export
-fairness_accuracy_tradeoff.BenchmarkResult <- function(object, fairness_measure, acc_measure = msr("classif.acc"), ...){
-  data = data.table(model = object$score(fairness_measure)[,6],
-                    accuracy = object$score(acc_measure)[,11],
-                    metrics = object$score(fairness_measure)[,11])
+fairness_accuracy_tradeoff.BenchmarkResult <- function(object, fairness_measure = msr("fairness.fpr"), acc_measure = msr("classif.acc"), ...){
+  data = data.table(model = object$score(fairness_measure)[, "learner_id"],
+                    accuracy = object$score(acc_measure)[, acc_measure$id, with = F],
+                    metrics = object$score(fairness_measure)[, fairness_measure$id, with = F])
   colnames(data) <- c("model", "accuracy", "metrics")
   ggplot(data, aes(x = accuracy, y=metrics, colour=model)) +
-    geom_point()
+    geom_point() +
+    labs(y = fairness_measure$id)
 }
 
 #' @export
-fairness_accuracy_tradeoff.ResampleResult <- function(object, fairness_measure, acc_measure = msr("classif.acc"), ...){
+fairness_accuracy_tradeoff.ResampleResult <- function(object, fairness_measure = msr("fairness.fpr"), acc_measure = msr("classif.acc"), ...){
   object = as_benchmark_result(object)
   fairness_accuracy_tradeoff(object, fairness_measure, acc_measure)
 }
@@ -100,7 +101,7 @@ fairness_accuracy_tradeoff.ResampleResult <- function(object, fairness_measure, 
 #' The arguments to be passed to methods, such as:
 #'
 #' * `fairness_measure` ([Measure])\cr
-#' The fairness measures that will evaluated on object, could be single measure \link{msr} or measures \link{msrs}.
+#' The fairness measures that will evaluated on object, could be single measure \link{msr} or measures \link{msrs}.  Default measure set to be \code{msr("fairness.acc")}
 #'
 #' * `task` ([TaskClassif])\cr
 #' The data task that contains the protected column, only required when the class of object is ([PredictionClassif])
@@ -138,7 +139,7 @@ fairness_compare <- function(object, ...){
 }
 
 #' @export
-fairness_compare.PredictionClassif <- function(object, fairness_measure, task, ...){
+fairness_compare.PredictionClassif <- function(object, fairness_measure = msr("fairness.acc"), task, ...){
   measures = object$score(fairness_measure, task)
   data <- melt(data.table(names = names(measures), data = measures), id.vars = "names")
   ggplot(data, aes(x=names, y=value, fill = names)) +
@@ -150,10 +151,11 @@ fairness_compare.PredictionClassif <- function(object, fairness_measure, task, .
 }
 
 #' @export
-fairness_compare.BenchmarkResult <- function(object, fairness_measure, ...){
+fairness_compare.BenchmarkResult <- function(object, fairness_measure = msr("fairness.acc"), ...){
+  fairness_name = get_msrs_name(fairness_measure)
   fairness_data = object$score(fairness_measure)
   data = melt(data.table(model = fairness_data$learner_id,
-                         fairness_data[,c(11:ncol(fairness_data)), with=FALSE]),
+                         fairness_data[, fairness_name, with=FALSE]),
               id.vars = "model")
   ggplot(data, aes(x=model, y=value, fill=model)) +
     geom_bar(stat = "identity",  width=1/length(unique(data$model))) +
@@ -165,7 +167,7 @@ fairness_compare.BenchmarkResult <- function(object, fairness_measure, ...){
 }
 
 #' @export
-fairness_compare.ResampleResult <- function(object, fairness_measure, ...){
+fairness_compare.ResampleResult <- function(object, fairness_measure = msr("fairness.acc"), ...){
   object = as_benchmark_result(object)
   fairness_compare(object, fairness_measure)
 }
@@ -215,7 +217,7 @@ fairness_prediction_density.PredictionClassif<- function(object, task, ...){
   ggplot(data, aes(x = protected_variable, y=probability)) +
     geom_boxplot(aes(fill = protected_variable), width=0.4/length(unique(data$protected_variable))) +
     geom_violin(alpha = 0.3, width=1.5/length(unique(data$protected_variable)), fill = "grey") +
-    xlab("protected variable") +
+    xlab("Protected attributes") +
     ylab( paste0("predicted probability for ", colnames(object$prob)[1])) +
     theme(legend.position = "none") +
     scale_fill_hue(c=100, l=100) +
