@@ -1,4 +1,5 @@
-#Data Task generator
+library(mlr3learners)
+
 simple_test_data <- function(need_pta = T) {
   example_data <- data.frame(
     value = as.factor(c(1,1,2,2,1,1,2,1,2,2,2,1,1,1,2,1)),
@@ -14,4 +15,32 @@ simple_pred_data <- function() {
   PredictionClassif$new(row_ids = c(1:16),
                         truth = as.factor(c(1,1,2,2,1,1,2,1,2,2,2,1,1,1,2,1)),
                         response = as.factor(c(1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2)))
+}
+
+adult_benchmark_result <- function(){
+  design = benchmark_grid(
+    tasks = tsk("adult_train"),
+    learners = lrns(c("classif.ranger", "classif.rpart"),
+                    predict_type = "prob", predict_sets = c("train", "test")),
+    resamplings = rsmps("cv", folds = 3)
+  )
+
+  return(benchmark(design))
+}
+
+adult_resample_result <- function(){
+  task = tsk("adult_train")
+  learner = lrn("classif.rpart")
+  resampling = rsmp("cv")
+  resampling$instantiate(task)
+  rr = resample(task, learner, resampling)
+  return(rr)
+}
+
+adult_rpart_prob_predictions <- function(){
+  data_task = tsk("adult_train")
+  learner = lrn("classif.ranger", predict_type = "prob")
+  learner$train(data_task)
+  predictions = learner$predict(data_task)
+  return(predictions)
 }
