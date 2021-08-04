@@ -2,10 +2,10 @@ source(file.path(getwd(), "data_helper.R"))
 
 # Test preparation
 ######################################################################
-test_data = tsk("adult_train")
-prediction = adult_rpart_prob_predictions()
-benchmark_obj = adult_benchmark_result()
-resample_obj = adult_resample_result()
+test_data = medium_test_data()
+prediction = simple_rpart_prob_predictions()
+benchmark_obj = simple_benchmark_result()
+resample_obj = simple_resample_result()
 fairness_measure = msr("fairness.acc")
 fairness_measures = msrs(c("fairness.tpr", "fairness.fnr"))
 ######################################################################

@@ -26,11 +26,11 @@ The data task that contains the protected column, only required when the class o
 }}
 }
 \description{
-This function specialize in comparing the Fairness vs Accuracy between learners through visualizations.
+These functions specialize in comparing the Fairness and Accuracy between learners through visualizations.
 From the visualization, users could see the tradeoff between fairness metrics and accuracy.
 Those insights could help the users to choose the optimum model from their model sets.
 And the fairness consistency of the learners by visualizing the tradeoff for different resampling iterations.
-It could take multiple type of inputs, like (\link{PredictionClassif}), (\link{BenchmarkResult}) and (\link{ResampleResult}).
+It could take multiple types of inputs, like (\link{PredictionClassif}), (\link{BenchmarkResult}) and (\link{ResampleResult}).
 }
 \examples{
 library(mlr3fairness)

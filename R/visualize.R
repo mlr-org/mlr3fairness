@@ -1,11 +1,11 @@
 #' Fairness Accuracy Tradeoff Visualization
 #'
 #' @description
-#' This function specialize in comparing the Fairness vs Accuracy between learners through visualizations.
+#' These functions specialize in comparing the Fairness and Accuracy between learners through visualizations.
 #' From the visualization, users could see the tradeoff between fairness metrics and accuracy.
 #' Those insights could help the users to choose the optimum model from their model sets.
 #' And the fairness consistency of the learners by visualizing the tradeoff for different resampling iterations.
-#' It could take multiple type of inputs, like ([PredictionClassif]), ([BenchmarkResult]) and ([ResampleResult]).
+#' It could take multiple types of inputs, like ([PredictionClassif]), ([BenchmarkResult]) and ([ResampleResult]).
 #'
 #'
 #' @param object ([PredictionClassif])\cr ([BenchmarkResult])\cr ([ResampleResult])\cr
@@ -62,7 +62,9 @@ fairness_accuracy_tradeoff <- function(object, ...){
 fairness_accuracy_tradeoff.PredictionClassif <- function(object, fairness_measure = msr("fairness.fpr"), task, acc_measure = msr("classif.acc"), ...){
   data = data.table(accuracy = object$score(acc_measure),
                     fairness = object$score(fairness_measure, task))
-  ggplot(data, aes(x = accuracy, y=fairness)) + geom_point()
+  ggplot(data, aes(x = accuracy, y=fairness)) +
+    labs(y = fairness_measure$id, x=acc_measure$id) +
+    geom_point()
 }
 
 #' @export
@@ -70,10 +72,9 @@ fairness_accuracy_tradeoff.BenchmarkResult <- function(object, fairness_measure 
   data = data.table(model = object$score(fairness_measure)[, "learner_id"],
                     accuracy = object$score(acc_measure)[, acc_measure$id, with = F],
                     metrics = object$score(fairness_measure)[, fairness_measure$id, with = F])
-  colnames(data) <- c("model", "accuracy", "metrics")
   ggplot(data, aes(x = accuracy, y=metrics, colour=model)) +
-    geom_point() +
-    labs(y = fairness_measure$id)
+    labs(y = fairness_measure$id, x=acc_measure$id) +
+    geom_point()
 }
 
 #' @export
@@ -86,7 +87,7 @@ fairness_accuracy_tradeoff.ResampleResult <- function(object, fairness_measure =
 #' Fairness Comparison
 #'
 #' @description
-#' This function specialize in comparing the Fairness metrics between learners and levels in protected columns through visualizations.
+#' These functions specialize in comparing the Fairness metrics between learners and levels in protected columns through visualizations.
 #' From the visualization, users could see the fairness metrics difference between learners and levels in protected fields.
 #' Those visualizations could help the users to detect the fairness problems and choose the optimum model.
 #' It could take multiple type of inputs, like ([PredictionClassif]), ([BenchmarkResult]) and ([ResampleResult]).
@@ -175,7 +176,7 @@ fairness_compare.ResampleResult <- function(object, fairness_measure = msr("fair
 #' Fairness Prediction Density Visualization
 #'
 #' @description
-#' This function specializes in visualizing the plots that will demonstrate the predicted probability density for each level in the protected column.
+#' These functions specialize in visualizing the plots that will demonstrate the predicted probability density for each level in the protected column.
 #' Which will potentially reveal the fairness problems in the dataset if the density differs significantly for each level.
 #' The plot is a combination of boxplot and violin plot. So users could use the plot to detect both the outliers and distribution problems.
 #' The y-axis shows the levels in protected columns. And the x-axis shows the predicted probability.

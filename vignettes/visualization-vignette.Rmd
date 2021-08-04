@@ -24,11 +24,11 @@ library(data.table)
 
 # Why we need fairness visualizations:
 
-Fairness Visualizations are the communications. Most of the users are not expected to understand fairness problems from fairness metrics. They are just numbers for non-experts. However, through fairness visualizations we could provide a clear, thorough and understandable way to understand the fairness problems. More than that, users could quickly diagnose their models through visualizations and locate the fairness problems. In this vignette we will showcase some of the pre build fairness visualization functions.
+Through fairness visualizations we could provide a clear, thorough and understandable way to understand the fairness problems. More than that, users could quickly diagnose their models through visualizations and locate the fairness problems. In this vignette we will showcase some of the pre build fairness visualization functions.
 
 # Setup Data tasks, learner and predictions
 
-For this example, we used the Adult dataset. Since mlr3fairness provide the adult datasets in adult_train and adult_test. We will load those two datasets separately. Keep in mind all the datasets from mlr3fairness package already set protected attributes:
+For this example, we used the adult dataset. Since mlr3fairness provide the adult datasets in adult_train and adult_test. We will load those two datasets separately. Keep in mind all the datasets from mlr3fairness package already set protected attributes:
 Then we choose Random Forest as our model. For comparison, we introduce both Random Forest and Decision Tree for benchmark results.
 
 ```{r}
@@ -73,7 +73,7 @@ fairness_prediction_density(predictions, data_task)
 
 # Fairness Accuracy Tradeoff Plot
 
-Since fairness metrics usually associated with the total accuracy of the model. There is a hidden tradeoff between accuracy and fairness metrics. Users could use ```fairness_accuracy_tradeoff``` function to visualize such tradeoff. For example, with one single measure the visualization will contrain one single point indicate the relation between fairness and accuracy. However, with ```BenchmarkResults``` or ```ResamplingResults```. Users could compare such tradeoff between different models and resamplings.
+Since fairness metrics are usually associated with the total accuracy of the model. There is a hidden tradeoff between accuracy and fairness metrics. Users could use the ```fairness_accuracy_tradeoff``` function to visualize such a tradeoff. For example, with one single measure the visualization will contain one single point indicating the relation between fairness and accuracy. However, with ```BenchmarkResults``` or ```ResamplingResults```. Users could compare such tradeoffs between different models and resamplings.
 
 ```{r}
 fairness_accuracy_tradeoff(predictions, fairness_measure, data_task)
@@ -82,7 +82,7 @@ fairness_accuracy_tradeoff(bmr, fairness_measure)
 
 # Fairness Comparison Plot
 
-Then finally, if user want to compare fairness metrics either from single model or multiple models. They could use ```fairness_compare``` functions. Such functions could compare either one metric or multiple metrics. In the following we compared the fairness performance between decision trees and random forests.
+Then finally, if the user wants to compare fairness metrics either from a single model or multiple models. They could use ```fairness_compare``` functions. Such functions could compare either one metric or multiple metrics. In the following we compared the fairness performance between decision trees and random forests.
 
 ```{r}
 fairness_compare(predictions, fairness_measure, data_task)

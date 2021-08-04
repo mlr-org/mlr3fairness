@@ -24,7 +24,7 @@ The data task that contains the protected column, only required when the class o
 }}
 }
 \description{
-This function specialize in comparing the Fairness metrics between learners and levels in protected columns through visualizations.
+These functions specialize in comparing the Fairness metrics between learners and levels in protected columns through visualizations.
 From the visualization, users could see the fairness metrics difference between learners and levels in protected fields.
 Those visualizations could help the users to detect the fairness problems and choose the optimum model.
 It could take multiple type of inputs, like (\link{PredictionClassif}), (\link{BenchmarkResult}) and (\link{ResampleResult}).

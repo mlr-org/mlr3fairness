@@ -17,7 +17,7 @@ The data task that contains the protected column.
 }}
 }
 \description{
-This function specializes in visualizing the plots that will demonstrate the predicted probability density for each level in the protected column.
+These functions specialize in visualizing the plots that will demonstrate the predicted probability density for each level in the protected column.
 Which will potentially reveal the fairness problems in the dataset if the density differs significantly for each level.
 The plot is a combination of boxplot and violin plot. So users could use the plot to detect both the outliers and distribution problems.
 The y-axis shows the levels in protected columns. And the x-axis shows the predicted probability.
