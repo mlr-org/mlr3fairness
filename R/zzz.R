@@ -25,15 +25,12 @@
   x$add("fairness", MeasureFairness)
 
   # Define a set of widely used metrics. Documented in mlr_measures_fairness
-  x$add("fairness.fpr", MeasureFairness, base_measure = msr("classif.fpr"))
-  x$add("fairness.fnr", MeasureFairness, base_measure = msr("classif.fnr"))
-  x$add("fairness.tpr", MeasureFairness, base_measure = msr("classif.tpr"))
-  x$add("fairness.ppv", MeasureFairness, base_measure = msr("classif.ppv"))
-  x$add("fairness.npv", MeasureFairness, base_measure = msr("classif.npv"))
-  x$add("fairness.acc", MeasureFairness, base_measure = msr("classif.acc"))
-  x$add("fairness.fp", MeasureFairness, base_measure = msr("classif.fp"))
-  x$add("fairness.fn", MeasureFairness, base_measure = msr("classif.fn"))
-
-  #Create the global variables for visualization S3 methods:
-  utils::globalVariables(c("accuracy", "metrics", "model", "fairness", "value", "probability", "protected_variable"))
+  x$add("fairness.fpr", MeasureFairness, base_measure = msr("classif.fpr"), operation = "groupwise_quotient")
+  x$add("fairness.fnr", MeasureFairness, base_measure = msr("classif.fnr"), operation = "groupwise_quotient")
+  x$add("fairness.tpr", MeasureFairness, base_measure = msr("classif.tpr"), operation = "groupwise_quotient")
+  x$add("fairness.ppv", MeasureFairness, base_measure = msr("classif.ppv"), operation = "groupwise_quotient")
+  x$add("fairness.npv", MeasureFairness, base_measure = msr("classif.npv"), operation = "groupwise_quotient")
+  x$add("fairness.acc", MeasureFairness, base_measure = msr("classif.acc"), operation = "groupwise_quotient")
+  x$add("fairness.fp", MeasureFairness, base_measure = msr("classif.fp"), operation = "groupwise_quotient")
+  x$add("fairness.fn", MeasureFairness, base_measure = msr("classif.fn"), operation = "groupwise_quotient")
 }

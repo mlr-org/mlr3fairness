@@ -30,8 +30,8 @@ Suggests:
     knitr,
     rpart,
     testthat (>= 3.0.0),
-    mlr3learners,
-    ranger
+    ranger,
+    mlr3learners
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Collate:
