@@ -8,55 +8,47 @@ fairness_measure = msr("fairness.acc")
 fairness_measures = msrs(c("fairness.tpr", "fairness.fnr"))
 ######################################################################
 
+# check plot satisfy those three conditions
+
 # fairness_accuracy_tradeoff Tests
 test_that("fairness_accuracy_tradeoff work properly with PredictionClassif", {
-  expect_error(fairness_accuracy_tradeoff(prediction, fairness_measure, test_data), NA)
-  expect_warning(fairness_accuracy_tradeoff(prediction, fairness_measure, test_data), NA)
+  check_plot(fairness_accuracy_tradeoff(prediction, fairness_measure, test_data))
 })
 
 test_that("fairness_accuracy_tradeoff work properly with ResampleResult", {
-  expect_error(fairness_accuracy_tradeoff(resample_obj, fairness_measure), NA)
-  expect_warning(fairness_accuracy_tradeoff(resample_obj, fairness_measure), NA)
+  check_plot(fairness_accuracy_tradeoff(resample_obj, fairness_measure))
 })
 
 test_that("fairness_accuracy_tradeoff work properly with BenchmarkResult", {
-  expect_error(fairness_accuracy_tradeoff(benchmark_obj, fairness_measure), NA)
-  expect_warning(fairness_accuracy_tradeoff(benchmark_obj, fairness_measure), NA)
+  check_plot(fairness_accuracy_tradeoff(benchmark_obj, fairness_measure))
 })
 
 # fairness_compare Tests
 test_that("fairness_compare work properly with PredictionClassif", {
   # Single Measure
-  expect_error(fairness_compare(prediction, fairness_measure, test_data), NA)
-  expect_warning(fairness_compare(prediction, fairness_measure, test_data), NA)
+  check_plot(fairness_compare(prediction, fairness_measure, test_data))
 
   # Multiple Measures
-  expect_error(fairness_compare(prediction, fairness_measures, test_data), NA)
-  expect_warning(fairness_compare(prediction, fairness_measures, test_data), NA)
+  check_plot(fairness_compare(prediction, fairness_measures, test_data))
 })
 
 test_that("fairness_compare work properly with ResampleResult", {
   # Single Measure
-  expect_error(fairness_compare(resample_obj, fairness_measure), NA)
-  expect_warning(fairness_compare(resample_obj, fairness_measure), NA)
+  check_plot(fairness_compare(resample_obj, fairness_measure))
 
   # Multiple Measures
-  expect_error(fairness_compare(resample_obj, fairness_measures), NA)
-  expect_warning(fairness_compare(resample_obj, fairness_measures), NA)
+  check_plot(fairness_compare(resample_obj, fairness_measures))
 })
 
 test_that("fairness_compare work properly with BenchmarkResult", {
   # Single Measure
-  expect_error(fairness_compare(benchmark_obj, fairness_measure), NA)
-  expect_warning(fairness_compare(benchmark_obj, fairness_measure), NA)
+  check_plot(fairness_compare(benchmark_obj, fairness_measure))
 
   # Multiple Measures
-  expect_error(fairness_compare(benchmark_obj, fairness_measures), NA)
-  expect_warning(fairness_compare(benchmark_obj, fairness_measures), NA)
+  check_plot(fairness_compare(benchmark_obj, fairness_measures))
 })
 
 # fairness_prediction_density Tests
 test_that("fairness_prediction_density work properly with PredictionClassif", {
-  expect_error(fairness_prediction_density(prediction, test_data), NA)
-  expect_warning(fairness_prediction_density(prediction, test_data), NA)
+  check_plot(fairness_prediction_density(prediction, test_data))
 })
