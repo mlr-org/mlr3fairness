@@ -1,5 +1,5 @@
 ---
-title: "visualization-vignette"
+title: "Fairness Visualizations"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{visualization-vignette}
