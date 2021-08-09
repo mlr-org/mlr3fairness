@@ -1,5 +1,5 @@
 ---
-title: "measures-vignette"
+title: "FairnessMeasures"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{measures-vignette}
@@ -213,7 +213,7 @@ predictions$score(msrs(c("fairness.fnr", "fairness.fpr")), task = adult_test) #S
 
 If users want to compare fairness measures between different models. They could create the BenchmarkResults first. Then by using ```aggregate()``` function they could access the fairness measures easily. The following example demonstrates the process to evaluate the fairness metrics on Benchmark Results:
 
-```{r}
+```{r, warning=FALSE}
 design = benchmark_grid(
   tasks = tsks(c("adult_test")),
   learners = lrns(c("classif.ranger", "classif.rpart"),
