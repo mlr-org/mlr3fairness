@@ -85,7 +85,7 @@ fairness_accuracy_tradeoff.ResampleResult <- function(object, fairness_measure =
 }
 
 
-#' Fairness Comparison
+#' Fairness Comparison Visualization
 #'
 #' @description
 #' These functions specialize in comparing the Fairness metrics between learners and levels in protected columns through visualizations.
