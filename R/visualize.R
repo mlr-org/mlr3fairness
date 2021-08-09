@@ -72,6 +72,7 @@ fairness_accuracy_tradeoff.BenchmarkResult <- function(object, fairness_measure 
   data = data.table(model = object$score(fairness_measure)[, "learner_id"],
                     accuracy = object$score(acc_measure)[, acc_measure$id, with = F],
                     metrics = object$score(fairness_measure)[, fairness_measure$id, with = F])
+  colnames(data) <- c("model", "accuracy", "metrics")
   ggplot(data, aes(x = accuracy, y=metrics, colour=model)) +
     labs(y = fairness_measure$id, x=acc_measure$id) +
     geom_point()

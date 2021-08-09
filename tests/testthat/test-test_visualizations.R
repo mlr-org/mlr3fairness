@@ -1,5 +1,3 @@
-source(file.path(getwd(), "data_helper.R"))
-
 # Test preparation
 ######################################################################
 test_data = medium_test_data()
