@@ -12,7 +12,7 @@ The binary class prediction object that will be evaluated. Only one data task is
 \itemize{
 \item If provided a (\link{PredictionClassif}). Then only one point will indicate the accuracy and fairness metrics for the current predictions.
 \item If provided a (\link{ResampleResult}). Then the plot will compare the accuracy and fairness metrics for the same model, but different resampling iterations.
-\item If provided a (\link{BenchmarkResult}). Then the plot will compare the accuracy and fairness metrics for all models and all resampling iterations.
+\item If provided a (\link{BenchmarkResult}). Then the plot will compare the accuracy and fairness metrics for all models and all resampling iterations. Points are coloured acording to the models.
 }}
 
 \item{...}{Arguments to be passed to methods. Such as:

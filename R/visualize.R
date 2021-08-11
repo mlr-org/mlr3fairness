@@ -12,7 +12,7 @@
 #' The binary class prediction object that will be evaluated. Only one data task is allowed for BenchmarkResult or ResampleResult
 #' * If provided a ([PredictionClassif]). Then only one point will indicate the accuracy and fairness metrics for the current predictions.
 #' * If provided a ([ResampleResult]). Then the plot will compare the accuracy and fairness metrics for the same model, but different resampling iterations.
-#' * If provided a ([BenchmarkResult]). Then the plot will compare the accuracy and fairness metrics for all models and all resampling iterations.
+#' * If provided a ([BenchmarkResult]). Then the plot will compare the accuracy and fairness metrics for all models and all resampling iterations. Points are coloured acording to the models.
 #'
 #' @param ...
 #' Arguments to be passed to methods. Such as:
