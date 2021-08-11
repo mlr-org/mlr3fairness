@@ -65,7 +65,17 @@ Helper Method: \code{get_weights()}. Return the weights used for reweighing algo
 }
 
 \examples{
-NULL # Place Holder
+library(mlr3pipelines)
+library(mlr3)
+reweighing = po("reweighing")
+learner_po = po("learner", learner = lrn("classif.rpart"))
+
+data = tsk("adult_train")
+graph = reweighing \%>>\% learner_po
+glrn = GraphLearner$new(graph)
+glrn$train(data)
+tem = glrn$predict(data)
+tem$confusion
 }
 \seealso{
 https://mlr3book.mlr-org.com/list-pipeops.html
