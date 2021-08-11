@@ -23,7 +23,8 @@ Imports:
     R6 (>= 2.4.1),
     data.table (>= 1.13.6),
     mlr3measures (>= 0.3.0),
-    mlr3misc
+    mlr3misc,
+    mlr3pipelines
 Suggests:
     rmarkdown,
     knitr,
@@ -35,11 +36,12 @@ RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Collate:
     'MeasureFairness.R'
+    'PipeOpsFairness.R'
     'adult.R'
-    'compas.R'
     'assertions.R'
-    'operations.R'
+    'compas.R'
     'helper.R'
+    'operations.R'
     'zzz.R'
 Config/testthat/edition: 3
 VignetteBuilder: knitr
