@@ -32,16 +32,19 @@ mlr3fairness is a comprehensive machine learning package with full support from 
 * Fairness Measures
 
 **Fairness metrics are the foundations.**
+
 Not only you can only use those metrics to diagnose biases in models. You also need those measures to build fairness visualizations or bias mitigation algorithms in order to detect the fairness problems and correct them.
 
 * Fairness Visualizations
 
 **Fairness Visualizations are the communications.**
+
 You are not expected to understand fairness problems from just the fairness metrics. They are just numbers for non-experts. However, through fairness visualizations we could provide a clear, thorough and understandable way to understand the fairness problems.
 
 * Debiasing Methods
 
 **Debiasing Algorithms are the Solutions.**
+
 Now you could measure, see and understand the fairness problems. You want to mitigate the fairness problems that exist in their models. For this part, mlr3fairness will provide you the toolkits like reweighing or equalized odds algorithms in `FairnessPipeOps`. Your models could now correct fairness problems with one extra line of code.
 
 # Demo for Adult Dataset
