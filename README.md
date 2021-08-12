@@ -54,7 +54,7 @@ mlr3fairnessWASCS is a free and open source software project that encourages par
 
 In case of problems / bugs, it is often helpful if you provide a “minimum working example” that showcases the behaviour (but don’t worry about this if the bug is obvious).
 
-# GSOC 2021 Candidate Project
+# GSOC 2021 Project Candidate
 
 This project has been accepted as a Google Summer of Code Project!
 
