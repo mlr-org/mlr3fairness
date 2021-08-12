@@ -1,4 +1,5 @@
-# mlr3fairness : Machine Learning Fairness Extension for [mlr3](https://github.com/mlr-org/mlr3).
+# mlr3fairness
+## Machine Learning Fairness Extension for [mlr3](https://github.com/mlr-org/mlr3).
 
 # Installation
 
