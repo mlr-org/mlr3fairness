@@ -1,6 +1,10 @@
 # mlr3fairness
 ## Machine Learning Fairness Extension for [mlr3](https://github.com/mlr-org/mlr3).
 
+[![tic](https://github.com/mlr-org/mlr3proba/workflows/tic/badge.svg?branch=main)](https://github.com/mlr-org/mlr3fairness/actions)
+[![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
+[![Mattermost](https://img.shields.io/badge/chat-mattermost-orange.svg)](https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/)
+
 # Installation
 
 Install the development version from mlr3 repo
