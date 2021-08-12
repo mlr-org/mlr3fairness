@@ -3,11 +3,12 @@
 # Installation
 
 Install the development version from mlr3 repo
+
 ```r
 remotes::install_github("mlr-org/mlr3fairness")
 ```
 
-# Why care fairness in machine learning?
+# Why should you care fairness in machine learning?
 
 Because fairness is important in machine learning. ML model predictions could be skewed by a range of factors and thus might be considered unfair to certain groups or individuals. An example would be the COMPAS dataset, the african american community has higher FP than FN. This will lead to biased predictions and even more, higher prison rates for african american than the other races.
 
@@ -24,17 +25,29 @@ mlr3fairness is a comprehensive machine learning package with full support from 
 # Feature Overview
 
 * Fairness Measures
+
 **Fairness metrics are the foundations.**
 Not only you can only use those metrics to diagnose biases in models. You also need those measures to build fairness visualizations or bias mitigation algorithms in order to detect the fairness problems and correct them.
 
 * Fairness Visualizations
+
 **Fairness Visualizations are the communications.**
 You are not expected to understand fairness problems from just the fairness metrics. They are just numbers for non-experts. However, through fairness visualizations we could provide a clear, thorough and understandable way to understand the fairness problems.
 
 * Debiasing Methods
+
 **Debiasing Algorithms are the Solutions.**
 Now you could measure, see and understand the fairness problems. You want to mitigate the fairness problems that exist in their models. For this part, mlr3fairness will provide you the toolkits like reweighing or equalized odds algorithms in `FairnessPipeOps`. Your models could now correct fairness problems with one extra line of code.
 
+# Demo for Adult Dataset
+
+# Near-Future Plans
+
+# Bugs, Feedbacks and Questions
+
+mlr3fairnessWASCS is a free and open source software project that encourages participation and feedback. If you have any issues, questions, suggestions or feedback, please do not hesitate to open an “issue” about it on the GitHub page!
+
+In case of problems / bugs, it is often helpful if you provide a “minimum working example” that showcases the behaviour (but don’t worry about this if the bug is obvious).
 
 # GSOC 2021 Candidate Project
 
