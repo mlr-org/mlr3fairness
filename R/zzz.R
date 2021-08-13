@@ -5,6 +5,7 @@
 #' @import mlr3measures
 #' @import mlr3pipelines
 #' @importFrom utils getFromNamespace data
+#' @import paradox
 "_PACKAGE"
 
 .onLoad = function(libname, pkgname) { # nolint

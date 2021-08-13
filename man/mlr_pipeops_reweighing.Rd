@@ -20,6 +20,7 @@ Caution: Only fairness tasks are supported. Which means tasks need to have prote
 }
 \itemize{
 \item \code{id} :: \code{character(1)}
+\item \code{param_vals} :: \code{list}
 }
 }
 
@@ -60,13 +61,13 @@ Only fields inherited from \code{\link{PipeOpTaskPreproc}}/\code{\link{PipeOp}}.
 \section{Methods}{
 
 Methods inherited from \code{\link{PipeOpTaskPreproc}}/\code{\link{PipeOp}}.
-Helper Method: \code{get_weights()}. Return the weights used for reweighing algorithm calculation \cr
-`c(W_positive_privileged, W_negative_privileged, W_positive_unprivileged, W_negative_unprivileged)``
 }
 
 \examples{
 library(mlr3pipelines)
+library(mlr3fairness)
 library(mlr3)
+
 reweighing = po("reweighing")
 learner_po = po("learner", learner = lrn("classif.rpart"))
 
@@ -106,13 +107,22 @@ https://mlr3book.mlr-org.com/list-pipeops.html
 \subsection{Method \code{new()}}{
 Creates a new instance of this [R6][R6::R6Class][\code{PipeOp}] R6 class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PipeOpReweighing$new(id = "reweighing")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PipeOpReweighing$new(id = "reweighing", param_vals = list())}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{id}}{The PipeOps identifier in the PipeOps library.}
+
+\item{\code{param_vals}}{The parameter values to be set. There are two parameters that could be set:
+\itemize{
+\item temperature: controls the proportion between constant weight and reweighing weight. Default set to be 1
+\item const_weight: the constant weight. Default set to be 1
+Here is how it works:
+first_weight = (1 - temperature) x const_weight + temperature x reweighing_weight
+final_reweighing_weight = first_weight * old_weight (if old weight exist, otherwise oldweight = 1)
+}}
 }
 \if{html}{\out{</div>}}
 }

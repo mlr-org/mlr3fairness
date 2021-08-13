@@ -7,6 +7,25 @@ as_backend = function(id) {
   mlr3::as_data_backend(ee[[id]])
 }
 
+
+#' Is this task a fairness task?
+#' @name is_fairness_task
+#'
+#' @param task [`TaskClassif`][mlr3::TaskClassif]\cr
+#' The data task used for evaluation
+#'
+#' @return result (`logical`)
+#' @export
+#'
+#' @examples
+#' library(mlr3fairness)
+#' library(mlr3)
+#' task = tsk("compas")
+#' is_fairness_task(task)
+is_fairness_task <- function(task){
+  return(!is.na(task$col_roles$pta))
+}
+
 # Binary Measure Score
 #
 # @description
@@ -27,7 +46,7 @@ binary_measure_score = function(prediction, base_measure, data_task){
   return(c(msr1, msr2))
 }
 
-# Conditional Positive Score Over Protected Attributes
+# Conditional Binary Target Count Over Binary Protected Attribute
 #
 # @description
 # This helper function count the conditional positive/negative cases on fairness data tasks over protected attributes
@@ -36,25 +55,55 @@ binary_measure_score = function(prediction, base_measure, data_task){
 # The third element of returned scores: negative_privileged = count of negative and privileged cases
 # The fourth element of returned scores: negative_unprivileged = count of negative and unprivileged cases
 #
-#
-# @param task (`TaskClassif()`)\cr The data task with protected attributes. (Fairness Dataset)
 # @param data (`data.table`)\cr The data table contained in data task
+# @param target (`character`)\cr The target col name of the data task
 # @param positive (`character`)\cr The positive label of data task target.
 # @param pta (`character`)\cr The name of the protected attribute in data task.
 # @param privileged (`factor`) or (`character`)\cr The privileged group of data task.
 #
 # @return c(positive_privileged, positive_unprivileged, negative_privileged, negative_unprivileged)
-binary_classif_pta_count <- function(task, data, positive, pta, privileged) {
-  tar = task$target_names
-
+conditional_binary_target_pta_count <- function(data, target, positive, pta, privileged) {
   N_all = dim(data)[1]
   privileged_data = data[get(pta) == privileged]
   unprivileged_data = data[get(pta) != privileged]
 
-  positive_privileged = dim(privileged_data[get(tar) == positive])[1]
-  positive_unprivileged = dim(unprivileged_data[get(tar) == positive])[1]
+  positive_privileged = dim(privileged_data[get(target) == positive])[1]
+  positive_unprivileged = dim(unprivileged_data[get(target) == positive])[1]
   negative_privileged = dim(privileged_data)[1] - positive_privileged
   negative_unprivileged = dim(unprivileged_data)[1] - negative_privileged
 
   return( c(positive_privileged, positive_unprivileged, negative_privileged, negative_unprivileged) )
+}
+
+# Get the weights used for reweighing algorithm (Helper Function)
+#
+# @param data (`data.table`)\cr The data table contained in data task
+# @param target (`character`)\cr The target col name of the data task
+# @param positive (`factor`) or (`character`)\cr The positive label of data task target.
+# @param pta (`character`)\cr The name of the protected attribute in data task.
+# @param privileged (`factor`) or (`character`)\cr The privileged group of data task.
+#
+# @return c(weight_positive_privileged, weight_negative_privileged, weight_positive_unprivileged, weight_negative_unprivileged)
+get_reweighing_weights = function(data, target, positive, pta, privileged) {
+  print(data)
+  N_all = dim(data)[1]
+  privileged_data = data[get(pta) == privileged]
+  unprivileged_data = data[get(pta) != privileged]
+
+  N_pos_privileged = dim(privileged_data[get(target) == positive])[1]
+  N_pos_unprivileged = dim(unprivileged_data[get(target) == positive])[1]
+  N_neg_privileged = dim(privileged_data)[1] - N_pos_privileged
+  N_neg_unprivileged = dim(unprivileged_data)[1] - N_neg_privileged
+
+  N_positive = N_pos_privileged + N_pos_unprivileged
+  N_negative = N_neg_privileged + N_neg_unprivileged
+  N_privileged = N_pos_privileged + N_neg_privileged
+  N_unprivileged = N_pos_unprivileged + N_neg_unprivileged
+
+  W_positive_privileged = (N_positive * N_privileged)/(N_all * N_pos_privileged)
+  W_negative_privileged = (N_negative * N_privileged)/(N_all * N_neg_privileged)
+  W_positive_unprivileged = (N_positive * N_unprivileged)/(N_all * N_neg_unprivileged)
+  W_negative_unprivileged = (N_negative * N_unprivileged)/(N_all * N_neg_unprivileged)
+
+  return( c(W_positive_privileged, W_negative_privileged, W_positive_unprivileged, W_negative_unprivileged) )
 }

@@ -17,6 +17,7 @@
 #' PipeOpReweighing$new(id = "reweighing", param_vals = list())
 #' ```
 #' * `id` :: `character(1)`
+#' * `param_vals` :: `list`
 #'
 #' @section Input and Output Channels:
 #' Input and output channels are inherited from [`PipeOpTaskPreproc`]. Instead of a [`Task`][mlr3::Task], a
@@ -43,15 +44,15 @@
 #'
 #' @section Methods:
 #' Methods inherited from [`PipeOpTaskPreproc`]/[`PipeOp`].
-#' Helper Method: `get_weights()`. Return the weights used for reweighing algorithm calculation \cr
-#' `c(W_positive_privileged, W_negative_privileged, W_positive_unprivileged, W_negative_unprivileged)``
 #'
 #' @family PipeOps
 #' @seealso https://mlr3book.mlr-org.com/list-pipeops.html
 #' @export
 #' @examples
 #' library(mlr3pipelines)
+#' library(mlr3fairness)
 #' library(mlr3)
+#'
 #' reweighing = po("reweighing")
 #' learner_po = po("learner", learner = lrn("classif.rpart"))
 #'
@@ -68,8 +69,20 @@ PipeOpReweighing = R6Class("PipeOpReweighing",
     #' Creates a new instance of this [R6][R6::R6Class][`PipeOp`] R6 class.
     #'
     #' @param id The PipeOps identifier in the PipeOps library.
-    initialize = function(id = "reweighing") {
-      super$initialize(id, feature_types = c("numeric", "integer"))
+    #' @param param_vals The parameter values to be set. There are two parameters that could be set:
+    #' * temperature: controls the proportion between constant weight and reweighing weight. Default set to be 1
+    #' * const_weight: the constant weight. Default set to be 1
+    #' Here is how it works:
+    #' first_weight = (1 - temperature) x const_weight + temperature x reweighing_weight
+    #' final_reweighing_weight = first_weight * old_weight (if old weight exist, otherwise oldweight = 1)
+    initialize = function(id = "reweighing", param_vals = list()) {
+      ps = ParamSet$new(params = list(
+        ParamDbl$new("temperature", lower = 0, upper = Inf, tags = "train"),
+        ParamDbl$new("const_weight", lower = 0, upper = Inf, tags = "train")
+      ))
+      ps$values = list(temperature = 1, const_weight = 1)
+      super$initialize(id, param_set = ps, param_vals = param_vals,
+                       task_type = "TaskClassif", tags = "imbalanced data")
     }
   ),
   private = list(
@@ -97,52 +110,27 @@ PipeOpReweighing = R6Class("PipeOpReweighing",
       index_unpri_pos = setdiff(data[list(positive), on = target, which = T], index_pri_pos)
       index_unpri_neg = setdiff(c(1:dim(data)[1]), Reduce(union, list(index_pri_pos, index_pri_neg, index_unpri_pos)))
 
-      wcol = setnames(data.table(rep(0, dim(data)[1])), weightcolname)
+      wcol = data.table(rep(0, dim(data)[1]))
       wcol[index_pri_pos] = weights[1]
       wcol[index_pri_neg] = weights[2]
       wcol[index_unpri_pos] = weights[3]
       wcol[index_unpri_neg] = weights[4]
 
+      tem = self$param_set$values$temperature
+      wcol = (1 - tem) * self$param_set$values$const_weight + tem * wcol
+      wcol = ifelse(identical(task$col_roles$weight, character(0)),
+                    wcol,
+                    wcol * task$weights$weight)
+      wcol = setnames(as.data.table(wcol), weightcolname)
+
       task$cbind(wcol)
-      task$col_roles$feature = union(task$col_roles$feature, weightcolname)
+      task$col_roles$feature = setdiff(task$col_roles$feature, weightcolname)
       task$col_roles$weight = weightcolname
       task
     },
 
-    .predict_task = function(task){
-      return( private$.train_task(task) )
-    },
-
-    # Get the weights used for reweighing algorithm (Helper Function)
-    #
-    # @param task The task
-    # @param data The complete data.table in task
-    # @param positive Default positive label in target
-    # @param pta The name of the protected attribute, (task$col_roles$pta)
-    # @param privileged The privileged group in protected attribute
-    #
-    # @return c(weight_positive_privileged, weight_negative_privileged, weight_positive_unprivileged, weight_negative_unprivileged)
-    get_weights = function(task, data, positive, pta, privileged) {
-      conditional_counts = binary_classif_pta_count(task, data, positive, pta, privileged)
-      N_pos_privileged = conditional_counts[1]
-      N_pos_unprivileged = conditional_counts[2]
-      N_neg_privileged = conditional_counts[3]
-      N_neg_unprivileged = conditional_counts[4]
-
-      N_all = dim(data)[1]
-      N_positive = N_pos_privileged + N_pos_unprivileged
-      N_negative = N_neg_privileged + N_neg_unprivileged
-      N_privileged = N_pos_privileged + N_neg_privileged
-      N_unprivileged = N_pos_unprivileged + N_neg_unprivileged
-
-      W_positive_privileged = (N_positive * N_privileged)/(N_all * N_pos_privileged)
-      W_negative_privileged = (N_negative * N_privileged)/(N_all * N_neg_privileged)
-      W_positive_unprivileged = (N_positive * N_unprivileged)/(N_all * N_neg_unprivileged)
-      W_negative_unprivileged = (N_negative * N_unprivileged)/(N_all * N_neg_unprivileged)
-
-      return( c(W_positive_privileged, W_negative_privileged, W_positive_unprivileged, W_negative_unprivileged) )
-    }
+    .predict_task = identity
   )
 )
 
-mlr_pipeops$add("reweighing", PipeOpReweighing)
+mlr3pipelines::mlr_pipeops$add("reweighing", PipeOpReweighing)

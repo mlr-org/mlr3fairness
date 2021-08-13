@@ -2,11 +2,13 @@
 
 export(MeasureFairness)
 export(PipeOpReweighing)
+export(is_fairness_task)
 import(R6)
 import(checkmate)
 import(mlr3)
 import(mlr3measures)
 import(mlr3misc)
 import(mlr3pipelines)
+import(paradox)
 importFrom(utils,data)
 importFrom(utils,getFromNamespace)
