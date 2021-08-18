@@ -103,7 +103,7 @@ PipeOpReweighing = R6Class("PipeOpReweighing",
       privileged = unlist(task$data()[1,task$col_roles$pta, with = F])
       target = task$target_names
 
-      weights = private$get_weights(task, data, positive, pta, privileged)
+      weights = get_reweighing_weights(data, target, positive, pta, privileged)
       tem_data = data[,c(pta, target), with=F]
       index_pri_pos = data[list(privileged, positive), on = c(pta, target), which = T]
       index_pri_neg = setdiff(data[list(privileged), on = pta, which = T], index_pri_pos)
@@ -126,11 +126,11 @@ PipeOpReweighing = R6Class("PipeOpReweighing",
       task$cbind(wcol)
       task$col_roles$feature = setdiff(task$col_roles$feature, weightcolname)
       task$col_roles$weight = weightcolname
+
+      print(task)
       task
     },
 
     .predict_task = identity
   )
 )
-
-mlr3pipelines::mlr_pipeops$add("reweighing", PipeOpReweighing)

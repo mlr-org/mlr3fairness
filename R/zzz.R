@@ -6,6 +6,7 @@
 #' @import mlr3pipelines
 #' @importFrom utils getFromNamespace data
 #' @import paradox
+#' @import data.table
 "_PACKAGE"
 
 .onLoad = function(libname, pkgname) { # nolint
@@ -33,4 +34,7 @@
   x$add("fairness.acc", MeasureFairness, base_measure = msr("classif.acc"), operation = "groupwise_quotient")
   x$add("fairness.fp", MeasureFairness, base_measure = msr("classif.fp"), operation = "groupwise_quotient")
   x$add("fairness.fn", MeasureFairness, base_measure = msr("classif.fn"), operation = "groupwise_quotient")
+
+  x = getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
+  x$add("reweighing", PipeOpReweighing)
 }

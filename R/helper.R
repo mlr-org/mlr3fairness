@@ -63,12 +63,12 @@ binary_measure_score = function(prediction, base_measure, data_task){
 #
 # @return c(positive_privileged, positive_unprivileged, negative_privileged, negative_unprivileged)
 conditional_binary_target_pta_count <- function(data, target, positive, pta, privileged) {
-  N_all = dim(data)[1]
-  privileged_data = data[get(pta) == privileged]
-  unprivileged_data = data[get(pta) != privileged]
+  privileged_index = data[list(privileged), on = pta, which = T]
+  privileged_data = data[privileged_index,]
+  unprivileged_data = data[-privileged_index,]
 
-  positive_privileged = dim(privileged_data[get(target) == positive])[1]
-  positive_unprivileged = dim(unprivileged_data[get(target) == positive])[1]
+  positive_privileged = length(privileged_data[positive, on = target, which = T])
+  positive_unprivileged = length(unprivileged_data[positive, on = target, which = T])
   negative_privileged = dim(privileged_data)[1] - positive_privileged
   negative_unprivileged = dim(unprivileged_data)[1] - negative_privileged
 
@@ -85,15 +85,13 @@ conditional_binary_target_pta_count <- function(data, target, positive, pta, pri
 #
 # @return c(weight_positive_privileged, weight_negative_privileged, weight_positive_unprivileged, weight_negative_unprivileged)
 get_reweighing_weights = function(data, target, positive, pta, privileged) {
-  print(data)
   N_all = dim(data)[1]
-  privileged_data = data[get(pta) == privileged]
-  unprivileged_data = data[get(pta) != privileged]
+  binary_classify_count = conditional_binary_target_pta_count(data, target, positive, pta, privileged)
 
-  N_pos_privileged = dim(privileged_data[get(target) == positive])[1]
-  N_pos_unprivileged = dim(unprivileged_data[get(target) == positive])[1]
-  N_neg_privileged = dim(privileged_data)[1] - N_pos_privileged
-  N_neg_unprivileged = dim(unprivileged_data)[1] - N_neg_privileged
+  N_pos_privileged = binary_classify_count[1]
+  N_pos_unprivileged = binary_classify_count[2]
+  N_neg_privileged = binary_classify_count[3]
+  N_neg_unprivileged = binary_classify_count[4]
 
   N_positive = N_pos_privileged + N_pos_unprivileged
   N_negative = N_neg_privileged + N_neg_unprivileged
