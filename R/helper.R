@@ -57,22 +57,24 @@ binary_measure_score = function(prediction, base_measure, data_task){
 #
 # @param data (`data.table`)\cr The data table contained in data task
 # @param target (`character`)\cr The target col name of the data task
-# @param positive (`character`)\cr The positive label of data task target.
 # @param pta (`character`)\cr The name of the protected attribute in data task.
 # @param privileged (`factor`) or (`character`)\cr The privileged group of data task.
 #
 # @return c(positive_privileged, positive_unprivileged, negative_privileged, negative_unprivileged)
-conditional_binary_target_pta_count <- function(data, target, positive, pta, privileged) {
-  privileged_index = data[list(privileged), on = pta, which = T]
-  privileged_data = data[privileged_index,]
-  unprivileged_data = data[-privileged_index,]
+conditional_binary_target_pta_count <- function(data, target, pta, privileged) {
+  # count grouped data and cast from long to wide
+  tab = data[, .N, by = c(target, pta)]
+  tab = dcast(tab, formulate(pta, "target"), value.var = "N", drop = FALSE)
 
-  positive_privileged = length(privileged_data[positive, on = target, which = T])
-  positive_unprivileged = length(unprivileged_data[positive, on = target, which = T])
-  negative_privileged = dim(privileged_data)[1] - positive_privileged
-  negative_unprivileged = dim(unprivileged_data)[1] - negative_privileged
+  # reorder pta to have [privileged] in first row
+  #
+  # NB: cols do not need to be reordered, the positive class is always first class level
+  # if the data is extracted from `task$data()`.
+  order = unique(c(match(privileged, tab[[pta]]), seq_row(tab)))
+  tab = tab[order]
 
-  return( c(positive_privileged, positive_unprivileged, negative_privileged, negative_unprivileged) )
+  # convert to matrix to be able to operate via colSums() and rowSums()
+  as.matrix(tab[, !pta, with = FALSE], rownames = tab[[pta]])
 }
 
 # Get the weights used for reweighing algorithm (Helper Function)
@@ -83,15 +85,15 @@ conditional_binary_target_pta_count <- function(data, target, positive, pta, pri
 # @param pta (`character`)\cr The name of the protected attribute in data task.
 # @param privileged (`factor`) or (`character`)\cr The privileged group of data task.
 #
-# @return c(weight_positive_privileged, weight_negative_privileged, weight_positive_unprivileged, weight_negative_unprivileged)
+# @return matrix(c(weight_positive_privileged, weight_negative_privileged, weight_positive_unprivileged, weight_negative_unprivileged), nrow = 2)
 get_reweighing_weights = function(data, target, positive, pta, privileged) {
   N_all = dim(data)[1]
-  binary_classify_count = conditional_binary_target_pta_count(data, target, positive, pta, privileged)
+  binary_classify_count = conditional_binary_target_pta_count(data, target, pta, privileged)
 
-  N_pos_privileged = binary_classify_count[1]
-  N_pos_unprivileged = binary_classify_count[2]
-  N_neg_privileged = binary_classify_count[3]
-  N_neg_unprivileged = binary_classify_count[4]
+  N_pos_privileged = binary_classify_count[1,1]
+  N_pos_unprivileged = binary_classify_count[2,1]
+  N_neg_privileged = binary_classify_count[1,2]
+  N_neg_unprivileged = binary_classify_count[2,2]
 
   N_positive = N_pos_privileged + N_pos_unprivileged
   N_negative = N_neg_privileged + N_neg_unprivileged

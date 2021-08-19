@@ -126,8 +126,6 @@ PipeOpReweighing = R6Class("PipeOpReweighing",
       task$cbind(wcol)
       task$col_roles$feature = setdiff(task$col_roles$feature, weightcolname)
       task$col_roles$weight = weightcolname
-
-      print(task)
       task
     },
 
