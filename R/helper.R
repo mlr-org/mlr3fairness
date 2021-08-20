@@ -64,7 +64,7 @@ binary_measure_score = function(prediction, base_measure, data_task){
 conditional_binary_target_pta_count <- function(data, target, pta, privileged) {
   # count grouped data and cast from long to wide
   tab = data[, .N, by = c(target, pta)]
-  tab = dcast(tab, formulate(pta, "target"), value.var = "N", drop = FALSE)
+  tab = dcast(tab, formulate(pta, target), value.var = "N", drop = FALSE)
 
   # reorder pta to have [privileged] in first row
   #

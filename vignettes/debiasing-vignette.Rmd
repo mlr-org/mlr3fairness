@@ -1,0 +1,26 @@
+---
+title: "Debiasing Methods Vignette"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# mlr3fairness: Fairness Pipeline Operators
+
+All the debiasing methods cannot be independent and has to be used with the learners. For the convinience of the users, we provide all the debiasing methods encapsulated as Pipeline Operators. The way to use those pipeline operators are as simple as some popular packages like `tidyverse` or `dplyr`. Below we will show some examples.
+
+# Introduction to this vignette.
+
+Instead of just showing you how to use debiasing methods. We want to show you how the least code to measure the fairness metrics, visualize the fairness metrics, and using debiasing methods to correct the fairness problems.
+
+Let's start with the data task we mostly used, the 
