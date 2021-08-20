@@ -1,5 +1,5 @@
 ---
-title: "measures-vignette"
+title: "Measures Vignette"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{measures-vignette}
