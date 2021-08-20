@@ -53,7 +53,6 @@ design = benchmark_grid(
 
 bmr = benchmark(design)
 fairness_measure = msr("fairness.tpr")
-fairness_measures = msrs(c("fairness.tpr", "fairness.fnr"))
 
 fairness_accuracy_tradeoff(predictions, fairness_measure, task)
 fairness_accuracy_tradeoff(bmr, fairness_measure)

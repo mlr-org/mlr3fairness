@@ -2,7 +2,7 @@
 % Please edit documentation in R/visualize.R
 \name{fairness_compare}
 \alias{fairness_compare}
-\title{Fairness Comparison}
+\title{Fairness Comparison Visualization}
 \usage{
 fairness_compare(object, ...)
 }

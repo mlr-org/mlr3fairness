@@ -58,7 +58,7 @@ fairness_accuracy_tradeoff <- function(object, ...){
 #' @export
 fairness_accuracy_tradeoff.PredictionClassif <- function(object, fairness_measure = msr("fairness.fpr"), task, acc_measure = msr("classif.acc"), ...){
   data = data.table(accuracy = object$score(acc_measure),
-                    fairness = object$score(fairness_measure, task)) #Create a data table to store both fairness and acc metrics.
+               fairness = object$score(fairness_measure, task))
   ggplot(data, aes(x = accuracy, y=fairness)) +
     labs(y = fairness_measure$id, x=acc_measure$id) +
     geom_point()
@@ -66,9 +66,9 @@ fairness_accuracy_tradeoff.PredictionClassif <- function(object, fairness_measur
 
 #' @export
 fairness_accuracy_tradeoff.BenchmarkResult <- function(object, fairness_measure = msr("fairness.fpr"), acc_measure = msr("classif.acc"), ...){
-  data = data.table(model = object$score(fairness_measure)[, "learner_id"][[1]],
-                    accuracy = object$score(acc_measure)[, acc_measure$id, with = F],
-                    metrics = object$score(fairness_measure)[, fairness_measure$id, with = F])
+  data = cbind(model = object$score(fairness_measure)[, "learner_id"][[1]],
+               accuracy = object$score(acc_measure)[, acc_measure$id, with = F],
+               metrics = object$score(fairness_measure)[, fairness_measure$id, with = F])
   colnames(data) <- c("model", "accuracy", "metrics")
   ggplot(data, aes(x = accuracy, y=metrics, colour=model)) +
     labs(y = fairness_measure$id, x=acc_measure$id) +
@@ -151,10 +151,18 @@ fairness_compare.PredictionClassif <- function(object, fairness_measure = msr("f
 
 #' @export
 fairness_compare.BenchmarkResult <- function(object, fairness_measure = msr("fairness.acc"), ...){
-  fairness_name = ids(fairness_measure)
+
+  if("list" %in% class(fairness_measure)) {
+    assert_measures(as_measures(fairness_measure))
+    fairness_name = ids(fairness_measure)
+  } else {
+    assert_measure(as_measure(fairness_measure))
+    fairness_name = fairness_measure$id
+  }
+
   fairness_data = object$score(fairness_measure)
-  data = melt(data.table(model = fairness_data$learner_id,
-                         fairness_data[, fairness_name, with=FALSE]),
+  data = melt(cbind(model = fairness_data$learner_id,
+                    fairness_data[, fairness_name, with=FALSE]),
               id.vars = "model")
   ggplot(data, aes(x=model, y=value, fill=model)) +
     geom_bar(stat = "identity",  width=1/length(unique(data$model))) +
@@ -208,8 +216,7 @@ fairness_prediction_density <- function(object, ...){
 
 #' @export
 fairness_prediction_density.PredictionClassif<- function(object, task, ...){
-  data <- melt(data.table(task$data(cols = task$col_roles$pta),
-                          object$prob[,1]),
+  data <- melt(cbind(task$data(cols = task$col_roles$pta), object$prob[,1]),
                id = task$col_roles$pta)
   colnames(data) <- c("protected_variable", "variable", "probability")
 
@@ -226,7 +233,8 @@ fairness_prediction_density.PredictionClassif<- function(object, task, ...){
 
 #' @export
 fairness_prediction_density.BenchmarkResult <- function(object, task, ...){
-  NULL
+  stop("Not implemented")
+  NULL #To be implemented, how should it looks like?
 }
 
 #' @export

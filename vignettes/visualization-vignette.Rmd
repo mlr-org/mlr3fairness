@@ -32,10 +32,10 @@ For this example, we used the adult dataset. Since mlr3fairness provide the adul
 Then we choose Random Forest as our model. For comparison, we introduce both Random Forest and Decision Tree for benchmark results.
 
 ```{r}
-data_task = tsk("adult_train")
+task = tsk("adult_train")
 learner = lrn("classif.ranger", predict_type = "prob")
-learner$train(data_task)
-predictions = learner$predict(data_task)
+learner$train(task)
+predictions = learner$predict(task)
 
 design = benchmark_grid(
   tasks = tsk("adult_train"),
@@ -68,7 +68,7 @@ fairness_measures = msrs(c("fairness.tpr", "fairness.fnr"))
 If we want to compare the predictions for protected attributes for the same model. Then Fairness Prediction Density Plot would be the optimum solution. By using fairness prediction density plot we could see the model predicted probability about whether the observations have income <=50K or not. Then by comparing the predicted probability for male and female. We could see male have a much higher probability to have income higher than females. This plot then indicates some potential fairness problems in our model.
 
 ```{r}
-fairness_prediction_density(predictions, data_task)
+fairness_prediction_density(predictions, task)
 ```
 
 # Fairness Accuracy Tradeoff Plot
@@ -76,7 +76,7 @@ fairness_prediction_density(predictions, data_task)
 Since fairness metrics are usually associated with the total accuracy of the model. There is a hidden tradeoff between accuracy and fairness metrics. Users could use the ```fairness_accuracy_tradeoff``` function to visualize such a tradeoff. For example, with one single measure the visualization will contain one single point indicating the relation between fairness and accuracy. However, with ```BenchmarkResults``` or ```ResamplingResults```. Users could compare such tradeoffs between different models and resamplings.
 
 ```{r}
-fairness_accuracy_tradeoff(predictions, fairness_measure, data_task)
+fairness_accuracy_tradeoff(predictions, fairness_measure, task)
 fairness_accuracy_tradeoff(bmr, fairness_measure)
 ```
 
@@ -85,8 +85,8 @@ fairness_accuracy_tradeoff(bmr, fairness_measure)
 Then finally, if the user wants to compare fairness metrics either from a single model or multiple models. They could use ```fairness_compare``` functions. Such functions could compare either one metric or multiple metrics. In the following we compared the fairness performance between decision trees and random forests.
 
 ```{r}
-fairness_compare(predictions, fairness_measure, data_task)
-fairness_compare(predictions, fairness_measures, data_task)
+fairness_compare(predictions, fairness_measure, task)
+fairness_compare(predictions, fairness_measures, task)
 fairness_compare(bmr, fairness_measure)
 fairness_compare(bmr, fairness_measures)
 ```
