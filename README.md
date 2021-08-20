@@ -51,6 +51,18 @@ Now you could measure, see and understand the fairness problems. You want to mit
 
 # Near-Future Plans
 
+## Visualizations
+1. Should we add support to BenchmarkResult and Resampling result to fairness_prediction_density visulization, and how does it look like.
+2. Improvement on visualizations, like anchor points and others. See issues.
+3. More visualizations.
+
+## Metrics
+1. Add support to non-binary target attributes and non-binary protected attributes.
+2. Add metrics that are not supported with current design in `extra_measures.R`.
+
+## Debiasing Methods
+1. More Debiasing Methods, post-processing and in-processing.
+
 # Bugs, Feedbacks and Questions
 
 mlr3fairnessWASCS is a free and open source software project that encourages participation and feedback. If you have any issues, questions, suggestions or feedback, please do not hesitate to open an “issue” about it on the GitHub page!
