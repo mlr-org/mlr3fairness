@@ -26,8 +26,6 @@
 #' * `task` ([TaskClassif])\cr
 #' The data task that contains the protected column, only required when the class of object is ([PredictionClassif])
 #'
-#'
-#'
 #' @examples
 #' library(mlr3fairness)
 #' library(mlr3learners)
@@ -49,7 +47,6 @@
 #'
 #' bmr = benchmark(design)
 #' fairness_measure = msr("fairness.tpr")
-#' fairness_measures = msrs(c("fairness.tpr", "fairness.fnr"))
 #'
 #' fairness_accuracy_tradeoff(predictions, fairness_measure, task)
 #' fairness_accuracy_tradeoff(bmr, fairness_measure)
@@ -61,7 +58,7 @@ fairness_accuracy_tradeoff <- function(object, ...){
 #' @export
 fairness_accuracy_tradeoff.PredictionClassif <- function(object, fairness_measure = msr("fairness.fpr"), task, acc_measure = msr("classif.acc"), ...){
   data = data.table(accuracy = object$score(acc_measure),
-                    fairness = object$score(fairness_measure, task))
+                    fairness = object$score(fairness_measure, task)) #Create a data table to store both fairness and acc metrics.
   ggplot(data, aes(x = accuracy, y=fairness)) +
     labs(y = fairness_measure$id, x=acc_measure$id) +
     geom_point()
@@ -69,7 +66,7 @@ fairness_accuracy_tradeoff.PredictionClassif <- function(object, fairness_measur
 
 #' @export
 fairness_accuracy_tradeoff.BenchmarkResult <- function(object, fairness_measure = msr("fairness.fpr"), acc_measure = msr("classif.acc"), ...){
-  data = data.table(model = object$score(fairness_measure)[, "learner_id"],
+  data = data.table(model = object$score(fairness_measure)[, "learner_id"][[1]],
                     accuracy = object$score(acc_measure)[, acc_measure$id, with = F],
                     metrics = object$score(fairness_measure)[, fairness_measure$id, with = F])
   colnames(data) <- c("model", "accuracy", "metrics")
@@ -154,7 +151,7 @@ fairness_compare.PredictionClassif <- function(object, fairness_measure = msr("f
 
 #' @export
 fairness_compare.BenchmarkResult <- function(object, fairness_measure = msr("fairness.acc"), ...){
-  fairness_name = get_msrs_name(fairness_measure)
+  fairness_name = ids(fairness_measure)
   fairness_data = object$score(fairness_measure)
   data = melt(data.table(model = fairness_data$learner_id,
                          fairness_data[, fairness_name, with=FALSE]),

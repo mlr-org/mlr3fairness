@@ -26,15 +26,3 @@ binary_measure_score = function(prediction, base_measure, data_task){
 
   return(c(msr1, msr2))
 }
-
-# Get Measures Name
-# @description
-# This helper function returns name of msr or msrs
-#
-# @param object one single measure (msr) or multiple measures (msrs)
-get_msrs_name <- function(object, NA_character = NA) {
-  if( any(class(object) == "Measure") ) { return(object$id) }
-
-  result = map_chr(object, function(x) ifelse(is.null(x$id), NA_character, x$id))
-  return(result)
-}
