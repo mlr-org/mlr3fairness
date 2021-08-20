@@ -23,7 +23,7 @@ Because fairness is important in machine learning. ML model predictions could be
 mlr3fairness is a comprehensive machine learning package with full support from mlr3. There are three major components of this package:
 * **Fairness Measures:** Provide fairness metrics (You could also create your own!!!)
 * **Fairness Visualizations:** Diagnose fairness problems through visualizations with one function call.
-* **Debiasing Methods:**Correct fairness problems in three lines of code.
+* **Debiasing Methods:** Correct fairness problems in three lines of code.
 
 # Feature Overview
 
