@@ -44,5 +44,6 @@ Collate:
     'helper.R'
     'operations.R'
     'zzz.R'
+    'extra_measures.R'
 Config/testthat/edition: 3
 VignetteBuilder: knitr

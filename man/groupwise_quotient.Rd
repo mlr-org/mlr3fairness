@@ -4,14 +4,14 @@
 \alias{groupwise_quotient}
 \title{Groupwise Quotient (Fairness Metrics)}
 \usage{
-groupwise_quotient(prediction, base_measure, data_task, ...)
+groupwise_quotient(prediction, base_measure, task, ...)
 }
 \arguments{
 \item{prediction}{(\code{PredictionClassif()})\cr The predictions of the learner.}
 
 \item{base_measure}{(\code{Measure()})\cr The base measures used to evaluate.}
 
-\item{data_task}{(\code{TaskClassif()})\cr The data task for the fairness metric.}
+\item{task}{(\code{TaskClassif()})\cr The data task for the fairness metric.}
 
 \item{...}{Further arguments, currently ignored.}
 }

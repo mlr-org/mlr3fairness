@@ -14,12 +14,12 @@
 #' @examples
 #' # Create MeasureFairness to measure the Predictive Parity.
 #' library(mlr3)
-#' data_task = tsk("adult_train")
+#' task = tsk("adult_train")
 #' learner = lrn("classif.rpart", cp = .01)
-#' learner$train(data_task)
+#' learner$train(task)
 #' measure = msr("fairness", base_measure = msr("classif.ppv"), operation = "groupwise_quotient")
-#' predictions = learner$predict(data_task)
-#' predictions$score(measure, task = data_task)
+#' predictions = learner$predict(task)
+#' predictions$score(measure, task = task)
 MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALSE,
   public = list(
     #' @template field_base_measure
@@ -58,7 +58,7 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
     fun = NULL,
 
     .score = function(prediction, task, ...) {
-      invoke(private$fun, prediction = prediction, data_task = task, base_measure = self$base_measure)
+      invoke(private$fun, prediction = prediction, task = task, base_measure = self$base_measure)
     }
   )
 )

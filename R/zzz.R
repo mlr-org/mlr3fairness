@@ -35,6 +35,9 @@
   x$add("fairness.fp", MeasureFairness, base_measure = msr("classif.fp"), operation = "groupwise_quotient")
   x$add("fairness.fn", MeasureFairness, base_measure = msr("classif.fn"), operation = "groupwise_quotient")
 
+  # Extra customized measures
+  x$add("classif.pp", MeasurePositiveProbability)
+
   x = getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
   x$add("reweighing", PipeOpReweighing)
 }

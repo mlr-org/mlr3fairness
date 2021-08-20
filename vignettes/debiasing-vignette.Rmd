@@ -1,9 +1,8 @@
 ---
 title: "Debiasing Methods Vignette"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{debiasing-vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,12 +14,52 @@ knitr::opts_chunk$set(
 )
 ```
 
-# mlr3fairness: Fairness Pipeline Operators
+# Introduction: Fairness Pipeline Operators
 
-All the debiasing methods cannot be independent and has to be used with the learners. For the convinience of the users, we provide all the debiasing methods encapsulated as Pipeline Operators. The way to use those pipeline operators are as simple as some popular packages like `tidyverse` or `dplyr`. Below we will show some examples.
+All the debiasing methods cannot be independent and has to be used with the learners (aka models). For the convenience of the users, we provide all the debiasing methods encapsulated as Pipeline Operators (PipelineOp). The way to use those pipeline operators are as simple as some popular packages like `tidyverse` or `dplyr`. Below we will show some examples.
 
-# Introduction to this vignette.
+However, users need to be aware of the optimum debiasing methods are not the same. Instead, it heavily depends on which fairness metric users care the most and the dataset. We will illustrate more details in our example.
 
-Instead of just showing you how to use debiasing methods. We want to show you how the least code to measure the fairness metrics, visualize the fairness metrics, and using debiasing methods to correct the fairness problems.
+# Pre-requsite: Data Tasks
+In this example, we will keep using the very famous Adult dataset and choose the protected field to be “sex”. The predictions are a binary variable indicate whether the selected people have income more than 50K or less than 50K. Then we will show the basic usages of Debiasing Methods with adult dataset.
 
-Let's start with the data task we mostly used, the 
+```{r}
+library(mlr3fairness)
+library(mlr3pipelines)
+library(mlr3)
+
+task = tsk("adult_train")
+```
+
+
+# Metrics: Fairness Measures
+Suppose we want to use one fairness measure called Disparate Impact Score, with the formula to be P(positive prediction | privileged group) / P(positive prediction | unprivileged group). Ideally a unbiased learner will generate predictions with disparate impact score close to 1. Which means no significant difference on the proportion of the positive prediction between the binary group in protected attribute.
+
+Now with the adult dataset. Let's use decision tree as our learner and create disparate impact score as our fairness measure to verify this on adult dataset. Below we could see the score is about 1.287. Which is not bad.
+
+```{r}
+# Set the decision tree complexity parameter to be 0.005
+learner = lrn("classif.rpart", cp = 0.005)
+learner$train(task)
+predictions = learner$predict(task)
+
+# Create the fairness measure disparate impact score
+measure = msr("fairness", base_measure = msr("classif.pp"), operation = "groupwise_quotient")
+predictions$score(measure, task = task)
+```
+
+# Debiasing: Reweighing algorithms
+
+Now let's use reweighing algorithm. We could create reweighing algorithm using the pipeline operators. After we applied the reweighing algorithms, the disparate impact score decreased to about 1.181. Considering we are using quotient, this is 8.23% improvement in this metric, well done!!!
+
+```{r}
+reweighing = po("reweighing")
+learner_po = po("learner", learner = lrn("classif.rpart", cp = 0.005))
+graph = reweighing %>>% learner_po
+glrn = GraphLearner$new(graph)
+glrn$train(task)
+reweighing_predictions = glrn$predict(task)
+reweighing_predictions$score(measure, task = task)
+```
+
+# Becareful: Overall accuracy and other metrics.

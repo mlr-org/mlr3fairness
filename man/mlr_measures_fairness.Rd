@@ -36,12 +36,12 @@ A set of widely used metrics is included in mlr3fairness.
 \examples{
 # Create MeasureFairness to measure the Predictive Parity.
 library(mlr3)
-data_task = tsk("adult_train")
+task = tsk("adult_train")
 learner = lrn("classif.rpart", cp = .01)
-learner$train(data_task)
+learner$train(task)
 measure = msr("fairness", base_measure = msr("classif.ppv"), operation = "groupwise_quotient")
-predictions = learner$predict(data_task)
-predictions$score(measure, task = data_task)
+predictions = learner$predict(task)
+predictions$score(measure, task = task)
 # Predfined measures:
 msr("fairness.fpr")
 msr("fairness.acc")
