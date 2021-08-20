@@ -1,4 +1,4 @@
-# mlr3fairness
+# [mlr3fairness](https://github.com/mlr-org/mlr3fairness)
 ## Machine Learning Fairness Extension for [mlr3](https://github.com/mlr-org/mlr3).
 
 [![tic](https://github.com/mlr-org/mlr3proba/workflows/tic/badge.svg?branch=main)](https://github.com/mlr-org/mlr3fairness/actions)
@@ -21,11 +21,9 @@ Because fairness is important in machine learning. ML model predictions could be
 # What is mlr3fairness?
 
 mlr3fairness is a comprehensive machine learning package with full support from mlr3. There are three major components of this package:
-|Features|Description|
-|---|---|
-| Fairness Measures  |  Provide fairness metrics (You could also create your own!!!)|
-|   Fairness Visualizations |  Diagnose fairness problems through visualizations with one function call. |
-|   Debiasing Methods |  Correct fairness problems in three lines of code. |
+* **Fairness Measures:** Provide fairness metrics (You could also create your own!!!)
+* **Fairness Visualizations:** Diagnose fairness problems through visualizations with one function call.
+* **Debiasing Methods:**Correct fairness problems in three lines of code.
 
 # Feature Overview
 
