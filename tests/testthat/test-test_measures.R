@@ -42,3 +42,8 @@ test_that("fairness.fn can be loaded and work as expected", {
   msr_obj = msr("fairness", base_measure = msr("classif.fn"), operation = "groupwise_abs_diff")
   expect_true( predictions$score(msr_obj, test_data) == 0)
 })
+
+test_that("fairness.pp (disparate impact score) can be loaded and work as expected", {
+  msr_obj = msr("fairness", base_measure = msr("classif.pp"), operation = "groupwise_quotient")
+  expect_true( predictions$score(msr_obj, test_data) == 1)
+})

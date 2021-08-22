@@ -98,12 +98,13 @@ PipeOpReweighing = R6Class("PipeOpReweighing",
       }
 
       data = task$data()
-      positive = task$positive
       pta = task$col_roles$pta
-      privileged = unlist(task$data()[1,task$col_roles$pta, with = F])
       target = task$target_names
+      #The positive and privileged class are always first class level as get_reweighing_weights needed
+      privileged = unlist(task$data()[1,task$col_roles$pta, with = F])
+      positive = unlist(task$data()[1,task$target_names, with = F])
 
-      weights = get_reweighing_weights(data, target, positive, pta, privileged)
+      weights = get_reweighing_weights(data, target, pta, privileged)
       tem_data = data[,c(pta, target), with=F]
       index_pri_pos = data[list(privileged, positive), on = c(pta, target), which = T]
       index_pri_neg = setdiff(data[list(privileged), on = pta, which = T], index_pri_pos)

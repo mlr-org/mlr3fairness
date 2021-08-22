@@ -81,12 +81,11 @@ conditional_binary_target_pta_count <- function(data, target, pta, privileged) {
 #
 # @param data (`data.table`)\cr The data table contained in data task
 # @param target (`character`)\cr The target col name of the data task
-# @param positive (`factor`) or (`character`)\cr The positive label of data task target.
 # @param pta (`character`)\cr The name of the protected attribute in data task.
 # @param privileged (`factor`) or (`character`)\cr The privileged group of data task.
 #
 # @return matrix(c(weight_positive_privileged, weight_negative_privileged, weight_positive_unprivileged, weight_negative_unprivileged), nrow = 2)
-get_reweighing_weights = function(data, target, positive, pta, privileged) {
+get_reweighing_weights = function(data, target, pta, privileged) {
   N_all = dim(data)[1]
   binary_classify_count = conditional_binary_target_pta_count(data, target, pta, privileged)
 
