@@ -47,6 +47,26 @@ Now you could measure, see and understand the fairness problems. You want to mit
 
 # Demo for Adult Dataset
 
+```r
+library(mlr3fairness)
+
+#Initialize Fairness Measure
+fairness_measure = msr("fairness.fpr")
+#Initialize tasks
+task_train = tsk("adult_train")
+task_test = tsk("adult_test")
+#Initialize model
+learner = lrn("classif.rpart", predict_type = "prob")
+
+#Verify fairness metrics
+learner$train(task_train)
+predictions = learner$predict(task_test)
+predictions$score(fairness_measure, task = task_test)
+
+#Visualize the predicted probability score based on protected attribute.
+fairness_prediction_density(predictions, task_test)
+```
+
 # Near-Future Plans
 
 ## Visualizations
