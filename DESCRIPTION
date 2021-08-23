@@ -23,7 +23,8 @@ Imports:
     R6 (>= 2.4.1),
     data.table (>= 1.13.6),
     mlr3measures (>= 0.3.0),
-    mlr3misc
+    mlr3misc,
+    ggplot2
 Suggests:
     rmarkdown,
     knitr,
@@ -41,5 +42,6 @@ Collate:
     'operations.R'
     'helper.R'
     'zzz.R'
+    'visualize.R'
 Config/testthat/edition: 3
 VignetteBuilder: knitr

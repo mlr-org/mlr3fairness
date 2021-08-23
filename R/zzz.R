@@ -3,6 +3,8 @@
 #' @import R6
 #' @import checkmate
 #' @import mlr3measures
+#' @import ggplot2
+#' @import data.table
 #' @importFrom utils getFromNamespace data
 "_PACKAGE"
 

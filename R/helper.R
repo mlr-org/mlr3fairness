@@ -19,7 +19,7 @@ as_backend = function(id) {
 # @return c(measure_score_1, measure_score_2)
 binary_measure_score = function(prediction, base_measure, data_task){
   subcol = data_task$col_roles$pta
-  prediction = split(as.data.table(prediction), data_task$data(cols = subcol))
+  prediction = split(as.data.table(prediction), data_task$data(cols = subcol, rows = prediction$row_ids)[[1]])
   prediction = map(prediction, as_prediction_classif)
   msr1 = prediction[[1]]$score(base_measure)
   msr2 = prediction[[2]]$score(base_measure)
