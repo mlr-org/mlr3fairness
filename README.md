@@ -15,7 +15,7 @@ remotes::install_github("mlr-org/mlr3fairness")
 
 # Why should you care fairness in machine learning?
 
-Because fairness is important in machine learning. ML model predictions could be skewed by a range of factors and thus might be considered unfair to certain groups or individuals. An example would be the COMPAS dataset, the african american community has higher FP than FN. This will lead to biased predictions and even more, higher prison rates for african american than the other races.
+Because fairness is important in machine learning. Machine Learning model predictions could be skewed by a range of factors and thus might be considered unfair to certain groups or individuals. An example would be the COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) dataset, which is a popular commercial algorithm used by judges and parole officers for scoring criminal defendant’s likelihood of reoffending (recidivism). It has been shown that the algorithm is biased in favor of white defendants, and against black inmates. In short, the african american community has higher False Positive Rate than False Negative Rate. This will lead to biased predictions and even more, higher prison rates for african american than the other races.
 
 
 # What is mlr3fairness?
