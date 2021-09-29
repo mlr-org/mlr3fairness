@@ -1,0 +1,93 @@
+---
+title: "Fairness Visualizations"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{visualization-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(mlr3fairness)
+library(mlr3learners)
+library(mlr3)
+library(ggplot2)
+library(data.table)
+```
+
+# Why we need fairness visualizations:
+
+Through fairness visualizations we could provide a clear, thorough and understandable way to understand the fairness problems. More than that, users could quickly diagnose their models through visualizations and locate the fairness problems. In this vignette we will showcase some of the pre build fairness visualization functions.
+
+# Setup Data tasks, learner and predictions
+
+For this example, we used the adult dataset. Since mlr3fairness provide the adult datasets in adult_train and adult_test. We will load those two datasets separately. Keep in mind all the datasets from mlr3fairness package already set protected attributes:
+Then we choose Random Forest as our model. For comparison, we introduce both Random Forest and Decision Tree for benchmark results.
+
+```{r}
+task = tsk("adult_train")
+learner = lrn("classif.ranger", predict_type = "prob")
+learner$train(task)
+predictions = learner$predict(task)
+
+design = benchmark_grid(
+  tasks = tsk("adult_train"),
+  learners = lrns(c("classif.ranger", "classif.rpart"),
+                  predict_type = "prob", predict_sets = c("train", "test")),
+  resamplings = rsmps("cv", folds = 3)
+)
+
+bmr = benchmark(design)
+
+paste0("Adult train have protected attributes: ", adult_train$col_roles$pta)
+paste0("Adult test have protected attributes: ", adult_test$col_roles$pta)
+```
+We could then check the predictions and the benchmark_results.
+```{r}
+predictions$confusion
+print(bmr)
+```
+
+Since we want to show some of our visualization functions could take both single and multiple measures, we create one single measure to be ```fairness.tpr```, and the multiple measures to be ```c("fairness,tpr", "fairness.fnr")```.
+
+```{r}
+fairness_measure = msr("fairness.tpr")
+fairness_measures = msrs(c("fairness.tpr", "fairness.fnr"))
+```
+
+
+# Fairness Prediction Density Plot
+
+If we want to compare the predictions for protected attributes for the same model. Then Fairness Prediction Density Plot would be the optimum solution. By using fairness prediction density plot we could see the model predicted probability about whether the observations have income <=50K or not. Then by comparing the predicted probability for male and female. We could see male have a much higher probability to have income higher than females. This plot then indicates some potential fairness problems in our model.
+
+```{r}
+fairness_prediction_density(predictions, task)
+```
+
+# Fairness Accuracy Tradeoff Plot
+
+Since fairness metrics are usually associated with the total accuracy of the model. There is a hidden tradeoff between accuracy and fairness metrics. Users could use the ```fairness_accuracy_tradeoff``` function to visualize such a tradeoff. For example, with one single measure the visualization will contain one single point indicating the relation between fairness and accuracy. However, with ```BenchmarkResults``` or ```ResamplingResults```. Users could compare such tradeoffs between different models and resamplings.
+
+```{r}
+fairness_accuracy_tradeoff(predictions, fairness_measure, task)
+fairness_accuracy_tradeoff(bmr, fairness_measure)
+```
+
+# Fairness Comparison Plot
+
+Then finally, if the user wants to compare fairness metrics either from a single model or multiple models. They could use ```fairness_compare``` functions. Such functions could compare either one metric or multiple metrics. In the following we compared the fairness performance between decision trees and random forests.
+
+```{r}
+fairness_compare(predictions, fairness_measure, task)
+fairness_compare(predictions, fairness_measures, task)
+fairness_compare(bmr, fairness_measure)
+fairness_compare(bmr, fairness_measures)
+```
+

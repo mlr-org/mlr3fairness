@@ -1,4 +1,3 @@
-source(file.path(getwd(), "data_helper.R"))
 delta = 1e-15
 test_data = simple_test_data()
 predictions = simple_pred_data()

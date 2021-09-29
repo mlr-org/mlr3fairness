@@ -4,6 +4,7 @@
 #' @import checkmate
 #' @import mlr3measures
 #' @import mlr3pipelines
+#' @import ggplot2
 #' @importFrom utils getFromNamespace data
 #' @import paradox
 #' @import data.table

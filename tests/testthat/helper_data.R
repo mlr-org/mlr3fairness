@@ -27,22 +27,6 @@ medium_test_data <- function(need_pta = T) {
   return(task)
 }
 
-biased_test_data <- function(need_pta = T) {
-  set.seed(5)
-  example_data <- data.frame(
-    value = as.factor(sample.int(2, 100, T)),
-    variable.a = c(sample(c(1:50), 80, T), sample(c(80:100), 20, T)),
-    variable.b = c(sample(c(1:50), 80, T), sample(c(80:100), 20, T)),
-    variable.c = c(sample(c(1:50), 80, T), sample(c(80:100), 20, T)),
-    variable.d = sample.int(100, 100, T),
-    pta = as.factor(c(rep(1,80), rep(2, 20)))
-  )
-  b = as_data_backend(example_data)
-  task = mlr3::TaskClassif$new("example", b, target = "value")
-  if(need_pta) task$col_roles$pta = "pta"
-  return(task)
-}
-
 simple_pred_data <- function() {
   PredictionClassif$new(row_ids = c(1:16),
                         truth = as.factor(c(1,1,2,2,1,1,2,1,2,2,2,1,1,1,2,1)),

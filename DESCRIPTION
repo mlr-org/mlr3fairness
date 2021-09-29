@@ -25,7 +25,8 @@ Imports:
     paradox,
     mlr3measures (>= 0.3.0),
     mlr3misc,
-    mlr3pipelines
+    mlr3pipelines,
+    ggplot2
 Suggests:
     rmarkdown,
     knitr,
@@ -33,7 +34,7 @@ Suggests:
     testthat (>= 3.0.0),
     ranger,
     mlr3learners
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 Collate:
     'MeasureFairness.R'
@@ -45,5 +46,6 @@ Collate:
     'operations.R'
     'zzz.R'
     'extra_measures.R'
+    'visualize.R'
 Config/testthat/edition: 3
 VignetteBuilder: knitr

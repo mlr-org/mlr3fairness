@@ -6,6 +6,8 @@
 \title{Reweighing to balance disparate impact metric}
 \format{
 \code{\link{R6Class}} object inheriting from \code{\link{PipeOpTaskPreproc}}/\code{\link{PipeOp}}.
+
+\code{\link{R6Class}} object inheriting from \code{\link{PipeOpTaskPreproc}}/\code{\link{PipeOp}}.
 }
 \description{
 Adds a class weight column to the \code{\link[mlr3:Task]{Task}} that different \code{\link[mlr3:Learner]{Learner}}s may be
@@ -14,8 +16,22 @@ able to use to balance the disparate impack metric. Such approach is usually cal
 Only binary \link[mlr3:TaskClassif]{classification tasks} are supported.
 
 Caution: Only fairness tasks are supported. Which means tasks need to have protected field. \code{tsk$col_roles$pta}
+
+Adds a class weight column to the \code{\link[mlr3:Task]{Task}} that different \code{\link[mlr3:Learner]{Learner}}s may be
+able to use to balance the disparate impack metric. Such approach is usually called reweighing method.
+
+Only binary \link[mlr3:TaskClassif]{classification tasks} are supported.
+
+Caution: Only fairness tasks are supported. Which means tasks need to have protected field. \code{tsk$col_roles$pta}
 }
 \section{Construction}{
+\preformatted{PipeOpReweighing$new(id = "reweighing", param_vals = list())
+}
+\itemize{
+\item \code{id} :: \code{character(1)}
+\item \code{param_vals} :: \code{list}
+}
+
 \preformatted{PipeOpReweighing$new(id = "reweighing", param_vals = list())
 }
 \itemize{
@@ -31,14 +47,28 @@ Input and output channels are inherited from \code{\link{PipeOpTaskPreproc}}. In
 
 The output during training is the input \code{\link[mlr3:Task]{Task}} with added weights column according to target class.
 The output during prediction is the unchanged input.
+
+
+Input and output channels are inherited from \code{\link{PipeOpTaskPreproc}}. Instead of a \code{\link[mlr3:Task]{Task}}, a
+\code{\link[mlr3:TaskClassif]{TaskClassif}} is used as input and output during training and prediction.
+
+The output during training is the input \code{\link[mlr3:Task]{Task}} with added weights column according to target class.
+The output during prediction is the unchanged input.
 }
 
 \section{State}{
 
 The \verb{$state} is a named \code{list} with the \verb{$state} elements inherited from \code{\link{PipeOpTaskPreproc}}.
+
+
+The \verb{$state} is a named \code{list} with the \verb{$state} elements inherited from \code{\link{PipeOpTaskPreproc}}.
 }
 
 \section{Parameters}{
+
+The parameters are the parameters inherited from \code{\link{PipeOpTaskPreproc}};
+.
+
 
 The parameters are the parameters inherited from \code{\link{PipeOpTaskPreproc}};
 .
@@ -51,14 +81,27 @@ respect weights for this to have an effect.
 
 The newly introduced column is named \code{reweighing.WEIGHTS}; there will be a naming conflict if this column already exists and is \emph{not} a
 weight column itself.
+
+
+Introduces, or overwrites, the "weights" column in the \code{\link[mlr3:Task]{Task}}. However, the \code{\link[mlr3:Learner]{Learner}} method needs to
+respect weights for this to have an effect.
+
+The newly introduced column is named \code{reweighing.WEIGHTS}; there will be a naming conflict if this column already exists and is \emph{not} a
+weight column itself.
 }
 
 \section{Fields}{
 
 Only fields inherited from \code{\link{PipeOpTaskPreproc}}/\code{\link{PipeOp}}.
+
+
+Only fields inherited from \code{\link{PipeOpTaskPreproc}}/\code{\link{PipeOp}}.
 }
 
 \section{Methods}{
+
+Methods inherited from \code{\link{PipeOpTaskPreproc}}/\code{\link{PipeOp}}.
+
 
 Methods inherited from \code{\link{PipeOpTaskPreproc}}/\code{\link{PipeOp}}.
 }
@@ -77,11 +120,89 @@ glrn = GraphLearner$new(graph)
 glrn$train(data)
 tem = glrn$predict(data)
 tem$confusion
+library(mlr3pipelines)
+library(mlr3fairness)
+library(mlr3)
+
+reweighing = po("reweighing")
+learner_po = po("learner", learner = lrn("classif.rpart"))
+
+data = tsk("adult_train")
+graph = reweighing \%>>\% learner_po
+glrn = GraphLearner$new(graph)
+glrn$train(data)
+tem = glrn$predict(data)
+tem$confusion
 }
 \seealso{
 https://mlr3book.mlr-org.com/list-pipeops.html
+
+https://mlr3book.mlr-org.com/list-pipeops.html
 }
 \concept{PipeOps}
+\section{Super classes}{
+\code{\link[mlr3pipelines:PipeOp]{mlr3pipelines::PipeOp}} -> \code{\link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}} -> \code{PipeOpReweighing}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{PipeOpReweighing$new()}}
+\item \href{#method-clone}{\code{PipeOpReweighing$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="mlr3pipelines" data-topic="PipeOp" data-id="predict">}\href{../../mlr3pipelines/html/PipeOp.html#method-predict}{\code{mlr3pipelines::PipeOp$predict()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3pipelines" data-topic="PipeOp" data-id="print">}\href{../../mlr3pipelines/html/PipeOp.html#method-print}{\code{mlr3pipelines::PipeOp$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3pipelines" data-topic="PipeOp" data-id="train">}\href{../../mlr3pipelines/html/PipeOp.html#method-train}{\code{mlr3pipelines::PipeOp$train()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Creates a new instance of this [R6][R6::R6Class][\code{PipeOp}] R6 class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PipeOpReweighing$new(id = "reweighing", param_vals = list())}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{The PipeOps identifier in the PipeOps library.}
+
+\item{\code{param_vals}}{The parameter values to be set. There are two parameters that could be set:
+\itemize{
+\item temperature: controls the proportion between constant weight and reweighing weight. Default set to be 1
+\item const_weight: the constant weight. Default set to be 1
+Here is how it works:
+first_weight = (1 - temperature) x const_weight + temperature x reweighing_weight
+final_reweighing_weight = first_weight * old_weight (if old weight exist, otherwise oldweight = 1)
+}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PipeOpReweighing$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}
 \section{Super classes}{
 \code{\link[mlr3pipelines:PipeOp]{mlr3pipelines::PipeOp}} -> \code{\link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}} -> \code{PipeOpReweighing}
 }
