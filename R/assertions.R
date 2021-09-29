@@ -11,7 +11,7 @@
 NULL
 
 # Assert the pta column to be a binary field.
-assert_binary_pta = function(data_task, operation) {
+assert_pta_binary = function(data_task, operation) {
   assert_pta(data_task)
   pta = data_task$data(cols = data_task$col_roles$pta)
   if (nrow(unique(pta)) != 2) {
@@ -22,6 +22,6 @@ assert_binary_pta = function(data_task, operation) {
 # Assert data_task contains a pta column.
 assert_pta = function(data_task) {
   if (is.null(data_task$col_roles$pta)) {
-    stopf("Task must have preset protected columns pta for fairness operations")
+    stop("Task must have col_roles 'pta' (protected attribute) for fairness operations")
   }
 }

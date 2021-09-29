@@ -236,7 +236,6 @@ fairness_prediction_density.PredictionClassif<- function(object, task, ...){
 #' @export
 fairness_prediction_density.BenchmarkResult <- function(object, task, ...){
   stop("Not implemented")
-  NULL #To be implemented, how should it looks like?
 }
 
 #' @export

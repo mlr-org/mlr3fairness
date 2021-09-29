@@ -9,14 +9,15 @@
 @url https://github.com/propublica/compas-analysis
 }
 \description{
-This dataset include the processed COMPAS datas between 2013-2014. The data cleaning process followed the guidance in the original COMPAS repo.
+This dataset include the processed COMPAS datas between 2013-2014.
+The data cleaning process followed the guidance in the original COMPAS repo.
 Contains 6172 observations and 14 features. The target column could either be "is_recid" or "two_year_recid", but often "two_year_recid" is prefered.
-The column \code{"sex"} is set as protected attribute.
+The column \code{"sex"} is set as protected attribute, but more often \code{"race"} is used.
 }
 \section{Pre-processing}{
 
 \itemize{
-\item Identication columns are removed
+\item Identifying columns are removed
 \item Removed the outliers for abs(days_b_screening_arrest) >= 30.
 \item Removed observations where is_recid != -1.
 \item Removed observations where c_charge_degree != "O".
@@ -29,10 +30,10 @@ The column \code{"sex"} is set as protected attribute.
 \section{Metadata}{
 
 \itemize{
-\item (integer) Age : The age of defendants
+\item (integer) age : The age of defendants.
 \item (factor) c_charge_degree : The charge degree of defendants. F: Felony M: Misdemanor
 \item (factor) race: The race of defendants.
-\item (facotr) age: The age category of defendants.
+\item (factor) age_cat: The age category of defendants.
 \item (factor) score_text: The score category of defendants.
 \item (factor) sex: The sex of defendants.
 \item (integer) priors_count: The prior criminal records of defendants.

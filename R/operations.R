@@ -1,52 +1,14 @@
-#' Groupwise Differenence (Fairness Metrics)
-#' @name groupwise_diff
+#' Groupwise Ratio
 #'
-#' @param prediction (`PredictionClassif()`)\cr The predictions of the learner.
-#' @param base_measure (`Measure()`)\cr The base measures used to evaluate.
-#' @param data_task (`TaskClassif()`)\cr The data task for the fairness metric.
-#' @param ... Further arguments, currently ignored.
-#'
-#' @return Difference of base measues between binary protected groups.
-groupwise_diff = function(prediction, base_measure, data_task, ...) {
-  assert_binary_pta(data_task, "groupwise_diff")
-
-  measure_list = binary_measure_score(prediction, base_measure, data_task)
-  msr1 = measure_list[1]
-  msr2 = measure_list[2]
-
-  return(msr1 - msr2)
+#' Computes `min(x/y, y/x)` i.e. the symmetric ratio between x and y
+#' that is smaller than 1.
+#' @param x [´numeric`] \cr
+#'   Measured performance in group 1.
+#' @param y [´numeric`] \cr
+#'   Measured performance in group 1.
+#' @param eps [´numeric`] \cr
+#'   A small value to ensure no division by 0.
+groupdiff_tau = function(x, y, eps = .01) {
+  min(c(x/max(c(y,eps)), y/max(c(x, eps))))
 }
 
-#' Groupwise Absolute Differenence (Fairness Metrics)
-#' @name groupwise_abs_diff
-#'
-#' @param prediction (`PredictionClassif()`)\cr The predictions of the learner.
-#' @param base_measure (`Measure()`)\cr The base measures used to evaluate.
-#' @param data_task (`TaskClassif()`)\cr The data task for the fairness metric.
-#' @param ... Further arguments, currently ignored.
-#'
-#' @return Absolute difference of base measues between binary protected groups.
-groupwise_abs_diff <- function(prediction, base_measure, data_task, ...) {
-  groupwise_diff_val = groupwise_diff(prediction, base_measure, data_task)
-  return(abs(groupwise_diff_val))
-}
-
-#' Groupwise Quotient (Fairness Metrics)
-#' @name groupwise_quotient
-#'
-#' @param prediction (`PredictionClassif()`)\cr The predictions of the learner.
-#' @param base_measure (`Measure()`)\cr The base measures used to evaluate.
-#' @param data_task (`TaskClassif()`)\cr The data task for the fairness metric.
-#' @param ... Further arguments, currently ignored.
-#'
-#' @return Quotient of base measues between binary protected groups.
-groupwise_quotient = function(prediction, base_measure, data_task, ...) {
-  assert_binary_pta(data_task, "groupwise_quotient")
-
-  measure_list = binary_measure_score(prediction, base_measure, data_task)
-  msr1 = measure_list[1]
-  msr2 = measure_list[2]
-
-  #Do we need a value check to avoid msr2 = 0 (numerical error)?
-  return(msr1/msr2)
-}

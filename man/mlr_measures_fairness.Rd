@@ -6,12 +6,13 @@
 \title{Fairness Measure}
 \description{
 This measure specializes \code{\link[mlr3:Measure]{mlr3::Measure()}} to allow for measuring statistical group fairness:
-A common approach to quantifying a model's fairness is to compute the difference between a protected and an unprotected group according to some performance metric such as \verb{classification error}, \verb{false positive rate} or others.
-This measure allows for the composition of a fairness-metric from such a \code{base_measure} by computing group-wise difference according to some strategy.
-Several options wrt. computing difference such as \code{\link[=groupwise_abs_diff]{groupwise_abs_diff()}}, \code{\link[=groupwise_diff]{groupwise_diff()}}, or \code{\link[=groupwise_quotient]{groupwise_quotient()}} are available.
+A common approach to quantifying a model's fairness is to compute the difference between a protected and an
+unprotected group according to some performance metric such as \verb{classification error},
+\verb{false positive rate} or others.
+This measure allows for the composition of a fairness-metric from such a \code{base_measure} by computing
+group-wise difference. This difference metric can be specified using the  'operation' parameter.
 
 Predefined measures can be found in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_measures}.
-Predefined operations can be found in the \link{mlr3fairness}.
 }
 \section{Predefined measures}{
 
@@ -28,8 +29,8 @@ A set of widely used metrics is included in mlr3fairness.
 \item \code{fairness.tpr} :: Abs. difference in True positive rates across groups (Part of Equalized Odds)
 \item \code{fairness.ppv} :: Abs. difference in Positive predictive values across groups (Part of Conditional use accuracy equality)
 \item \code{fairness.npv} :: Abs. difference in Negative predictive values across groups (Part of Conditional use accuracy equality)
-\item \code{fairness.fp} :: Abs. difference in False positives across groups (Part of Treatment equality)
-\item \code{fairness.fn} :: Abs. difference in False negatives values across groups (Part of Treatment equality)
+\item \code{fairness.fp}  :: Abs. difference in False positives across groups (Part of Treatment equality)
+\item \code{fairness.fn}  :: Abs. difference in False negatives across groups (Part of Treatment equality)
 }
 }
 
@@ -39,7 +40,7 @@ library(mlr3)
 data_task = tsk("adult_train")
 learner = lrn("classif.rpart", cp = .01)
 learner$train(data_task)
-measure = msr("fairness", base_measure = msr("classif.ppv"), operation = "groupwise_quotient")
+measure = msr("fairness", base_measure = msr("classif.ppv"))
 predictions = learner$predict(data_task)
 predictions$score(measure, task = data_task)
 # Predfined measures:
@@ -52,6 +53,9 @@ msr("fairness.npv")
 msr("fairness.fp")
 msr("fairness.fn")
 }
+\seealso{
+groupdiff_tau
+}
 \section{Super class}{
 \code{\link[mlr3:Measure]{mlr3::Measure}} -> \code{MeasureFairness}
 }
@@ -61,6 +65,10 @@ msr("fairness.fn")
 \item{\code{base_measure}}{(\code{Measure()})\cr
 The base measure to be used by the fairness measures,
 e.g. \link{mlr_measures_classif.fpr} for the false positive rate.}
+
+\item{\code{operation}}{(\verb{function()})\cr
+The operation used to compute the difference. A function with args 'x' and 'y' that returns
+a single value. Defaults to \code{abs(x - y)}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -87,25 +95,22 @@ e.g. \link{mlr_measures_classif.fpr} for the false positive rate.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MeasureFairness$new(operation = "groupwise_abs_diff", base_measure)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MeasureFairness$new(
+  base_measure,
+  operation = function(x, y) {     abs(x - y) },
+  minimize = TRUE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{operation}}{(\code{character()})\cr
-The operation name performed on the base measures.
-\itemize{
-\item Possible inputs should be one of:
-\itemize{
-\item "groupwise_abs_diff"
-\item "groupwise_diff"
-\item "groupwise_quotient"
-}
-}}
-
 \item{\code{base_measure}}{(\code{Measure()})\cr
 The measure used to perform fairness operations.}
+
+\item{\code{operation}}{(\verb{function()})\cr
+The operation used to compute the difference. A function with args 'x' and 'y' that returns
+a single value. Defaults to \code{abs(x - y)}.}
 }
 \if{html}{\out{</div>}}
 }
