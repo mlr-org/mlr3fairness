@@ -43,6 +43,8 @@ Suggests:
     testthat (>= 3.0.0),
     ranger,
     mlr3learners
+Remotes:
+    mlr-org/mlr3
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Collate:
@@ -50,7 +52,7 @@ Collate:
     'adult.R'
     'compas.R'
     'assertions.R'
-    'operations.R'
+    'measure_operations.R'
     'helper.R'
     'zzz.R'
     'visualize.R'

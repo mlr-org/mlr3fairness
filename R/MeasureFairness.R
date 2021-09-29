@@ -10,8 +10,9 @@
 #' group-wise difference. This difference metric can be specified using the  'operation' parameter.
 #'
 #' Predefined measures can be found in the [dictionary][mlr3misc::Dictionary] [mlr_measures].
-#' @seealso groupdiff_tau
+#' See [`groupdiff_tau`] for a simple way to construct difference functions.
 #'
+#' @seealso groupdiff_tau
 #' @export
 #' @examples
 #' # Create MeasureFairness to measure the Predictive Parity.
@@ -34,15 +35,15 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
     #'
     #' @param base_measure (`Measure()`)\cr
     #' The measure used to perform fairness operations.
-    #'
     #' @param operation (`function`)\cr
-    #' The operation used to compute the difference. A function with args 'x' and 'y' that returns
+    #' The operation used to compute the difference. A function with args 'x' and 'y'(optional) that returns
     #' a single value. Defaults to `abs(x - y)`.
     #' @param minimize (`logical`)\cr
-    #' Should the measure be minimized?
-    #'
-    initialize = function(base_measure, operation = function(x, y) {abs(x - y)}, minimize = TRUE, range = c(-Inf, Inf)) {
-      self$operation = assert_function(observation, nargs = 2)
+    #' Should the measure be minimized? Defaults to `TRUE`.
+    #' @param range (`numeric`)\cr
+    #' Range of the resulting measure. Defaults to `c(-Inf, Inf)`.
+    initialize = function(base_measure, operation = function(x) {abs(diff(x))}, minimize = TRUE, range = c(-Inf, Inf)) {
+      self$operation = assert_function(operation)
       self$base_measure = assert_measure(base_measure)
 
       super$initialize(
@@ -58,7 +59,7 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
   ),
   private = list(
     .score = function(prediction, task, ...) {
-      mvals = binary_measure_score(prediction, base_measure, data_task)
+      mvals = score_groupwise(prediction, self$base_measure, task)
       invoke(self$operation, mvals)
     }
   )

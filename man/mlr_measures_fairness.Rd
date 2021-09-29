@@ -13,6 +13,7 @@ This measure allows for the composition of a fairness-metric from such a \code{b
 group-wise difference. This difference metric can be specified using the  'operation' parameter.
 
 Predefined measures can be found in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_measures}.
+See \code{\link{groupdiff_tau}} for a simple way to construct difference functions.
 }
 \section{Predefined measures}{
 
@@ -98,7 +99,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<div class="r">}}\preformatted{MeasureFairness$new(
   base_measure,
   operation = function(x, y) {     abs(x - y) },
-  minimize = TRUE
+  minimize = TRUE,
+  range = c(-Inf, Inf)
 )}\if{html}{\out{</div>}}
 }
 
@@ -108,9 +110,15 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \item{\code{base_measure}}{(\code{Measure()})\cr
 The measure used to perform fairness operations.}
 
-\item{\code{operation}}{(\verb{function()})\cr
-The operation used to compute the difference. A function with args 'x' and 'y' that returns
+\item{\code{operation}}{(\code{function})\cr
+The operation used to compute the difference. A function with args 'x' and 'y'(optional) that returns
 a single value. Defaults to \code{abs(x - y)}.}
+
+\item{\code{minimize}}{(\code{logical})\cr
+Should the measure be minimized? Defaults to \code{TRUE}.}
+
+\item{\code{range}}{(\code{numeric})\cr
+Range of the resulting measure. Defaults to \code{c(-Inf, Inf)}.}
 }
 \if{html}{\out{</div>}}
 }
