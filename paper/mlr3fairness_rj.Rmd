@@ -46,6 +46,8 @@ output: rticles::rjournal_article
 Introductory section which may include references in parentheses
 [@R], or cite a reference such as @R in the text.
 
+[@mlr3] [@mlr3pipelines] [@mlr3proba]
+
 ## Section title in sentence case
 
 This section may contain a figure such as Figure \ref{fig:Rlogo}.
