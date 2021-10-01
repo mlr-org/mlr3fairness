@@ -30,7 +30,7 @@ author:
     - line 1 affiliation
     - line 2 affiliation
 abstract: >
-  An abstract of less than 150 words.
+  We present the package mlr3fairness.
 preamble: |
   % Any extra LaTeX you need in the preamble
 
