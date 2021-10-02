@@ -2,13 +2,14 @@
 % Please edit documentation in R/visualize.R
 \name{fairness_prediction_density}
 \alias{fairness_prediction_density}
-\title{Fairness Prediction Density Visualization}
+\title{Probability Density Plot}
 \usage{
 fairness_prediction_density(object, ...)
 }
 \arguments{
-\item{object}{(\link{PredictionClassif})\cr (\link{ResampleResult})\cr (\link{BenchmarkResult})\cr
-The binary class prediction object that will be evaluated. Only one data task is allowed for Resample Result and Benchmark Result.}
+\item{object}{(\link{PredictionClassif}) | (\link{ResampleResult}) | (\link{BenchmarkResult})\cr
+The binary class prediction object that will be evaluated.
+If \code{\link{PredictionClassif}}, a \code{\link{Task}} is required.}
 
 \item{...}{The arguments to be passed to methods, such as:
 \itemize{
@@ -17,9 +18,8 @@ The data task that contains the protected column.
 }}
 }
 \description{
-These functions specialize in visualizing the plots that will demonstrate the predicted probability density for each level in the protected column.
-Which will potentially reveal the fairness problems in the dataset if the density differs significantly for each level.
-The plot is a combination of boxplot and violin plot. So users could use the plot to detect both the outliers and distribution problems.
+Visualizes per-subgroup densities across learners, task and class.
+The plot is a combination of boxplot and violin plot.
 The y-axis shows the levels in protected columns. And the x-axis shows the predicted probability.
 The title for the plot will demonstrate which class for predicted probability.
 }
@@ -27,12 +27,14 @@ The title for the plot will demonstrate which class for predicted probability.
 library(mlr3fairness)
 library(mlr3learners)
 library(mlr3)
-library(ggplot2)
-library(data.table)
 
 task = tsk("adult_train")
-learner = lrn("classif.ranger", predict_type = "prob")
+learner = lrn("classif.rpart", predict_type = "prob", cp = 0.001)
 learner$train(task)
+# For prediction
 predictions = learner$predict(task)
 fairness_prediction_density(predictions, task)
+# For resampling
+rsm = resample(task, learner, rsmp("cv"))
+fairness_prediction_density(rsm)
 }

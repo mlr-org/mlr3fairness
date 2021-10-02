@@ -1,27 +1,29 @@
-#' Fairness Accuracy Tradeoff Visualization
+#' Fairness Accuracy Tradeoff
 #'
 #' @description
-#' These functions specialize in comparing the Fairness and Accuracy between learners through visualizations.
-#' From the visualization, users could see the tradeoff between fairness metrics and accuracy.
-#' Those insights could help the users to choose the optimum model from their model sets.
-#' And the fairness consistency of the learners by visualizing the tradeoff for different resampling iterations.
-#' It could take multiple types of inputs, like ([PredictionClassif]), ([BenchmarkResult]) and ([ResampleResult]).
+#' Provides visualization wrt. trade-offs between fairness and accuracy metrics across learners and resampling iterations.
+#' This can assist in gauging the optimal model from a set of options along with estimates of variance
+#' (through individual resampling iterations).
 #'
 #'
-#' @param object ([PredictionClassif])\cr ([BenchmarkResult])\cr ([ResampleResult])\cr
-#' The binary class prediction object that will be evaluated. Only one data task is allowed for BenchmarkResult or ResampleResult
-#' * If provided a ([PredictionClassif]). Then only one point will indicate the accuracy and fairness metrics for the current predictions.
-#' * If provided a ([ResampleResult]). Then the plot will compare the accuracy and fairness metrics for the same model, but different resampling iterations.
-#' * If provided a ([BenchmarkResult]). Then the plot will compare the accuracy and fairness metrics for all models and all resampling iterations. Points are coloured acording to the models.
+#' @param object ([PredictionClassif]) | ([BenchmarkResult]) | ([ResampleResult])\cr
+#' The binary class prediction object that will be evaluated.
+#' * If provided a ([PredictionClassif]). Then only one point will indicate the accuracy and fairness metrics for the current predictions. Requires also passing a [`Task`].
+#' * If provided a ([ResampleResult]). Then the plot will compare the accuracy and fairness metrics for the same model, but different resampling iterations. as well as the aggregate
+#'   indicated by a cross.
+#' * If provided a ([BenchmarkResult]). Then the plot will compare the accuracy and fairness metrics for all models and all resampling iterations.
+#'   Points are coloured acording to the learner_id and faceted by task_id. The aggregated score is indicated by a cross.
 #'
 #' @param ...
 #' Arguments to be passed to methods. Such as:
 #'
 #' * `fairness_measure` ([Measure])\cr
-#' The fairness measures that will evaluated on object, could be single measure (`msr`) or list of measures (`msrs`), check [mlr3::Measure]. Default measure set to be \code{msr("fairness.fpr")}
+#' The fairness measures that will evaluated.
+#' Default measure set to be \code{msr("fairness.fpr")}
 #'
 #' * `accuracy_measure` ([Measure])\cr
-#' The accuracy measure that will evaluated on object, could be single measure \link{msr} or measures \link{msrs}. Default measure set to be \code{\link[mlr3:MeasureClassif]{msr("classif.acc")}}
+#' The accuracy measure that will evaluated.
+#' Default measure set to be \code{\link[mlr3:MeasureClassif]{msr("classif.acc")}}
 #'
 #' * `task` ([TaskClassif])\cr
 #' The data task that contains the protected column, only required when the class of object is ([PredictionClassif])
@@ -56,27 +58,35 @@ fairness_accuracy_tradeoff <- function(object, ...){
 }
 
 #' @export
-fairness_accuracy_tradeoff.PredictionClassif <- function(object, fairness_measure = msr("fairness.fpr"), task, acc_measure = msr("classif.acc"), ...){
+fairness_accuracy_tradeoff.PredictionClassif <- function(object, fairness_measure = msr("fairness.fpr"), acc_measure = msr("classif.acc"), task, ...){
   assert_measure(fairness_measure)
   assert_measure(acc_measure)
-  data = data.table(accuracy = object$score(acc_measure),
-               fairness = object$score(fairness_measure, task))
-  ggplot(data, aes(x = accuracy, y=fairness)) +
-    labs(y = fairness_measure$id, x=acc_measure$id) +
-    geom_point()
+  data =  as.data.frame(t(object$score(list(acc_measure, fairness_measure), task = task)))
+  ggplot(data, aes_string(x = acc_measure$id, y = fairness_measure$id)) +
+    geom_point() +
+    theme_bw() +
+    scale_colour_viridis_d()
 }
 
 #' @export
 fairness_accuracy_tradeoff.BenchmarkResult <- function(object, fairness_measure = msr("fairness.fpr"), acc_measure = msr("classif.acc"), ...){
   assert_measure(fairness_measure)
   assert_measure(acc_measure)
-  data = cbind(model = object$score(fairness_measure)[, "learner_id"][[1]],
-               accuracy = object$score(acc_measure)[, acc_measure$id, with = F],
-               metrics = object$score(fairness_measure)[, fairness_measure$id, with = F])
-  colnames(data) <- c("model", "accuracy", "metrics")
-  ggplot(data, aes(x = accuracy, y=metrics, colour=model)) +
-    labs(y = fairness_measure$id, x=acc_measure$id) +
-    geom_point()
+  data = rbind(
+    object$score(list(acc_measure, fairness_measure))[, aggi := 0][, agg := "replication"],
+    object$aggregate(list(acc_measure, fairness_measure))[, aggi := 1][, agg:= "mean"],
+    fill = TRUE
+  )
+  ggplot(data, aes_string(x = acc_measure$id, y=fairness_measure$id, colour="learner_id", size = "aggi", alpha = "aggi", pch = "agg")) +
+    geom_point() +
+    theme_bw() +
+    scale_colour_viridis_d() +
+    scale_alpha(range = c(0.5, 1)) +
+    scale_size(range = c(3,6)) +
+    scale_shape_manual(name = "Aggregation", values = c(4, 16)) +
+    guides(size = "none", alpha ="none") +
+    facet_wrap(~task_id)
+
 }
 
 #' @export
@@ -86,16 +96,14 @@ fairness_accuracy_tradeoff.ResampleResult <- function(object, fairness_measure =
 }
 
 
-#' Fairness Comparison Visualization
+#' Compare differnt metrics
 #'
 #' @description
-#' These functions specialize in comparing the Fairness metrics between learners and levels in protected columns through visualizations.
-#' From the visualization, users could see the fairness metrics difference between learners and levels in protected fields.
-#' Those visualizations could help the users to detect the fairness problems and choose the optimum model.
-#' It could take multiple type of inputs, like ([PredictionClassif]), ([BenchmarkResult]) and ([ResampleResult]).
+#' Compare learners with respect to to one or multiple metrics.
+#' Metrics can but be but are not limited to fairness metrics.
 #'
-#' @param object ([PredictionClassif])\cr ([BenchmarkResult])\cr ([ResampleResult])\cr
-#' The binary class prediction object that will be evaluated. Only one data task is allowed for BenchmarkResult or ResampleResult
+#' @param object ([PredictionClassif]) | ([BenchmarkResult]) | ([ResampleResult])\cr
+#' The object to create a plot for.
 #' * If provided a ([PredictionClassif]). Then the visualization will compare the fairness metrics among the binary level from protected field through bar plots.
 #' * If provided a ([ResampleResult]). Then the visualization will generate the boxplots for fairness metrics, and compare them among the binary level from protected field.
 #' * If provided a ([BenchmarkResult]). Then the visualization will generate the boxplots for fairness metrics, and compare them among both the binary level from protected field and the models implemented.
@@ -103,18 +111,16 @@ fairness_accuracy_tradeoff.ResampleResult <- function(object, fairness_measure =
 #' @param ...
 #' The arguments to be passed to methods, such as:
 #'
-#' * `fairness_measures` ([Measure])\cr
+#' * `fairness_measures` (list of [`Measure`])\cr
 #' The fairness measures that will evaluated on object, could be single measure \link{msr} or measures \link{msrs}.  Default measure set to be \code{msr("fairness.acc")}
 #'
 #' * `task` ([TaskClassif])\cr
-#' The data task that contains the protected column, only required when the class of object is ([PredictionClassif])
+#' The data task that contains the protected column, only required when object is ([PredictionClassif]).
 #'
 #' @examples
+#' library(mlr3)
 #' library(mlr3fairness)
 #' library(mlr3learners)
-#' library(mlr3)
-#' library(ggplot2)
-#' library(data.table)
 #'
 #' # Setup the Fairness Measures and tasks
 #' task = tsk("adult_train")
@@ -130,68 +136,64 @@ fairness_accuracy_tradeoff.ResampleResult <- function(object, fairness_measure =
 #'
 #' bmr = benchmark(design)
 #' fairness_measure = msr("fairness.tpr")
-#' fairness_measures = msrs(c("fairness.tpr", "fairness.fnr"))
+#' fairness_measures = msrs(c("fairness.tpr", "fairness.fnr", "fairness.acc"))
 #'
-#' fairness_compare(predictions, fairness_measure, task)
-#' fairness_compare(predictions, fairness_measures, task)
-#' fairness_compare(bmr, fairness_measure)
-#' fairness_compare(bmr, fairness_measures)
+#' # Predictions
+#' compare_metrics(predictions, fairness_measure, task)
+#' compare_metrics(predictions, fairness_measures, task)
+#'
+#' # BenchmarkResult and ResamplingResult
+#' compare_metrics(bmr, fairness_measure)
+#' compare_metrics(bmr, fairness_measures)
 #' @export
-fairness_compare <- function(object, ...){
-  UseMethod("fairness_compare")
+compare_metrics <- function(object, ...){
+  UseMethod("compare_metrics")
 }
 
 #' @export
-fairness_compare.PredictionClassif <- function(object, fairness_measures = msr("fairness.acc"), task, ...){
-  fairness_measures = as_measures(fairness_measures)
-  assert_measures(fairness_measures)
-
-  measures = object$score(fairness_measures, task)
-  data <- melt(data.table(names = names(measures), data = measures), id.vars = "names")
-  ggplot(data, aes(x=names, y=value, fill = names)) +
-    geom_bar(stat = "identity",  width=0.4/length(unique(data$names))) +
-    xlab("metrics") +
-    ylab("values") +
+compare_metrics.PredictionClassif <- function(object, measures = msr("fairness.acc"), task, ...){
+  measures = as_measures(measures)
+  scores = data.table(as.data.frame(t(object$score(measures, task = task, ...))))
+  data = melt(scores[, c(ids(measures)), with=FALSE], measure.vars = names(scores))
+  ggplot(data, aes(x=variable, y=value)) +
+    geom_bar(stat = "identity") +
+    xlab("Metrics") +
+    ylab("Value") +
     theme(legend.position = "none") +
     scale_fill_hue(c=100, l=60)
 }
 
 #' @export
-fairness_compare.BenchmarkResult <- function(object, fairness_measures = msr("fairness.acc"), ...){
-  fairness_measures = as_measures(fairness_measures)
-  assert_measures(fairness_measures)
-
-  fairness_name = ids(fairness_measures)
-  fairness_data = object$score(fairness_measures)
-  data = melt(cbind(model = fairness_data$learner_id,
-                    fairness_data[, fairness_name, with=FALSE]),
-              id.vars = "model")
-  ggplot(data, aes(x=model, y=value, fill=model)) +
-    geom_bar(stat = "identity",  width=1/length(unique(data$model))) +
-    xlab("metrics") +
-    ylab("values") +
-    theme(legend.position = "none") +
-    scale_fill_hue(c=100, l=60) +
-    facet_wrap(~variable)
+compare_metrics.BenchmarkResult <- function(object, measures = msr("fairness.acc"), ...){
+  measures = as_measures(measures)
+  scores = object$aggregate(measures, ...)
+  data = melt(scores[, c(ids(measures), "learner_id", "task_id"), with=FALSE], id.vars = c("learner_id", "task_id"))
+  ggplot(data, aes(x=learner_id, y=value, fill=variable)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    xlab("Metrics") +
+    ylab("Value") +
+    scale_fill_hue(name = "Metric", c=100, l=60) +
+    facet_wrap(~task_id) +
+    theme_bw()
 }
 
 #' @export
-fairness_compare.ResampleResult <- function(object, fairness_measures = msr("fairness.acc"), ...){
+compare_metrics.ResampleResult <- function(object, measures = msr("fairness.acc"), ...){
   object = as_benchmark_result(object)
   fairness_compare(object, fairness_measures)
 }
 
-#' Fairness Prediction Density Visualization
+#' Probability Density Plot
 #'
 #' @description
-#' These functions specialize in visualizing the plots that will demonstrate the predicted probability density for each level in the protected column.
-#' Which will potentially reveal the fairness problems in the dataset if the density differs significantly for each level.
-#' The plot is a combination of boxplot and violin plot. So users could use the plot to detect both the outliers and distribution problems.
+#' Visualizes per-subgroup densities across learners, task and class.
+#' The plot is a combination of boxplot and violin plot.
 #' The y-axis shows the levels in protected columns. And the x-axis shows the predicted probability.
 #' The title for the plot will demonstrate which class for predicted probability.
 #'
-#' @param object ([PredictionClassif])\cr ([ResampleResult])\cr ([BenchmarkResult])\cr
-#' The binary class prediction object that will be evaluated. Only one data task is allowed for Resample Result and Benchmark Result.
+#' @param object ([PredictionClassif]) | ([ResampleResult]) | ([BenchmarkResult])\cr
+#' The binary class prediction object that will be evaluated.
+#' If [`PredictionClassif`], a [`Task`] is required.
 #'
 #' @param ...
 #' The arguments to be passed to methods, such as:
@@ -203,14 +205,16 @@ fairness_compare.ResampleResult <- function(object, fairness_measures = msr("fai
 #' library(mlr3fairness)
 #' library(mlr3learners)
 #' library(mlr3)
-#' library(ggplot2)
-#' library(data.table)
 #'
 #' task = tsk("adult_train")
-#' learner = lrn("classif.ranger", predict_type = "prob")
+#' learner = lrn("classif.rpart", predict_type = "prob", cp = 0.001)
 #' learner$train(task)
+#' # For prediction
 #' predictions = learner$predict(task)
 #' fairness_prediction_density(predictions, task)
+#' # For resampling
+#' rsm = resample(task, learner, rsmp("cv"))
+#' fairness_prediction_density(rsm)
 #' @export
 fairness_prediction_density <- function(object, ...){
   UseMethod("fairness_prediction_density")
@@ -221,7 +225,6 @@ fairness_prediction_density.PredictionClassif<- function(object, task, ...){
   data <- melt(cbind(task$data(cols = task$col_roles$pta), object$prob[,1]),
                id = task$col_roles$pta)
   colnames(data) <- c("protected_variable", "variable", "probability")
-
   ggplot(data, aes(x = protected_variable, y=probability)) +
     geom_boxplot(aes(fill = protected_variable), width=0.4/length(unique(data$protected_variable))) +
     geom_violin(alpha = 0.3, width=1.5/length(unique(data$protected_variable)), fill = "grey") +
@@ -230,12 +233,35 @@ fairness_prediction_density.PredictionClassif<- function(object, task, ...){
     theme(legend.position = "none") +
     scale_fill_hue(c=100, l=100) +
     ylim(c(0,1)) +
-    coord_flip()
+    coord_flip() +
+    theme_bw()
 }
 
 #' @export
-fairness_prediction_density.BenchmarkResult <- function(object, task, ...){
-  stop("Not implemented")
+fairness_prediction_density.BenchmarkResult <- function(object, ...){
+  dt = rbindlist(map(object$resample_results$resample_result, function(rr) {
+    dt = rbindlist(map(rr$predictions(), as.data.table))
+    dt = cbind(setkey(dt), rr$task$data(cols = rr$task$col_roles$pta))
+    dt[, task_id := rr$task$id][, learner_id := rr$learner$id][, pta := rr$task$col_roles$pta]
+  }))
+  # Melt probs
+  classes = colnames(dt)[grep(colnames(dt), pattern= "prob.")]
+  dt = melt(dt, measure.vars = classes)
+  dt = melt(dt, measure.vars = unique(dt$pta), value.name = "pta_cols", variable.name = "pta_name")
+  # For binary get rid of 2nd class probs
+  if (length(unique(classes)) == 2) {
+    dt = dt[variable == classes[1],]
+  }
+
+  ggplot(dt, aes(x = pta_cols, y = value)) +
+    geom_boxplot(aes(fill = pta_cols), width=0.4/length(unique(dt$pta_cols))) +
+    geom_violin(alpha = 0.3, fill = "grey", width = 1.5/length(unique(dt$pta_cols))) +
+    xlab("Protected attributes") +
+    scale_fill_hue(c=100, l=100) +
+    ylim(c(0,1)) +
+    coord_flip() +
+    theme_bw() +
+    facet_wrap(variable ~ learner_id + task_id)
 }
 
 #' @export
