@@ -27,40 +27,10 @@ test_task_big <- function(need_pta = T) {
   return(task)
 }
 
-
-
 pred_small <- function() {
-  PredictionClassif$new(row_ids = c(1:16),
-                        truth = as.factor(c(1,1,2,2,1,1,2,1,2,2,2,1,1,1,2,1)),
-                        response = as.factor(c(1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2)))
-}
-
-
-
-simple_benchmark_result <- function(){
-  design = benchmark_grid(
-    tasks = medium_test_data(),
-    learners = lrns(c("classif.ranger", "classif.rpart"),
-                    predict_type = "prob", predict_sets = c("train", "test")),
-    resamplings = rsmps("cv", folds = 3)
+  PredictionClassif$new(
+    row_ids = c(1:16),
+    truth = as.factor(c(1,1,2,2,1,1,2,1,2,2,2,1,1,1,2,1)),
+    response = as.factor(c(1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2))
   )
-
-  return(benchmark(design))
-}
-
-simple_resample_result <- function(){
-  task = medium_test_data()
-  learner = lrn("classif.rpart")
-  resampling = rsmp("cv")
-  resampling$instantiate(task)
-  rr = resample(task, learner, resampling)
-  return(rr)
-}
-
-simple_rpart_prob_predictions <- function(){
-  data_task = medium_test_data()
-  learner = lrn("classif.rpart", predict_type = "prob")
-  learner$train(data_task)
-  predictions = learner$predict(data_task)
-  return(predictions)
 }
