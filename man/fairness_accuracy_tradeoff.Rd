@@ -2,35 +2,37 @@
 % Please edit documentation in R/visualize.R
 \name{fairness_accuracy_tradeoff}
 \alias{fairness_accuracy_tradeoff}
-\title{Fairness Accuracy Tradeoff Visualization}
+\title{Fairness Accuracy Tradeoff}
 \usage{
 fairness_accuracy_tradeoff(object, ...)
 }
 \arguments{
-\item{object}{(\link{PredictionClassif})\cr (\link{BenchmarkResult})\cr (\link{ResampleResult})\cr
-The binary class prediction object that will be evaluated. Only one data task is allowed for BenchmarkResult or ResampleResult
+\item{object}{(\link{PredictionClassif}) | (\link{BenchmarkResult}) | (\link{ResampleResult})\cr
+The binary class prediction object that will be evaluated.
 \itemize{
-\item If provided a (\link{PredictionClassif}). Then only one point will indicate the accuracy and fairness metrics for the current predictions.
-\item If provided a (\link{ResampleResult}). Then the plot will compare the accuracy and fairness metrics for the same model, but different resampling iterations.
-\item If provided a (\link{BenchmarkResult}). Then the plot will compare the accuracy and fairness metrics for all models and all resampling iterations. Points are coloured acording to the models.
+\item If provided a (\link{PredictionClassif}). Then only one point will indicate the accuracy and fairness metrics for the current predictions. Requires also passing a \code{\link{Task}}.
+\item If provided a (\link{ResampleResult}). Then the plot will compare the accuracy and fairness metrics for the same model, but different resampling iterations. as well as the aggregate
+indicated by a cross.
+\item If provided a (\link{BenchmarkResult}). Then the plot will compare the accuracy and fairness metrics for all models and all resampling iterations.
+Points are coloured acording to the learner_id and faceted by task_id. The aggregated score is indicated by a cross.
 }}
 
 \item{...}{Arguments to be passed to methods. Such as:
 \itemize{
 \item \code{fairness_measure} (\link{Measure})\cr
-The fairness measures that will evaluated on object, could be single measure (\code{msr}) or list of measures (\code{msrs}), check \link[mlr3:Measure]{mlr3::Measure}. Default measure set to be \code{msr("fairness.fpr")}
+The fairness measures that will evaluated.
+Default measure set to be \code{msr("fairness.fpr")}
 \item \code{accuracy_measure} (\link{Measure})\cr
-The accuracy measure that will evaluated on object, could be single measure \link{msr} or measures \link{msrs}. Default measure set to be \code{\link[mlr3:MeasureClassif]{msr("classif.acc")}}
+The accuracy measure that will evaluated.
+Default measure set to be \code{\link[mlr3:MeasureClassif]{msr("classif.acc")}}
 \item \code{task} (\link{TaskClassif})\cr
 The data task that contains the protected column, only required when the class of object is (\link{PredictionClassif})
 }}
 }
 \description{
-These functions specialize in comparing the Fairness and Accuracy between learners through visualizations.
-From the visualization, users could see the tradeoff between fairness metrics and accuracy.
-Those insights could help the users to choose the optimum model from their model sets.
-And the fairness consistency of the learners by visualizing the tradeoff for different resampling iterations.
-It could take multiple types of inputs, like (\link{PredictionClassif}), (\link{BenchmarkResult}) and (\link{ResampleResult}).
+Provides visualization wrt. trade-offs between fairness and accuracy metrics across learners and resampling iterations.
+This can assist in gauging the optimal model from a set of options along with estimates of variance
+(through individual resampling iterations).
 }
 \examples{
 library(mlr3fairness)

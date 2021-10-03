@@ -4,12 +4,13 @@
 #' @aliases Compas
 #'
 #' @description
-#' This dataset include the processed COMPAS datas between 2013-2014. The data cleaning process followed the guidance in the original COMPAS repo.
+#' This dataset include the processed COMPAS datas between 2013-2014.
+#' The data cleaning process followed the guidance in the original COMPAS repo.
 #' Contains 6172 observations and 14 features. The target column could either be "is_recid" or "two_year_recid", but often "two_year_recid" is prefered.
-#' The column `"sex"` is set as protected attribute.
+#' The column `"sex"` is set as protected attribute, but more often `"race"` is used.
 #'
 #' @section Pre-processing:
-#' * Identication columns are removed
+#' * Identifying columns are removed
 #' * Removed the outliers for abs(days_b_screening_arrest) >= 30.
 #' * Removed observations where is_recid != -1.
 #' * Removed observations where c_charge_degree != "O".
@@ -18,10 +19,10 @@
 #' * Add length of stay (c_jail_out - c_jail_in) in the dataset.
 #'
 #' @section Metadata:
-#' * (integer) Age : The age of defendants
+#' * (integer) age : The age of defendants.
 #' * (factor) c_charge_degree : The charge degree of defendants. F: Felony M: Misdemanor
 #' * (factor) race: The race of defendants.
-#' * (facotr) age: The age category of defendants.
+#' * (factor) age_cat: The age category of defendants.
 #' * (factor) score_text: The score category of defendants.
 #' * (factor) sex: The sex of defendants.
 #' * (integer) priors_count: The prior criminal records of defendants.

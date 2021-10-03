@@ -1,17 +1,28 @@
 Package: mlr3fairness
 Type: Package
-Title: Fairness Package in mlr3 family
+Title: Fairness auditing and debiasing for mlr3
 Version: 0.1.0
 Authors@R:
-    person(given = "Wei",
-           family = "Siyi",
-           role = c("cre", "aut"),
-           email = "weisiyi2@gmail.com"
+    c(
+      person(given = "Wei",
+               family = "Siyi",
+               role = c("cre", "aut"),
+               email = "weisiyi2@gmail.com"),
+      person(given = "Florian",
+             family = "Pfisterer",
+             role = "aut",
+             email = "pfistererf@googlemail.com",
+             comment = c(ORCID = "0000-0001-8867-762X")),
+      person(given = "Michel",
+             family = "Lang",
+             role = "aut",
+             email = "michellang@gmail.com",
+             comment = c(ORCID = "0000-0001-9754-0393"))
     )
-Description: This new package could be used by many other mlr3 subsystems like mlr3pipelines,
-    mlr3tuning and mlr3proba. Then further help the researchers and industrial users to detect
-    the fairness of datasets or algorithmic bias more easily, which could benefit the accuracy
-    and impartiality of their models built by mlr3.
+Description:
+    Integrates fairness auditing and debiasing methods into the mlr3 ecosystem.
+    This includes fairness metrics, visualizations and debiasing methods such
+    as Reweighing and Equalied Odds. Integration with mlr3 allows for auditing of mlr3 models as well as convenient joint tuning of ML algorithm and debiasing methods.
 License: LGPL-3
 Encoding: UTF-8
 LazyData: true
@@ -35,17 +46,20 @@ Suggests:
     ranger,
     mlr3learners
 RoxygenNote: 7.1.2
+Remotes:
+    mlr-org/mlr3
 Roxygen: list(markdown = TRUE)
 Collate:
+    'compas.R'
+    'adult.R'
     'MeasureFairness.R'
     'PipeOpsFairness.R'
-    'adult.R'
     'assertions.R'
-    'compas.R'
-    'helper.R'
-    'operations.R'
+    'helpers.R'
+    'measure_operations.R'
+    'helpers.R'
     'zzz.R'
-    'extra_measures.R'
     'visualize.R'
 Config/testthat/edition: 3
+Config/testthat/parallel: true
 VignetteBuilder: knitr

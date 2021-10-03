@@ -4,14 +4,19 @@
 \name{mlr3fairness-package}
 \alias{mlr3fairness}
 \alias{mlr3fairness-package}
-\title{mlr3fairness: Fairness Package in mlr3 family}
+\title{mlr3fairness: Fairness auditing and debiasing for mlr3}
 \description{
-This new package could be used by many other mlr3 subsystems like mlr3pipelines,
-    mlr3tuning and mlr3proba. Then further help the researchers and industrial users to detect
-    the fairness of datasets or algorithmic bias more easily, which could benefit the accuracy
-    and impartiality of their models built by mlr3.
+Integrates fairness auditing and debiasing methods into the mlr3 ecosystem.
+    This includes fairness metrics, visualizations and debiasing methods such
+    as Reweighing and Equalied Odds. Integration with mlr3 allows for auditing of mlr3 models as well as convenient joint tuning of ML algorithm and debiasing methods.
 }
 \author{
 \strong{Maintainer}: Wei Siyi \email{weisiyi2@gmail.com}
+
+Authors:
+\itemize{
+  \item Florian Pfisterer \email{pfistererf@googlemail.com} (\href{https://orcid.org/0000-0001-8867-762X}{ORCID})
+  \item Michel Lang \email{michellang@gmail.com} (\href{https://orcid.org/0000-0001-9754-0393}{ORCID})
+}
 
 }

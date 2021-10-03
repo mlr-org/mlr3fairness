@@ -1,6 +1,6 @@
 library(mlr3learners)
 
-simple_test_data <- function(need_pta = T) {
+test_task_small <- function(need_pta = T) {
   example_data <- data.frame(
     value = as.factor(c(1,1,2,2,1,1,2,1,2,2,2,1,1,1,2,1)),
     variable = c(3,1,4,8,5,41,22,3,4,29,2,13,4,26,2,34),
@@ -11,52 +11,25 @@ simple_test_data <- function(need_pta = T) {
   return(task)
 }
 
-medium_test_data <- function(need_pta = T) {
-  set.seed(5)
-  example_data <- data.frame(
-    value = as.factor(sample.int(2, 100, T)),
-    variable.a = sample.int(100, 100, T),
-    variable.b = sample.int(100, 100, T),
-    variable.c = sample.int(100, 100, T),
-    variable.d = sample.int(100, 100, T),
-    pta = as.factor(sample.int(2, 100, T))
+pred_small <- function() {
+  PredictionClassif$new(
+    row_ids = c(1:16),
+    truth = as.factor(c(1,1,2,2,1,1,2,1,2,2,2,1,1,1,2,1)),
+    response = as.factor(c(1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2))
   )
-  b = as_data_backend(example_data)
-  task = mlr3::TaskClassif$new("example", b, target = "value")
-  if(need_pta) task$col_roles$pta = "pta"
-  return(task)
 }
 
-simple_pred_data <- function() {
-  PredictionClassif$new(row_ids = c(1:16),
-                        truth = as.factor(c(1,1,2,2,1,1,2,1,2,2,2,1,1,1,2,1)),
-                        response = as.factor(c(1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2)))
+test_tasks = function() {
+  tasks = list(tsk("adult_train")$filter(1:500), tsk("compas")$filter(1:500))
 }
 
-simple_benchmark_result <- function(){
-  design = benchmark_grid(
-    tasks = medium_test_data(),
-    learners = lrns(c("classif.ranger", "classif.rpart"),
-                    predict_type = "prob", predict_sets = c("train", "test")),
-    resamplings = rsmps("cv", folds = 3)
-  )
-
-  return(benchmark(design))
+test_measures = function() {
+  msrs(c("fairness.tpr", "fairness.fnr"))
 }
 
-simple_resample_result <- function(){
-  task = medium_test_data()
-  learner = lrn("classif.rpart")
-  resampling = rsmp("cv")
-  resampling$instantiate(task)
-  rr = resample(task, learner, resampling)
-  return(rr)
-}
-
-simple_rpart_prob_predictions <- function(){
-  data_task = medium_test_data()
-  learner = lrn("classif.rpart", predict_type = "prob")
-  learner$train(data_task)
-  predictions = learner$predict(data_task)
-  return(predictions)
+test_bmr = function() {
+  lrns  = list(lrn("classif.rpart", predict_type = "prob"), lrn("classif.featureless", predict_type = "prob"))
+  tasks = test_tasks()
+  fairness_measures = test_measures()
+  benchmark(benchmark_grid(tasks = tasks, learners = lrns, rsmp("cv", folds = 3L)))
 }
