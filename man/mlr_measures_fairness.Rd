@@ -126,7 +126,7 @@ The measure used to perform fairness operations.}
 
 \item{\code{operation}}{(\code{function})\cr
 The operation used to compute the difference. A function with args 'x' and 'y'(optional) that returns
-a single value. Defaults to \code{abs(x - y)}.}
+a single value. Defaults to \code{max(abs(diff(x)))}.}
 
 \item{\code{minimize}}{(\code{logical})\cr
 Should the measure be minimized? Defaults to \code{TRUE}.}

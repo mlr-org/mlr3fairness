@@ -33,5 +33,5 @@
   x$add("fairness.acc", MeasureFairness, base_measure = msr("classif.acc"))
   x$add("fairness.fp",  MeasureFairness, base_measure = msr("classif.fp"))
   x$add("fairness.fn",  MeasureFairness, base_measure = msr("classif.fn"))
-  x$add("fairness.EOd", MeasureFairnessComposite, measures = list("fairness.classif.fpr", "fairness.classif.tpr"))
+  x$add("fairness.EOd", MeasureFairnessComposite, measures = list("fairness.fpr", "fairness.tpr"))
 }

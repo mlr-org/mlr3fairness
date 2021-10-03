@@ -180,7 +180,7 @@ compare_metrics.BenchmarkResult <- function(object, measures = msr("fairness.acc
 #' @export
 compare_metrics.ResampleResult <- function(object, measures = msr("fairness.acc"), ...){
   object = as_benchmark_result(object)
-  compare_metrics(object, fairness_measures)
+  compare_metrics(object, measures)
 }
 
 #' Probability Density Plot
@@ -252,7 +252,7 @@ fairness_prediction_density.PredictionClassif<- function(object, task, ...){
 
 #' @export
 fairness_prediction_density.BenchmarkResult <- function(object, ...){
-  assert_true(all("prob" %in% map_chr(bmr$learners$learner, "predict_type")))
+  assert_true(all("prob" %in% map_chr(object$learners$learner, "predict_type")))
   dt = rbindlist(map(object$resample_results$resample_result, function(rr) {
     dt = rbindlist(map(rr$predictions(), as.data.table))
     dt = cbind(setkey(dt), rr$task$data(cols = rr$task$col_roles$pta))

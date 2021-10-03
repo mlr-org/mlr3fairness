@@ -25,10 +25,11 @@ test_that("fairness measures work as expected - simulated data", {
   map(prds, function(prd) {
     map(metrics, function (m) {
       out = prd$score(measures = msr(m), task = tsk)
-      expect_number(out, lower = 0, upper = Inf)
+      expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
     })
   })
 })
+
 
 test_that("fairness errors on missing pta, works with", {
   df = data.frame(

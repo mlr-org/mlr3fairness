@@ -41,7 +41,7 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
     #' The measure used to perform fairness operations.
     #' @param operation (`function`)\cr
     #' The operation used to compute the difference. A function with args 'x' and 'y'(optional) that returns
-    #' a single value. Defaults to `abs(x - y)`.
+    #' a single value. Defaults to `max(abs(diff(x)))`.
     #' @param minimize (`logical`)\cr
     #' Should the measure be minimized? Defaults to `TRUE`.
     #' @param range (`numeric`)\cr
@@ -105,14 +105,12 @@ MeasureFairnessComposite = R6Class("MeasureFairnessComposite", inherit = Measure
     #'   Should the measure be minimized? Defaults to `TRUE`.
     #' @param range (`numeric`)\cr
     #'   Range of the resulting measure. Defaults to `c(-Inf, Inf)`.
-    initialize = function(id = NULL, measures, aggfun, operation = function(x, y) {abs(x - y)}, minimize = TRUE, range = c(-Inf, Inf)) {
+    initialize = function(id = NULL, measures, aggfun = function(x) mean(x, na.rm = TRUE), operation = function(x) {max(abs(diff(x)))}, minimize = TRUE, range = c(-Inf, Inf)) {
 
-      private$.measures = map(measures, function(x) {
-        if (is.character(measure)) {
-          measure = msr(measure, operation = operation)
-        }
-        assert_measure(measure)
-      })
+      if (all(map(measures, class) == "character")) {
+        measures = msrs(unlist(measures), operation = operation)
+      }
+      private$.measures = assert_measures(measures)
       private$.aggfun = assert_function(aggfun)
 
       if (is.null(id)) {
@@ -132,9 +130,10 @@ MeasureFairnessComposite = R6Class("MeasureFairnessComposite", inherit = Measure
   ),
   private = list(
     .measures = NULL,
+    .aggfun = NULL,
     .score = function(prediction, task, ...) {
       private$.aggfun(
-        map(private$.measures, function(m) {
+        map_dbl(private$.measures, function(m) {
           prediction$score(m, task = task, ...)
         })
       )

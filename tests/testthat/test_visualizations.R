@@ -1,10 +1,9 @@
-# Test preparation
-######################################################################
-  lrns  = list(lrn("classif.rpart", predict_type = "prob"), lrn("classif.featureless", predict_type = "prob"))
-  tasks = list(tsk("adult_train"), tsk("compas"))
-  fairness_measures = msrs(c("fairness.tpr", "fairness.fnr"))
-  bmr = benchmark(benchmark_grid(tasks = tasks, learners = lrns, rsmp("cv", folds = 3L)))
-######################################################################
+#--- Prepare
+tasks = test_tasks()
+fairness_measures = test_measures()
+bmr = test_bmr()
+#---
+
 
 # fairness_accuracy_tradeoff Tests
 test_that("fairness_accuracy_tradeoff", {
@@ -25,6 +24,7 @@ test_that("fairness_accuracy_tradeoff", {
     })
   })
 })
+
 
 test_that("compare_metrics", {
   # BMR
