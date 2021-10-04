@@ -1,4 +1,3 @@
-
 #' @title Assertion for mlr3fairness
 #'
 #' @description

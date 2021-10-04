@@ -25,10 +25,11 @@ test_that("fairness measures work as expected - simulated data", {
   map(prds, function(prd) {
     map(metrics, function (m) {
       out = prd$score(measures = msr(m), task = tsk)
-      expect_number(out, lower = 0, upper = Inf)
+      expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
     })
   })
 })
+
 
 test_that("fairness errors on missing pta, works with", {
   df = data.frame(
@@ -85,3 +86,52 @@ test_that("fairness works on non-binary target", {
   expect_error(prd$score(msr("fairness.tpr"), task = task), 'needs task properties')
 })
 
+
+delta = 1e-15
+test_data = test_task_small()
+predictions = pred_small()
+
+test_that("fairness.fpr can be loaded and work as expected", {
+  msr_obj = msr("fairness", base_measure = msr("classif.fpr"))
+  expect_true( round(predictions$score(msr_obj, test_data),4) == 0.0833 )
+})
+
+test_that("fairness.acc can be loaded and work as expected", {
+  msr_obj = msr("fairness", base_measure = msr("classif.acc"))
+  expect_true( abs(predictions$score(msr_obj, test_data) - 0.125) < delta )
+})
+
+test_that("fairness.fnr can be loaded and work as expected", {
+  msr_obj = msr("fairness", base_measure = msr("classif.fnr"))
+  expect_true( abs(predictions$score(msr_obj, test_data) - 0.15) < delta )
+})
+
+test_that("fairness.tpr can be loaded and work as expected", {
+  msr_obj = msr("fairness", base_measure = msr("classif.tpr"))
+  expect_true( abs(predictions$score(msr_obj, test_data) - 0.15) < delta )
+})
+
+test_that("fairness.ppv can be loaded and work as expected", {
+  msr_obj = msr("fairness", base_measure = msr("classif.ppv"))
+  expect_true( abs(predictions$score(msr_obj, test_data) - 0.25) < delta )
+})
+
+test_that("fairness.npv can be loaded and work as expected", {
+  msr_obj = msr("fairness", base_measure = msr("classif.npv"))
+  expect_true(abs(predictions$score(msr_obj, test_data) - 0) < delta )
+})
+
+test_that("fairness.fp can be loaded and work as expected", {
+  msr_obj = msr("fairness", base_measure = msr("classif.fp"))
+  expect_true( predictions$score(msr_obj, test_data) == 1 )
+})
+
+test_that("fairness.fn can be loaded and work as expected", {
+  msr_obj = msr("fairness", base_measure = msr("classif.fn"))
+  expect_true( predictions$score(msr_obj, test_data) == 0)
+})
+
+test_that("fairness.pp (disparate impact score) can be loaded and work as expected", {
+  msr_obj = msr("fairness", base_measure = msr("classif.pp"))
+  expect_true(predictions$score(msr_obj, test_data) == 0)
+})

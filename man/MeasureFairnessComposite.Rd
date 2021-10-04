@@ -46,8 +46,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<div class="r">}}\preformatted{MeasureFairnessComposite$new(
   id = NULL,
   measures,
-  aggfun,
-  operation = function(x, y) {     abs(x - y) },
+  aggfun = function(x) mean(x, na.rm = TRUE),
+  operation = function(x) {     max(abs(diff(x))) },
   minimize = TRUE,
   range = c(-Inf, Inf)
 )}\if{html}{\out{</div>}}

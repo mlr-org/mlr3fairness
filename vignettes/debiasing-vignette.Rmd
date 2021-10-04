@@ -1,0 +1,80 @@
+---
+title: "Debiasing Methods Vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{debiasing-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction: Fairness Pipeline Operators
+
+**Open a ticket at issues if you want us to implement a new debiasing methodI**
+
+All the debiasing methods cannot be independent and have to be used with the learners (aka models). For the convenience of the users, we provide all the debiasing methods encapsulated as Pipeline Operators (PipeOp). The way to use those pipeline operators is as simple as some popular packages like `tidyverse` or `dplyr`. Below we will show some examples.
+
+However, users need to be aware that the optimum debiasing methods are not the same for different tasks. Instead, it heavily depends on which fairness metric users care the most and the data. We will illustrate more details in our example.
+
+# Prerequisite: Data Tasks
+In this example, we will keep using the very famous adult dataset and choose the protected field to be “sex”. The predictions are a binary variable indicating whether the selected people have income more than 50K or less than 50K. Then we will show some basic usages of debiasing methods with adult dataset.
+
+```{r}
+library(mlr3fairness)
+library(mlr3pipelines)
+library(mlr3)
+
+task = tsk("adult_train")
+```
+
+
+# Metrics: Fairness Measures
+After users evaluate some fairness metrics or fairness visualizations on their models. They detect some fairness problems. For example, one fairness measure called Disparate Impact Score is higher than usual. Given its formula to be P(positive prediction | privileged group) / P(positive prediction | unprivileged group). Ideally an unbiased learner will generate predictions with disparate impact scores close to 1. Which means no significant difference in the proportion of the positive prediction between the binary group in the protected attribute.
+
+Now with the adult dataset. Let's use decision trees as our learner and create disparate impact scores as our fairness measure to verify this on an adult dataset. Below we can see the score is about 1.287. Which is a bit higher.
+```{r}
+# Set the decision tree complexity parameter to be 0.005
+learner = lrn("classif.rpart", cp = 0.005)
+learner$train(task)
+predictions = learner$predict(task)
+
+# Create the fairness measure disparate impact score
+measure = msr("fairness", base_measure = msr("classif.pp"), operation = "groupwise_quotient")
+predictions$score(measure, task = task)
+```
+
+# Debiasing: Reweighing algorithms
+
+Now let's choose the debiasing methods we want to use. There are three kinds of debiasing methods.
+* Pre-processing debiasing methods
+* In-processing debiasing methods
+* Post-processing debiasing methods
+Just sounds like their names. Pre-processing methods will perform correction before modelling starts, in-processing methods will perform correct during the modelling and post-processing will perform corrects after we have the predictions. Since our focused fairness measure is disparate impact score, and reweighing algorithm was performed debiasing based on disparate impact score. So without doubt, the optimum debiasing method would be Reweighing algorithm.
+We could create reweighing algorithm using the pipeline operators. After we applied the reweighing algorithms, the disparate impact score decreased to about 1.201. Considering we are using quotient, this is 6.68% improvement in this metric, well done!!!
+
+```{r}
+reweighing = po("reweighing")
+learner_po = po("learner", learner = lrn("classif.rpart", cp = 0.005))
+graph = reweighing %>>% learner_po
+glrn = GraphLearner$new(graph)
+glrn$train(task)
+reweighing_predictions = glrn$predict(task)
+reweighing_predictions$score(measure, task = task)
+```
+
+# Becareful: Overall accuracy and other metrics.
+
+However, the reweighing algorithm does not guarantee the improvement in fairness will generalize for other fairness metrics. Take one of the most common fairness measures, the false positive rate. We could see the false positive rate increases after reweighing. Keep in mind, there does not exist one single measure that could represent the overall fairness of the model. Consequently, there does not exist one single debiasing method could correct all fairness problems. It is important to choose the debiasing methods that suit your needs.
+
+```{r}
+fpr_measure = msr("fairness.fpr")
+predictions$score(fpr_measure, task = task)
+reweighing_predictions$score(fpr_measure, task = task)
+```
+

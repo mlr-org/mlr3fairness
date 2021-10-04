@@ -180,7 +180,7 @@ compare_metrics.BenchmarkResult <- function(object, measures = msr("fairness.acc
 #' @export
 compare_metrics.ResampleResult <- function(object, measures = msr("fairness.acc"), ...){
   object = as_benchmark_result(object)
-  fairness_compare(object, fairness_measures)
+  compare_metrics(object, measures)
 }
 
 #' Probability Density Plot
@@ -222,28 +222,42 @@ fairness_prediction_density <- function(object, ...){
 
 #' @export
 fairness_prediction_density.PredictionClassif<- function(object, task, ...){
-  data <- melt(cbind(task$data(cols = task$col_roles$pta), object$prob[,1]),
-               id = task$col_roles$pta)
-  colnames(data) <- c("protected_variable", "variable", "probability")
-  ggplot(data, aes(x = protected_variable, y=probability)) +
-    geom_boxplot(aes(fill = protected_variable), width=0.4/length(unique(data$protected_variable))) +
-    geom_violin(alpha = 0.3, width=1.5/length(unique(data$protected_variable)), fill = "grey") +
+  if (is.null(object$prob)) {
+    print("object needs to have predict.type = 'prob'!")
+  }
+
+  dt = as.data.table(object)
+  dt = cbind(dt, task$data(rows = dt$row_ids, cols = task$col_roles$pta))
+  dt[, task_id := task$id][, pta := task$col_roles$pta]
+  classes = colnames(dt)[grep(colnames(dt), pattern= "prob.")]
+  dt = melt(dt, measure.vars = classes)
+  dt = melt(dt, measure.vars = unique(dt$pta), value.name = "pta_cols", variable.name = "pta_name")
+  # For binary get rid of 2nd class probs
+  if (length(unique(classes)) == 2) {
+    dt = dt[variable == classes[1],]
+  }
+
+  ggplot(dt, aes(x = pta_cols, y=value)) +
+    geom_boxplot(aes(fill = pta_cols), width=0.4/length(unique(dt$pta_cols))) +
+    geom_violin(alpha = 0.3, width=1.5/length(unique(dt$pta_cols)), fill = "grey") +
     xlab("Protected attributes") +
-    ylab( paste0("predicted probability for ", colnames(object$prob)[1])) +
+    ylab("Predicted probability") +
     theme(legend.position = "none") +
     scale_fill_hue(c=100, l=100) +
     ylim(c(0,1)) +
     coord_flip() +
-    theme_bw()
+    theme_bw() +
+    facet_wrap(variable ~ .)
 }
 
 #' @export
 fairness_prediction_density.BenchmarkResult <- function(object, ...){
+  assert_true(all("prob" %in% map_chr(object$learners$learner, "predict_type")))
   dt = rbindlist(map(object$resample_results$resample_result, function(rr) {
     dt = rbindlist(map(rr$predictions(), as.data.table))
     dt = cbind(setkey(dt), rr$task$data(cols = rr$task$col_roles$pta))
     dt[, task_id := rr$task$id][, learner_id := rr$learner$id][, pta := rr$task$col_roles$pta]
-  }))
+  }), fill = TRUE)
   # Melt probs
   classes = colnames(dt)[grep(colnames(dt), pattern= "prob.")]
   dt = melt(dt, measure.vars = classes)
