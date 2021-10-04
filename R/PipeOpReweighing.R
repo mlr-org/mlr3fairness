@@ -9,16 +9,17 @@
 #'
 #' @section PipeOpReweighingWeights:
 #' Adds a class weight column to the [`Task`][mlr3::Task] that different [`Learner`][mlr3::Learner]s may be
-#' using.
+#' using. In case initial weights are present, those are multiplied with new weights.
 #' Caution: Only fairness tasks are supported. Which means tasks need to have protected field. `tsk$col_roles$pta`.
 #'
 #' @section PipeOpReweighingOversampling:
 #' Oversamples a [`Task`][mlr3::Task] for more balanced ratios in subgroups and protected groups.
+#' Can be used if a learner does not support weights.
 #' Caution: Only fairness tasks are supported. Which means tasks need to have protected field. `tsk$col_roles$pta`.
 #'
 #' @section Construction:
 #' ```
-#' PipeOpReweighing$new(id = "reweighing", param_vals = list())
+#' PipeOpReweighing*$new(id = "reweighing", param_vals = list())
 #' ```
 #' * `id` :: `character(1)`
 #' * `param_vals` :: `list`
@@ -98,9 +99,16 @@ PipeOpReweighingWeights = R6Class("PipeOpReweighingWeights",
         stopf("Weight column '%s' is already in the Task", weightcolname)
       }
       assert_pta_task(task)
+      browser()
       wtab = compute_reweighing_weights(task, 1)
       wcol = task$data(cols = c(task$backend$primary_key, task$target_names, task$col_roles$pta))
       wcol = wcol[wtab, on = c(task$target_names, task$col_roles$pta)][, c(task$backend$primary_key, "wt"), with = FALSE]
+      if (is.null(task$weights)) {
+        initial_weights = rep(1, task$nrow)
+      } else {
+        initial_weights = task$weights
+      }
+      wcol = wcol[, wt := wt * initial_weights]
       wcol = setNames(wcol, c(task$backend$primary_key, weightcolname))
       task$cbind(wcol)
       task$set_col_roles(weightcolname, "weight")

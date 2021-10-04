@@ -53,7 +53,7 @@ Collate:
     'compas.R'
     'adult.R'
     'MeasureFairness.R'
-    'PipeOpsFairness.R'
+    'PipeOpReweighing.R'
     'assertions.R'
     'helpers.R'
     'measure_operations.R'
