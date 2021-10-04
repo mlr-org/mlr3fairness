@@ -112,7 +112,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MeasureFairness$new(
   base_measure,
-  operation = function(x) {     max(abs(diff(x))) },
+  operation = groupdiff_absdiff,
   minimize = TRUE,
   range = c(-Inf, Inf)
 )}\if{html}{\out{</div>}}

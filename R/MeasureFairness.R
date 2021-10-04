@@ -46,7 +46,7 @@ MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure, cloneable = 
     #' Should the measure be minimized? Defaults to `TRUE`.
     #' @param range (`numeric`)\cr
     #' Range of the resulting measure. Defaults to `c(-Inf, Inf)`.
-    initialize = function(base_measure, operation = function(x) {max(abs(diff(x)))}, minimize = TRUE, range = c(-Inf, Inf)) {
+    initialize = function(base_measure, operation = groupdiff_absdiff, minimize = TRUE, range = c(-Inf, Inf)) {
       self$operation = assert_function(operation)
       self$base_measure = assert_measure(base_measure)
 
@@ -104,7 +104,7 @@ MeasureFairnessComposite = R6::R6Class("MeasureFairnessComposite", inherit = Mea
     #'   Should the measure be minimized? Defaults to `TRUE`.
     #' @param range (`numeric`)\cr
     #'   Range of the resulting measure. Defaults to `c(-Inf, Inf)`.
-    initialize = function(id = NULL, measures, aggfun = function(x) mean(x, na.rm = TRUE), operation = function(x) {max(abs(diff(x)))}, minimize = TRUE, range = c(-Inf, Inf)) {
+    initialize = function(id = NULL, measures, aggfun = function(x) mean(x, na.rm = TRUE), operation = groupdiff_absdiff, minimize = TRUE, range = c(-Inf, Inf)) {
 
       if (all(map(measures, class) == "character")) {
         measures = msrs(unlist(measures), operation = operation)

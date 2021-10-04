@@ -13,6 +13,8 @@ test_that("fairness measures work as expcted", {
       expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
       out = prd$score(measures = msr(m, operation = groupdiff_tau), task = tsk)
       expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
+      out = prd$score(measures = msr(m, operation = groupdiff_absdiff), task = tsk)
+      expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
     })
   })
 })

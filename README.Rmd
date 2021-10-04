@@ -39,12 +39,22 @@ The **goal of `mlr3fairness`** is to allow for auditing of `mlr3` learners, visu
 ## Feature Overview
 
 * **Fairness Measures:** Audit algorithmms for fairness using a variety of fairness criteria. This also allows for designing custom criteria.
+
 * **Fairness Visualizations:** Diagnose fairness problems through visualizations.
+
 * **Debiasing Methods:** Correct fairness problems in three lines of code.
+
 * **Fairness Report:** Obtain a report regarding an algorithm's fairness. (Under development)
 
 
 
+### Protected Attribute
+
+`mlr3fairness` requires information about the protected attribute wrt. which we want to assess fairness. This can be set via the `col_role` "pta".
+
+```{r}
+task$col_roles$pta = "variable_name"
+```
 
 ### Fairness Measures
 

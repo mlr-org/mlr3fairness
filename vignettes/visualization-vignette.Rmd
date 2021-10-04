@@ -24,70 +24,91 @@ library(data.table)
 
 # Why we need fairness visualizations:
 
-Through fairness visualizations we could provide a clear, thorough and understandable way to understand the fairness problems. More than that, users could quickly diagnose their models through visualizations and locate the fairness problems. In this vignette we will showcase some of the pre build fairness visualization functions.
+Through fairness visualizations allow for first investigations into possible fairness problems in a dataset. In this vignette we will showcase some of the pre-built fairness visualization functions.
+All of the methods showcased below can be used together with objects of type `BenchmarkResult`, `ResampleResult` and `Prediction`.
 
-# Setup Data tasks, learner and predictions
+# The scenario
 
-For this example, we used the adult dataset. Since mlr3fairness provide the adult datasets in adult_train and adult_test. We will load those two datasets separately. Keep in mind all the datasets from mlr3fairness package already set protected attributes:
-Then we choose Random Forest as our model. For comparison, we introduce both Random Forest and Decision Tree for benchmark results.
+For this example, we use the `adult_train` dataset.
+Keep in mind all the datasets from mlr3fairness package already set protected attribute via the `col_role` "pta", here the "sex" column.
 
 ```{r}
-task = tsk("adult_train")
+t = tsk("adult_train")
+t$col_roles$pta
+```
+We choose a random forest as well as a decision tree model in order to showcase differences in performances.
+
+```{r}
+task = tsk("adult_train")$filter(1:5000)
 learner = lrn("classif.ranger", predict_type = "prob")
 learner$train(task)
-predictions = learner$predict(task)
+predictions = learner$predict(tsk("adult_test")$filter(1:5000))
+```
+Note, that it is important to evaluate predictions on held-out data in order to obtain unbiased estimates of fairness and performance metrics.
+By inspecting the confusion matrix, we can get some first insights.
 
+```{r}
+predictions$confusion
+```
+
+We furthermore design a small experiment allowing us to compare a random forest (`ranger`) and a decision tree (`rpart`). The result, `bmr` is a `BenchmarkResult` that contains the trained models on each cross-validation split.
+
+
+```{r}
 design = benchmark_grid(
-  tasks = tsk("adult_train"),
+  tasks = tsk("adult_train")$filter(1:5000),
   learners = lrns(c("classif.ranger", "classif.rpart"),
-                  predict_type = "prob", predict_sets = c("train", "test")),
+                  predict_type = "prob"),
   resamplings = rsmps("cv", folds = 3)
 )
 
 bmr = benchmark(design)
-
-paste0("Adult train have protected attributes: ", adult_train$col_roles$pta)
-paste0("Adult test have protected attributes: ", adult_test$col_roles$pta)
 ```
-We could then check the predictions and the benchmark_results.
-```{r}
-predictions$confusion
-print(bmr)
-```
-
-Since we want to show some of our visualization functions could take both single and multiple measures, we create one single measure to be ```fairness.tpr```, and the multiple measures to be ```c("fairness,tpr", "fairness.fnr")```.
-
-```{r}
-fairness_measure = msr("fairness.tpr")
-fairness_measures = msrs(c("fairness.tpr", "fairness.fnr"))
-```
-
 
 # Fairness Prediction Density Plot
 
-If we want to compare the predictions for protected attributes for the same model. Then Fairness Prediction Density Plot would be the optimum solution. By using fairness prediction density plot we could see the model predicted probability about whether the observations have income <=50K or not. Then by comparing the predicted probability for male and female. We could see male have a much higher probability to have income higher than females. This plot then indicates some potential fairness problems in our model.
+By inspecting the prediction density plot we can see the predicted probability for a given class split by the protected attribute, in this case `"sex"`. Large differences in densities might hint at strong differences in the target between groups, either directly in the data or as a consequence of the modeling process. Note, that plotting densities for a `Prediction`
+requires a `Task` since information about protected attributes is not contained in the `Prediction`.
 
+We can either plot the density with a `Prediction`
 ```{r}
 fairness_prediction_density(predictions, task)
 ```
 
-# Fairness Accuracy Tradeoff Plot
-
-Since fairness metrics are usually associated with the total accuracy of the model. There is a hidden tradeoff between accuracy and fairness metrics. Users could use the ```fairness_accuracy_tradeoff``` function to visualize such a tradeoff. For example, with one single measure the visualization will contain one single point indicating the relation between fairness and accuracy. However, with ```BenchmarkResults``` or ```ResamplingResults```. Users could compare such tradeoffs between different models and resamplings.
+or use it with a `BenchmarkResult` / `ResampleResult`:
 
 ```{r}
-fairness_accuracy_tradeoff(predictions, fairness_measure, task)
-fairness_accuracy_tradeoff(bmr, fairness_measure)
+fairness_prediction_density(bmr)
+```
+
+# Fairness Accuracy Tradeoff Plot
+
+In practice, we are most often interested in a trade-off between fairness metrics and a measure of utility such as accuracy.
+We showcase individual scores obtained in each cross-validation fold as well as the aggregate (`mean`) in order to additionally provide an indication in the variance of the performance estimates.
+
+```{r}
+fairness_accuracy_tradeoff(bmr, msr("fairness.fpr"))
 ```
 
 # Fairness Comparison Plot
 
-Then finally, if the user wants to compare fairness metrics either from a single model or multiple models. They could use ```fairness_compare``` functions. Such functions could compare either one metric or multiple metrics. In the following we compared the fairness performance between decision trees and random forests.
+An additional comparison can be obtained using `compare_metrics`. It allows comparing `Learner`s with respect to multiple metrics.
+Again, we can use it with a `Prediction`:
 
 ```{r}
-fairness_compare(predictions, fairness_measure, task)
-fairness_compare(predictions, fairness_measures, task)
-fairness_compare(bmr, fairness_measure)
-fairness_compare(bmr, fairness_measures)
+compare_metrics(predictions, msrs(c("fairness.fpr", "fairness.tpr")), task)
 ```
 
+or use it with a `BenchmarkResult` / `ResampleResult`:
+
+```{r}
+compare_metrics(bmr, msrs(c("classif.mmce", "fairness.fpr", "fairness.tpr")))
+```
+
+# Custom visualizations
+
+The required metrics to create custom visualizations can also be easily computed using the `$score()` method.
+
+```{r}
+bmr$score(msr("fairness.tpr"))
+```

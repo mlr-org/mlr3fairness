@@ -13,17 +13,24 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-# mlr3fairness: FairnessMeasures
+# FairnessMeasures
 
-mlr3fairness is a fairness toolkit for mlr3 users to measure the fairness metrics when building the machine learning models. And moreover, they could use this toolkit to visualize, compare the metrics and correct the algorithmic bias to ensure fairness among protected fields.
+Fairness measures (or metrics) allow us to assess and audit for possible biases in a trained model. There are several types of metrics that are widely used in order to assess a model's fairness. They can be coarsely classified into three groups:
 
-# Why should we care fairness?
+- `Statistical Group Fairness Metrics`: Given a set of predictions from our model, we assess for differences in one or multiple metrics across groups.
 
-In machine learning, the problem of algorithmic bias and fairness problems are well known. Outcomes may be skewed by a range of factors and thus might be considered unfair to certain groups or individuals. An example would be the way social media sites deliver personalized news to consumers. The potential is always there to give undue weight to certain viewpoints. Thus, fairness becomes crucial for the Machine Learning community. Which is the very first reason we want to develop this toolkit for the mlr3 family.
+- `Individual Fairness`: Basically requires that similar people are treated similar independent of the protected attribute. This is more of a philosophical concept and concrete implementations of this fairness notion are not immediately clear.
 
-# Introduction to Fairness Measures
+- `Causal Fairness Notions`: An important realization in the context of Fairness is, that whether a process is fair is often subject to the underlying causal directed acyclic graph (DAG). Knowledge of the DAG allows for causally assessing reasons for (un-)fairness. Since DAG's are often hard to construct for a given dataset, we currently do not provide any causal fairness metrics.
 
-The fairness measures (or metrics) are the foundations for fairness packages. Users can not only use those metrics to diagnose the datasets. They also need those measures to build fairness visualizations or bias mitigation algorithms so users could detect the fairness problems and correct them more easily.
+## Core Idea: Statistical Group Fairness
+
+A simple way to assess the fairness of a model is to find a definition of fairness that is relevant to a problem at hand. We might for example define a model to be fair if the chance to be accepted for a job given you are qualified is independent of a protected attribute e.g. `gender`. This can e.g. be measured using the `true positive rate`(TPR): in `mlr3` this metric is called `"classif.tpr"`. In this case we measure discrepancies between groups by computing differences `(-)` but we could also compute quotients.
+In practice, we often compute absolute differences.
+
+$$$
+  \Delta_{TPR} = TPR_{Group 1} - TPR_{Group 2}
+$$$
 
 # Pre-requsite: Data Tasks
 
