@@ -3,9 +3,11 @@
 #' @import R6
 #' @import checkmate
 #' @import mlr3measures
+#' @import mlr3pipelines
 #' @import ggplot2
-#' @import data.table
 #' @importFrom utils getFromNamespace data
+#' @import paradox
+#' @import data.table
 "_PACKAGE"
 
 .onLoad = function(libname, pkgname) { # nolint
@@ -21,10 +23,9 @@
     union(cr, "pta")
   })
 
+  # Define a set of widely used metrics. Documented in mlr_measures_fairness
   x = getFromNamespace("mlr_measures", ns = "mlr3")
   x$add("fairness", MeasureFairness)
-
-  # Define a set of widely used metrics. Documented in mlr_measures_fairness
   x$add("fairness.fpr", MeasureFairness, base_measure = msr("classif.fpr"))
   x$add("fairness.fnr", MeasureFairness, base_measure = msr("classif.fnr"))
   x$add("fairness.tpr", MeasureFairness, base_measure = msr("classif.tpr"))
@@ -34,4 +35,9 @@
   x$add("fairness.fp",  MeasureFairness, base_measure = msr("classif.fp"))
   x$add("fairness.fn",  MeasureFairness, base_measure = msr("classif.fn"))
   x$add("fairness.EOd", MeasureFairnessComposite, measures = list("fairness.fpr", "fairness.tpr"))
+  x$add("classif.pp", MeasurePositiveProbability)
+
+  x = getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
+  x$add("reweighing_wts", PipeOpReweighingWeights)
+  x$add("reweighing_os", PipeOpReweighingOversampling)
 }

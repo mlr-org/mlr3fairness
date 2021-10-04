@@ -27,7 +27,7 @@
 #'   measure = msr("fairness", base_measure = msr("classif.ppv"))
 #'   predictions = learner$predict(data_task)
 #'   predictions$score(measure, task = data_task)
-MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALSE,
+MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure, cloneable = FALSE,
   public = list(
     #' @template field_base_measure
     base_measure = NULL,
@@ -69,7 +69,6 @@ MeasureFairness = R6Class("MeasureFairness", inherit = Measure, cloneable = FALS
     }
   )
 )
-
 mlr_measures$add("fairness", MeasureFairness)
 
 
@@ -87,7 +86,7 @@ mlr_measures$add("fairness", MeasureFairness)
 #'   MeasureFairnessComposite$new(measures = list("fairness.classif.fpr", "fairness.classif.tpr"))
 #'   # Other metrics e.g. based on negative rates
 #'   MeasureFairnessComposite$new(measures = list("fairness.classif.fnr", "fairness.classif.tnr"))
-MeasureFairnessComposite = R6Class("MeasureFairnessComposite", inherit = Measure,
+MeasureFairnessComposite = R6::R6Class("MeasureFairnessComposite", inherit = Measure,
   public = list(
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
@@ -140,8 +139,52 @@ MeasureFairnessComposite = R6Class("MeasureFairnessComposite", inherit = Measure
     }
   )
 )
-
 mlr_measures$add("fairness.composite", MeasureFairnessComposite)
+
+#' @title Positive Probability Measure
+#' @name mlr_measures_positive_probability
+#'
+#' @description
+#' Return the positive probability of the predictions. Formula: P(positive prediction) = positive_predictions / all_predictions
+#'
+#' @export
+#' @examples
+#' # Create Positive Probability Measure
+#' library(mlr3)
+#' data_task = tsk("adult_train")
+#' learner = lrn("classif.rpart", cp = .01)
+#' learner$train(data_task)
+#' measure = msr("classif.pp")
+#' predictions = learner$predict(data_task)
+#' predictions$score(measure, task = data_task)
+MeasurePositiveProbability = R6::R6Class("MeasurePositiveProbability",
+  inherit = mlr3::Measure,
+  public = list(
+
+    #' @description
+    #' Initialize a Measure Positive Probability Object
+    initialize = function() {
+      super$initialize(
+        id = "classif.pp",
+        packages = character(),
+        properties = character(),
+        predict_type = "response",
+        range = c(0, 1),
+        minimize = FALSE)
+      }
+    ),
+
+  private = list(
+    .score = function(prediction, task, ...) {
+      pp = function(response, positive) {
+        positive_count = sum(response == positive)
+        return(positive_count/length(response))
+        }
+      pp(prediction$response, task$positive)
+      }
+    )
+)
+mlr_measures$add("classif.pp", MeasurePositiveProbability)
 
 
 #' @title Fairness Measures in mlr3

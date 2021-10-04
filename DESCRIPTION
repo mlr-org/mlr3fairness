@@ -33,8 +33,10 @@ Imports:
     checkmate,
     R6 (>= 2.4.1),
     data.table (>= 1.13.6),
+    paradox,
     mlr3measures (>= 0.3.0),
     mlr3misc,
+    mlr3pipelines,
     ggplot2
 Suggests:
     rmarkdown,
@@ -43,15 +45,17 @@ Suggests:
     testthat (>= 3.0.0),
     ranger,
     mlr3learners
+RoxygenNote: 7.1.2
 Remotes:
     mlr-org/mlr3
-RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Collate:
-    'MeasureFairness.R'
-    'adult.R'
     'compas.R'
+    'adult.R'
+    'MeasureFairness.R'
+    'PipeOpReweighing.R'
     'assertions.R'
+    'helpers.R'
     'measure_operations.R'
     'helpers.R'
     'zzz.R'
