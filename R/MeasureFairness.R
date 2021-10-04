@@ -14,9 +14,8 @@
 #'   Composite measures encompasing multiple fairness metrics can be built using [`MeasureFairnessComposite`].
 #'
 #'   Predefined measures can be found in the [dictionary][mlr3misc::Dictionary] [mlr_measures].
-#'   See [`groupdiff_tau`] for a simple way to construct difference functions.
 #'
-#' @seealso groupdiff_tau
+#' @seealso groupdiff_tau groupdiff_absdiff
 #' @export
 #' @examples
 #'   # Create MeasureFairness to measure the Predictive Parity.
@@ -40,8 +39,9 @@ MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure, cloneable = 
     #' @param base_measure (`Measure()`)\cr
     #' The measure used to perform fairness operations.
     #' @param operation (`function`)\cr
-    #' The operation used to compute the difference. A function with args 'x' and 'y'(optional) that returns
-    #' a single value. Defaults to `max(abs(diff(x)))`.
+    #' The operation used to compute the difference. A function that returns
+    #' a single value given input: computed metric for each subgroup.
+    #' Defaults to `groupdiff_absdiff`.
     #' @param minimize (`logical`)\cr
     #' Should the measure be minimized? Defaults to `TRUE`.
     #' @param range (`numeric`)\cr
@@ -98,8 +98,10 @@ MeasureFairnessComposite = R6::R6Class("MeasureFairnessComposite", inherit = Mea
     #' @param aggfun (`function()`)\cr
     #'   Aggregation function used to aggregate results from respective measures. Defaults to `sum`.
     #' @param operation (`function`)\cr
-    #'   The operation used to compute the difference. A function with args 'x' and 'y'(optional) that returns
-    #'   a single value. See `MeasureFairness` for more information. Only used if `measures` is of type `character`.
+    #' The operation used to compute the difference. A function that returns
+    #' a single value given input: computed metric for each subgroup.
+    #' Defaults to `groupdiff_absdiff`.
+    #' See `MeasureFairness` for more information. Only used if `measures` is of type `character`.
     #' @param minimize (`logical`)\cr
     #'   Should the measure be minimized? Defaults to `TRUE`.
     #' @param range (`numeric`)\cr

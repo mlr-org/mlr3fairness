@@ -66,8 +66,10 @@ List of fairness measures to aggregate (or valid keys to be used with \code{msr(
 Aggregation function used to aggregate results from respective measures. Defaults to \code{sum}.}
 
 \item{\code{operation}}{(\code{function})\cr
-The operation used to compute the difference. A function with args 'x' and 'y'(optional) that returns
-a single value. See \code{MeasureFairness} for more information. Only used if \code{measures} is of type \code{character}.}
+The operation used to compute the difference. A function that returns
+a single value given input: computed metric for each subgroup.
+Defaults to \code{groupdiff_absdiff}.
+See \code{MeasureFairness} for more information. Only used if \code{measures} is of type \code{character}.}
 
 \item{\code{minimize}}{(\code{logical})\cr
 Should the measure be minimized? Defaults to \code{TRUE}.}

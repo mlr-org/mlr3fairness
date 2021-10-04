@@ -25,7 +25,6 @@ For an overview of measures see \code{\link{mlr_measures_fairness}}.
 Composite measures encompasing multiple fairness metrics can be built using \code{\link{MeasureFairnessComposite}}.
 
 Predefined measures can be found in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_measures}.
-See \code{\link{groupdiff_tau}} for a simple way to construct difference functions.
 }
 
 \section{Predefined measures}{
@@ -68,7 +67,7 @@ msr("fairness.fp")
 msr("fairness.fn")
 }
 \seealso{
-groupdiff_tau
+groupdiff_tau groupdiff_absdiff
 }
 \keyword{datasets}
 \section{Super class}{
@@ -125,8 +124,9 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 The measure used to perform fairness operations.}
 
 \item{\code{operation}}{(\code{function})\cr
-The operation used to compute the difference. A function with args 'x' and 'y'(optional) that returns
-a single value. Defaults to \code{max(abs(diff(x)))}.}
+The operation used to compute the difference. A function that returns
+a single value given input: computed metric for each subgroup.
+Defaults to \code{groupdiff_absdiff}.}
 
 \item{\code{minimize}}{(\code{logical})\cr
 Should the measure be minimized? Defaults to \code{TRUE}.}
