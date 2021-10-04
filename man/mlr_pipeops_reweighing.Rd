@@ -79,7 +79,7 @@ library(mlr3pipelines)
 library(mlr3fairness)
 library(mlr3)
 
-reweighing = po("reweighing")
+reweighing = po("reweighing_wts")
 learner_po = po("learner", learner = lrn("classif.rpart"))
 
 data = tsk("adult_train")

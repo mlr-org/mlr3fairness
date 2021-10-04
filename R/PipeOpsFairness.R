@@ -57,7 +57,7 @@
 #' library(mlr3fairness)
 #' library(mlr3)
 #'
-#' reweighing = po("reweighing")
+#' reweighing = po("reweighing_wts")
 #' learner_po = po("learner", learner = lrn("classif.rpart"))
 #'
 #' data = tsk("adult_train")
@@ -81,7 +81,7 @@ PipeOpReweighingWeights = R6Class("PipeOpReweighingWeights",
     #' final_reweighing_weight = first_weight * old_weight (if old weight exist, otherwise oldweight = 1)
     initialize = function(id = "reweighing_wts", param_vals = list()) {
       ps = ParamSet$new(params = list(
-        ParamDbl$new("alpha", lower = 0, upper = 1, tags = "train"),
+        ParamDbl$new("alpha", lower = 0, upper = 1, tags = "train")
       ))
       ps$values = list(alpha = 1)
       super$initialize(id, param_set = ps, param_vals = param_vals, task_type = "TaskClassif", tags = "imbalanced data")
@@ -99,9 +99,9 @@ PipeOpReweighingWeights = R6Class("PipeOpReweighingWeights",
       }
       assert_pta_task(task)
       wtab = compute_reweighing_weights(task, 1)
-      wcol = task$data(cols = c(task$target_names, task$col_roles$pta))
-      wcol = wcol[wtab, on = c(task$target_names, task$col_roles$pta)][, "wt"]
-      wcol = setNames(wcol, weightcolname)
+      wcol = task$data(cols = c(task$backend$primary_key, task$target_names, task$col_roles$pta))
+      wcol = wcol[wtab, on = c(task$target_names, task$col_roles$pta)][, c(task$backend$primary_key, "wt"), with = FALSE]
+      wcol = setNames(wcol, c(task$backend$primary_key, weightcolname))
       task$cbind(wcol)
       task$set_col_roles(weightcolname, "weight")
       task
@@ -123,7 +123,7 @@ PipeOpReweighingOversampling = R6Class("PipeOpReweighingOversampling",
     #'   A list of parameter values.
     initialize = function(id = "reweighing_os", param_vals = list()) {
       ps = ParamSet$new(params = list(
-        ParamDbl$new("alpha", lower = 0, upper = 1, tags = "train"),
+        ParamDbl$new("alpha", lower = 0, upper = 1, tags = "train")
       ))
       ps$values = list(alpha = 1)
       super$initialize(id, param_set = ps, param_vals = param_vals, can_subset_cols = FALSE, task_type = "TaskClassif", tags = "imbalanced data")
@@ -134,13 +134,14 @@ PipeOpReweighingOversampling = R6Class("PipeOpReweighingOversampling",
     .train_task = function(task) {
       self$state = list()
       assert_pta_task(task)
-      wtab = compute_reweighing_weights(task, self$param_vals$alpha)
+      pv = self$param_set$get_values()
+      wtab = compute_reweighing_weights(task, pv$alpha)
       dt = task$data(cols = c(task$target_names, task$col_roles$pta, task$backend$primary_key))
       dt = dt[wtab, on = c(task$target_names, task$col_roles$pta)][, sel := 0]
       dt[wt > 1, sel := floor(wt)][wt > 1, wt := wt - sel][, rnd := runif(nrow(dt))]
       dt[wt >= rnd, sel := sel + 1]
       new_ids = sample(unlist(pmap(list(dt[[task$backend$primary_key]], dt[["sel"]]), rep)))
-      mlr3pipelines:::task_filter_ex(task, new_ids)
+      task_filter_ex(task, new_ids)
     },
 
     .predict_task = identity
