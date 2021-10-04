@@ -99,7 +99,6 @@ PipeOpReweighingWeights = R6Class("PipeOpReweighingWeights",
         stopf("Weight column '%s' is already in the Task", weightcolname)
       }
       assert_pta_task(task)
-      browser()
       wtab = compute_reweighing_weights(task, 1)
       wcol = task$data(cols = c(task$backend$primary_key, task$target_names, task$col_roles$pta))
       wcol = wcol[wtab, on = c(task$target_names, task$col_roles$pta)][, c(task$backend$primary_key, "wt"), with = FALSE]

@@ -24,13 +24,17 @@ Install the development version from mlr3 repo
 remotes::install_github("mlr-org/mlr3fairness")
 ```
 
-# Why should you care fairness in machine learning?
+# Why should I care about fairness in machine learning?
 
-Machine Learning model predictions can be skewed by a range of factors and thus might be considered unfair towards certain groups or individuals. An example would be the COMPAS algorithm, which is a popular commercial algorithm used by judges and parole officers for scoring criminal defendant’s likelihood of reoffending (recidivism). [Studies](https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing) have shown, that the algorithm might be biased in favor of white defendants. Biases can occur in a large variety of situations where algorithms automate or support human decision making e.g. credit checks, automatic HR tools along with a variety of other domains.
+Machine Learning model predictions can be skewed by a range of factors and thus might be considered unfair towards certain groups or individuals.
+An example would be the COMPAS algorithm, which is a popular commercial algorithm used by judges and parole officers for scoring criminal defendant’s
+likelihood of reoffending (recidivism).
+[Studies](https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing) have shown, that the algorithm might be biased in favor of white defendants.
+Biases can occur in a large variety of situations where algorithms automate or support human decision making e.g. credit checks, automatic HR tools along with a variety of other domains.
 
-# What is mlr3fairness?
 
-mlr3fairness integrates fairness auditing and debiasing with mlr3.
+The **goal of `mlr3fairness`** is to allow for auditing of `mlr3` learners, visualization and subsequently trying to improve fairness using debiasing strategies.
+
 
 ## Feature Overview
 
@@ -49,16 +53,22 @@ Metrics are prefixed with `fairness.` and can be found in the `msr()` dictionary
 Most fairness metrics are based on a difference between two protected groups (e.g. male and female) for a given metric (e.g. the false positive rate: `fpr`).
 
 ```{r}
-msr()
+library(mlr3)
+library(mlr3fairness)
+```
+```{r, echo = FALSE}
+knitr::kable(mlr3fairness:::mlr_measures_fairness)
 ```
 
 ### Fairness Visualizations
 
-Visualizations can be used with either a `Prediction`, `ResampleResult` or a `BenchmarkResult`. For more information regarding those object, refer to the [mlr3 book](https://mlr3book.mlr-org.com/basics.html).
+Visualizations can be used with either a `Prediction`, `ResampleResult` or a `BenchmarkResult`.
+For more information regarding those objects, refer to the [mlr3 book](https://mlr3book.mlr-org.com/basics.html).
+
 
 - **fairness_accuracy_tradeoff**: Plot available trade-offs between fairness and model performance.
 
-- **fairness_compare**: Compare fairness across models and cross-validation forlds.
+- **compare_metrics**: Compare fairness across models and cross-validation forlds.
 
 - **fairness_prediction_density**: Density plots for each protected attribute.
 
@@ -66,16 +76,22 @@ Visualizations can be used with either a `Prediction`, `ResampleResult` or a `Be
 ### Debiasing Methods
 
 Debiasing methods can be used to improve the fairness of a given model.
-`mlr3fairness` includes several methods that can be used together with `mlr3pipelines` to obtain fair(er) models:
+`mlr3fairness` includes several methods that can be used together with
+`mlr3pipelines` to obtain fair(er) models:
+
 
 ```{r}
-
+library(mlr3pipelines)
+lrn = as_learner(po("reweighing_wts") %>>% lrn("classif.rpart"))
+rs = resample(lrn, task = tsk("compas")$filter(1:500), rsmp("cv"))
+rs$score(msr("fairness.acc"))
 ```
 
 ### Datasets
 
 `mlr3fairness` includes two fairness datasets: `adult` and `compas`. See `?adult` and `?compas` for additional information regarding columns.
 
+You can load them using `tsk(<key>)`.
 
 ## Demo for Adult Dataset
 
@@ -109,12 +125,14 @@ fairness_prediction_density(predictions, task_test)
 2. Improvement on visualizations, like anchor points and others. See issues.
 3. More visualizations.
 
+
 ## Metrics
 1. Add support to non-binary target attributes and non-binary protected attributes.
 2. Add metrics that are not supported with current design in `extra_measures.R`.
 
 ## Debiasing Methods
 1. More Debiasing Methods, post-processing and in-processing.
+
 
 # Bugs, Feedbacks and Questions
 
