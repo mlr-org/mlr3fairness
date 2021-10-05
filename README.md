@@ -37,12 +37,25 @@ using debiasing strategies.
   - **Fairness Measures:** Audit algorithmms for fairness using a
     variety of fairness criteria. This also allows for designing custom
     criteria.
+
   - **Fairness Visualizations:** Diagnose fairness problems through
     visualizations.
+
   - **Debiasing Methods:** Correct fairness problems in three lines of
     code.
+
   - **Fairness Report:** Obtain a report regarding an algorithm’s
     fairness. (Under development)
+
+### Protected Attribute
+
+`mlr3fairness` requires information about the protected attribute wrt.
+which we want to assess fairness. This can be set via the `col_role`
+“pta”.
+
+``` r
+task$col_roles$pta = "variable_name"
+```
 
 ### Fairness Measures
 
@@ -62,11 +75,12 @@ library(mlr3fairness)
 | fairness.EOd | Equalized Odds: Sum of abs. difference between true positive and false positive rates across groups     |
 | fairness.fpr | Abs. difference in false positive rates across groups                                                   |
 | fairness.acc | Abs. difference in accurq()acy across groups (Overall accuracy equality)                                |
-| fairness.tpr | Abs. difference in True positive rates across groups                                                    |
-| fairness.ppv | Abs. difference in Positive predictive values across groups (Part of Conditional use accuracy equality) |
-| fairness.npv | Abs. difference in Negative predictive values across groups (Part of Conditional use accuracy equality) |
-| fairness.fp  | Abs. difference in False positives across groups (Part of Treatment equality)                           |
-| fairness.fn  | Abs. difference in False negatives across groups (Part of Treatment equality)                           |
+| fairness.tpr | Abs. difference in true positive rates across groups                                                    |
+| fairness.tnr | Abs. difference in true negative rates across groups                                                    |
+| fairness.ppv | Abs. difference in positive predictive values across groups (Part of Conditional use accuracy equality) |
+| fairness.npv | Abs. difference in negative predictive values across groups (Part of Conditional use accuracy equality) |
+| fairness.fp  | Abs. difference in false positives across groups (Part of Treatment equality)                           |
+| fairness.fn  | Abs. difference in false negatives across groups (Part of Treatment equality)                           |
 
 ### Fairness Visualizations
 
@@ -118,17 +132,24 @@ rs$score(msr("fairness.acc"))
     ##  8: <ResamplingCV[19]>            cv         8 <PredictionClassif[20]>
     ##  9: <ResamplingCV[19]>            cv         9 <PredictionClassif[20]>
     ## 10: <ResamplingCV[19]>            cv        10 <PredictionClassif[20]>
-    ##     fairness.classif.acc
-    ##  1:           0.07308970
-    ##  2:           0.02439024
-    ##  3:           0.05263158
-    ##  4:           0.02272727
-    ##  5:           0.05405405
-    ##  6:           0.00000000
-    ##  7:           0.04545455
-    ##  8:           0.00000000
-    ##  9:           0.00000000
-    ## 10:           0.07500000
+    ##     fairness.acc
+    ##  1:   0.07308970
+    ##  2:   0.02439024
+    ##  3:   0.05263158
+    ##  4:   0.02272727
+    ##  5:   0.05405405
+    ##  6:   0.00000000
+    ##  7:   0.04545455
+    ##  8:   0.00000000
+    ##  9:   0.00000000
+    ## 10:   0.07500000
+
+**Overview:**
+
+| key             | input.type.train | input.type.predict | output.type.train | output.type.predict |
+| :-------------- | :--------------- | :----------------- | :---------------- | :------------------ |
+| reweighing\_os  | TaskClassif      | TaskClassif        | TaskClassif       | TaskClassif         |
+| reweighing\_wts | TaskClassif      | TaskClassif        | TaskClassif       | TaskClassif         |
 
 ### Datasets
 

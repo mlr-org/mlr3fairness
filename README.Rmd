@@ -52,7 +52,7 @@ The **goal of `mlr3fairness`** is to allow for auditing of `mlr3` learners, visu
 
 `mlr3fairness` requires information about the protected attribute wrt. which we want to assess fairness. This can be set via the `col_role` "pta".
 
-```{r}
+```{r, eval = FALSE}
 task$col_roles$pta = "variable_name"
 ```
 
@@ -100,6 +100,7 @@ rs$score(msr("fairness.acc"))
 **Overview:**
 
 ```{r, echo = FALSE}
+library(mlr3misc)
 dt = as.data.table(mlr_pipeops)
 knitr::kable(dt[map_lgl(dt$tags, function(x) "fairness" %in% x)][, c(1,7,8,9,10)])
 ```
