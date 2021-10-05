@@ -160,6 +160,7 @@ compare_metrics.PredictionClassif <- function(object, measures = msr("fairness.a
     xlab("Metrics") +
     ylab("Value") +
     theme(legend.position = "none") +
+    theme_bw() +
     scale_fill_hue(c=100, l=60)
 }
 

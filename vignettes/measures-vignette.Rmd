@@ -2,7 +2,7 @@
 title: "Fairness Metrics"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{measures-vignette}
+  %\VignetteIndexEntry{Fairness Metrics}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

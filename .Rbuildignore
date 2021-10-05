@@ -23,3 +23,5 @@
 ^\.vscode$
 ^codemeta\.json$
 ^data-raw$
+^doc$
+^Meta$
