@@ -51,7 +51,7 @@ The \verb{$state} is a named \code{list} with the \verb{$state} elements inherit
 \section{Parameters}{
 
 \itemize{
-\item \code{alpha} :: \code{\link{numeric}} A number between 0 (no debiasing) and 1 (full debiasing).
+\item \code{alpha} :: \code{numeric} A number between 0 (no debiasing) and 1 (full debiasing).
 .
 }
 }

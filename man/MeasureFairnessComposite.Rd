@@ -12,9 +12,9 @@ Aggregates using \code{aggfun}, defaults to \code{mean()}.
   library(mlr3)
   library(mlr3fairness)
   # Equalized Odds Metric
-  MeasureFairnessComposite$new(measures = list("fairness.classif.fpr", "fairness.classif.tpr"))
+  MeasureFairnessComposite$new(measures = list("fairness.fpr", "fairness.tpr"))
   # Other metrics e.g. based on negative rates
-  MeasureFairnessComposite$new(measures = list("fairness.classif.fnr", "fairness.classif.tnr"))
+  MeasureFairnessComposite$new(measures = list("fairness.fnr", "fairness.tnr"))
 }
 \section{Super class}{
 \code{\link[mlr3:Measure]{mlr3::Measure}} -> \code{MeasureFairnessComposite}
