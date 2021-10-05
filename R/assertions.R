@@ -15,4 +15,5 @@ assert_pta_task = function(task, measure = NULL) {
   if (length(task$col_roles$pta) == 0L) {
     stop("Task must have col_roles 'pta' (protected attribute) for fairness operations")
   }
+  assert_task(task)
 }

@@ -35,7 +35,7 @@ group fairness measures based on a difference between a performance metrics acro
 by combining a performance measure with an operation for measuring differences.
 
 \tabular{ll}{
-fairness.EOd \tab Equalized Odds: Abs. difference between true positive and false positive rates across groups           \cr
+fairness.eod \tab Equalized Odds: Abs. difference between true positive and false positive rates across groups           \cr
 fairness.fpr \tab Abs. difference in false positive rates across groups                                                  \cr
 fairness.acc \tab Abs. difference in accuracy across groups (Overall accuracy equality)                               \cr
 fairness.tpr \tab Abs. difference in True positive rates across groups                                                   \cr
@@ -56,7 +56,7 @@ fairness.fn  \tab Abs. difference in False negatives across groups (Part of Trea
   predictions = learner$predict(data_task)
   predictions$score(measure, task = data_task)
 # Predfined measures:
-msr("fairness.EOd")
+msr("fairness.eod")
 msr("fairness.fpr")
 msr("fairness.acc")
 msr("fairness.fnr")

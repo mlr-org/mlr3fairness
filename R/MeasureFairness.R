@@ -202,7 +202,7 @@ mlr_measures$add("classif.pp", MeasurePositiveProbability)
 #' by combining a performance measure with an operation for measuring differences.
 #'
 #' \tabular{ll}{
-#'  fairness.EOd \tab Equalized Odds: Abs. difference between true positive and false positive rates across groups           \cr
+#'  fairness.eod \tab Equalized Odds: Abs. difference between true positive and false positive rates across groups           \cr
 #'  fairness.fpr \tab Abs. difference in false positive rates across groups                                                  \cr
 #'  fairness.acc \tab Abs. difference in accuracy across groups (Overall accuracy equality)                               \cr
 #'  fairness.tpr \tab Abs. difference in True positive rates across groups                                                   \cr
@@ -214,7 +214,7 @@ mlr_measures$add("classif.pp", MeasurePositiveProbability)
 #'
 #' @examples
 #' # Predfined measures:
-#' msr("fairness.EOd")
+#' msr("fairness.eod")
 #' msr("fairness.fpr")
 #' msr("fairness.acc")
 #' msr("fairness.fnr")
@@ -225,7 +225,7 @@ mlr_measures$add("classif.pp", MeasurePositiveProbability)
 #' msr("fairness.fn")
 mlr_measures_fairness = rowwise_table(
   ~key, ~ description,
-  "fairness.EOd" , "Equalized Odds: Sum of abs. difference between true positive and false positive rates across groups",
+  "fairness.eod" , "Equalized Odds: Sum of abs. difference between true positive and false positive rates across groups",
   "fairness.fpr" , "Abs. difference in false positive rates across groups",
   "fairness.acc" , "Abs. difference in accurq()acy across groups (Overall accuracy equality)",
   "fairness.tpr" , "Abs. difference in true positive rates across groups",
