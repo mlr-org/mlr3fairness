@@ -42,12 +42,12 @@ library(ggplot2)
 library(data.table)
 
 # Setup the Fairness Measures and tasks
-task = tsk("adult_train")
+task = tsk("adult_train")$filter(1:500)
 learner = lrn("classif.ranger", predict_type = "prob")
 learner$train(task)
 predictions = learner$predict(task)
 design = benchmark_grid(
-  tasks = tsk("adult_train"),
+  tasks = task,
   learners = lrns(c("classif.ranger", "classif.rpart"),
                  predict_type = "prob", predict_sets = c("train", "test")),
   resamplings = rsmps("cv", folds = 3)
@@ -56,6 +56,6 @@ design = benchmark_grid(
 bmr = benchmark(design)
 fairness_measure = msr("fairness.tpr")
 
-fairness_accuracy_tradeoff(predictions, fairness_measure, task)
+fairness_accuracy_tradeoff(predictions, fairness_measure, task = task)
 fairness_accuracy_tradeoff(bmr, fairness_measure)
 }

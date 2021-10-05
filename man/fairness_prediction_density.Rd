@@ -28,7 +28,7 @@ library(mlr3fairness)
 library(mlr3learners)
 library(mlr3)
 
-task = tsk("adult_train")
+task = tsk("adult_train")$filter(1:500)
 learner = lrn("classif.rpart", predict_type = "prob", cp = 0.001)
 learner$train(task)
 # For prediction

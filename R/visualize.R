@@ -36,12 +36,12 @@
 #' library(data.table)
 #'
 #' # Setup the Fairness Measures and tasks
-#' task = tsk("adult_train")
+#' task = tsk("adult_train")$filter(1:500)
 #' learner = lrn("classif.ranger", predict_type = "prob")
 #' learner$train(task)
 #' predictions = learner$predict(task)
 #' design = benchmark_grid(
-#'   tasks = tsk("adult_train"),
+#'   tasks = task,
 #'   learners = lrns(c("classif.ranger", "classif.rpart"),
 #'                  predict_type = "prob", predict_sets = c("train", "test")),
 #'   resamplings = rsmps("cv", folds = 3)
@@ -50,7 +50,7 @@
 #' bmr = benchmark(design)
 #' fairness_measure = msr("fairness.tpr")
 #'
-#' fairness_accuracy_tradeoff(predictions, fairness_measure, task)
+#' fairness_accuracy_tradeoff(predictions, fairness_measure, task = task)
 #' fairness_accuracy_tradeoff(bmr, fairness_measure)
 #' @export
 fairness_accuracy_tradeoff = function(object, ...){
@@ -125,12 +125,12 @@ fairness_accuracy_tradeoff.ResampleResult = function(object, fairness_measure = 
 #' library(mlr3learners)
 #'
 #' # Setup the Fairness Measures and tasks
-#' task = tsk("adult_train")
+#' task = tsk("adult_train")$filter(1:500)
 #' learner = lrn("classif.ranger", predict_type = "prob")
 #' learner$train(task)
 #' predictions = learner$predict(task)
 #' design = benchmark_grid(
-#'   tasks = tsk("adult_train"),
+#'   tasks = task,
 #'   learners = lrns(c("classif.ranger", "classif.rpart"),
 #'                  predict_type = "prob", predict_sets = c("train", "test")),
 #'   resamplings = rsmps("cv", folds = 3)
@@ -209,7 +209,7 @@ compare_metrics.ResampleResult = function(object, measures = msr("fairness.acc")
 #' library(mlr3learners)
 #' library(mlr3)
 #'
-#' task = tsk("adult_train")
+#' task = tsk("adult_train")$filter(1:500)
 #' learner = lrn("classif.rpart", predict_type = "prob", cp = 0.001)
 #' learner$train(task)
 #' # For prediction

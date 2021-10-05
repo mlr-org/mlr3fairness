@@ -46,7 +46,7 @@
   x$add("reweighing_wts", PipeOpReweighingWeights)
   x$add("reweighing_os", PipeOpReweighingOversampling)
 
-# static code checks should not complain about commonly used data.table columns
-utils::globalVariables(c("variable", "value", "learner_id", "n_tgt", "n_pta", 'pta', 'task_id', 'pta_cols', 'wt', 'N'))
+  # static code checks should not complain about commonly used data.table columns
+  utils::globalVariables(c("variable", "value", "learner_id", "n_tgt", "n_pta", 'pta', 'task_id', 'pta_cols', 'wt', 'N', 'agg'))
 
 }
