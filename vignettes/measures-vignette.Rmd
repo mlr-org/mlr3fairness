@@ -103,7 +103,6 @@ The core `Measure` in `mlr3fairness` is a `MeasureFairness`. It can be used to c
 m1 = MeasureFairness$new(base_measure = msr("classif.fpr"), operation = function(x) {abs(x[1] - x[2])})
 m1
 ```
-
 This measure does the following steps:
 - Compute the metric supplied as `base_measure` in each group defined by the `"pta"` column.
 - Compute `operation` (here `abs(x[1] - x[2])`) and return the result.
@@ -116,6 +115,7 @@ also across protected attributes that have more then two classes_
 - `groupdiff_absdiff`: maximum absolute difference between all classes (the default for all metrics)
 - `groupdiff_tau`: minimum quotient between all classes
 
+**Note**: Depdending on the `operation` we need to set a different `minimize` flag for the measure so subsequent operations based on the measure automatically know if the measure is to be minimized or maximized e.g. during tuning.
 
 We can also use those operations to construct a measure using `msr()`, since `MeasureFairness` (key: `msr("fairness")` can be constructed from the dictionary with additional arguments.
 

@@ -64,8 +64,7 @@ fairness_accuracy_tradeoff.PredictionClassif <- function(object, fairness_measur
   data =  as.data.frame(t(object$score(list(acc_measure, fairness_measure), task = task)))
   ggplot(data, aes_string(x = acc_measure$id, y = fairness_measure$id)) +
     geom_point() +
-    theme_bw() +
-    scale_colour_viridis_d()
+    theme_bw()
 }
 
 #' @export
@@ -80,7 +79,6 @@ fairness_accuracy_tradeoff.BenchmarkResult <- function(object, fairness_measure 
   ggplot(data, aes_string(x = acc_measure$id, y=fairness_measure$id, colour="learner_id", size = "aggi", alpha = "aggi", pch = "agg")) +
     geom_point() +
     theme_bw() +
-    scale_colour_viridis_d() +
     scale_alpha(range = c(0.5, 1)) +
     scale_size(range = c(3,6)) +
     scale_shape_manual(name = "Aggregation", values = c(4, 16)) +
@@ -244,7 +242,7 @@ fairness_prediction_density.PredictionClassif<- function(object, task, ...){
     xlab("Protected attributes") +
     ylab("Predicted probability") +
     theme(legend.position = "none") +
-    scale_fill_hue(c=100, l=100) +
+    scale_fill_hue(name = pta_name, c=100, l=100) +
     ylim(c(0,1)) +
     coord_flip() +
     theme_bw() +

@@ -1,7 +1,8 @@
 
 # [mlr3fairness](https://github.com/mlr-org/mlr3fairness)
 
-## Machine Learning Fairness Extension for [mlr3](https://github.com/mlr-org/mlr3).
+Machine Learning Fairness Extension for
+[mlr3](https://github.com/mlr-org/mlr3).
 
 [![tic](https://github.com/mlr-org/mlr3proba/workflows/tic/badge.svg?branch=main)](https://github.com/mlr-org/mlr3fairness/actions)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
@@ -51,11 +52,15 @@ using debiasing strategies.
 
 `mlr3fairness` requires information about the protected attribute wrt.
 which we want to assess fairness. This can be set via the `col_role`
-“pta”.
+“pta” (protected attribute). Currently `mlr3fairness` allows only a
+single column as `"pta"`.
 
 ``` r
 task$col_roles$pta = "variable_name"
 ```
+
+In case a non-categorical or more complex protected attribute is
+required, it can be manually computed and added to the task.
 
 ### Fairness Measures
 
@@ -63,7 +68,9 @@ task$col_roles$pta = "variable_name"
 prefixed with `fairness.` and can be found in the `msr()` dictionary.
 Most fairness metrics are based on a difference between two protected
 groups (e.g. male and female) for a given metric (e.g. the false
-positive rate: `fpr`).
+positive rate: `fpr`). See
+[here](https://textbook.coleridgeinitiative.org/chap-bias.html) for a
+more in-depth introduction to fairness metrics and how to choose them.
 
 ``` r
 library(mlr3)
@@ -97,7 +104,8 @@ refer to the [mlr3 book](https://mlr3book.mlr-org.com/basics.html).
   - **fairness\_prediction\_density**: Density plots for each protected
     attribute.
 
-### Debiasing Methods
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- --> \#\#\#
+Debiasing Methods
 
 Debiasing methods can be used to improve the fairness of a given model.
 `mlr3fairness` includes several methods that can be used together with
@@ -109,40 +117,6 @@ lrn = as_learner(po("reweighing_wts") %>>% lrn("classif.rpart"))
 rs = resample(lrn, task = tsk("compas")$filter(1:500), rsmp("cv"))
 rs$score(msr("fairness.acc"))
 ```
-
-    ##                  task task_id            learner                   learner_id
-    ##  1: <TaskClassif[48]>  compas <GraphLearner[35]> reweighing_wts.classif.rpart
-    ##  2: <TaskClassif[48]>  compas <GraphLearner[35]> reweighing_wts.classif.rpart
-    ##  3: <TaskClassif[48]>  compas <GraphLearner[35]> reweighing_wts.classif.rpart
-    ##  4: <TaskClassif[48]>  compas <GraphLearner[35]> reweighing_wts.classif.rpart
-    ##  5: <TaskClassif[48]>  compas <GraphLearner[35]> reweighing_wts.classif.rpart
-    ##  6: <TaskClassif[48]>  compas <GraphLearner[35]> reweighing_wts.classif.rpart
-    ##  7: <TaskClassif[48]>  compas <GraphLearner[35]> reweighing_wts.classif.rpart
-    ##  8: <TaskClassif[48]>  compas <GraphLearner[35]> reweighing_wts.classif.rpart
-    ##  9: <TaskClassif[48]>  compas <GraphLearner[35]> reweighing_wts.classif.rpart
-    ## 10: <TaskClassif[48]>  compas <GraphLearner[35]> reweighing_wts.classif.rpart
-    ##             resampling resampling_id iteration              prediction
-    ##  1: <ResamplingCV[19]>            cv         1 <PredictionClassif[20]>
-    ##  2: <ResamplingCV[19]>            cv         2 <PredictionClassif[20]>
-    ##  3: <ResamplingCV[19]>            cv         3 <PredictionClassif[20]>
-    ##  4: <ResamplingCV[19]>            cv         4 <PredictionClassif[20]>
-    ##  5: <ResamplingCV[19]>            cv         5 <PredictionClassif[20]>
-    ##  6: <ResamplingCV[19]>            cv         6 <PredictionClassif[20]>
-    ##  7: <ResamplingCV[19]>            cv         7 <PredictionClassif[20]>
-    ##  8: <ResamplingCV[19]>            cv         8 <PredictionClassif[20]>
-    ##  9: <ResamplingCV[19]>            cv         9 <PredictionClassif[20]>
-    ## 10: <ResamplingCV[19]>            cv        10 <PredictionClassif[20]>
-    ##     fairness.acc
-    ##  1:   0.07308970
-    ##  2:   0.02439024
-    ##  3:   0.05263158
-    ##  4:   0.02272727
-    ##  5:   0.05405405
-    ##  6:   0.00000000
-    ##  7:   0.04545455
-    ##  8:   0.00000000
-    ##  9:   0.00000000
-    ## 10:   0.07500000
 
 **Overview:**
 

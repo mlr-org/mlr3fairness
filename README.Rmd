@@ -56,11 +56,13 @@ The **goal of `mlr3fairness`** is to allow for auditing of `mlr3` learners, visu
 task$col_roles$pta = "variable_name"
 ```
 
+In case a non-categorical or more complex protected attribute is required, it can be manually computed and added to the task.
+
 ### Fairness Measures
 
 `mlr3fairness` offers a variety of fairness metrics.
 Metrics are prefixed with `fairness.` and can be found in the `msr()` dictionary.
-Most fairness metrics are based on a difference between two protected groups (e.g. male and female) for a given metric (e.g. the false positive rate: `fpr`).
+Most fairness metrics are based on a difference between two protected groups (e.g. male and female) for a given metric (e.g. the false positive rate: `fpr`). See [here](https://textbook.coleridgeinitiative.org/chap-bias.html) for a more in-depth introduction to fairness metrics and how to choose them.
 
 ```{r}
 library(mlr3)
@@ -83,6 +85,22 @@ For more information regarding those objects, refer to the [mlr3 book](https://m
 - **fairness_prediction_density**: Density plots for each protected attribute.
 
 
+```{r, echo = FALSE}
+library(mlr3learners)
+t = tsk("adult_train")$filter(1:5000)
+design = benchmark_grid(
+  tasks = t,
+  learners = lrns(c("classif.ranger", "classif.rpart"), predict_type = "prob"),
+  resamplings = rsmps("cv", folds = 3)
+)
+
+bmr = benchmark(design)
+
+library(patchwork)
+fairness_accuracy_tradeoff(bmr, msr("fairness.fpr")) +
+compare_metrics(bmr, msrs(c("fairness.fpr", "fairness.tpr"))) +
+fairness_prediction_density(bmr)
+```
 ### Debiasing Methods
 
 Debiasing methods can be used to improve the fairness of a given model.
@@ -101,6 +119,7 @@ rs$score(msr("fairness.acc"))
 
 ```{r, echo = FALSE}
 library(mlr3misc)
+library(mlr3pipelines)
 dt = as.data.table(mlr_pipeops)
 knitr::kable(dt[map_lgl(dt$tags, function(x) "fairness" %in% x)][, c(1,7,8,9,10)])
 ```
