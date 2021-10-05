@@ -6,7 +6,7 @@
 \alias{MeasureFairness}
 \title{Fairness Measure}
 \format{
-An object of class \code{data.table} (inherits from \code{data.frame}) with 8 rows and 2 columns.
+An object of class \code{data.table} (inherits from \code{data.frame}) with 9 rows and 2 columns.
 }
 \usage{
 mlr_measures_fairness

@@ -160,7 +160,7 @@ predictions$score(fairness_measure, task = task_test)
 fairness_prediction_density(predictions, task_test)
 ```
 
-# Near-Future Plans
+# Future Development
 
 ## Visualizations
 

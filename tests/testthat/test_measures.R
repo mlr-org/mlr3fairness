@@ -5,7 +5,7 @@ test_that("fairness measures work as expcted", {
     lrn("classif.rpart", predict_type = "prob")$train(tsk)$predict(tsk),
     lrn("classif.featureless", predict_type = "prob")$train(tsk)$predict(tsk)
   )
-  metrics = c("fairness.acc", "fairness.EOd", "fairness.fn", "fairness.fnr", "fairness.fp",
+  metrics = c("fairness.acc", "fairness.eod", "fairness.fn", "fairness.fnr", "fairness.fp",
     "fairness.fpr", "fairness.npv", "fairness.ppv", "fairness.tpr")
   map(prds, function(prd) {
     map(metrics, function (m) {
@@ -22,7 +22,7 @@ test_that("fairness measures work as expcted", {
 test_that("fairness measures work as expected - simulated data", {
   tsk = test_task_small()
   prds = list(pred_small())
-  metrics = c("fairness.acc", "fairness.EOd", "fairness.fn", "fairness.fnr", "fairness.fp",
+  metrics = c("fairness.acc", "fairness.eod", "fairness.fn", "fairness.fnr", "fairness.fp",
     "fairness.fpr", "fairness.npv", "fairness.ppv", "fairness.tpr")
   map(prds, function(prd) {
     map(metrics, function (m) {
@@ -85,7 +85,7 @@ test_that("fairness works on non-binary target", {
   expect_error(prd$score(msr("fairness.acc"), task = task), 'must have col_roles')
   task$col_roles$pta = "pta"
   expect_number(prd$score(msr("fairness.acc"), task = task), lower = 0, upper = 1)
-  expect_error(prd$score(msr("fairness.tpr"), task = task), 'needs task properties')
+  expect_warning(expect_warning(expect_warning(prd$score(msr("fairness.tpr"), task = task), 'is missing properties')))
 })
 
 

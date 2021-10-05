@@ -53,12 +53,12 @@
 #' fairness_accuracy_tradeoff(predictions, fairness_measure, task)
 #' fairness_accuracy_tradeoff(bmr, fairness_measure)
 #' @export
-fairness_accuracy_tradeoff <- function(object, ...){
+fairness_accuracy_tradeoff = function(object, ...){
   UseMethod("fairness_accuracy_tradeoff")
 }
 
 #' @export
-fairness_accuracy_tradeoff.PredictionClassif <- function(object, fairness_measure = msr("fairness.fpr"), acc_measure = msr("classif.acc"), task, ...){
+fairness_accuracy_tradeoff.PredictionClassif = function(object, fairness_measure = msr("fairness.fpr"), acc_measure = msr("classif.acc"), task, ...){
   assert_measure(fairness_measure)
   assert_measure(acc_measure)
   data =  as.data.frame(t(object$score(list(acc_measure, fairness_measure), task = task)))
@@ -68,14 +68,18 @@ fairness_accuracy_tradeoff.PredictionClassif <- function(object, fairness_measur
 }
 
 #' @export
-fairness_accuracy_tradeoff.BenchmarkResult <- function(object, fairness_measure = msr("fairness.fpr"), acc_measure = msr("classif.acc"), ...){
+fairness_accuracy_tradeoff.BenchmarkResult = function(object, fairness_measure = msr("fairness.fpr"), acc_measure = msr("classif.acc"), plot_scores = TRUE, ...){
   assert_measure(fairness_measure)
   assert_measure(acc_measure)
+  assert_flag(plot_scores)
   data = rbind(
     object$score(list(acc_measure, fairness_measure))[, aggi := 0][, agg := "replication"],
     object$aggregate(list(acc_measure, fairness_measure))[, aggi := 1][, agg:= "mean"],
     fill = TRUE
   )
+  if (plot_scores) {
+    data = data[agg == "mean",]
+  }
   ggplot(data, aes_string(x = acc_measure$id, y=fairness_measure$id, colour="learner_id", size = "aggi", alpha = "aggi", pch = "agg")) +
     geom_point() +
     theme_bw() +
@@ -88,7 +92,7 @@ fairness_accuracy_tradeoff.BenchmarkResult <- function(object, fairness_measure 
 }
 
 #' @export
-fairness_accuracy_tradeoff.ResampleResult <- function(object, fairness_measure = msr("fairness.fpr"), acc_measure = msr("classif.acc"), ...){
+fairness_accuracy_tradeoff.ResampleResult = function(object, fairness_measure = msr("fairness.fpr"), acc_measure = msr("classif.acc"), ...){
   object = as_benchmark_result(object)
   fairness_accuracy_tradeoff(object, fairness_measure, acc_measure)
 }
@@ -144,12 +148,12 @@ fairness_accuracy_tradeoff.ResampleResult <- function(object, fairness_measure =
 #' compare_metrics(bmr, fairness_measure)
 #' compare_metrics(bmr, fairness_measures)
 #' @export
-compare_metrics <- function(object, ...){
+compare_metrics = function(object, ...){
   UseMethod("compare_metrics")
 }
 
 #' @export
-compare_metrics.PredictionClassif <- function(object, measures = msr("fairness.acc"), task, ...){
+compare_metrics.PredictionClassif = function(object, measures = msr("fairness.acc"), task, ...){
   measures = as_measures(measures)
   scores = data.table(as.data.frame(t(object$score(measures, task = task, ...))))
   data = melt(scores[, c(ids(measures)), with=FALSE], measure.vars = names(scores))
@@ -163,7 +167,7 @@ compare_metrics.PredictionClassif <- function(object, measures = msr("fairness.a
 }
 
 #' @export
-compare_metrics.BenchmarkResult <- function(object, measures = msr("fairness.acc"), ...){
+compare_metrics.BenchmarkResult = function(object, measures = msr("fairness.acc"), ...){
   measures = as_measures(measures)
   scores = object$aggregate(measures, ...)
   data = melt(scores[, c(ids(measures), "learner_id", "task_id"), with=FALSE], id.vars = c("learner_id", "task_id"))
@@ -177,7 +181,7 @@ compare_metrics.BenchmarkResult <- function(object, measures = msr("fairness.acc
 }
 
 #' @export
-compare_metrics.ResampleResult <- function(object, measures = msr("fairness.acc"), ...){
+compare_metrics.ResampleResult = function(object, measures = msr("fairness.acc"), ...){
   object = as_benchmark_result(object)
   compare_metrics(object, measures)
 }
@@ -215,12 +219,12 @@ compare_metrics.ResampleResult <- function(object, measures = msr("fairness.acc"
 #' rsm = resample(task, learner, rsmp("cv"))
 #' fairness_prediction_density(rsm)
 #' @export
-fairness_prediction_density <- function(object, ...){
+fairness_prediction_density = function(object, ...){
   UseMethod("fairness_prediction_density")
 }
 
 #' @export
-fairness_prediction_density.PredictionClassif<- function(object, task, ...){
+fairness_prediction_density.PredictionClassif = function(object, task, ...){
   if (is.null(object$prob)) {
     print("object needs to have predict.type = 'prob'!")
   }
@@ -242,7 +246,7 @@ fairness_prediction_density.PredictionClassif<- function(object, task, ...){
     xlab("Protected attributes") +
     ylab("Predicted probability") +
     theme(legend.position = "none") +
-    scale_fill_hue(name = pta_name, c=100, l=100) +
+    scale_fill_hue(name = "Subgroup", c=100, l=100) +
     ylim(c(0,1)) +
     coord_flip() +
     theme_bw() +
@@ -250,7 +254,7 @@ fairness_prediction_density.PredictionClassif<- function(object, task, ...){
 }
 
 #' @export
-fairness_prediction_density.BenchmarkResult <- function(object, ...){
+fairness_prediction_density.BenchmarkResult = function(object, ...){
   assert_true(all("prob" %in% map_chr(object$learners$learner, "predict_type")))
   dt = rbindlist(map(object$resample_results$resample_result, function(rr) {
     dt = rbindlist(map(rr$predictions(), as.data.table))
@@ -278,7 +282,7 @@ fairness_prediction_density.BenchmarkResult <- function(object, ...){
 }
 
 #' @export
-fairness_prediction_density.ResampleResult <- function(object, task, ...){
+fairness_prediction_density.ResampleResult = function(object, task, ...){
   object = as_benchmark_result(object)
   fairness_prediction_density(object, task)
 }

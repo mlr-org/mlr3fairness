@@ -85,7 +85,7 @@ For more information regarding those objects, refer to the [mlr3 book](https://m
 - **fairness_prediction_density**: Density plots for each protected attribute.
 
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, fig.width = 12}
 library(mlr3learners)
 t = tsk("adult_train")$filter(1:5000)
 design = benchmark_grid(
@@ -96,10 +96,11 @@ design = benchmark_grid(
 
 bmr = benchmark(design)
 
+library(ggplot2)
 library(patchwork)
-p1 = fairness_accuracy_tradeoff(bmr, msr("fairness.fpr"))
-p2 = compare_metrics(bmr, msrs(c("fairness.fpr", "fairness.tpr")))
-p3 = fairness_prediction_density(bmr)
+p1 = fairness_accuracy_tradeoff(bmr, msr("fairness.fpr")) + ggtitle("fairness_accuracy_tradeoff")
+p2 = compare_metrics(bmr, msrs(c("fairness.fpr", "fairness.tpr"))) + ggtitle("compare_metrics")
+p3 = fairness_prediction_density(bmr) + ggtitle("fairness_prediction_density")
 p1 / (p2 | p3)
 ```
 
@@ -157,7 +158,7 @@ predictions$score(fairness_measure, task = task_test)
 fairness_prediction_density(predictions, task_test)
 ```
 
-# Near-Future Plans
+# Future Development
 
 ## Visualizations
 

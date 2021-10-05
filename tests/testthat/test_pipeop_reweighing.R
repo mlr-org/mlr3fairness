@@ -21,5 +21,5 @@ test_that("reweighing_wts", {
   tsk = po("reweighing_os")$train(list(tsk("adult_train")$filter(1:600)))[[1]]
   dt = cbind(tsk$data(cols = c("..row_id", "sex", "target")))
   tab = table(dt$sex, dt$target)
-  expect_true(abs(diff(tab[1,] / tab[2,])) < 20/nrow(dt))
+  expect_true(abs(diff(tab[1,] / tab[2,])) < 40/nrow(dt))
 })
