@@ -61,6 +61,8 @@ task$col_roles$pta = "variable_name"
 
 In case a non-categorical or more complex protected attribute is
 required, it can be manually computed and added to the task.
+`mlr3fairness` does not require specific types for `pta`, but will
+compute one metric for every unique value in the `pta` column.
 
 ### Fairness Measures
 
