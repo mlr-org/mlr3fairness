@@ -85,7 +85,7 @@ PipeOpReweighingWeights = R6Class("PipeOpReweighingWeights",
         ParamDbl$new("alpha", lower = 0, upper = 1, tags = "train")
       ))
       ps$values = list(alpha = 1)
-      super$initialize(id, param_set = ps, param_vals = param_vals, task_type = "TaskClassif", tags = "imbalanced data")
+      super$initialize(id, param_set = ps, param_vals = param_vals, task_type = "TaskClassif", tags = c("imbalanced data", "fairness"))
     }
   ),
   private = list(
@@ -133,7 +133,7 @@ PipeOpReweighingOversampling = R6Class("PipeOpReweighingOversampling",
         ParamDbl$new("alpha", lower = 0, upper = 1, tags = "train")
       ))
       ps$values = list(alpha = 1)
-      super$initialize(id, param_set = ps, param_vals = param_vals, can_subset_cols = FALSE, task_type = "TaskClassif", tags = "imbalanced data")
+      super$initialize(id, param_set = ps, param_vals = param_vals, can_subset_cols = FALSE, task_type = "TaskClassif", tags = c("imbalanced data", "fairness"))
     }
   ),
   private = list(

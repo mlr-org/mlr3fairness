@@ -97,6 +97,12 @@ rs = resample(lrn, task = tsk("compas")$filter(1:500), rsmp("cv"))
 rs$score(msr("fairness.acc"))
 ```
 
+**Overview:**
+
+```{r, echo = FALSE}
+dt = as.data.table(mlr_pipeops)
+knitr::kable(dt[map_lgl(dt$tags, function(x) "fairness" %in% x)][, c(1,7,8,9,10)])
+```
 ### Datasets
 
 `mlr3fairness` includes two fairness datasets: `adult` and `compas`. See `?adult` and `?compas` for additional information regarding columns.

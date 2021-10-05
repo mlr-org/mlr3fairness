@@ -1,5 +1,5 @@
 ---
-title: "Measures Vignette"
+title: "Fairness Metrics"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{measures-vignette}
@@ -148,7 +148,7 @@ m = MeasureFairnessComposite$new(measures = ms, aggfun = mean)
 
 ## How to compare the fairness performance between different learners using Benchmarks
 
-In this example, we create a `BenchmarkInstance`.Then by using `aggregate()` function they could access the fairness measures easily. The following example demonstrates the process to evaluate the fairness metrics on Benchmark Results:
+In this example, we create a `BenchmarkInstance`. Then by using `aggregate()` function they could access the fairness measures easily. The following example demonstrates the process to evaluate the fairness metrics on Benchmark Results:
 
 ```{r}
 design = benchmark_grid(

@@ -23,6 +23,10 @@
     union(cr, "pta")
   })
 
+  # register pipeop tag fairness
+  x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
+  x$pipeops$valid_tags = union(x$pipeops$valid_tags, "fairness")
+
   # Define a set of widely used metrics. Documented in mlr_measures_fairness
   x = getFromNamespace("mlr_measures", ns = "mlr3")
   x$add("fairness", MeasureFairness)
