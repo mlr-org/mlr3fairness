@@ -162,9 +162,6 @@ fairness_prediction_density(predictions, task_test)
 
 ## Visualizations
 
-1.  Should we add support to BenchmarkResult and Resampling result to
-    fairness\_prediction\_density visulization, and how does it look
-    like.
 2.  Improvement on visualizations, like anchor points and others. See
     issues.
 3.  More visualizations.
@@ -173,12 +170,12 @@ fairness_prediction_density(predictions, task_test)
 
 1.  Add support to non-binary target attributes and non-binary protected
     attributes.
-2.  Add metrics that are not supported with current design in
-    `extra_measures.R`.
 
 ## Debiasing Methods
 
 1.  More Debiasing Methods, post-processing and in-processing.
+
+## Fairness Report
 
 # Bugs, Feedbacks and Questions
 
@@ -190,13 +187,3 @@ questions, suggestions or feedback, please do not hesitate to open an
 In case of problems / bugs, it is often helpful if you provide a
 “minimum working example” that showcases the behaviour (but don’t
 worry about this if the bug is obvious).
-
-# GSOC 2021 Project Candidate
-
-This project has been accepted as a Google Summer of Code Project\!
-
-  - Project description:
-    <https://github.com/rstats-gsoc/gsoc2021/wiki/mlr3fairness>
-  - Timeline: <https://developers.google.com/open-source/gsoc/timeline>
-  - Student: @superp0tat0
-  - Mentors: @pfistfl, @mllg, @berndbischl, @vollmersj
