@@ -29,6 +29,7 @@
   x$add("fairness.fpr", MeasureFairness, base_measure = msr("classif.fpr"))
   x$add("fairness.fnr", MeasureFairness, base_measure = msr("classif.fnr"))
   x$add("fairness.tpr", MeasureFairness, base_measure = msr("classif.tpr"))
+  x$add("fairness.tnr", MeasureFairness, base_measure = msr("classif.tnr"))
   x$add("fairness.ppv", MeasureFairness, base_measure = msr("classif.ppv"))
   x$add("fairness.npv", MeasureFairness, base_measure = msr("classif.npv"))
   x$add("fairness.acc", MeasureFairness, base_measure = msr("classif.acc"))

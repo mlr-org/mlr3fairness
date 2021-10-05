@@ -32,197 +32,127 @@ $$$
   \Delta_{TPR} = TPR_{Group 1} - TPR_{Group 2}
 $$$
 
-# Pre-requsite: Data Tasks
+We will use metrics like the one defined above throughout the remainder of this vignette.
+Some predifined measures are readily available in `mlr3fairness`, but we will also showcase how custom measures can be constrcuted below.
 
-In this example, we will use the very famous Adult dataset and choose the protected field to be "sex". The predictions are a binary variable indicate whether the selected people have income more than 50K or less than 50K. Then we will show the basic usages of FairnessMeasures in Adult dataset. There are three steps we want to demonstrate:
+In general, fairness measures have a `fairness.` prefix followed by the metric that is compared across groups. We will thus e.g. call the difference in accuracies across groups `fairness.acc`.
+A full list can be found below.
 
-* How to create the most common fairness measures.
-* How to customize their fairness measures using MeasureFairness classes.
-* How to compare different learners' fairness levels using Benchmarks.
+```{r}
+knitr::kable(mlr3fairness:::mlr_measures_fairness)
+```
 
-## Download and Import the required packages
+## Assessing for Bias: A first look
 
-Other than the main package ```mlr3``` and the fairness package ```mlr3fairness```. We also need the machine learning model package and the random forest package ```mlr3learners``` and ```ranger``` for measures in Benchmark Results. You can find them at [mlr-org github](https://github.com/mlr-org).
+This vignette assumes that you are familiar with the basics of `mlr3` and it's core objects.
+The [mlr3 book](https://mlr3book.mlr-org.com/index.html) can be a great ressource in case you want to learn more about mlr3's internals.
 
-After the installation of the required packages, we could use the following commands to import the required packages.
-```{r setup}
+We first start by training a model for which we want to conduct an audit:
+
+```{r}
+library(mlr3)
 library(mlr3fairness)
 library(mlr3learners)
-library(mlr3)
-library(ranger)
 ```
 
-## Create the Data Tasks, the protected field, the learner and the predictions
-
-Here we used the pre-build data tasks in the fairness package. However, users are expected to create mlr3 data tasks for their data tasks. There are some requirements for data tasks such as all the features need to be factor or numerical values. Moreover, the data task for fairness operations needs to contain one important field : "protected field". Which is the field for calculating metrics.
-
-Here we have the name of our protected field to be "sex". It is a binary variable for levels "Male" and "Female". So all of the following fairness measures will compare the difference of normal measures between "Male" and "Female" either by quotient or absolute difference.
-
-```{r pta}
-#Load the dataset, check the protected column has been set and make the predictions.
-adult_train = tsk("adult_train")
-adult_test = tsk("adult_test")
-paste0("The protected for adult train dataset is : ", adult_train$col_roles$pta)
-paste0("The protected for adult test dataset is : ", adult_test$col_roles$pta)
-```
-
-We could then see some basic information for Adult data task. Keep in mind, users are expected to do some data cleansing process like NULL imputations and data type transformations before create the data tasks.
-
-```{r eda}
-adult_train
-```
-
-Once we have the data task ready. We could train our model and make the predictions. Here we create a decision tree and predict on the same Adult dataset. Keep in mind, predictions is an object for ```Predictions()``` class.
+For this example, we use the `adult_train` dataset.
+Keep in mind all the datasets from mlr3fairness package already set protected attribute via the `col_role` "pta", here the "sex" column. To speed things up, we only use the first 1000 rows.
 
 ```{r}
-model = lrn("classif.rpart")
-model$train(adult_train)
-predictions = model$predict(adult_test)
+t = tsk("adult_train")$filter(1:1000)
+t$col_roles$pta
 ```
 
-
-# Basic: MeasureFairness Class
-
-After we set up the data tasks, we could use fairness measures to evaluate data tasks. There are two parameters we care for each MeasureFairness Class. The operation and base_measure.
-
-For the base_measure, it is a measure object with class ```MeasureClassif()``` that will be applied on the subset of datasets for each factor level in the protected field. Some common examples will be
-
-* False Negative Rates
-* False Positive Rates
+Our model is a random forest model fitted on the dataset:
 
 ```{r}
-# Binary Class false negative rates
-msr("classif.fnr")
+l = lrn("classif.ranger")
+l$train(t)
+```
 
-#Binary Class false positive rates
+We can now predict on a new dataset and use those predictions to assess for bias:
+
+```{r}
+test = tsk("adult_test")
+prd = l$predict(test)
+```
+
+Using the `$score` method and a measure we can e.g. compute the absolute differences in true positive rates.
+
+```{r}
+prd$score(msr("fairness.tpr"), task = test)
+```
+
+The exact measure to choose is often data-set and situation dependent. The [Aequitas Fairness Tree](https://textbook.coleridgeinitiative.org/chap-bias.html) can be a great ressource to get started.
+
+## Fairness Measures - An in-depth look
+
+Before, we have used `msr("fairness.tpr")` to assess differences in false positive rates across groups. But what happens internally?
+
+The `msr()` function is used to obtain a `Measure` from a dictionary of pre-defined `Measure`s. We can use `msr()` without any arguments in order to print a list of available measures.
+In the following example, we will build a `Measure` that computes differences in False Positive Rates making use of the `"classif.fpr"` measure readily implemented in `mlr3`.
+
+```{r}
+# Binary Class false positive rates
 msr("classif.fpr")
 ```
 
-Then for the operations, they are the operations that will be performed on the value of the base measures. Since the FairnessMeasures only support binary protected fields. There will be only three operations.
-
-* Quotient
-* Absolute Difference
-* Difference
-
-By assuming a female false positive rate and male false positive rate, here are how those three operations work:
+The core `Measure` in `mlr3fairness` is a `MeasureFairness`. It can be used to construct arbitrary measures that compute a difference between a specific metric across groups. We can therefore build a new metric as follows:
 
 ```{r}
-female_fpr = 0.4
-male_fpr = 0.6
-
-quotient = female_fpr / male_fpr
-absolute_difference = abs(female_fpr - male_fpr)
-difference = (female_fpr - male_fpr)
+m1 = MeasureFairness$new(base_measure = msr("classif.fpr"), operation = function(x) {abs(x[1] - x[2])})
+m1
 ```
 
-Once we have a MeasureFairness Class, we could calculate the most popular fairness metrics.
+This measure does the following steps:
+- Compute the metric supplied as `base_measure` in each group defined by the `"pta"` column.
+- Compute `operation` (here `abs(x[1] - x[2])`) and return the result.
 
-## Measures only require one metric
+In some cases, we might also want to replace the operation with a different operation, e.g. `x[1] / x[2]` in order to compute a different perspective.
 
-Basic fairness measures could be evaluated using only one metric. Like False Positive Rate Bias and False Negative Rate Bias. From the following example we could see the false negative cases difference for Adult ```sex``` is 470 and the false negative rate bias for Adult ```sex``` is about 0.06.
+`mlr3fairness` comes with two built-in functions that can be used to compute fairness metrics
+also across protected attributes that have more then two classes_
+
+- `groupdiff_absdiff`: maximum absolute difference between all classes (the default for all metrics)
+- `groupdiff_tau`: minimum quotient between all classes
+
+
+We can also use those operations to construct a measure using `msr()`, since `MeasureFairness` (key: `msr("fairness")` can be constructed from the dictionary with additional arguments.
 
 ```{r}
-# False Positive Rate Bias
-me = MeasureFairness$new("groupwise_abs_diff", base_measure = msr("classif.fn"))
-predictions$score(me, task = adult_test)
-
-# False Negative Rate Bias
-me = MeasureFairness$new("groupwise_abs_diff", base_measure = msr("classif.fnr"))
-predictions$score(me, task = adult_test)
+m2 = msr("fairness", operation = groupdiff_absdiff, base_measure = msr("classif.tpr"))
 ```
 
-Users could also use the following code to create some common fairness measures which only require one metric. Those measures are created by default. So users could use measure library ```msr()``` to access those measures:
-
-* Predictive parity, also referred to as outcome test.
-
-A classifier satisfies Predictive parity if the subjects in the protected and unprotected groups have equal PPV. We could use the following code to assess it:
+This allows us to construct pretty flexible metrics e.g. for regression settings:
 
 ```{r}
-#me = MeasureFairness$new("groupwise_quotient", base_measure = msr("classif.ppv"))
-me = msr("fairness.ppv")
-predictions$score(me, task = adult_test) #Should close to 1
-```
-* False negative error rate balance, also referred to as equal opportunity.
-A classifier satisfies equal opportunity if the subjects in the protected and unprotected groups have equal FNR. We could use the following code to assess it:
-
-```{r}
-#me = MeasureFairness$new("groupwise_quotient", base_measure = msr("classif.fnr"))
-me = msr("fairness.fnr")
-predictions$score(me, task = adult_test) #Should close to 1
-```
-* Overall accuracy equality
-A classifier satisfies Overall accuracy equality if the subject in the protected and unprotected groups have equal prediction accuracy. We could use the following code to assess it:
-
-```{r}
-#me = MeasureFairness$new("groupwise_quotient", base_measure = msr("classif.acc"))
-me = msr("fairness.acc")
-predictions$score(me, task = adult_test) #Should close to 1
+m2 = msr("fairness", operation = groupdiff_absdiff, base_measure = msr("regr.mse"))
 ```
 
-## Measures require two or more metrics:
+## Composite Fairness Measures
 
-However, some fairness measures require two or more metrics. For those measures we have created some of them in the measure libraries. Users could use ```msrs()```, which could take multiple measures as input, to create them more efficiently:
-
-* Equalized Odds
-Users are expected to evaluate Equalized Odds by ratio or absolute difference. A classifier satisfies Equalized Odds if the subjects in the protected and unprotected groups have equal TPR and equal FPR. So we could use the following code to assess Equalized Odds:
+Some fairness measures also require a combination of multiple Fairness Metrics.
+In the following example we e.g. want to compute the mean of two fairness metrics,
+here false negative and true negative rates.
 
 ```{r}
-me = msrs(c("fairness.tpr", "fairness.fpr"))
-predictions$score(me, task = adult_test) #Both should close to 1
+ms = list(msr("fairness.fnr"), msr("fairness.tnr"))
+ms
 ```
 
-* Conditional use accuracy equality
-A classifier satisfies Conditional use accuracy equality if the subjects in the protected and unprotected groups have equal PPV and equal NPV. We could use ratio or absolute difference to assess it:
+and create a new `Measure` that compute the mean (see `aggfun`) of those metrics.
 
 ```{r}
-me = msrs(c("fairness.ppv", "fairness.npv"))
-predictions$score(me, task = adult_test) #Both should close to 1
-```
-
-* Treatment equality
-A classifier satisfies this definition if the subjects in the protected and unprotected groups have an equal ratio of FN and FP, satisfying the formula:
-
-Assume A is the protected field with a binary variable. Then FN{A=a}/FP{A=a} = FN{A=b}/FP{A=b}
-
-However, we could do a simple transformation and assess FN{A=a}/FN{A=b} = FP{A=a}/FP{A=b}. Then we could use the following code:
-
-
-```{r}
-me = msrs(c("fairness.fp", "fairness.fn"))
-predictions$score(me, task = adult_test) #Measures should be close
-```
-
-## How to customize measures
-
-Not all measures are created in measure libraries. Most often users want to customize their measures. The following examples will show how to do that. There are two types of fairness measures.
-
-* To add a measure which only requires single metric, just create the Measure Fairness object.
-
-```{r}
-me = MeasureFairness$new(operation = "groupwise_quotient", base_measure = msr("classif.fnr"))
-predictions$score(me, task = adult_test) #Should close to 1
-```
-
-* To add a measure which requires more metrics, users are expected to add the base measures to mlr3_measures library first. Then create the fairness measure using `msrs()`.
-
-```{r}
-me1 = MeasureFairness$new(operation = "groupwise_quotient", base_measure = msr("classif.fnr"))
-me2 = MeasureFairness$new(operation = "groupwise_quotient", base_measure = msr("classif.fpr"))
-
-#Add created measures to library
-mlr_measures$add("fairness.fnr", me1)
-mlr_measures$add("fairness.fpr", me2)
-
-predictions$score(msrs(c("fairness.fnr", "fairness.fpr")), task = adult_test) #Should close to 1
+m = MeasureFairnessComposite$new(measures = ms, aggfun = mean)
 ```
 
 ## How to compare the fairness performance between different learners using Benchmarks
 
-If users want to compare fairness measures between different models. They could create the BenchmarkResults first. Then by using ```aggregate()``` function they could access the fairness measures easily. The following example demonstrates the process to evaluate the fairness metrics on Benchmark Results:
+In this example, we create a `BenchmarkInstance`.Then by using `aggregate()` function they could access the fairness measures easily. The following example demonstrates the process to evaluate the fairness metrics on Benchmark Results:
 
 ```{r}
 design = benchmark_grid(
-  tasks = tsks(c("adult_test")),
+  tasks = tsks("compas"),
   learners = lrns(c("classif.ranger", "classif.rpart"),
     predict_type = "prob", predict_sets = c("train", "test")),
   resamplings = rsmps("cv", folds = 3)
@@ -234,6 +164,6 @@ bmr = benchmark(design)
 measures = list( msr("fairness.tpr"), msr("fairness.npv"), msr("fairness.acc"), msr("classif.acc") )
 
 tab = bmr$aggregate(measures)
-print(tab)
+tab
 ```
 

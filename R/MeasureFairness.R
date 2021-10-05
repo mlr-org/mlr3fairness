@@ -50,8 +50,11 @@ MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure, cloneable = 
       self$operation = assert_function(operation)
       self$base_measure = assert_measure(base_measure)
 
+      # regr|classif|... to fairness
+      id = paste0("fairness", gsub(paste0(mlr_reflections$task_types$type, collapse = "|"), "", base_measure$id))
+
       super$initialize(
-        id = paste0("fairness.", base_measure$id),
+        id = id,
         range = assert_numeric(range, len = 2),
         properties = "requires_task",
         minimize = assert_flag(minimize),
@@ -225,9 +228,10 @@ mlr_measures_fairness = rowwise_table(
   "fairness.EOd" , "Equalized Odds: Sum of abs. difference between true positive and false positive rates across groups",
   "fairness.fpr" , "Abs. difference in false positive rates across groups",
   "fairness.acc" , "Abs. difference in accurq()acy across groups (Overall accuracy equality)",
-  "fairness.tpr" , "Abs. difference in True positive rates across groups",
-  "fairness.ppv" , "Abs. difference in Positive predictive values across groups (Part of Conditional use accuracy equality)",
-  "fairness.npv" , "Abs. difference in Negative predictive values across groups (Part of Conditional use accuracy equality)",
-  "fairness.fp"  , "Abs. difference in False positives across groups (Part of Treatment equality)",
-  "fairness.fn"  , "Abs. difference in False negatives across groups (Part of Treatment equality)"
+  "fairness.tpr" , "Abs. difference in true positive rates across groups",
+  "fairness.tnr" , "Abs. difference in true negative rates across groups",
+  "fairness.ppv" , "Abs. difference in positive predictive values across groups (Part of Conditional use accuracy equality)",
+  "fairness.npv" , "Abs. difference in negative predictive values across groups (Part of Conditional use accuracy equality)",
+  "fairness.fp"  , "Abs. difference in false positives across groups (Part of Treatment equality)",
+  "fairness.fn"  , "Abs. difference in false negatives across groups (Part of Treatment equality)"
  )
