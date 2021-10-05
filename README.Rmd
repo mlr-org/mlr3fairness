@@ -10,7 +10,7 @@ options(datatable.print.class = FALSE, datatable.print.keys = FALSE)
 
 # [mlr3fairness](https://github.com/mlr-org/mlr3fairness)
 
-## Machine Learning Fairness Extension for [mlr3](https://github.com/mlr-org/mlr3).
+Machine Learning Fairness Extension for [mlr3](https://github.com/mlr-org/mlr3).
 
 [![tic](https://github.com/mlr-org/mlr3proba/workflows/tic/badge.svg?branch=main)](https://github.com/mlr-org/mlr3fairness/actions)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
@@ -50,7 +50,7 @@ The **goal of `mlr3fairness`** is to allow for auditing of `mlr3` learners, visu
 
 ### Protected Attribute
 
-`mlr3fairness` requires information about the protected attribute wrt. which we want to assess fairness. This can be set via the `col_role` "pta".
+`mlr3fairness` requires information about the protected attribute wrt. which we want to assess fairness. This can be set via the `col_role` "pta" (protected attribute). Currently `mlr3fairness` allows only a single column as `"pta"`.
 
 ```{r, eval = FALSE}
 task$col_roles$pta = "variable_name"
@@ -90,7 +90,7 @@ Debiasing methods can be used to improve the fairness of a given model.
 `mlr3pipelines` to obtain fair(er) models:
 
 
-```{r}
+```{r, eval = FALSE}
 library(mlr3pipelines)
 lrn = as_learner(po("reweighing_wts") %>>% lrn("classif.rpart"))
 rs = resample(lrn, task = tsk("compas")$filter(1:500), rsmp("cv"))
