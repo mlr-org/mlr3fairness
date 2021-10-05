@@ -104,8 +104,9 @@ refer to the [mlr3 book](https://mlr3book.mlr-org.com/basics.html).
   - **fairness\_prediction\_density**: Density plots for each protected
     attribute.
 
-![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- --> \#\#\#
-Debiasing Methods
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
+### Debiasing Methods
 
 Debiasing methods can be used to improve the fairness of a given model.
 `mlr3fairness` includes several methods that can be used together with

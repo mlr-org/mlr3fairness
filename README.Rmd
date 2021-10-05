@@ -97,10 +97,11 @@ design = benchmark_grid(
 bmr = benchmark(design)
 
 library(patchwork)
-fairness_accuracy_tradeoff(bmr, msr("fairness.fpr")) +
-compare_metrics(bmr, msrs(c("fairness.fpr", "fairness.tpr"))) +
+fairness_accuracy_tradeoff(bmr, msr("fairness.fpr")) /
+compare_metrics(bmr, msrs(c("fairness.fpr", "fairness.tpr"))) /
 fairness_prediction_density(bmr)
 ```
+
 ### Debiasing Methods
 
 Debiasing methods can be used to improve the fairness of a given model.
@@ -123,6 +124,7 @@ library(mlr3pipelines)
 dt = as.data.table(mlr_pipeops)
 knitr::kable(dt[map_lgl(dt$tags, function(x) "fairness" %in% x)][, c(1,7,8,9,10)])
 ```
+
 ### Datasets
 
 `mlr3fairness` includes two fairness datasets: `adult` and `compas`. See `?adult` and `?compas` for additional information regarding columns.
