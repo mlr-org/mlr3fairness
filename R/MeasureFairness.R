@@ -96,9 +96,9 @@ MeasureFairnessComposite = R6::R6Class("MeasureFairnessComposite", inherit = Mea
     #'
     #' @param id [`character`]\cr
     #'   Id of the measure. Defaults to the concatenation of id's in `measure`.
-    #' @param measures list of [`MeasureFairness`| `character`]\cr
+    #' @param measures list of [`MeasureFairness`] | [`character`]\cr
     #'   List of fairness measures to aggregate (or valid keys to be used with `msr()`).
-    #' @param aggfun (`function()`)\cr
+    #' @param aggfun (`function`)\cr
     #'   Aggregation function used to aggregate results from respective measures. Defaults to `sum`.
     #' @param operation (`function`)\cr
     #' The operation used to compute the difference. A function that returns

@@ -125,15 +125,17 @@ Creates a new instance of this [R6][R6::R6Class][\code{PipeOp}] R6 class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{id}}{The PipeOps identifier in the PipeOps library.}
+\item{\code{id}}{\code{character} \cr
+The PipeOps identifier in the PipeOps library.}
 
-\item{\code{param_vals}}{The parameter values to be set. There are two parameters that could be set:
+\item{\code{param_vals}}{\code{list} \cr
+The parameter values to be set. There are two parameters that could be set:
 \itemize{
 \item temperature: controls the proportion between constant weight and reweighing weight. Default set to be 1
 \item const_weight: the constant weight. Default set to be 1
 Here is how it works:
-first_weight = (1 - temperature) x const_weight + temperature x reweighing_weight
-final_reweighing_weight = first_weight * old_weight (if old weight exist, otherwise oldweight = 1)
+new_weight = (1 - alpha) * 1 + alpha x reweighing_weight
+final_weight = old_weight * new_weight
 }}
 }
 \if{html}{\out{</div>}}
@@ -187,10 +189,10 @@ The objects of this class are cloneable with this method.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{id}}{\link{`character'} \cr
+\item{\code{id}}{`character' \cr
 The PipeOp's id.}
 
-\item{\code{param_vals}}{\link{`list'} \cr
+\item{\code{param_vals}}{`list' \cr
 A list of parameter values.}
 }
 \if{html}{\out{</div>}}

@@ -59,10 +59,10 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \item{\code{id}}{\code{\link{character}}\cr
 Id of the measure. Defaults to the concatenation of id's in \code{measure}.}
 
-\item{\code{measures}}{list of \link[=`MeasureFairness`| `character`]{\code{MeasureFairness}| \code{character}}\cr
+\item{\code{measures}}{list of \code{\link{MeasureFairness}} | \code{\link{character}}\cr
 List of fairness measures to aggregate (or valid keys to be used with \code{msr()}).}
 
-\item{\code{aggfun}}{(\verb{function()})\cr
+\item{\code{aggfun}}{(\code{function})\cr
 Aggregation function used to aggregate results from respective measures. Defaults to \code{sum}.}
 
 \item{\code{operation}}{(\code{function})\cr

@@ -7,7 +7,7 @@
 groupdiff_absdiff(x)
 }
 \arguments{
-\item{x}{\link{´numeric`} \cr
+\item{x}{´numeric` \cr
 Measured performance in group 1, 2, ...}
 }
 \description{

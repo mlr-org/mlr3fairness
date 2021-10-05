@@ -73,13 +73,15 @@ PipeOpReweighingWeights = R6Class("PipeOpReweighingWeights",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class][`PipeOp`] R6 class.
     #'
-    #' @param id The PipeOps identifier in the PipeOps library.
-    #' @param param_vals The parameter values to be set. There are two parameters that could be set:
-    #' * temperature: controls the proportion between constant weight and reweighing weight. Default set to be 1
-    #' * const_weight: the constant weight. Default set to be 1
+    #' @param id `character` \cr
+    #'   The PipeOps identifier in the PipeOps library.
+    #' @param param_vals `list` \cr
+    #'   The parameter values to be set. There are two parameters that could be set:
+    #'   * temperature: controls the proportion between constant weight and reweighing weight. Default set to be 1
+    #'   * const_weight: the constant weight. Default set to be 1
     #' Here is how it works:
-    #' first_weight = (1 - temperature) x const_weight + temperature x reweighing_weight
-    #' final_reweighing_weight = first_weight * old_weight (if old weight exist, otherwise oldweight = 1)
+    #' new_weight = (1 - alpha) * 1 + alpha x reweighing_weight
+    #' final_weight = old_weight * new_weight
     initialize = function(id = "reweighing_wts", param_vals = list()) {
       ps = ParamSet$new(params = list(
         ParamDbl$new("alpha", lower = 0, upper = 1, tags = "train")
@@ -124,9 +126,9 @@ PipeOpReweighingOversampling = R6Class("PipeOpReweighingOversampling",
   inherit = mlr3pipelines::PipeOpTaskPreproc,
 
   public = list(
-    #' @param id [`character'] \cr
+    #' @param id `character' \cr
     #'   The PipeOp's id.
-    #' @param param_vals [`list'] \cr
+    #' @param param_vals `list' \cr
     #'   A list of parameter values.
     initialize = function(id = "reweighing_os", param_vals = list()) {
       ps = ParamSet$new(params = list(

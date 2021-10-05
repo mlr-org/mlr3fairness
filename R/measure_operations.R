@@ -3,7 +3,7 @@
 #' Computes `min(x/y, y/x)` i.e. the smallest symmetric ratio between x and y
 #' that is smaller than 1. If x is a vector, the symmetric ratio between all
 #' elements in 'x' is computed.
-#' @param x [´numeric`] \cr
+#' @param x `numeric` \cr
 #'   Measured performance in group 1, 2, ...
 #' @export
 groupdiff_tau = function(x) {
@@ -20,7 +20,7 @@ groupdiff_tau = function(x) {
 #' Computes `max(abs(x-y, y-x))` i.e. the smallest symmetric ratio between x and y
 #' that is smaller than 1. If x is a vector, the symmetric ratio between all
 #' elements in 'x' is computed.
-#' @param x [´numeric`] \cr
+#' @param x ´numeric` \cr
 #'   Measured performance in group 1, 2, ...
 #' @export
 groupdiff_absdiff = function(x) {

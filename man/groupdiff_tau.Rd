@@ -7,7 +7,7 @@
 groupdiff_tau(x)
 }
 \arguments{
-\item{x}{\link{´numeric`} \cr
+\item{x}{\code{numeric} \cr
 Measured performance in group 1, 2, ...}
 }
 \description{
