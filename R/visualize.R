@@ -98,7 +98,7 @@ fairness_accuracy_tradeoff.ResampleResult = function(object, fairness_measure = 
 }
 
 
-#' Compare differnt metrics
+#' Compare different metrics
 #'
 #' @description
 #' Compare learners with respect to to one or multiple metrics.

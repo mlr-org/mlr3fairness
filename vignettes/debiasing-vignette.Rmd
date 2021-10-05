@@ -70,4 +70,4 @@ bmr$aggregate(msrs(c("fairness.tpr", "fairness.acc")))
 fairness_accuracy_tradeoff(bmr, msr("fairness.tpr"))
 ```
 
-Our model became way fairer wrt. `true positive rate` but minimally wors wrt. `accuracy`!
+Our model became way fairer wrt. `true positive rate` but minimally worse wrt. `accuracy`!

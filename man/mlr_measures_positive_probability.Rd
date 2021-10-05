@@ -5,7 +5,8 @@
 \alias{MeasurePositiveProbability}
 \title{Positive Probability Measure}
 \description{
-Return the positive probability of the predictions. Formula: P(positive prediction) = positive_predictions / all_predictions
+Return the positive probability of the predictions. Formula: P(positive prediction) =
+positive_predictions / all_predictions
 }
 \examples{
 # Create Positive Probability Measure

@@ -32,13 +32,15 @@ The column \code{"sex"} is set as protected attribute, but more often \code{"rac
 
 \itemize{
 \item (integer) age : The age of defendants.
-\item (factor) c_charge_degree : The charge degree of defendants. F: Felony M: Misdemanor
+\item (factor) c_charge_degree : The charge degree of defendants. F: Felony M: Misdemeanor
 \item (factor) race: The race of defendants.
 \item (factor) age_cat: The age category of defendants.
 \item (factor) score_text: The score category of defendants.
 \item (factor) sex: The sex of defendants.
 \item (integer) priors_count: The prior criminal records of defendants.
-\item (integer) days_b_screening_arrest: The count of days between screening date and (original) arrest date. If they are too far apart, that may indicate an error. If the value is negative, that indicate the screening date happened before the arrest date.
+\item (integer) days_b_screening_arrest: The count of days between screening date and (original) arrest date.
+If they are too far apart, that may indicate an error. If the value is negative,
+that indicate the screening date happened before the arrest date.
 \item (integer) decile_score: Indicate the risk of recidivism (Min=1, Max=10)
 \item (integer) is_recid: Binary variable indicate whether defendant is rearrested at any time.
 \item (factor) two_year_recid: Binary variable indicate whether defendant is rearrested at within two years.

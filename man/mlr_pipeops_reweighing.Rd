@@ -13,16 +13,18 @@ Adjusts class balance and protected group balance in order to achieve fair(er) o
 }
 \section{PipeOpReweighingWeights}{
 
-Adds a class weight column to the \code{\link[mlr3:Task]{Task}} that different \code{\link[mlr3:Learner]{Learner}}s may be
-using. In case initial weights are present, those are multiplied with new weights.
-Caution: Only fairness tasks are supported. Which means tasks need to have protected field. \code{tsk$col_roles$pta}.
+Adds a class weight column to the \code{\link[mlr3:Task]{Task}} that different \code{\link[mlr3:Learner]{Learner}}s
+may be using. In case initial weights are present, those are multiplied with new weights.
+Caution: Only fairness tasks are supported. Which means tasks need to have protected field.
+\code{tsk$col_roles$pta}.
 }
 
 \section{PipeOpReweighingOversampling}{
 
 Oversamples a \code{\link[mlr3:Task]{Task}} for more balanced ratios in subgroups and protected groups.
 Can be used if a learner does not support weights.
-Caution: Only fairness tasks are supported. Which means tasks need to have protected field. \code{tsk$col_roles$pta}.
+Caution: Only fairness tasks are supported. Which means tasks need to have protected field.
+\code{tsk$col_roles$pta}.
 }
 
 \section{Construction}{
@@ -39,8 +41,8 @@ Caution: Only fairness tasks are supported. Which means tasks need to have prote
 Input and output channels are inherited from \code{\link{PipeOpTaskPreproc}}. Instead of a \code{\link[mlr3:Task]{Task}}, a
 \code{\link[mlr3:TaskClassif]{TaskClassif}} is used as input and output during training and prediction.
 
-The output during training is the input \code{\link[mlr3:Task]{Task}} with added weights column according to target class.
-The output during prediction is the unchanged input.
+The output during training is the input \code{\link[mlr3:Task]{Task}} with added weights column according
+to target class. The output during prediction is the unchanged input.
 }
 
 \section{State}{
@@ -52,17 +54,17 @@ The \verb{$state} is a named \code{list} with the \verb{$state} elements inherit
 
 \itemize{
 \item \code{alpha} :: \code{numeric} A number between 0 (no debiasing) and 1 (full debiasing).
-.
 }
 }
 
 \section{Internals}{
 
-Introduces, or overwrites, the "weights" column in the \code{\link[mlr3:Task]{Task}}. However, the \code{\link[mlr3:Learner]{Learner}} method needs to
+Introduces, or overwrites, the "weights" column in the \code{\link[mlr3:Task]{Task}}.
+However, the \code{\link[mlr3:Learner]{Learner}} method needs to
 respect weights for this to have an effect.
 
-The newly introduced column is named \code{reweighing.WEIGHTS}; there will be a naming conflict if this column already exists and is \emph{not} a
-weight column itself.
+The newly introduced column is named \code{reweighing.WEIGHTS}; there will be a naming conflict if this
+column already exists and is \emph{not} a weight column itself.
 }
 
 \section{Fields}{
@@ -131,8 +133,8 @@ The PipeOps identifier in the PipeOps library.}
 \item{\code{param_vals}}{\code{list} \cr
 The parameter values to be set. There are two parameters that could be set:
 \itemize{
-\item temperature: controls the proportion between constant weight and reweighing weight. Default set to be 1
-\item const_weight: the constant weight. Default set to be 1
+\item alpha: controls the proportion between initial weight (1 if nonexisting) and reweighing weight.
+Defaults to 1.
 Here is how it works:
 new_weight = (1 - alpha) * 1 + alpha x reweighing_weight
 final_weight = old_weight * new_weight

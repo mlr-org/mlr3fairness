@@ -80,7 +80,7 @@ For more information regarding those objects, refer to the [mlr3 book](https://m
 
 - **fairness_accuracy_tradeoff**: Plot available trade-offs between fairness and model performance.
 
-- **compare_metrics**: Compare fairness across models and cross-validation forlds.
+- **compare_metrics**: Compare fairness across models and cross-validation folds.
 
 - **fairness_prediction_density**: Density plots for each protected attribute.
 

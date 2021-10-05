@@ -8,14 +8,16 @@
 #' Adjusts class balance and protected group balance in order to achieve fair(er) outcomes.
 #'
 #' @section PipeOpReweighingWeights:
-#' Adds a class weight column to the [`Task`][mlr3::Task] that different [`Learner`][mlr3::Learner]s may be
-#' using. In case initial weights are present, those are multiplied with new weights.
-#' Caution: Only fairness tasks are supported. Which means tasks need to have protected field. `tsk$col_roles$pta`.
+#' Adds a class weight column to the [`Task`][mlr3::Task] that different [`Learner`][mlr3::Learner]s
+#' may be using. In case initial weights are present, those are multiplied with new weights.
+#' Caution: Only fairness tasks are supported. Which means tasks need to have protected field.
+#' `tsk$col_roles$pta`.
 #'
 #' @section PipeOpReweighingOversampling:
 #' Oversamples a [`Task`][mlr3::Task] for more balanced ratios in subgroups and protected groups.
 #' Can be used if a learner does not support weights.
-#' Caution: Only fairness tasks are supported. Which means tasks need to have protected field. `tsk$col_roles$pta`.
+#' Caution: Only fairness tasks are supported. Which means tasks need to have protected field.
+#' `tsk$col_roles$pta`.
 #'
 #' @section Construction:
 #' ```
@@ -28,21 +30,22 @@
 #' Input and output channels are inherited from [`PipeOpTaskPreproc`]. Instead of a [`Task`][mlr3::Task], a
 #' [`TaskClassif`][mlr3::TaskClassif] is used as input and output during training and prediction.
 #'
-#' The output during training is the input [`Task`][mlr3::Task] with added weights column according to target class.
-#' The output during prediction is the unchanged input.
+#' The output during training is the input [`Task`][mlr3::Task] with added weights column according
+#' to target class. The output during prediction is the unchanged input.
 #'
 #' @section State:
 #' The `$state` is a named `list` with the `$state` elements inherited from [`PipeOpTaskPreproc`].
 #'
 #' @section Parameters:
 #'  * `alpha` :: `numeric` A number between 0 (no debiasing) and 1 (full debiasing).
-#' .
+#'
 #' @section Internals:
-#' Introduces, or overwrites, the "weights" column in the [`Task`][mlr3::Task]. However, the [`Learner`][mlr3::Learner] method needs to
+#' Introduces, or overwrites, the "weights" column in the [`Task`][mlr3::Task].
+#' However, the [`Learner`][mlr3::Learner] method needs to
 #' respect weights for this to have an effect.
 #'
-#' The newly introduced column is named `reweighing.WEIGHTS`; there will be a naming conflict if this column already exists and is *not* a
-#' weight column itself.
+#' The newly introduced column is named `reweighing.WEIGHTS`; there will be a naming conflict if this
+#' column already exists and is *not* a weight column itself.
 #'
 #' @section Fields:
 #' Only fields inherited from [`PipeOpTaskPreproc`]/[`PipeOp`].
@@ -77,8 +80,8 @@ PipeOpReweighingWeights = R6Class("PipeOpReweighingWeights",
     #'   The PipeOps identifier in the PipeOps library.
     #' @param param_vals `list` \cr
     #'   The parameter values to be set. There are two parameters that could be set:
-    #'   * temperature: controls the proportion between constant weight and reweighing weight. Default set to be 1
-    #'   * const_weight: the constant weight. Default set to be 1
+    #'   * alpha: controls the proportion between initial weight (1 if nonexisting) and reweighing weight.
+    #'     Defaults to 1.
     #' Here is how it works:
     #' new_weight = (1 - alpha) * 1 + alpha x reweighing_weight
     #' final_weight = old_weight * new_weight
@@ -87,7 +90,8 @@ PipeOpReweighingWeights = R6Class("PipeOpReweighingWeights",
         ParamDbl$new("alpha", lower = 0, upper = 1, tags = "train")
       ))
       ps$values = list(alpha = 1)
-      super$initialize(id, param_set = ps, param_vals = param_vals, task_type = "TaskClassif", tags = c("imbalanced data", "fairness"))
+      super$initialize(id, param_set = ps, param_vals = param_vals,
+        task_type = "TaskClassif", tags = c("imbalanced data", "fairness"))
     }
   ),
   private = list(
@@ -135,7 +139,8 @@ PipeOpReweighingOversampling = R6Class("PipeOpReweighingOversampling",
         ParamDbl$new("alpha", lower = 0, upper = 1, tags = "train")
       ))
       ps$values = list(alpha = 1)
-      super$initialize(id, param_set = ps, param_vals = param_vals, can_subset_cols = FALSE, task_type = "TaskClassif", tags = c("imbalanced data", "fairness"))
+      super$initialize(id, param_set = ps, param_vals = param_vals, can_subset_cols = FALSE,
+        task_type = "TaskClassif", tags = c("imbalanced data", "fairness"))
     }
   ),
   private = list(

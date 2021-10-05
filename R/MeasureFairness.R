@@ -3,7 +3,8 @@
 #'
 #' @description
 #'   This measure specializes [mlr3::Measure()] to allow for measuring statistical group fairness:
-#'   A common approach to quantifying a model's fairness is to compute the difference between a protected and an
+#'   A common approach to quantifying a model's fairness is to compute the difference between a
+#'   protected and an
 #'   unprotected group according to some performance metric such as `classification error`,
 #'   `false positive rate` or others.
 #'   This measure allows for the composition of a fairness-metric from such a `base_measure` by computing
@@ -11,7 +12,8 @@
 #'
 #' @section Overview:
 #'   For an overview of measures see [`mlr_measures_fairness`].
-#'   Composite measures encompasing multiple fairness metrics can be built using [`MeasureFairnessComposite`].
+#'   Composite measures encompasing multiple fairness metrics can be built using
+#'   [`MeasureFairnessComposite`].
 #'
 #'   Predefined measures can be found in the [dictionary][mlr3misc::Dictionary] [mlr_measures].
 #'
@@ -46,12 +48,14 @@ MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure, cloneable = 
     #' Should the measure be minimized? Defaults to `TRUE`.
     #' @param range (`numeric`)\cr
     #' Range of the resulting measure. Defaults to `c(-Inf, Inf)`.
-    initialize = function(base_measure, operation = groupdiff_absdiff, minimize = TRUE, range = c(-Inf, Inf)) {
+    initialize = function(base_measure, operation = groupdiff_absdiff, minimize = TRUE,
+      range = c(-Inf, Inf)) {
       self$operation = assert_function(operation)
       self$base_measure = assert_measure(base_measure)
 
       # regr|classif|... to fairness
-      id = paste0("fairness", gsub(paste0(mlr_reflections$task_types$type, collapse = "|"), "", base_measure$id))
+      id = paste0("fairness", gsub(paste0(mlr_reflections$task_types$type, collapse = "|"), "",
+        base_measure$id))
 
       super$initialize(
         id = id,
@@ -109,7 +113,8 @@ MeasureFairnessComposite = R6::R6Class("MeasureFairnessComposite", inherit = Mea
     #'   Should the measure be minimized? Defaults to `TRUE`.
     #' @param range (`numeric`)\cr
     #'   Range of the resulting measure. Defaults to `c(-Inf, Inf)`.
-    initialize = function(id = NULL, measures, aggfun = function(x) mean(x, na.rm = TRUE), operation = groupdiff_absdiff, minimize = TRUE, range = c(-Inf, Inf)) {
+    initialize = function(id = NULL, measures, aggfun = function(x) mean(x, na.rm = TRUE),
+      operation = groupdiff_absdiff, minimize = TRUE, range = c(-Inf, Inf)) {
 
       if (all(map(measures, class) == "character")) {
         measures = msrs(unlist(measures), operation = operation)
@@ -150,7 +155,8 @@ mlr_measures$add("fairness.composite", MeasureFairnessComposite)
 #' @name mlr_measures_positive_probability
 #'
 #' @description
-#' Return the positive probability of the predictions. Formula: P(positive prediction) = positive_predictions / all_predictions
+#' Return the positive probability of the predictions. Formula: P(positive prediction) =
+#' positive_predictions / all_predictions
 #'
 #' @export
 #' @examples
@@ -202,14 +208,14 @@ mlr_measures$add("classif.pp", MeasurePositiveProbability)
 #' by combining a performance measure with an operation for measuring differences.
 #'
 #' \tabular{ll}{
-#'  fairness.eod \tab Equalized Odds: Abs. difference between true positive and false positive rates across groups           \cr
-#'  fairness.fpr \tab Abs. difference in false positive rates across groups                                                  \cr
-#'  fairness.acc \tab Abs. difference in accuracy across groups (Overall accuracy equality)                               \cr
-#'  fairness.tpr \tab Abs. difference in True positive rates across groups                                                   \cr
-#'  fairness.ppv \tab Abs. difference in Positive predictive values across groups (Part of Conditional use accuracy equality)\cr
-#'  fairness.npv \tab Abs. difference in Negative predictive values across groups (Part of Conditional use accuracy equality)\cr
-#'  fairness.fp  \tab Abs. difference in False positives across groups (Part of Treatment equality)                          \cr
-#'  fairness.fn  \tab Abs. difference in False negatives across groups (Part of Treatment equality)
+#'  fairness.eod \tab Equalized Odds: Abs. difference between true positive and false positive rates across groups \cr
+#'  fairness.fpr \tab Abs. difference in false positive rates across groups \cr
+#'  fairness.acc \tab Abs. difference in accuracy across groups (Overall accuracy equality) \cr
+#'  fairness.tpr \tab Abs. difference in True positive rates across groups \cr
+#'  fairness.ppv \tab Abs. difference in Positive predictive values across groups \cr
+#'  fairness.npv \tab Abs. difference in Negative predictive values across groups \cr
+#'  fairness.fp  \tab Abs. difference in False positives across groups  \cr
+#'  fairness.fn  \tab Abs. difference in False negatives across groups
 #' }
 #'
 #' @examples
@@ -225,13 +231,14 @@ mlr_measures$add("classif.pp", MeasurePositiveProbability)
 #' msr("fairness.fn")
 mlr_measures_fairness = rowwise_table(
   ~key, ~ description,
-  "fairness.eod" , "Equalized Odds: Sum of abs. difference between true positive and false positive rates across groups",
+  "fairness.eod" , "Equalized Odds: Sum of abs. difference between true positive and
+    false positive rates across groups",
   "fairness.fpr" , "Abs. difference in false positive rates across groups",
   "fairness.acc" , "Abs. difference in accurq()acy across groups (Overall accuracy equality)",
   "fairness.tpr" , "Abs. difference in true positive rates across groups",
   "fairness.tnr" , "Abs. difference in true negative rates across groups",
-  "fairness.ppv" , "Abs. difference in positive predictive values across groups (Part of Conditional use accuracy equality)",
-  "fairness.npv" , "Abs. difference in negative predictive values across groups (Part of Conditional use accuracy equality)",
-  "fairness.fp"  , "Abs. difference in false positives across groups (Part of Treatment equality)",
-  "fairness.fn"  , "Abs. difference in false negatives across groups (Part of Treatment equality)"
+  "fairness.ppv" , "Abs. difference in positive predictive values across groups ",
+  "fairness.npv" , "Abs. difference in negative predictive values across groups",
+  "fairness.fp"  , "Abs. difference in false positives across groups",
+  "fairness.fn"  , "Abs. difference in false negatives across groups"
  )

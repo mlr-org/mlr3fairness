@@ -2,7 +2,7 @@
 % Please edit documentation in R/visualize.R
 \name{compare_metrics}
 \alias{compare_metrics}
-\title{Compare differnt metrics}
+\title{Compare different metrics}
 \usage{
 compare_metrics(object, ...)
 }

@@ -21,13 +21,15 @@
 #'
 #' @section Metadata:
 #' * (integer) age : The age of defendants.
-#' * (factor) c_charge_degree : The charge degree of defendants. F: Felony M: Misdemanor
+#' * (factor) c_charge_degree : The charge degree of defendants. F: Felony M: Misdemeanor
 #' * (factor) race: The race of defendants.
 #' * (factor) age_cat: The age category of defendants.
 #' * (factor) score_text: The score category of defendants.
 #' * (factor) sex: The sex of defendants.
 #' * (integer) priors_count: The prior criminal records of defendants.
-#' * (integer) days_b_screening_arrest: The count of days between screening date and (original) arrest date. If they are too far apart, that may indicate an error. If the value is negative, that indicate the screening date happened before the arrest date.
+#' * (integer) days_b_screening_arrest: The count of days between screening date and (original) arrest date.
+#'   If they are too far apart, that may indicate an error. If the value is negative,
+#'   that indicate the screening date happened before the arrest date.
 #' * (integer) decile_score: Indicate the risk of recidivism (Min=1, Max=10)
 #' * (integer) is_recid: Binary variable indicate whether defendant is rearrested at any time.
 #' * (factor) two_year_recid: Binary variable indicate whether defendant is rearrested at within two years.
