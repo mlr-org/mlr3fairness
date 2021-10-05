@@ -35,7 +35,7 @@
 #' The `$state` is a named `list` with the `$state` elements inherited from [`PipeOpTaskPreproc`].
 #'
 #' @section Parameters:
-#'  * `alpha` :: [`numeric`] A number between 0 (no debiasing) and 1 (full debiasing).
+#'  * `alpha` :: `numeric` A number between 0 (no debiasing) and 1 (full debiasing).
 #' .
 #' @section Internals:
 #' Introduces, or overwrites, the "weights" column in the [`Task`][mlr3::Task]. However, the [`Learner`][mlr3::Learner] method needs to

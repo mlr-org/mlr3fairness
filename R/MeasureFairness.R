@@ -86,9 +86,9 @@ mlr_measures$add("fairness", MeasureFairness)
 #'   library(mlr3)
 #'   library(mlr3fairness)
 #'   # Equalized Odds Metric
-#'   MeasureFairnessComposite$new(measures = list("fairness.classif.fpr", "fairness.classif.tpr"))
+#'   MeasureFairnessComposite$new(measures = list("fairness.fpr", "fairness.tpr"))
 #'   # Other metrics e.g. based on negative rates
-#'   MeasureFairnessComposite$new(measures = list("fairness.classif.fnr", "fairness.classif.tnr"))
+#'   MeasureFairnessComposite$new(measures = list("fairness.fnr", "fairness.tnr"))
 MeasureFairnessComposite = R6::R6Class("MeasureFairnessComposite", inherit = Measure,
   public = list(
     #' @description
