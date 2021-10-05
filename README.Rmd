@@ -46,7 +46,11 @@ The **goal of `mlr3fairness`** is to allow for auditing of `mlr3` learners, visu
 
 * **Fairness Report:** Obtain a report regarding an algorithm's fairness. (Under development)
 
+**More Information**
 
+- [Debiasing](https://mlr3fairness.mlr-org.com/articles/debiasing-vignette.html)
+- [Fairness Metrics](https://mlr3fairness.mlr-org.com/articles/measures-vignette.html)
+- [Visualizations](https://mlr3fairness.mlr-org.com/articles/visualization-vignette.html)
 
 ### Protected Attribute
 
