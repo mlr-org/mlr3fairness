@@ -79,7 +79,7 @@ PipeOpReweighingWeights = R6Class("PipeOpReweighingWeights",
     #' @param id `character` \cr
     #'   The PipeOps identifier in the PipeOps library.
     #' @param param_vals `list` \cr
-    #'   The parameter values to be set. There are two parameters that could be set:
+    #'   The parameter values to be set.
     #'   * alpha: controls the proportion between initial weight (1 if nonexisting) and reweighing weight.
     #'     Defaults to 1.
     #' Here is how it works:

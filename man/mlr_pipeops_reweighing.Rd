@@ -94,6 +94,9 @@ tem$confusion
 }
 \seealso{
 https://mlr3book.mlr-org.com/list-pipeops.html
+
+Other PipeOps: 
+\code{\link{mlr_pipeops_equalized_odds}}
 }
 \concept{PipeOps}
 \section{Super classes}{
@@ -131,7 +134,7 @@ Creates a new instance of this [R6][R6::R6Class][\code{PipeOp}] R6 class.
 The PipeOps identifier in the PipeOps library.}
 
 \item{\code{param_vals}}{\code{list} \cr
-The parameter values to be set. There are two parameters that could be set:
+The parameter values to be set.
 \itemize{
 \item alpha: controls the proportion between initial weight (1 if nonexisting) and reweighing weight.
 Defaults to 1.
