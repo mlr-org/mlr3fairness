@@ -70,12 +70,14 @@ library(mlr3)
 eod = po("EOd")
 learner_po = po("learner_cv", learner = lrn("classif.rpart"))
 
-data = tsk("adult_train")
+task = tsk("adult_train")
 graph = learner_po \%>>\% eod
 glrn = GraphLearner$new(graph)
-glrn$train(data)
-tem = glrn$predict(data)
-tem$confusion
+glrn$train(task)
+# On a Task
+glrn$predict(task)
+# On newdata
+glrn$predict_newdata(task$data(cols = task$feature_names))
 }
 \seealso{
 https://mlr3book.mlr-org.com/list-pipeops.html

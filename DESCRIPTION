@@ -54,10 +54,11 @@ Collate:
     'compas.R'
     'adult.R'
     'MeasureFairness.R'
-    'PipeOpReweighing.R'
     'assertions.R'
     'helpers.R'
     'measure_operations.R'
+    'PipeOpReweighing.R'
+    'PipeOpEOd.R'
     'zzz.R'
     'visualize.R'
 Config/testthat/edition: 3

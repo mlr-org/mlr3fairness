@@ -57,12 +57,14 @@
 #' eod = po("EOd")
 #' learner_po = po("learner_cv", learner = lrn("classif.rpart"))
 #'
-#' data = tsk("adult_train")
+#' task = tsk("adult_train")
 #' graph = learner_po %>>% eod
 #' glrn = GraphLearner$new(graph)
-#' glrn$train(data)
-#' tem = glrn$predict(data)
-#' tem$confusion
+#' glrn$train(task)
+#' # On a Task
+#' glrn$predict(task)
+#' # On newdata
+#' glrn$predict_newdata(task$data(cols = task$feature_names))
 PipeOpEOd= R6Class("PipeOpEOd",
   inherit = PipeOp,
   public = list(
@@ -75,7 +77,7 @@ PipeOpEOd= R6Class("PipeOpEOd",
     #'   The parameter values to be set. See `Parameters`.
     initialize = function(id = "EOd", param_vals = list()) {
       ps = ParamSet$new(list(
-        ParamDbl$new("alpha", lower = 0, upper = 1)
+        ParamDbl$new("alpha", lower = 0, upper = 1, tags = "train")
      ))
       ps$values = list(alpha = 1)
       super$initialize(id, param_set = ps, param_vals = param_vals,
@@ -88,14 +90,15 @@ PipeOpEOd= R6Class("PipeOpEOd",
   ),
   private = list(
 
-    .train = function(task) {
-      task =  assert_pta_task(task[[1]])
+    .train = function(input) {
+      task =  assert_pta_task(input[[1]])
       params = self$param_set$get_values(tags = "train")
-      flips = private$.compute_flip_probs()
-      self$state = map(flips, function(x) alpha * flips)
+      flips = private$.compute_flip_probs(task)
+      self$state = list(flip_probs = map(flips, function(x) params$alpha * x))
     },
 
-    .predict = function(task) {
+    .predict = function(input) {
+      task = assert_pta_task(input[[1]])
       flips = self$state$flip_probs
       # Widely used vars
       pta = task$col_roles$pta
@@ -110,25 +113,29 @@ PipeOpEOd= R6Class("PipeOpEOd",
       # Binary priviledged group indicator
       is_prv = dt[,get(pta) == prv]
 
-      # Get indices to switch
-      pp_idx = sample(which(dt[is_prv, get(prd) == task$positive]))
-      pn_idx = sample(which(dt[is_prv, get(prd) != task$negative]))
-      n2p_idx = pn_idx[seq_len(round( flips$sn2p    * length(pn_idx)))]
-      p2n_idx = pp_idx[seq_len(round((1-flips$sp2p) * length(pp_idx)))]
+      if (flips$sn2p > 0) {
+        pn_idx = sample(which(dt[is_prv, get(prd) != task$negative]))
+        n2p_idx = pn_idx[seq_len(ceiling( flips$sn2p    * length(pn_idx)))]
+        dt[n2p_idx, (prd) := task$positive]
+      }
+      if (flips$sp2p > 0) {
+        pp_idx = sample(which(dt[is_prv, get(prd) == task$positive]))
+        p2n_idx = pp_idx[seq_len(ceiling((1-flips$sp2p) * length(pp_idx)))]
+        dt[p2n_idx, (prd) := task$negative]
+      }
 
-      # Flip predictions
-      dt[n2p_idx, (prd) := task$positive]
-      dt[p2n_idx, (prd) := task$negative]
-
-      if (task$col_roles$truth %in% colnames())
       # Convert to prediction
       set(dt, j = "row_ids", value = dt[[task$backend$primary_key]])
       set(dt, j = "response", value = dt[[prd]])
-      set(dt, j = "truth", value = factor(truth, levels = levels(dt$response)))
-      as_prediction_classif(dt[, c("row_ids", "truth", "response")])
-
+      if (tgt %in% colnames(dt)) {
+        set(dt, j = "truth", value = factor(dt[[tgt]], levels = levels(dt$response)))
+      } else {
+        set(dt, j = "truth", value = factor(NA, levels = levels(dt$response)))
+      }
+      list(as_prediction_classif(dt[, c("row_ids", "truth", "response")]))
     },
     .compute_flip_probs = function(task) {
+      browser()
       # Widely used vars
       pta = task$col_roles$pta
       tgt = task$col_roles$target
@@ -141,8 +148,8 @@ PipeOpEOd= R6Class("PipeOpEOd",
       dt[, colnames(dt) := map(.SD, as.factor), .SDcols = colnames(dt)]
       # Compue base rates
       br = dt[, .N, by = pta]
-      sbr = br[get(pta) == prv][["N"]]
-      obr = br[get(pta) != prv][["N"]]
+      sbr = br[get(pta) == prv][["N"]] / nrow(dt)
+      obr = br[get(pta) != prv][["N"]] / nrow(dt)
 
       # Compute per-group metrics
       r = dt[, map(list(fpr, fnr, tpr, tnr, .N), function(fn) fn(get(tgt), get(prd), pos)), by = pta]
@@ -218,7 +225,7 @@ PipeOpEOd= R6Class("PipeOpEOd",
       const_dir = c(rep("<=", length(b_ineq)), rep("==", length(b_eq)))
 
       sol = linprog::solveLP(cvec, bvec, Amat, const.dir = const_dir, lpSolve = TRUE, maxiter = 1e4, zero=1e-16)
-      list("flip_probs" = setNames(as.list(sol$solution), c("sp2p", "sn2p", "op2p", "on2p")))
+      setNames(as.list(sol$solution), c("sp2p", "sn2p", "op2p", "on2p"))
     }
   )
 )
