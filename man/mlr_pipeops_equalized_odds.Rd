@@ -72,7 +72,10 @@ library(mlr3fairness)
 library(mlr3)
 
 eod = po("EOd")
-learner_po = po("learner_cv", learner = lrn("classif.rpart", cp = .0001))
+learner_po = po("learner_cv",
+  learner = lrn("classif.rpart"),
+  resampling.method = "insample"
+ )
 
 task = tsk("compas")
 graph = learner_po \%>>\% eod

@@ -11,6 +11,15 @@ Integrates fairness auditing and debiasing methods into the 'mlr3' ecosystem.
     Integration with mlr3 allows for auditing of mlr3 models as well as convenient joint tuning of
     machine learning algorithms and debiasing methods.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://mlr3fairness.mlr-org.com}
+  \item \url{https://github.com/mlr-org/mlr3fairness}
+  \item Report bugs at \url{https://github.com/mlr-org/mlr3fairness/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Wei Siyi \email{weisiyi2@gmail.com}
 

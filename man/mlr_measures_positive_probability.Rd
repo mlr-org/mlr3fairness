@@ -9,14 +9,14 @@ Return the positive probability of the predictions. Formula: P(positive predicti
 positive_predictions / all_predictions
 }
 \examples{
-# Create Positive Probability Measure
-library(mlr3)
-data_task = tsk("adult_train")
-learner = lrn("classif.rpart", cp = .01)
-learner$train(data_task)
-measure = msr("classif.pp")
-predictions = learner$predict(data_task)
-predictions$score(measure, task = data_task)
+  # Create Positive Probability Measure
+  library(mlr3)
+  data_task = tsk("adult_train")
+  learner = lrn("classif.rpart", cp = .01)
+  learner$train(data_task)
+  measure = msr("classif.pp")
+  predictions = learner$predict(data_task)
+  predictions$score(measure, task = data_task)
 }
 \section{Super class}{
 \code{\link[mlr3:Measure]{mlr3::Measure}} -> \code{MeasurePositiveProbability}

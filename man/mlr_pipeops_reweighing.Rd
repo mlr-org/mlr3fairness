@@ -136,7 +136,7 @@ The PipeOps identifier in the PipeOps library.}
 \item{\code{param_vals}}{\code{list} \cr
 The parameter values to be set.
 \itemize{
-\item alpha: controls the proportion between initial weight (1 if nonexisting) and reweighing weight.
+\item alpha: controls the proportion between initial weight (1 if non existing) and reweighing weight.
 Defaults to 1.
 Here is how it works:
 new_weight = (1 - alpha) * 1 + alpha x reweighing_weight
