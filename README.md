@@ -86,18 +86,18 @@ library(mlr3)
 library(mlr3fairness)
 ```
 
-| key                                | description                                                              |
-| :--------------------------------- | :----------------------------------------------------------------------- |
-| fairness.eod                       | Equalized Odds: Sum of abs. difference between true positive and         |
-| false positive rates across groups |                                                                          |
-| fairness.fpr                       | Abs. difference in false positive rates across groups                    |
+| key                                | description                                                           |
+| :--------------------------------- | :-------------------------------------------------------------------- |
+| fairness.eod                       | Equalized Odds: Sum of abs. difference between true positive and      |
+| false positive rates across groups |                                                                       |
+| fairness.fpr                       | Abs. difference in false positive rates across groups                 |
 | fairness.acc                       | Abs. difference in accuracy across groups (Overall accuracy equality) |
-| fairness.tpr                       | Abs. difference in true positive rates across groups                     |
-| fairness.tnr                       | Abs. difference in true negative rates across groups                     |
-| fairness.ppv                       | Abs. difference in positive predictive values across groups              |
-| fairness.npv                       | Abs. difference in negative predictive values across groups              |
-| fairness.fp                        | Abs. difference in false positives across groups                         |
-| fairness.fn                        | Abs. difference in false negatives across groups                         |
+| fairness.tpr                       | Abs. difference in true positive rates across groups                  |
+| fairness.tnr                       | Abs. difference in true negative rates across groups                  |
+| fairness.ppv                       | Abs. difference in positive predictive values across groups           |
+| fairness.npv                       | Abs. difference in negative predictive values across groups           |
+| fairness.fp                        | Abs. difference in false positives across groups                      |
+| fairness.fn                        | Abs. difference in false negatives across groups                      |
 
 The `fairness_tensor` function can be used with a `Prediction` in order
 to print group-wise confusion matrices for each protected attribute
