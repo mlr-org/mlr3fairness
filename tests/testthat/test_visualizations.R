@@ -4,7 +4,6 @@ fairness_measures = test_measures()
 bmr = test_bmr()
 #---
 
-
 # fairness_accuracy_tradeoff Tests
 test_that("fairness_accuracy_tradeoff", {
   # BMR
@@ -25,7 +24,6 @@ test_that("fairness_accuracy_tradeoff", {
   })
 })
 
-
 test_that("compare_metrics", {
   # BMR
   check_plots(compare_metrics(bmr, fairness_measures))
@@ -42,7 +40,6 @@ test_that("compare_metrics", {
     })
   })
 })
-
 
 test_that("fairness_accuracy_tradeoff", {
   # BMR

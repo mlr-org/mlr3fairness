@@ -40,11 +40,12 @@
   x$add("fairness.fp",  MeasureFairness, base_measure = msr("classif.fp"))
   x$add("fairness.fn",  MeasureFairness, base_measure = msr("classif.fn"))
   x$add("fairness.eod", MeasureFairnessComposite, measures = list("fairness.fpr", "fairness.tpr"), id = "equalized_odds")
-  x$add("classif.pp", MeasurePositiveProbability)
+  x$add("classif.pp",   MeasurePositiveProbability)
 
   x = getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
   x$add("reweighing_wts", PipeOpReweighingWeights)
   x$add("reweighing_os", PipeOpReweighingOversampling)
+  x$add("EOd", PipeOpEOd)
 
   # static code checks should not complain about commonly used data.table columns
   utils::globalVariables(c("variable", "value", "learner_id", "n_tgt", "n_pta", 'pta', 'task_id',

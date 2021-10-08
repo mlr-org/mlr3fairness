@@ -73,8 +73,8 @@ fairness_accuracy_tradeoff.BenchmarkResult = function(object, fairness_measure =
   assert_measure(acc_measure)
   assert_flag(plot_scores)
   data = rbind(
-    object$score(list(acc_measure, fairness_measure))[, "aggi" := 0, with = FALSE][, agg := "replication"],
-    object$aggregate(list(acc_measure, fairness_measure))[, "aggi" := 1, with = FALSE][, agg := "mean"],
+    object$score(list(acc_measure, fairness_measure))[, "aggi" := 0][, agg := "replication"],
+    object$aggregate(list(acc_measure, fairness_measure))[, "aggi" := 1][, agg := "mean"],
     fill = TRUE
   )
   if (plot_scores) {

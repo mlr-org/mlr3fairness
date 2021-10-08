@@ -244,15 +244,12 @@ PipeOpEOd= R6Class("PipeOpEOd",
       )
       Amat = rbind(A_ineq, t(A_eq))
       bvec = c(b_ineq, b_eq)
-
+      # Directions for constraints
       const_dir = c(rep("<=", length(b_ineq)), rep("==", length(b_eq)))
-
+      #  Sovle
       sol = linprog::solveLP(cvec, bvec, Amat, const.dir = const_dir, lpSolve = TRUE)
       setNames(as.list(sol$solution), c("sp2p", "sn2p", "op2p", "on2p"))
     },
     .priviledged = character(0)
   )
 )
-
-mlr_pipeops$add("EOd", PipeOpEOd)
-
