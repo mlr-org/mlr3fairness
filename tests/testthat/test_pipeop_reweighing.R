@@ -23,3 +23,25 @@ test_that("reweighing_wts", {
   tab = table(dt$sex, dt$target)
   expect_true(abs(diff(tab[1,] / tab[2,])) < .1)
 })
+
+test_that("reweighing_wts with initial weights", {
+  t1 = tsk("compas")
+  t2 = t1$clone()
+  t2$set_col_roles("age", "weight")
+
+  p1 = po("reweighing_wts")
+  p2 = p1$clone()
+
+  ot1 = p1$train(list(t1))[[1]]
+  ot2 = p2$train(list(t2))[[1]]
+  w1 = ot1$weights$weight * t1$data(cols = "age")[["age"]]
+  w2 = ot2$weights$weight
+  expect_true(abs(mean(w1 - w2)) < 1e-2)
+})
+
+test_that("reweighing errors on multiclass", {
+  t = tsk("iris")
+  t$set_col_roles("Petal.Length", "pta")
+  expect_error(po("reweighing_wts")$train(list(t))[[1]], "Only binary")
+  expect_error(po("reweighing_os")$train(list(t))[[1]], "Only binary")
+})

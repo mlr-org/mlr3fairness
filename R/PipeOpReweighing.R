@@ -80,7 +80,7 @@ PipeOpReweighingWeights = R6Class("PipeOpReweighingWeights",
     #'   The PipeOps identifier in the PipeOps library.
     #' @param param_vals `list` \cr
     #'   The parameter values to be set.
-    #'   * alpha: controls the proportion between initial weight (1 if nonexisting) and reweighing weight.
+    #'   * alpha: controls the proportion between initial weight (1 if non existing) and reweighing weight.
     #'     Defaults to 1.
     #' Here is how it works:
     #' new_weight = (1 - alpha) * 1 + alpha x reweighing_weight
@@ -102,7 +102,7 @@ PipeOpReweighingWeights = R6Class("PipeOpReweighingWeights",
       }
       weightcolname = "reweighing.WEIGHTS"
       if (weightcolname %in% unlist(task$col_roles)) {
-        stopf("Weight column '%s' is already in the Task", weightcolname)
+        stopf("Weight column '%s' is already in the Task", weightcolname) # nocov
       }
       assert_pta_task(task)
       wtab = compute_reweighing_weights(task, 1)
@@ -111,11 +111,14 @@ PipeOpReweighingWeights = R6Class("PipeOpReweighingWeights",
       if (is.null(task$weights)) {
         initial_weights = rep(1, task$nrow)
       } else {
-        initial_weights = task$weights
+        initial_weights = task$weights[wcol]$weight
       }
       wcol = wcol[, wt := wt * initial_weights]
       wcol = setNames(wcol, c(task$backend$primary_key, weightcolname))
       task$cbind(wcol)
+      if (length(task$col_roles$weight)) {
+        task$set_col_roles(task$col_roles$weight, remove_from = "weight")
+      }
       task$set_col_roles(weightcolname, "weight")
       task
     },
@@ -147,6 +150,9 @@ PipeOpReweighingOversampling = R6Class("PipeOpReweighingOversampling",
 
     .train_task = function(task) {
       self$state = list()
+      if ("twoclass" %nin% task$properties) {
+        stop("Only binary classification Tasks are supported.")
+      }
       assert_pta_task(task)
       pv = self$param_set$get_values()
       wtab = compute_reweighing_weights(task, pv$alpha)

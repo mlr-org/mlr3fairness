@@ -226,7 +226,7 @@ fairness_prediction_density = function(object, ...){
 #' @export
 fairness_prediction_density.PredictionClassif = function(object, task, ...){
   if (is.null(object$prob)) {
-    print("object needs to have predict.type = 'prob'!")
+    print("object needs to have predict.type = 'prob'!") # nocov
   }
 
   dt = as.data.table(object)

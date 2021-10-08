@@ -4,7 +4,7 @@
 #' @aliases Compas
 #'
 #' @description
-#' This dataset include the processed COMPAS datas between 2013-2014.
+#' This dataset include the processed COMPAS data between 2013-2014.
 #' The data cleaning process followed the guidance in the original COMPAS repo.
 #' Contains 6172 observations and 14 features.
 #' The target column could either be "is_recid" or "two_year_recid", but often "two_year_recid" is prefered.
@@ -43,10 +43,10 @@
 #' data("compas", package = "mlr3fairness")
 NULL
 
-get_compas_task = function() {
+get_compas_task = function() { # nocov start
   b = as_backend("compas")
   task = mlr3::TaskClassif$new("compas", b, target = "two_year_recid")
   task$col_roles$pta = "sex"
   b$hash = task$man = "mlr3fairness::mlr_tasks_compas"
   task
-}
+} # nocov end

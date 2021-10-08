@@ -91,7 +91,7 @@ library(mlr3fairness)
 | fairness.eod                       | Equalized Odds: Sum of abs. difference between true positive and         |
 | false positive rates across groups |                                                                          |
 | fairness.fpr                       | Abs. difference in false positive rates across groups                    |
-| fairness.acc                       | Abs. difference in accurq()acy across groups (Overall accuracy equality) |
+| fairness.acc                       | Abs. difference in accuracy across groups (Overall accuracy equality) |
 | fairness.tpr                       | Abs. difference in true positive rates across groups                     |
 | fairness.tnr                       | Abs. difference in true negative rates across groups                     |
 | fairness.ppv                       | Abs. difference in positive predictive values across groups              |

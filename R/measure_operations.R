@@ -5,6 +5,8 @@
 #' elements in 'x' is computed.
 #' @param x `numeric` \cr
 #'   Measured performance in group 1, 2, ...
+#' @examples
+#'   groupdiff_tau(runif(3))
 #' @export
 groupdiff_tau = function(x) {
   assert_numeric(x, min.len = 2L)
@@ -22,6 +24,8 @@ groupdiff_tau = function(x) {
 #' elements in 'x' is computed.
 #' @param x ´numeric` \cr
 #'   Measured performance in group 1, 2, ...
+#' @examples
+#'   groupdiff_absdiff(runif(3))
 #' @export
 groupdiff_absdiff = function(x) {
   assert_numeric(x, min.len = 2L)

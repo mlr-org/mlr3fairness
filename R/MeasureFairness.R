@@ -149,8 +149,6 @@ MeasureFairnessComposite = R6::R6Class("MeasureFairnessComposite", inherit = Mea
     }
   )
 )
-mlr_measures$add("fairness.composite", MeasureFairnessComposite)
-
 
 #' @title Positive Probability Measure
 #' @name mlr_measures_positive_probability
@@ -161,14 +159,14 @@ mlr_measures$add("fairness.composite", MeasureFairnessComposite)
 #'
 #' @export
 #' @examples
-#' # Create Positive Probability Measure
-#' library(mlr3)
-#' data_task = tsk("adult_train")
-#' learner = lrn("classif.rpart", cp = .01)
-#' learner$train(data_task)
-#' measure = msr("classif.pp")
-#' predictions = learner$predict(data_task)
-#' predictions$score(measure, task = data_task)
+#'   # Create Positive Probability Measure
+#'   library(mlr3)
+#'   data_task = tsk("adult_train")
+#'   learner = lrn("classif.rpart", cp = .01)
+#'   learner$train(data_task)
+#'   measure = msr("classif.pp")
+#'   predictions = learner$predict(data_task)
+#'   predictions$score(measure, task = data_task)
 MeasurePositiveProbability = R6::R6Class("MeasurePositiveProbability",
   inherit = mlr3::Measure,
   public = list(
@@ -235,7 +233,7 @@ mlr_measures_fairness = rowwise_table(
   "fairness.eod" , "Equalized Odds: Sum of abs. difference between true positive and
     false positive rates across groups",
   "fairness.fpr" , "Abs. difference in false positive rates across groups",
-  "fairness.acc" , "Abs. difference in accurq()acy across groups (Overall accuracy equality)",
+  "fairness.acc" , "Abs. difference in accuracy across groups (Overall accuracy equality)",
   "fairness.tpr" , "Abs. difference in true positive rates across groups",
   "fairness.tnr" , "Abs. difference in true negative rates across groups",
   "fairness.ppv" , "Abs. difference in positive predictive values across groups ",

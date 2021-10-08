@@ -137,3 +137,8 @@ test_that("fairness.pp (disparate impact score) can be loaded and work as expect
   msr_obj = msr("fairness", base_measure = msr("classif.pp"))
   expect_true(predictions$score(msr_obj, test_data) == 0)
 })
+
+test_that("fairness. composite no id", {
+  msr_obj = msr("fairness.composite", measures = msrs(c("classif.fpr", "classif.fnr")))
+  expect_true(msr_obj$id == "fairness.fpr_fnr")
+})

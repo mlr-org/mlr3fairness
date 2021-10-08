@@ -15,3 +15,6 @@ Computes \code{max(abs(x-y, y-x))} i.e. the smallest symmetric ratio between x a
 that is smaller than 1. If x is a vector, the symmetric ratio between all
 elements in 'x' is computed.
 }
+\examples{
+  groupdiff_absdiff(runif(3))
+}

@@ -33,7 +33,7 @@ $$$
 $$$
 
 We will use metrics like the one defined above throughout the remainder of this vignette.
-Some predefined measures are readily available in `mlr3fairness`, but we will also showcase how custom measures can be constrcuted below.
+Some predefined measures are readily available in `mlr3fairness`, but we will also showcase how custom measures can be constructed below.
 
 In general, fairness measures have a `fairness.` prefix followed by the metric that is compared across groups. We will thus e.g. call the difference in accuracies across groups `fairness.acc`.
 A full list can be found below.

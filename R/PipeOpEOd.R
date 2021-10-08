@@ -151,10 +151,8 @@ PipeOpEOd= R6Class("PipeOpEOd",
       # Binary priviledged group indicator
       is_prv = dt[,get(..pta) == prv]
       if (sum(is_prv) < 1) {
-        stop("'priviledged' needs to be a valid value in the 'pta' column!")
+        stop("'priviledged' needs to be a valid value in the 'pta' column!") # nocov
       }
-
-
 
       # Priviledged
       pn_idx = sample(which(dt[, is_prv & get(prd) == task$negative]))
@@ -186,7 +184,7 @@ PipeOpEOd= R6Class("PipeOpEOd",
       if (..tgt %in% colnames(dt)) {
         set(dt, j = "truth", value = factor(dt[[..tgt]], levels = levels(dt$response)))
       } else {
-        set(dt, j = "truth", value = factor(NA, levels = levels(dt$response)))
+        set(dt, j = "truth", value = factor(NA, levels = levels(dt$response))) # nocov
       }
       list(as_prediction_classif(dt[, c("row_ids", "truth", "response")]))
     },

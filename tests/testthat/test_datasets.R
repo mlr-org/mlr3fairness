@@ -14,6 +14,7 @@ test_that("tasks can be loaded", {
 
 test_that("compas dataset can be loaded with correct format", {
   compas = tsk("compas")
+  expect_r6(compas, "TaskClassif")
   compas_data = compas$data()
   check_data_format(compas_data)
   expect_true(nrow(compas_data) == 6172L)
@@ -28,6 +29,7 @@ test_that("compas dataset can be loaded with correct format", {
 
 test_that("adult_train dataset can be loaded with correct format", {
   adult_train = tsk("adult_train")
+  expect_r6(adult_train, "TaskClassif")
   adult_train_data = adult_train$data()
   expect_true(nrow(adult_train_data) == 30718L)
   expect_true(ncol(adult_train_data) == 13L)
@@ -41,6 +43,7 @@ test_that("adult_train dataset can be loaded with correct format", {
 
 test_that("adult_test dataset can be loaded with correct format", {
   adult_test = tsk("adult_test")
+  expect_r6(adult_test, "TaskClassif")
   adult_test_data = adult_test$data()
   expect_true(nrow(adult_test_data) == 15315L)
   expect_true(ncol(adult_test_data) == 13L)

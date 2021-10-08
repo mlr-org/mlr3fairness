@@ -12,7 +12,7 @@
 
 .onLoad = function(libname, pkgname) { # nolint
   # register tasks
-  x = getFromNamespace("mlr_tasks", ns = "mlr3")
+  x = getFromNamespace("mlr_tasks", ns = "mlr3") # nocov start
   x$add("adult_train", get_adult_task_train())
   x$add("adult_test", get_adult_task_test())
   x$add("compas", get_compas_task())
@@ -30,6 +30,7 @@
   # Define a set of widely used metrics. Documented in mlr_measures_fairness
   x = getFromNamespace("mlr_measures", ns = "mlr3")
   x$add("fairness", MeasureFairness)
+  x$add("fairness.composite", MeasureFairnessComposite)
   x$add("fairness.fpr", MeasureFairness, base_measure = msr("classif.fpr"))
   x$add("fairness.fnr", MeasureFairness, base_measure = msr("classif.fnr"))
   x$add("fairness.tpr", MeasureFairness, base_measure = msr("classif.tpr"))
@@ -49,5 +50,5 @@
 
   # static code checks should not complain about commonly used data.table columns
   utils::globalVariables(c("variable", "value", "learner_id", "n_tgt", "n_pta", 'pta', 'task_id',
-    'pta_cols', 'wt', 'N', 'agg'))
+    'pta_cols', 'wt', 'N', 'agg')) # nocov end
 }
