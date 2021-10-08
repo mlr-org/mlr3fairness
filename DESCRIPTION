@@ -54,10 +54,11 @@ Roxygen: list(markdown = TRUE)
 Collate:
     'compas.R'
     'adult.R'
-    'MeasureFairness.R'
     'assertions.R'
     'helpers.R'
+    'MeasureFairness.R'
     'measure_operations.R'
+    'fairness_tensor.R'
     'PipeOpReweighing.R'
     'PipeOpEOd.R'
     'zzz.R'

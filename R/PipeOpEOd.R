@@ -95,7 +95,7 @@
 #' eod = po("EOd")
 #' learner_po = po("learner_cv", learner = lrn("classif.rpart", cp = .0001))
 #'
-#' task = tsk("adult_train")
+#' task = tsk("compas")
 #' graph = learner_po %>>% eod
 #' glrn = GraphLearner$new(graph)
 #' glrn$train(task)
