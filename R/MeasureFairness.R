@@ -151,6 +151,7 @@ MeasureFairnessComposite = R6::R6Class("MeasureFairnessComposite", inherit = Mea
 )
 mlr_measures$add("fairness.composite", MeasureFairnessComposite)
 
+
 #' @title Positive Probability Measure
 #' @name mlr_measures_positive_probability
 #'

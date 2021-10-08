@@ -45,7 +45,8 @@ Suggests:
     testthat (>= 3.0.0),
     patchwork,
     ranger,
-    mlr3learners
+    mlr3learners,
+    linprog
 RoxygenNote: 7.1.2
 Remotes:
     mlr-org/mlr3

@@ -96,10 +96,26 @@ if (FALSE) {
 
 
 
+# FACT approach:
 
-#'
-#'
+ns = map_dbl(ft, sum)
+ms = map_dbl(ft, function(x) sum(x[,1]))
+n = sum(ns)
+z = unlist(ft) / n
 
+Acst = rbind(
+  c(1,1,1,1,0,0,0,0),
+  c(1,1,0,0,0,0,0,0),
+  c(0,0,0,0,1,1,1,1),
+  c(0,0,0,0,1,1,0,0)
+ )
+
+bcst = c(ms[1], ns[1], ms[2], ms[2]) / n
+
+Aeod = cbind(
+  c(ms[1], 0, 0          , 0, -ms[2], 0, 0           , 0),
+  c(0    , 0, ns[1]-ms[1], 0, 0     , 0, -ns[2]+ms[2], 0)
+)
 
 
 

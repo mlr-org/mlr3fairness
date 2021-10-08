@@ -7,14 +7,15 @@
 #' @description
 #'   Fairness post-processing method to achieve equalized odds fairness.
 #'   Works by randomly flipping a subset of predictions with pre-computed
-#'   probabilities in order to satisfy equalized odds constraints.
+#'   probabilities in order to satisfy equalized odds constraints.\cr
+#'   NOTE: Carefully assess the correct privileged group.
 #'
 #' @details
-#' For additional details, see:\cr
-#' M. Hardt, E. Price, and N. Srebro, "Equality of Opportunity in
-#'    Supervised Learning," Conference on Neural Information Processing
+#' For additional details, see: \cr
+#' * M. Hardt, E. Price, and N. Srebro, "Equality of Opportunity in
+#'   Supervised Learning," Conference on Neural Information Processing
 #'   Systems, 2016.
-#' G. Pleiss, M. Raghavan, F. Wu, J. Kleinberg, and
+#' * G. Pleiss, M. Raghavan, F. Wu, J. Kleinberg, and
 #'   K. Q. Weinberger, "On Fairness and Calibration," Conference on Neural
 #'   Information Processing Systems, 2017.
 #'
@@ -38,6 +39,7 @@
 #' @section Parameters:
 #'  * `alpha` :: `numeric` A number between 0 (no debiasing) and 1 (full debiasing).
 #'    Controls the debiasing strength by multiplying the flipping probabilities with alpha.
+#'  * `privileged` :: `character` The priviledged group.
 #'
 #'
 #' @section Fields:
@@ -55,7 +57,7 @@
 #' library(mlr3)
 #'
 #' eod = po("EOd")
-#' learner_po = po("learner_cv", learner = lrn("classif.rpart"))
+#' learner_po = po("learner_cv", learner = lrn("classif.rpart", cp = .0001))
 #'
 #' task = tsk("adult_train")
 #' graph = learner_po %>>% eod
@@ -77,15 +79,15 @@ PipeOpEOd= R6Class("PipeOpEOd",
     #'   The parameter values to be set. See `Parameters`.
     initialize = function(id = "EOd", param_vals = list()) {
       ps = ParamSet$new(list(
-        ParamDbl$new("alpha", lower = 0, upper = 1, tags = "train")
+        ParamDbl$new("alpha", lower = 0, upper = 1, tags = "train"),
+        ParamUty$new("priviledged", tags = "train")
      ))
       ps$values = list(alpha = 1)
       super$initialize(id, param_set = ps, param_vals = param_vals,
         input = data.table(name = "input", train = "TaskClassif",   predict = "TaskClassif"),
         output = data.table(name = "output", train = "NULL", predict = "PredictionClassif"),
-        tags = "fairness"
+        tags = "fairness", package = "linprog"
       )
-
     }
   ),
   private = list(
@@ -93,6 +95,7 @@ PipeOpEOd= R6Class("PipeOpEOd",
     .train = function(input) {
       task =  assert_pta_task(input[[1]])
       params = self$param_set$get_values(tags = "train")
+      private$.priviledged = params$priviledged %??% names(which.max(table(task$data(cols = task$col_roles$pta))))
       flips = private$.compute_flip_probs(task)
       self$state = list(flip_probs = map(flips, function(x) params$alpha * x))
     },
@@ -101,75 +104,99 @@ PipeOpEOd= R6Class("PipeOpEOd",
       task = assert_pta_task(input[[1]])
       flips = self$state$flip_probs
       # Widely used vars
-      pta = task$col_roles$pta
-      tgt = task$col_roles$target
+      ..pta = task$col_roles$pta
+      ..tgt = task$col_roles$target
       prd = task$col_roles$feature
-      prv = task$levels(pta)[[pta]][1]
+      prv = private$.priviledged
 
       # Obtain data
-      dt = task$data(cols = c(task$backend$primary_key, pta, tgt, prd))
-      dt[, c(tgt, prd) := map(.SD, as.factor), .SDcols = c(tgt, prd)]
-
+      dt = task$data(cols = c(task$backend$primary_key, ..pta, ..tgt, prd))
+      dt[, c(..tgt, prd) := map(.SD, as.factor), .SDcols = c(..tgt, prd)]
       # Binary priviledged group indicator
-      is_prv = dt[,get(pta) == prv]
+      is_prv = dt[,get(..pta) == prv]
+      if (sum(is_prv) < 1) {
+        stop("'priviledged' needs to be a valid value in the 'pta' column!")
+      }
 
+
+
+      # Priviledged
+      pn_idx = sample(which(dt[, is_prv & get(prd) == task$negative]))
+      pp_idx = sample(which(dt[, is_prv & get(prd) == task$positive]))
       if (flips$sn2p > 0) {
-        pn_idx = sample(which(dt[is_prv, get(prd) != task$negative]))
         n2p_idx = pn_idx[seq_len(ceiling( flips$sn2p    * length(pn_idx)))]
         dt[n2p_idx, (prd) := task$positive]
       }
       if (flips$sp2p > 0) {
-        pp_idx = sample(which(dt[is_prv, get(prd) == task$positive]))
         p2n_idx = pp_idx[seq_len(ceiling((1-flips$sp2p) * length(pp_idx)))]
+        dt[p2n_idx, (prd) := task$negative]
+      }
+
+      # Unpriviledged
+      pp_idx = sample(which(dt[, !is_prv & get(prd) == task$positive]))
+      pn_idx = sample(which(dt[, !is_prv & get(prd) == task$negative]))
+      if (flips$op2p > 0) {
+        p2p_idx = pp_idx[seq_len(ceiling((1-flips$op2p) * length(pp_idx)))]
+        dt[p2p_idx, (prd) := task$positive]
+      }
+      if (flips$on2p > 0) {
+        p2n_idx = pn_idx[seq_len(ceiling(flips$on2p * length(pn_idx)))]
         dt[p2n_idx, (prd) := task$negative]
       }
 
       # Convert to prediction
       set(dt, j = "row_ids", value = dt[[task$backend$primary_key]])
       set(dt, j = "response", value = dt[[prd]])
-      if (tgt %in% colnames(dt)) {
-        set(dt, j = "truth", value = factor(dt[[tgt]], levels = levels(dt$response)))
+      if (..tgt %in% colnames(dt)) {
+        set(dt, j = "truth", value = factor(dt[[..tgt]], levels = levels(dt$response)))
       } else {
         set(dt, j = "truth", value = factor(NA, levels = levels(dt$response)))
       }
       list(as_prediction_classif(dt[, c("row_ids", "truth", "response")]))
     },
     .compute_flip_probs = function(task) {
-      browser()
       # Widely used vars
-      pta = task$col_roles$pta
-      tgt = task$col_roles$target
+      ..pta = task$col_roles$pta
+      ..tgt = task$col_roles$target
       prd = task$col_roles$feature
       pos = task$positive
-      prv = task$levels(pta)[[pta]][1]
+      prv = private$.priviledged
 
       # Obtain data
-      dt = task$data(cols = c(pta, tgt, prd))
+      dt = task$data(cols = c(..pta, ..tgt, prd))
       dt[, colnames(dt) := map(.SD, as.factor), .SDcols = colnames(dt)]
-      # Compue base rates
-      br = dt[, .N, by = pta]
-      sbr = br[get(pta) == prv][["N"]] / nrow(dt)
-      obr = br[get(pta) != prv][["N"]] / nrow(dt)
+
+      # Compute base rates function
+      base_rate = function(truth, prediction, positive) sum(truth == positive) / length(truth)
 
       # Compute per-group metrics
-      r = dt[, map(list(fpr, fnr, tpr, tnr, .N), function(fn) fn(get(tgt), get(prd), pos)), by = pta]
-      names(r) = c(pta, c("fpr", "fnr", "tpr", "tnr", "base_rate"))
-      r[, base_rate := base_rate / nrow(dt)]
+      r = dt[, map(list(fpr, fnr, tpr, tnr, base_rate), function(fn) fn(get(..tgt), get(prd), pos)), by = ..pta]
+      names(r) = c(..pta, c("fpr", "fnr", "tpr", "tnr", "base_rate"))
+      r[, dpr := fpr - tpr][, dnr := tnr - fnr]
+
+      # Compute error differences in the different groups and base_rates
+      cvec = c(r[get(..pta) == prv]$dpr, r[get(..pta) == prv]$dnr, r[get(..pta) != prv]$dpr,r[get(..pta) != prv]$dnr)
+      sbr = r[get(..pta) == prv]$base_rate
+      obr = r[get(..pta) != prv]$base_rate
+
 
       # Binary priviledged group indicator
-      is_prv = dt[,get(pta) == prv]
+      is_prv = dt[,get(..pta) == prv]
+      if (sum(is_prv) < 1) {
+        stop("'priviledged' needs to be a valid value in the 'pta' column!")
+      }
       # True target
-      y_true = dt[[tgt]]
+      y_true = dt[[..tgt]]
 
       # Compute priviledged/unpriviledged pos. and negative samples
-      sconst = dt[is_prv, get(prd) == pos]
-      sflip =  dt[is_prv, get(prd) != pos]
+      sconst = dt[is_prv, get(prd) == pos] # Yh[A0] == +
+      sflip =  dt[is_prv, get(prd) != pos] # Yh[A0] == -
       oconst = dt[!is_prv, get(prd) == pos]
       oflip =  dt[!is_prv, get(prd) != pos]
 
       # Matrix entry components
       sm_tn = (y_true[is_prv] != pos) & sflip
-      sm_fn = (y_true[is_prv] == pos) & sflip
+      sm_fn = (y_true[is_prv] == pos) & sflip # Y[A0] == + & Yh[A0] == -
       sm_fp = (y_true[is_prv] != pos) & sconst
       sm_tp = (y_true[is_prv] == pos) & sconst
       om_tn = (y_true[!is_prv] != pos) & oflip
@@ -193,17 +220,18 @@ PipeOpEOd= R6Class("PipeOpEOd",
 
       # Equality constraints
       A_eq = cbind(c(
-          mean(sconst*sm_tp) - mean(sflip  * sm_tp) / sbr,
-          mean(sflip*sm_fn)  - mean(sconst * sm_fn) / sbr,
-          mean(oflip*om_tp)  - mean(oconst * om_tp) / obr,
-          mean(oconst*om_fn) - mean(oflip  * om_fn) / obr),
+          (mean(sconst*sm_tp) - mean(sflip  * sm_tp)) / sbr,
+          (mean(sflip*sm_fn)  - mean(sconst * sm_fn)) / sbr,
+          (mean(oflip*om_tp)  - mean(oconst * om_tp)) / obr,
+          (mean(oconst*om_fn) - mean(oflip  * om_fn)) / obr),
         c(
-          mean(sconst*sm_fp) - mean(sflip  * sm_fp) / (1-sbr),
-          mean(sflip*sm_tn)  - mean(sconst * sm_tn) / (1-sbr),
-          mean(oflip*om_fp)  - mean(oconst * om_fp) / (1-obr),
-          mean(oconst*om_tn) - mean(oflip  * om_tn) / (1-obr)
+          (mean(sconst*sm_fp) - mean(sflip  * sm_fp)) / (1-sbr),
+          (mean(sflip*sm_tn)  - mean(sconst * sm_tn)) / (1-sbr),
+          (mean(oflip*om_fp)  - mean(oconst * om_fp)) / (1-obr),
+          (mean(oconst*om_tn) - mean(oflip  * om_tn)) / (1-obr)
         )
       )
+      # (Yh[A0] == +) * (Y[A0] == +) & (Yh[A0] == -)
       b_eq = c(
         (mean(oflip*om_tp) + mean(oconst*om_fn)) / obr     - (mean(sflip*sm_tp) + mean(sconst*sm_fn)) / sbr,
         (mean(oflip*om_fp) + mean(oconst*om_tn)) / (1-obr) - (mean(sflip*sm_fp) + mean(sconst*sm_tn)) / (1-sbr)
@@ -216,18 +244,15 @@ PipeOpEOd= R6Class("PipeOpEOd",
       )
       Amat = rbind(A_ineq, t(A_eq))
       bvec = c(b_ineq, b_eq)
-      cvec = c(
-        r$fpr[1] - r$tpr[1],
-        r$tnr[1] - r$fnr[1],
-        r$fpr[2] - r$fpr[2],
-        r$tnr[2] - r$fnr[2]
-      )
+
       const_dir = c(rep("<=", length(b_ineq)), rep("==", length(b_eq)))
 
-      sol = linprog::solveLP(cvec, bvec, Amat, const.dir = const_dir, lpSolve = TRUE, maxiter = 1e4, zero=1e-16)
+      sol = linprog::solveLP(cvec, bvec, Amat, const.dir = const_dir, lpSolve = TRUE)
       setNames(as.list(sol$solution), c("sp2p", "sn2p", "op2p", "on2p"))
-    }
+    },
+    .priviledged = character(0)
   )
 )
 
 mlr_pipeops$add("EOd", PipeOpEOd)
+

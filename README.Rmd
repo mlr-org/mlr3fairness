@@ -62,7 +62,7 @@ task$col_roles$pta = "variable_name"
 
 In case a non-categorical or more complex protected attribute is required, it can be manually computed and added to the task. `mlr3fairness` does not require specific types for `pta`, but will compute one metric for every unique value in the `pta` column.
 
-### Fairness Measures
+### Fairness Metrics
 
 `mlr3fairness` offers a variety of fairness metrics.
 Metrics are prefixed with `fairness.` and can be found in the `msr()` dictionary.
@@ -75,6 +75,7 @@ library(mlr3fairness)
 ```{r, echo = FALSE}
 knitr::kable(mlr3fairness:::mlr_measures_fairness)
 ```
+The `fairness_tensor` function can be used with a `Prediction` in order to print group-wise confusion matrices for each protected attribute group.
 
 ### Fairness Visualizations
 

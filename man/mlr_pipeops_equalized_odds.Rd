@@ -10,16 +10,19 @@
 \description{
 Fairness post-processing method to achieve equalized odds fairness.
 Works by randomly flipping a subset of predictions with pre-computed
-probabilities in order to satisfy equalized odds constraints.
+probabilities in order to satisfy equalized odds constraints.\cr
+NOTE: Carefully assess the correct privileged group.
 }
 \details{
-For additional details, see:\cr
-M. Hardt, E. Price, and N. Srebro, "Equality of Opportunity in
+For additional details, see: \cr
+\itemize{
+\item M. Hardt, E. Price, and N. Srebro, "Equality of Opportunity in
 Supervised Learning," Conference on Neural Information Processing
 Systems, 2016.
-G. Pleiss, M. Raghavan, F. Wu, J. Kleinberg, and
+\item G. Pleiss, M. Raghavan, F. Wu, J. Kleinberg, and
 K. Q. Weinberger, "On Fairness and Calibration," Conference on Neural
 Information Processing Systems, 2017.
+}
 }
 \section{Construction}{
 \preformatted{PipeOpEOd*$new(id = "eod", param_vals = list())
@@ -49,6 +52,7 @@ The \verb{$state} is a named \code{list} with the \verb{$state} elements inherit
 \itemize{
 \item \code{alpha} :: \code{numeric} A number between 0 (no debiasing) and 1 (full debiasing).
 Controls the debiasing strength by multiplying the flipping probabilities with alpha.
+\item \code{privileged} :: \code{character} The priviledged group.
 }
 }
 
@@ -68,7 +72,7 @@ library(mlr3fairness)
 library(mlr3)
 
 eod = po("EOd")
-learner_po = po("learner_cv", learner = lrn("classif.rpart"))
+learner_po = po("learner_cv", learner = lrn("classif.rpart", cp = .0001))
 
 task = tsk("adult_train")
 graph = learner_po \%>>\% eod

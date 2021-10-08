@@ -39,7 +39,7 @@
   x$add("fairness.acc", MeasureFairness, base_measure = msr("classif.acc"))
   x$add("fairness.fp",  MeasureFairness, base_measure = msr("classif.fp"))
   x$add("fairness.fn",  MeasureFairness, base_measure = msr("classif.fn"))
-  x$add("fairness.eod", MeasureFairnessComposite, measures = list("fairness.fpr", "fairness.tpr"))
+  x$add("fairness.eod", MeasureFairnessComposite, measures = list("fairness.fpr", "fairness.tpr"), id = "equalized_odds")
   x$add("classif.pp", MeasurePositiveProbability)
 
   x = getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
