@@ -48,6 +48,13 @@ using debiasing strategies.
   - **Fairness Report:** Obtain a report regarding an algorithm’s
     fairness. (Under development)
 
+**More Information**
+
+  - [Debiasing](https://mlr3fairness.mlr-org.com/articles/debiasing-vignette.html)
+  - [Fairness
+    Metrics](https://mlr3fairness.mlr-org.com/articles/measures-vignette.html)
+  - [Visualizations](https://mlr3fairness.mlr-org.com/articles/visualization-vignette.html)
+
 ### Protected Attribute
 
 `mlr3fairness` requires information about the protected attribute wrt.
@@ -64,7 +71,7 @@ required, it can be manually computed and added to the task.
 `mlr3fairness` does not require specific types for `pta`, but will
 compute one metric for every unique value in the `pta` column.
 
-### Fairness Measures
+### Fairness Metrics
 
 `mlr3fairness` offers a variety of fairness metrics. Metrics are
 prefixed with `fairness.` and can be found in the `msr()` dictionary.
@@ -79,17 +86,22 @@ library(mlr3)
 library(mlr3fairness)
 ```
 
-| key          | description                                                                                             |
-| :----------- | :------------------------------------------------------------------------------------------------------ |
-| fairness.EOd | Equalized Odds: Sum of abs. difference between true positive and false positive rates across groups     |
-| fairness.fpr | Abs. difference in false positive rates across groups                                                   |
-| fairness.acc | Abs. difference in accurq()acy across groups (Overall accuracy equality)                                |
-| fairness.tpr | Abs. difference in true positive rates across groups                                                    |
-| fairness.tnr | Abs. difference in true negative rates across groups                                                    |
-| fairness.ppv | Abs. difference in positive predictive values across groups (Part of Conditional use accuracy equality) |
-| fairness.npv | Abs. difference in negative predictive values across groups (Part of Conditional use accuracy equality) |
-| fairness.fp  | Abs. difference in false positives across groups (Part of Treatment equality)                           |
-| fairness.fn  | Abs. difference in false negatives across groups (Part of Treatment equality)                           |
+| key                                | description                                                              |
+| :--------------------------------- | :----------------------------------------------------------------------- |
+| fairness.eod                       | Equalized Odds: Sum of abs. difference between true positive and         |
+| false positive rates across groups |                                                                          |
+| fairness.fpr                       | Abs. difference in false positive rates across groups                    |
+| fairness.acc                       | Abs. difference in accurq()acy across groups (Overall accuracy equality) |
+| fairness.tpr                       | Abs. difference in true positive rates across groups                     |
+| fairness.tnr                       | Abs. difference in true negative rates across groups                     |
+| fairness.ppv                       | Abs. difference in positive predictive values across groups              |
+| fairness.npv                       | Abs. difference in negative predictive values across groups              |
+| fairness.fp                        | Abs. difference in false positives across groups                         |
+| fairness.fn                        | Abs. difference in false negatives across groups                         |
+
+The `fairness_tensor` function can be used with a `Prediction` in order
+to print group-wise confusion matrices for each protected attribute
+group.
 
 ### Fairness Visualizations
 
@@ -101,12 +113,12 @@ refer to the [mlr3 book](https://mlr3book.mlr-org.com/basics.html).
     fairness and model performance.
 
   - **compare\_metrics**: Compare fairness across models and
-    cross-validation forlds.
+    cross-validation folds.
 
   - **fairness\_prediction\_density**: Density plots for each protected
     attribute.
 
-![](https://github.com/mlr-org/mlr3fairness/blob/main/README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ### Debiasing Methods
 
@@ -125,6 +137,7 @@ rs$score(msr("fairness.acc"))
 
 | key             | input.type.train | input.type.predict | output.type.train | output.type.predict |
 | :-------------- | :--------------- | :----------------- | :---------------- | :------------------ |
+| EOd             | TaskClassif      | TaskClassif        | NULL              | PredictionClassif   |
 | reweighing\_os  | TaskClassif      | TaskClassif        | TaskClassif       | TaskClassif         |
 | reweighing\_wts | TaskClassif      | TaskClassif        | TaskClassif       | TaskClassif         |
 
@@ -160,13 +173,34 @@ predictions$score(fairness_measure, task = task_test)
 fairness_prediction_density(predictions, task_test)
 ```
 
+# Extensions
+
+  - The [mcboost](https://github.com/mlr-org/mcboost) package integrates
+    with **mlr3** and offers additional debiasing post-processing
+    functionality for **classification**, **regression** and
+    **survival**.
+
+# Other Fairness Toolkits in R
+
+  - The [AI Fairness 360](https://aif360.mybluemix.net/) toolkit offers
+    an R extension that allows for bias auditing, visualization and
+    mitigation.
+  - The [Fairmodels](https://github.com/ModelOriented/fairmodels/)
+    integrates with the [DALEX](https://github.com/ModelOriented/DALEX)
+    R-packages and similarly allows for bias auditing, visualization and
+    mitigation.
+  - The [fairness](https://github.com/kozodoi/fairness) package allows
+    for bias auditing in R.
+
 # Future Development
+
+Several future developments are currently planned. Contributions are
+highly welcome\!
 
 ## Visualizations
 
-2.  Improvement on visualizations, like anchor points and others. See
+1.  Improvement on visualizations, like anchor points and others. See
     issues.
-3.  More visualizations.
 
 ## Metrics
 
@@ -181,11 +215,9 @@ fairness_prediction_density(predictions, task_test)
 
 # Bugs, Feedbacks and Questions
 
-mlr3fairnessWASCS is a free and open source software project that
+`mlr3fairness` is a free and open source software project that
 encourages participation and feedback. If you have any issues,
 questions, suggestions or feedback, please do not hesitate to open an
-“issue” about it on the GitHub page\!
-
-In case of problems / bugs, it is often helpful if you provide a
-“minimum working example” that showcases the behaviour (but don’t
-worry about this if the bug is obvious).
+“issue” about it on the GitHub page\! In case of problems / bugs, it
+is often helpful if you provide a “minimum working example” that
+showcases the behaviour.
