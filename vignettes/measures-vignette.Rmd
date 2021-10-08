@@ -129,6 +129,16 @@ This allows us to construct pretty flexible metrics e.g. for regression settings
 m2 = msr("fairness", operation = groupdiff_absdiff, base_measure = msr("regr.mse"))
 ```
 
+### Non-binary protected groups
+
+While fairness measures are widely defined or used with binary protected attributes, we can easily extend
+fairness measures such that they work with non-binary valued protected attributes.
+
+In order to do this, we have to supply an `operation` that reduces the desired metric measured in each subgroup
+to a single value. Two examples for such operations are `groupdiff_absdiff` and `groupdiff_tau` but
+custom functions can also be applied. Note, that **mlr3** `Measure`s are designed for a scalar output
+and `operation` therefore always has to result in a single scalar value.
+
 ## Composite Fairness Measures
 
 Some fairness measures also require a combination of multiple Fairness Metrics.
