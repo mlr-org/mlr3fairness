@@ -102,7 +102,3 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 *.code-workspace
 .vscode
-
-#Data process scirpts
-./process_script/*
-inst/doc

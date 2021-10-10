@@ -23,6 +23,7 @@ The column \code{"sex"} is set as protected attribute.
 \item Removed observations where score_text != 'N/A'.
 \item Factorize the features that are categorical.
 \item Add length of stay (c_jail_out - c_jail_in) in the dataset.
+\item \verb{Pre-processing Resouce:} @url https://github.com/propublica/compas-analysis/blob/master/Compas\%20Analysis.ipynb
 }
 }
 
