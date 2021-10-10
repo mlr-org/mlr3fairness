@@ -13,9 +13,25 @@
 #' The column `"sex"` is set as protected attribute.
 #'
 #' @section Pre-processing:
-#' * `country` column has been removed since we expect them have no predictive power.
-#' * `fnlwgt` column has been removed since we expect them have no predictive power.
+#' * `fnlwgt` Remove final weight, which is the number of people the census believes the entry represents
+#' * `native-country` Remove Native Country, which is the country of origin for an individual
 #' * Rows containing `NA` in workclass and occupation have been removed.
+#' * Pre-processing inspired by article: @url https://cseweb.ucsd.edu//classes/sp15/cse190-c/reports/sp15/048.pdf
+#'
+#' @section Metadata:
+#' * (integer) age: The age of the individuals
+#' * (factor) workclass: A general term to represent the employment status of an individual
+#' * (factor) education: The highest level of education achieved by an individual.
+#' * (integer) education_num: the highest level of education achieved in numerical form.
+#' * (factor) marital_status: marital status of an individual.
+#' * (factor) occupation: the general type of occupation of an individual
+#' * (factor) relationship: Which epresents what this individual is relative to others.
+#' * (factor) race: Descriptions of an individual’s race
+#' * (factor) sex: the biological sex of the individual
+#' * (integer) captain-gain: capital gains for an individual
+#' * (integer) captain-loss: capital loss for an individual
+#' * (integer) hours-per-week: the hours an individual has reported to work per week
+#' * (factor) target: whether or not an individual makes more than $50,000 annually
 #'
 #' @source  @misc{Dua:2019 ,
 #'   author = "Dua, Dheeru and Graff, Casey",
