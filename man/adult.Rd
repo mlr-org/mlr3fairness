@@ -26,9 +26,29 @@ The column \code{"sex"} is set as protected attribute.
 \section{Pre-processing}{
 
 \itemize{
-\item \code{country} column has been removed since we expect them have no predictive power.
-\item \code{fnlwgt} column has been removed since we expect them have no predictive power.
+\item \code{fnlwgt} Remove final weight, which is the number of people the census believes the entry represents
+\item \code{native-country} Remove Native Country, which is the country of origin for an individual
 \item Rows containing \code{NA} in workclass and occupation have been removed.
+\item Pre-processing inspired by article: @url https://cseweb.ucsd.edu//classes/sp15/cse190-c/reports/sp15/048.pdf
+}
+}
+
+\section{Metadata}{
+
+\itemize{
+\item (integer) age: The age of the individuals
+\item (factor) workclass: A general term to represent the employment status of an individual
+\item (factor) education: The highest level of education achieved by an individual.
+\item (integer) education_num: the highest level of education achieved in numerical form.
+\item (factor) marital_status: marital status of an individual.
+\item (factor) occupation: the general type of occupation of an individual
+\item (factor) relationship: Which epresents what this individual is relative to others.
+\item (factor) race: Descriptions of an individual’s race
+\item (factor) sex: the biological sex of the individual
+\item (integer) captain-gain: capital gains for an individual
+\item (integer) captain-loss: capital loss for an individual
+\item (integer) hours-per-week: the hours an individual has reported to work per week
+\item (factor) target: whether or not an individual makes more than $50,000 annually
 }
 }
 
