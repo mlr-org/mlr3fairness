@@ -18,6 +18,7 @@
 #' * Removed observations where score_text != 'N/A'.
 #' * Factorize the features that are categorical.
 #' * Add length of stay (c_jail_out - c_jail_in) in the dataset.
+#' * `Pre-processing Resouce:` @url https://github.com/propublica/compas-analysis/blob/master/Compas%20Analysis.ipynb
 #'
 #' @section Metadata:
 #' * (integer) age : The age of defendants.
