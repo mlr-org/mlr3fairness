@@ -30,7 +30,7 @@ task = tsk("adult_train")
 
 #  Reweighing algorithms
 
-`mlr3fairness` implements $2$ reweighing-based algorithms:
+`mlr3fairness` implements 2 reweighing-based algorithms:
 `reweighing_wts` and `reweighing_os`. `reweighing_wts` adds observation weights to a `Task` that can counteract imbalancies between the conditional probabilities $P(Y | pta)$.
 
 ```{r, echo = FALSE}
@@ -61,7 +61,8 @@ grd = benchmark_grid(list(task), list(learner, learner_rw), rsmp("cv", folds=3))
 bmr = benchmark(grd)
 ```
 
-We can now compute the metrics for our benchmark and see if reweighing actually improved fairness:
+We can now compute the metrics for our benchmark and see if reweighing actually improved fairness, measured
+via True Positive Rate (TPR) and classification accuracy (ACC):
 
 ```{r}
 bmr$aggregate(msrs(c("fairness.tpr", "fairness.acc")))
@@ -70,4 +71,4 @@ bmr$aggregate(msrs(c("fairness.tpr", "fairness.acc")))
 fairness_accuracy_tradeoff(bmr, msr("fairness.tpr"))
 ```
 
-Our model became way fairer wrt. `true positive rate` but minimally worse wrt. `accuracy`!
+Our model became way fairer wrt. TPR but minimally worse wrt. accuracy!

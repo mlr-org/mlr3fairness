@@ -17,20 +17,20 @@ knitr::opts_chunk$set(
 
 Fairness measures (or metrics) allow us to assess and audit for possible biases in a trained model. There are several types of metrics that are widely used in order to assess a model's fairness. They can be coarsely classified into three groups:
 
-- `Statistical Group Fairness Metrics`: Given a set of predictions from our model, we assess for differences in one or multiple metrics across groups.
+- **Statistical Group Fairness Metrics**: Given a set of predictions from our model, we assess for differences in one or multiple metrics across groups.
 
-- `Individual Fairness`: Basically requires that similar people are treated similar independent of the protected attribute. This is more of a philosophical concept and concrete implementations of this fairness notion are not immediately clear.
+- **Individual Fairness**: Basically requires that similar people are treated similar independent of the protected attribute. This is more of a philosophical concept and concrete implementations of this fairness notion are not immediately clear.
 
-- `Causal Fairness Notions`: An important realization in the context of Fairness is, that whether a process is fair is often subject to the underlying causal directed acyclic graph (DAG). Knowledge of the DAG allows for causally assessing reasons for (un-)fairness. Since DAG's are often hard to construct for a given dataset, we currently do not provide any causal fairness metrics.
+- **Causal Fairness Notions**: An important realization in the context of Fairness is, that whether a process is fair is often subject to the underlying causal directed acyclic graph (DAG). Knowledge of the DAG allows for causally assessing reasons for (un-)fairness. Since DAG's are often hard to construct for a given dataset, we currently do not provide any causal fairness metrics.
 
 ## Core Idea: Statistical Group Fairness
 
 A simple way to assess the fairness of a model is to find a definition of fairness that is relevant to a problem at hand. We might for example define a model to be fair if the chance to be accepted for a job given you are qualified is independent of a protected attribute e.g. `gender`. This can e.g. be measured using the `true positive rate`(TPR): in `mlr3` this metric is called `"classif.tpr"`. In this case we measure discrepancies between groups by computing differences `(-)` but we could also compute quotients.
 In practice, we often compute absolute differences.
 
-$$$
+$$
   \Delta_{TPR} = TPR_{Group 1} - TPR_{Group 2}
-$$$
+$$
 
 We will use metrics like the one defined above throughout the remainder of this vignette.
 Some predefined measures are readily available in `mlr3fairness`, but we will also showcase how custom measures can be constructed below.
@@ -38,7 +38,7 @@ Some predefined measures are readily available in `mlr3fairness`, but we will al
 In general, fairness measures have a `fairness.` prefix followed by the metric that is compared across groups. We will thus e.g. call the difference in accuracies across groups `fairness.acc`.
 A full list can be found below.
 
-```{r}
+```{r, echo = FALSE}
 knitr::kable(mlr3fairness:::mlr_measures_fairness)
 ```
 

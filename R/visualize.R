@@ -283,7 +283,6 @@ fairness_prediction_density.BenchmarkResult = function(object, ...) { # nolint
     scale_fill_hue(c = 100, l = 100) +
     ylim(c(0, 1)) +
     coord_flip() +
-    theme_bw() +
     facet_wrap(variable ~ learner_id + task_id)
 }
 
