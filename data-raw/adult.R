@@ -1,4 +1,4 @@
-to_factor <- function(dataset){
+to_factor = function(dataset) {
   dataset$workclass = as.factor(dataset$workclass)
   dataset$education = as.factor(dataset$education)
   dataset$martial_status = as.factor(dataset$martial_status)

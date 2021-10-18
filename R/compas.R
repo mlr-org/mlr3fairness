@@ -36,7 +36,7 @@
 #' * (factor) two_year_recid: Binary variable indicate whether defendant is rearrested at within two years.
 #' * (numeric) length_of_stay: The count of days stay in jail.
 #'
-#' @source  @url https://github.com/propublica/compas-analysis
+#' @source \url{https://github.com/propublica/compas-analysis}
 #'
 #' @docType data
 #' @keywords data
@@ -45,7 +45,7 @@
 NULL
 
 get_compas_task = function() { # nocov start
-  b = as_backend("compas")
+  b = as_data_backend(compas)
   task = mlr3::TaskClassif$new("compas", b, target = "two_year_recid")
   task$col_roles$pta = "sex"
   b$hash = task$man = "mlr3fairness::mlr_tasks_compas"

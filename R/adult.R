@@ -33,13 +33,8 @@
 #' * (integer) hours-per-week: the hours an individual has reported to work per week
 #' * (factor) target: whether or not an individual makes more than $50,000 annually
 #'
-#' @source  @misc{Dua:2019 ,
-#'   author = "Dua, Dheeru and Graff, Casey",
-#'   year = "2017",
-#'   title = "{UCI} Machine Learning Repository",
-#'   url = "http://archive.ics.uci.edu/ml",
-#'   institution = "University of California, Irvine, School of Information and Computer Sciences"
-#'  }
+#' @source
+#' `r format_bib("dua_2019")`
 #'
 #' @docType data
 #' @keywords data
@@ -49,15 +44,15 @@
 NULL
 
 get_adult_task_train = function() { # nocov start
-  b = as_backend("adult_train")
+  b = as_data_backend(adult_train)
   task = mlr3::TaskClassif$new("adult_train", b, target = "target")
   task$col_roles$pta = "sex"
   b$hash = task$man = "mlr3fairness::mlr_tasks_adult_train"
   task
-}  # nocov end
+} # nocov end
 
-get_adult_task_test = function() {  # nocov start
-  b = as_backend("adult_test")
+get_adult_task_test = function() { # nocov start
+  b = as_data_backend(adult_test)
   task = mlr3::TaskClassif$new("adult_test", b, target = "target")
   task$col_roles$pta = "sex"
   b$hash = task$man = "mlr3fairness::mlr_tasks_adult_test"

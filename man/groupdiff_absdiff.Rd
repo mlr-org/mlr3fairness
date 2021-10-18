@@ -16,5 +16,5 @@ that is smaller than 1. If x is a vector, the symmetric ratio between all
 elements in 'x' is computed.
 }
 \examples{
-  groupdiff_absdiff(runif(3))
+groupdiff_absdiff(runif(3))
 }

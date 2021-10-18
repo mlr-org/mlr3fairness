@@ -5,7 +5,7 @@ test_that("core operations for fairness measures", {
 
   x = c(.1, .1, .15)
   expect_true(abs(groupdiff_absdiff(x) - .05) < 1e-8)
-  expect_true(abs(groupdiff_tau(x) - 2/3) < 1e-8)
+  expect_true(abs(groupdiff_tau(x) - 2 / 3) < 1e-8)
 
   x = c(.1, .11, 1)
   expect_true(abs(groupdiff_absdiff(x) - .9) < 1e-8)

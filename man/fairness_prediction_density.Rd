@@ -24,17 +24,19 @@ The y-axis shows the levels in protected columns. And the x-axis shows the predi
 The title for the plot will demonstrate which class for predicted probability.
 }
 \examples{
+library(mlr3)
 library(mlr3fairness)
 library(mlr3learners)
-library(mlr3)
 
 task = tsk("adult_train")$filter(1:500)
 learner = lrn("classif.rpart", predict_type = "prob", cp = 0.001)
 learner$train(task)
+
 # For prediction
 predictions = learner$predict(task)
 fairness_prediction_density(predictions, task)
+
 # For resampling
-rsm = resample(task, learner, rsmp("cv"))
-fairness_prediction_density(rsm)
+rr = resample(task, learner, rsmp("cv"))
+fairness_prediction_density(rr)
 }

@@ -75,7 +75,7 @@ eod = po("EOd")
 learner_po = po("learner_cv",
   learner = lrn("classif.rpart"),
   resampling.method = "insample"
- )
+)
 
 task = tsk("compas")
 graph = learner_po \%>>\% eod

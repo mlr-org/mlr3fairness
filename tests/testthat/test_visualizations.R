@@ -19,7 +19,7 @@ test_that("fairness_accuracy_tradeoff", {
   # PRDS
   map(bmr$resample_results$resample_result[1:2], function(rr) {
     map(rr$predictions(), function(prd) {
-       check_plots(fairness_accuracy_tradeoff(prd, fairness_measures[[1]], task = tasks[[1]]))
+      check_plots(fairness_accuracy_tradeoff(prd, fairness_measures[[1]], task = tasks[[1]]))
     })
   })
 })
@@ -36,7 +36,7 @@ test_that("compare_metrics", {
   # PRDS
   map(bmr$resample_results$resample_result[1:2], function(rr) {
     map(rr$predictions(), function(prd) {
-       check_plots(compare_metrics(prd, fairness_measures[[1]], tasks[[1]]))
+      check_plots(compare_metrics(prd, fairness_measures[[1]], tasks[[1]]))
     })
   })
 })
@@ -53,7 +53,7 @@ test_that("fairness_accuracy_tradeoff", {
   # PRDS
   map(bmr$resample_results$resample_result[1:2], function(rr) {
     map(rr$predictions(), function(prd) {
-       check_plots(fairness_prediction_density(prd, tasks[[1]]))
+      check_plots(fairness_prediction_density(prd, tasks[[1]]))
     })
   })
 })

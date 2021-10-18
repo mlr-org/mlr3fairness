@@ -96,7 +96,7 @@
 #' learner_po = po("learner_cv",
 #'   learner = lrn("classif.rpart"),
 #'   resampling.method = "insample"
-#'  )
+#' )
 #'
 #' task = tsk("compas")
 #' graph = learner_po %>>% eod
@@ -106,7 +106,7 @@
 #' glrn$predict(task)
 #' # On newdata
 #' glrn$predict_newdata(task$data(cols = task$feature_names))
-PipeOpEOd= R6Class("PipeOpEOd",
+PipeOpEOd = R6Class("PipeOpEOd",
   inherit = PipeOp,
   public = list(
     #' @description
@@ -117,30 +117,31 @@ PipeOpEOd= R6Class("PipeOpEOd",
     #' @param param_vals `list` \cr
     #'   The parameter values to be set. See `Parameters`.
     initialize = function(id = "EOd", param_vals = list()) {
-      ps = ParamSet$new(list(
-        ParamDbl$new("alpha", lower = 0, upper = 1, tags = "train"),
-        ParamUty$new("priviledged", tags = "train")
-     ))
+      ps = ps(
+        alpha = p_dbl(0, 1, tags = "train"),
+        priviledged = p_uty(tags = "train")
+      )
       ps$values = list(alpha = 1)
       super$initialize(id, param_set = ps, param_vals = param_vals,
-        input = data.table(name = "input", train = "TaskClassif",   predict = "TaskClassif"),
+        input = data.table(name = "input", train = "TaskClassif", predict = "TaskClassif"),
         output = data.table(name = "output", train = "NULL", predict = "PredictionClassif"),
         tags = "fairness", package = "linprog"
       )
     }
   ),
-  private = list(
 
+  private = list(
     .train = function(input) {
-      task =  assert_pta_task(input[[1]])
+      task = assert_pta_task(input[[1L]])
       params = self$param_set$get_values(tags = "train")
+      # FIXME: which_max? -> random sampling in case of ties
       private$.priviledged = params$priviledged %??% names(which.max(table(task$data(cols = task$col_roles$pta))))
       flips = private$.compute_flip_probs(task)
       self$state = list(flip_probs = map(flips, function(x) params$alpha * x))
     },
 
     .predict = function(input) {
-      task = assert_pta_task(input[[1]])
+      task = assert_pta_task(input[[1L]])
       flips = self$state$flip_probs
       # Widely used vars
       ..pta = task$col_roles$pta
@@ -152,7 +153,7 @@ PipeOpEOd= R6Class("PipeOpEOd",
       dt = task$data(cols = c(task$backend$primary_key, ..pta, ..tgt, prd))
       dt[, c(..tgt, prd) := map(.SD, as.factor), .SDcols = c(..tgt, prd)]
       # Binary priviledged group indicator
-      is_prv = dt[,get(..pta) == prv]
+      is_prv = dt[, get(..pta) == prv]
       if (sum(is_prv) < 1) {
         stop("'priviledged' needs to be a valid value in the 'pta' column!") # nocov
       }
@@ -161,11 +162,11 @@ PipeOpEOd= R6Class("PipeOpEOd",
       pn_idx = sample(which(dt[, is_prv & get(prd) == task$negative]))
       pp_idx = sample(which(dt[, is_prv & get(prd) == task$positive]))
       if (flips$sn2p > 0) {
-        n2p_idx = pn_idx[seq_len(ceiling( flips$sn2p    * length(pn_idx)))]
+        n2p_idx = pn_idx[seq_len(ceiling(flips$sn2p * length(pn_idx)))]
         dt[n2p_idx, (prd) := task$positive]
       }
       if (flips$sp2p > 0) {
-        p2n_idx = pp_idx[seq_len(ceiling((1-flips$sp2p) * length(pp_idx)))]
+        p2n_idx = pp_idx[seq_len(ceiling((1 - flips$sp2p) * length(pp_idx)))]
         dt[p2n_idx, (prd) := task$negative]
       }
 
@@ -173,7 +174,7 @@ PipeOpEOd= R6Class("PipeOpEOd",
       pp_idx = sample(which(dt[, !is_prv & get(prd) == task$positive]))
       pn_idx = sample(which(dt[, !is_prv & get(prd) == task$negative]))
       if (flips$op2p > 0) {
-        p2p_idx = pp_idx[seq_len(ceiling((1-flips$op2p) * length(pp_idx)))]
+        p2p_idx = pp_idx[seq_len(ceiling((1 - flips$op2p) * length(pp_idx)))]
         dt[p2p_idx, (prd) := task$positive]
       }
       if (flips$on2p > 0) {
@@ -191,6 +192,7 @@ PipeOpEOd= R6Class("PipeOpEOd",
       }
       list(as_prediction_classif(dt[, c("row_ids", "truth", "response")]))
     },
+
     .compute_flip_probs = function(task) {
       # Widely used vars
       ..pta = task$col_roles$pta
@@ -212,24 +214,25 @@ PipeOpEOd= R6Class("PipeOpEOd",
       r[, dpr := fpr - tpr][, dnr := tnr - fnr]
 
       # Compute error differences in the different groups and base_rates
-      cvec = c(r[get(..pta) == prv]$dpr, r[get(..pta) == prv]$dnr, r[get(..pta) != prv]$dpr,r[get(..pta) != prv]$dnr)
+      cvec = c(r[get(..pta) == prv]$dpr, r[get(..pta) == prv]$dnr, r[get(..pta) != prv]$dpr, r[get(..pta) != prv]$dnr)
       sbr = r[get(..pta) == prv]$base_rate
       obr = r[get(..pta) != prv]$base_rate
 
 
       # Binary priviledged group indicator
-      is_prv = dt[,get(..pta) == prv]
+      is_prv = dt[, get(..pta) == prv]
       if (sum(is_prv) < 1) {
         stop("'priviledged' needs to be a valid value in the 'pta' column!")
       }
+
       # True target
       y_true = dt[[..tgt]]
 
       # Compute priviledged/unpriviledged pos. and negative samples
       sconst = dt[is_prv, get(prd) == pos] # Yh[A0] == +
-      sflip =  dt[is_prv, get(prd) != pos] # Yh[A0] == -
+      sflip = dt[is_prv, get(prd) != pos] # Yh[A0] == -
       oconst = dt[!is_prv, get(prd) == pos]
-      oflip =  dt[!is_prv, get(prd) != pos]
+      oflip = dt[!is_prv, get(prd) != pos]
 
       # Matrix entry components
       sm_tn = (y_true[is_prv] != pos) & sflip
@@ -243,7 +246,7 @@ PipeOpEOd= R6Class("PipeOpEOd",
 
       ### Set up linear programming problem ###
       # Inequality constraints
-      A_ineq = rbind(
+      A_ineq = rbind( # nolint start
         c( 1,  0,  0,  0),
         c(-1,  0,  0,  0),
         c( 0,  1,  0,  0),
@@ -252,26 +255,26 @@ PipeOpEOd= R6Class("PipeOpEOd",
         c( 0,  0, -1,  0),
         c( 0,  0,  0,  1),
         c( 0,  0,  0, -1)
-      )
+      ) # nolint end
       b_ineq = c(1, 0, 1, 0, 1, 0, 1, 0)
 
       # Equality constraints
       A_eq = cbind(c(
-          (mean(sconst*sm_tp) - mean(sflip  * sm_tp)) / sbr,
-          (mean(sflip*sm_fn)  - mean(sconst * sm_fn)) / sbr,
-          (mean(oflip*om_tp)  - mean(oconst * om_tp)) / obr,
-          (mean(oconst*om_fn) - mean(oflip  * om_fn)) / obr),
-        c(
-          (mean(sconst*sm_fp) - mean(sflip  * sm_fp)) / (1-sbr),
-          (mean(sflip*sm_tn)  - mean(sconst * sm_tn)) / (1-sbr),
-          (mean(oflip*om_fp)  - mean(oconst * om_fp)) / (1-obr),
-          (mean(oconst*om_tn) - mean(oflip  * om_tn)) / (1-obr)
-        )
+        (mean(sconst * sm_tp) - mean(sflip * sm_tp)) / sbr,
+        (mean(sflip * sm_fn) - mean(sconst * sm_fn)) / sbr,
+        (mean(oflip * om_tp) - mean(oconst * om_tp)) / obr,
+        (mean(oconst * om_fn) - mean(oflip * om_fn)) / obr),
+      c(
+        (mean(sconst * sm_fp) - mean(sflip * sm_fp)) / (1 - sbr),
+        (mean(sflip * sm_tn) - mean(sconst * sm_tn)) / (1 - sbr),
+        (mean(oflip * om_fp) - mean(oconst * om_fp)) / (1 - obr),
+        (mean(oconst * om_tn) - mean(oflip * om_tn)) / (1 - obr)
+      )
       )
       # (Yh[A0] == +) * (Y[A0] == +) & (Yh[A0] == -)
       b_eq = c(
-        (mean(oflip*om_tp) + mean(oconst*om_fn)) / obr     - (mean(sflip*sm_tp) + mean(sconst*sm_fn)) / sbr,
-        (mean(oflip*om_fp) + mean(oconst*om_tn)) / (1-obr) - (mean(sflip*sm_fp) + mean(sconst*sm_tn)) / (1-sbr)
+        (mean(oflip * om_tp) + mean(oconst * om_fn)) / obr - (mean(sflip * sm_tp) + mean(sconst * sm_fn)) / sbr,
+        (mean(oflip * om_fp) + mean(oconst * om_tn)) / (1 - obr) - (mean(sflip * sm_fp) + mean(sconst * sm_tn)) / (1 - sbr)
       )
 
       # Combine constraints
@@ -287,6 +290,7 @@ PipeOpEOd= R6Class("PipeOpEOd",
       sol = linprog::solveLP(cvec, bvec, Amat, const.dir = const_dir, lpSolve = TRUE)
       setNames(as.list(sol$solution), c("sp2p", "sn2p", "op2p", "on2p"))
     },
-    .priviledged = character(0)
+
+    .priviledged = character()
   )
 )

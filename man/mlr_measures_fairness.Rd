@@ -49,15 +49,15 @@ fairness.fn  \tab Abs. difference in False negatives across groups
 }
 
 \examples{
-  # Create MeasureFairness to measure the Predictive Parity.
-  library(mlr3)
-  data_task = tsk("adult_train")
-  learner = lrn("classif.rpart", cp = .01)
-  learner$train(data_task)
-  measure = msr("fairness", base_measure = msr("classif.ppv"))
-  predictions = learner$predict(data_task)
-  predictions$score(measure, task = data_task)
-# Predfined measures:
+# Create MeasureFairness to measure the Predictive Parity.
+library(mlr3)
+data_task = tsk("adult_train")
+learner = lrn("classif.rpart", cp = .01)
+learner$train(data_task)
+measure = msr("fairness", base_measure = msr("classif.ppv"))
+predictions = learner$predict(data_task)
+predictions$score(measure, task = data_task)
+# Predefined measures:
 msr("fairness.eod")
 msr("fairness.fpr")
 msr("fairness.acc")

@@ -6,7 +6,7 @@
 \alias{Compas}
 \title{Compas Dataset}
 \source{
-@url https://github.com/propublica/compas-analysis
+\url{https://github.com/propublica/compas-analysis}
 }
 \description{
 This dataset include the processed COMPAS data between 2013-2014.

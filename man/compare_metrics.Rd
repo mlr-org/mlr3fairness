@@ -10,15 +10,22 @@ compare_metrics(object, ...)
 \item{object}{(\link{PredictionClassif}) | (\link{BenchmarkResult}) | (\link{ResampleResult})\cr
 The object to create a plot for.
 \itemize{
-\item If provided a (\link{PredictionClassif}). Then the visualization will compare the fairness metrics among the binary level from protected field through bar plots.
-\item If provided a (\link{ResampleResult}). Then the visualization will generate the boxplots for fairness metrics, and compare them among the binary level from protected field.
-\item If provided a (\link{BenchmarkResult}). Then the visualization will generate the boxplots for fairness metrics, and compare them among both the binary level from protected field and the models implemented.
+\item If provided a (\link{PredictionClassif}).
+Then the visualization will compare the fairness metrics among the binary level from protected field
+through bar plots.
+\item If provided a (\link{ResampleResult}).
+Then the visualization will generate the boxplots for fairness metrics, and compare them among
+the binary level from protected field.
+\item If provided a (\link{BenchmarkResult}).
+Then the visualization will generate the boxplots for fairness metrics, and compare them among
+both the binary level from protected field and the models implemented.
 }}
 
 \item{...}{The arguments to be passed to methods, such as:
 \itemize{
 \item \code{fairness_measures} (list of \code{\link{Measure}})\cr
-The fairness measures that will evaluated on object, could be single measure \link{msr} or measures \link{msrs}.  Default measure set to be \code{msr("fairness.acc")}
+The fairness measures that will evaluated on object, could be single measure \link{msr} or measures \link{msrs}.
+Default measure set to be \code{msr("fairness.acc")}
 \item \code{task} (\link{TaskClassif})\cr
 The data task that contains the protected column, only required when object is (\link{PredictionClassif}).
 }}
@@ -40,7 +47,7 @@ predictions = learner$predict(task)
 design = benchmark_grid(
   tasks = task,
   learners = lrns(c("classif.ranger", "classif.rpart"),
-                 predict_type = "prob", predict_sets = c("train", "test")),
+    predict_type = "prob", predict_sets = c("train", "test")),
   resamplings = rsmps("cv", folds = 3)
 )
 

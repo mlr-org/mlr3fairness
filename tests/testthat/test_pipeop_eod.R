@@ -14,11 +14,11 @@ test_that("PipeOpEOd works on a task", {
 test_that("PipeOpEOd technically works for trivial cases priv 0", {
   # Test data set / task
   dt = data.table(
-    truth = rep(c(0,1), 100),
-    pta = rep(c(0,1), each = 100)
+    truth = rep(c(0, 1), 100),
+    pta = rep(c(0, 1), each = 100)
   )
-  dt[,prediction := truth]
-  dt[pta == 1 & truth == 1, prediction := c(rep(0,25), rep(1,25))]
+  dt[, prediction := truth]
+  dt[pta == 1 & truth == 1, prediction := c(rep(0, 25), rep(1, 25))]
   dt[, truth := factor(truth)]
   dt[, prediction := factor(prediction)]
   t = TaskClassif$new("test_task", dt, target = "truth")
@@ -26,8 +26,8 @@ test_that("PipeOpEOd technically works for trivial cases priv 0", {
 
   # Fairness Tensor based
   dft = fairness_tensor(dt, t)[[1]] == fairness_tensor(dt, t)[[2]]
-  expect_true(all( dft[,1]))
-  expect_true(all(!dft[,2]))
+  expect_true(all(dft[, 1]))
+  expect_true(all(!dft[, 2]))
 
   # Errors as epxected
   poed = po("EOd", priviledged = "5")
@@ -37,7 +37,7 @@ test_that("PipeOpEOd technically works for trivial cases priv 0", {
   poed$train(list(t))
   expect_true(all(unlist(poed$state) == c(1, 0.5, 1, 0)))
   prd = poed$predict(list(t))[[1]]
-  expect_true(prd$score(msr("fairness.eod"), task = t) < 1/50)
+  expect_true(prd$score(msr("fairness.eod"), task = t) < 1 / 50)
   # Matching fairness tensors afterwards
   expect_true(all(fairness_tensor(prd, t)[[1]] == fairness_tensor(prd, t)[[2]]))
 
@@ -46,17 +46,17 @@ test_that("PipeOpEOd technically works for trivial cases priv 0", {
   poed$train(list(t))
   expect_true(all(unlist(poed$state) == c(1, 0, 1, 0.5)))
   prd = poed$predict(list(t))[[1]]
-  expect_true(all(pmap_lgl(list(fairness_tensor(dt, t), fairness_tensor(prd, t)), function(x,y) all(x == y))))
+  expect_true(all(pmap_lgl(list(fairness_tensor(dt, t), fairness_tensor(prd, t)), function(x, y) all(x == y))))
 })
 
 test_that("PipeOpEOd technically works for trivial cases priv 1", {
   # Test data set
   dt = data.table(
-    truth = rep(c(0,1), 100),
-    pta = rep(c(0,1), each = 100)
+    truth = rep(c(0, 1), 100),
+    pta = rep(c(0, 1), each = 100)
   )
-  dt[,prediction := truth]
-  dt[pta == 0 & truth == 0, prediction := c(rep(0,25), rep(1,25))]
+  dt[, prediction := truth]
+  dt[pta == 0 & truth == 0, prediction := c(rep(0, 25), rep(1, 25))]
   dt[, truth := factor(truth)]
   dt[, prediction := factor(prediction)]
   # Debias

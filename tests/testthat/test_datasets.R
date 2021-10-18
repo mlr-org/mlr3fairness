@@ -1,7 +1,7 @@
 check_data_format = function(data) {
   expect_true(is.data.frame(data))
-  expect_true(all( colnames(data) == tolower(colnames(data)) ))
-  expect_true(all( colnames(data) == make.names(colnames(data), unique = TRUE) ))
+  expect_true(all(colnames(data) == tolower(colnames(data))))
+  expect_true(all(colnames(data) == make.names(colnames(data), unique = TRUE)))
   expect_true(is.integer(attr(data, "row.names")))
 }
 
@@ -22,8 +22,8 @@ test_that("compas dataset can be loaded with correct format", {
   expect_true(compas$col_roles$pta == "sex")
 
   assert_col_type = (sapply(compas_data, class) == c("factor", "integer", "factor", "factor",
-                                                    "integer", "integer", "factor", "integer",
-                                                    "integer", "factor", "factor", "factor"))
+    "integer", "integer", "factor", "integer",
+    "integer", "factor", "factor", "factor"))
   expect_true(all(assert_col_type))
 })
 
@@ -36,8 +36,8 @@ test_that("adult_train dataset can be loaded with correct format", {
   expect_true(adult_train$col_roles$pta == "sex")
 
   assert_col_type = (sapply(adult_train_data, class) == c("factor", "integer", "integer", "integer",
-                                                     "factor", "integer", "integer", "factor",
-                                                     "factor", "factor", "factor", "factor", "factor"))
+    "factor", "integer", "integer", "factor",
+    "factor", "factor", "factor", "factor", "factor"))
   expect_true(all(assert_col_type))
 })
 
@@ -50,7 +50,7 @@ test_that("adult_test dataset can be loaded with correct format", {
   expect_true(adult_test$col_roles$pta == "sex")
 
   assert_col_type = (sapply(adult_test_data, class) == c("factor", "integer", "integer", "integer",
-                                                          "factor", "integer", "integer", "factor",
-                                                          "factor", "factor", "factor", "factor", "factor"))
+    "factor", "integer", "integer", "factor",
+    "factor", "factor", "factor", "factor", "factor"))
   expect_true(all(assert_col_type))
 })

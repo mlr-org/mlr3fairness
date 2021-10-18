@@ -86,14 +86,15 @@ PipeOpReweighingWeights = R6Class("PipeOpReweighingWeights",
     #' new_weight = (1 - alpha) * 1 + alpha x reweighing_weight
     #' final_weight = old_weight * new_weight
     initialize = function(id = "reweighing_wts", param_vals = list()) {
-      ps = ParamSet$new(params = list(
-        ParamDbl$new("alpha", lower = 0, upper = 1, tags = "train")
-      ))
+      ps = ps(
+        alpha = p_dbl(0, 1, tags = "train")
+      )
       ps$values = list(alpha = 1)
       super$initialize(id, param_set = ps, param_vals = param_vals,
         task_type = "TaskClassif", tags = c("imbalanced data", "fairness"))
     }
   ),
+
   private = list(
     .train_task = function(task) {
       self$state = list()
@@ -105,6 +106,7 @@ PipeOpReweighingWeights = R6Class("PipeOpReweighingWeights",
         stopf("Weight column '%s' is already in the Task", weightcolname) # nocov
       }
       assert_pta_task(task)
+
       wtab = compute_reweighing_weights(task, 1)
       wcol = task$data(cols = c(task$backend$primary_key, task$target_names, task$col_roles$pta))
       wcol = wcol[wtab, on = c(task$target_names, task$col_roles$pta)][, c(task$backend$primary_key, "wt"), with = FALSE]
@@ -114,14 +116,17 @@ PipeOpReweighingWeights = R6Class("PipeOpReweighingWeights",
         initial_weights = task$weights[wcol]$weight
       }
       wcol = wcol[, wt := wt * initial_weights]
-      wcol = setNames(wcol, c(task$backend$primary_key, weightcolname))
+      setnames(wcol, c(task$backend$primary_key, weightcolname))
       task$cbind(wcol)
+
       if (length(task$col_roles$weight)) {
         task$set_col_roles(task$col_roles$weight, remove_from = "weight")
       }
+
       task$set_col_roles(weightcolname, "weight")
       task
     },
+
     .predict_task = identity
   )
 )
@@ -138,16 +143,16 @@ PipeOpReweighingOversampling = R6Class("PipeOpReweighingOversampling",
     #' @param param_vals `list' \cr
     #'   A list of parameter values.
     initialize = function(id = "reweighing_os", param_vals = list()) {
-      ps = ParamSet$new(params = list(
-        ParamDbl$new("alpha", lower = 0, upper = 1, tags = "train")
-      ))
+      ps = ps(
+        alpha = p_dbl(0, 1, tags = "train")
+      )
       ps$values = list(alpha = 1)
       super$initialize(id, param_set = ps, param_vals = param_vals, can_subset_cols = FALSE,
         task_type = "TaskClassif", tags = c("imbalanced data", "fairness"))
     }
   ),
-  private = list(
 
+  private = list(
     .train_task = function(task) {
       self$state = list()
       if ("twoclass" %nin% task$properties) {

@@ -7,7 +7,7 @@
 groupdiff_tau(x)
 }
 \arguments{
-\item{x}{\code{numeric} \cr
+\item{x}{(\code{numeric()}) \cr
 Measured performance in group 1, 2, ...}
 }
 \description{
@@ -16,5 +16,5 @@ that is smaller than 1. If x is a vector, the symmetric ratio between all
 elements in 'x' is computed.
 }
 \examples{
-  groupdiff_tau(runif(3))
+groupdiff_tau(runif(3))
 }

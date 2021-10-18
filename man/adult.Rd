@@ -7,13 +7,9 @@
 \alias{adult_train}
 \title{Adult Dataset}
 \source{
-@misc{Dua:2019 ,
-author = "Dua, Dheeru and Graff, Casey",
-year = "2017",
-title = "{UCI} Machine Learning Repository",
-url = "http://archive.ics.uci.edu/ml",
-institution = "University of California, Irvine, School of Information and Computer Sciences"
-}
+Dua, Dheeru, Graff, Casey (2017).
+\dQuote{UCI Machine Learning Repository.}
+\url{http://archive.ics.uci.edu/ml}.
 }
 \description{
 Dataset used to predict whether income exceeds $50K/yr based on census data.

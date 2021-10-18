@@ -20,14 +20,14 @@
 #' @seealso groupdiff_tau groupdiff_absdiff
 #' @export
 #' @examples
-#'   # Create MeasureFairness to measure the Predictive Parity.
-#'   library(mlr3)
-#'   data_task = tsk("adult_train")
-#'   learner = lrn("classif.rpart", cp = .01)
-#'   learner$train(data_task)
-#'   measure = msr("fairness", base_measure = msr("classif.ppv"))
-#'   predictions = learner$predict(data_task)
-#'   predictions$score(measure, task = data_task)
+#' # Create MeasureFairness to measure the Predictive Parity.
+#' library(mlr3)
+#' data_task = tsk("adult_train")
+#' learner = lrn("classif.rpart", cp = .01)
+#' learner$train(data_task)
+#' measure = msr("fairness", base_measure = msr("classif.ppv"))
+#' predictions = learner$predict(data_task)
+#' predictions$score(measure, task = data_task)
 MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure, cloneable = FALSE,
   public = list(
     #' @template field_base_measure
@@ -68,6 +68,7 @@ MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure, cloneable = 
       )
     }
   ),
+
   private = list(
     .score = function(prediction, task, ...) {
       assert_pta_task(task)
@@ -76,23 +77,25 @@ MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure, cloneable = 
     }
   )
 )
+
 mlr_measures$add("fairness", MeasureFairness)
 
 
 #' @title Composite Fairness Measure
 #'
 #' @description
-#'   Compute a composite measure from multiple fairness metrics.
-#'   Aggregates using `aggfun`, defaults to `mean()`.
+#' Compute a composite measure from multiple fairness metrics.
+#' Aggregates using `aggfun`, defaults to `mean()`.
+#'
 #' @export
 #' @examples
-#'   # Create MeasureFairness to measure the Predictive Parity.
-#'   library(mlr3)
-#'   library(mlr3fairness)
-#'   # Equalized Odds Metric
-#'   MeasureFairnessComposite$new(measures = list("fairness.fpr", "fairness.tpr"))
-#'   # Other metrics e.g. based on negative rates
-#'   MeasureFairnessComposite$new(measures = list("fairness.fnr", "fairness.tnr"))
+#' # Create MeasureFairness to measure the Predictive Parity.
+#' library(mlr3)
+#' library(mlr3fairness)
+#' # Equalized Odds Metric
+#' MeasureFairnessComposite$new(measures = list("fairness.fpr", "fairness.tpr"))
+#' # Other metrics e.g. based on negative rates
+#' MeasureFairnessComposite$new(measures = list("fairness.fnr", "fairness.tnr"))
 MeasureFairnessComposite = R6::R6Class("MeasureFairnessComposite", inherit = Measure,
   public = list(
     #' @description
@@ -131,12 +134,13 @@ MeasureFairnessComposite = R6::R6Class("MeasureFairnessComposite", inherit = Mea
         range = assert_numeric(range, len = 2),
         properties = "requires_task",
         minimize = assert_flag(minimize),
-        predict_type =  unique(unlist(map(measures, "predict_type"))),
+        predict_type = unique(unlist(map(measures, "predict_type"))),
         packages = "mlr3fairness",
         man = "mlr_measures_fairness_composite"
       )
     }
   ),
+
   private = list(
     .measures = NULL,
     .aggfun = NULL,
@@ -159,14 +163,14 @@ MeasureFairnessComposite = R6::R6Class("MeasureFairnessComposite", inherit = Mea
 #'
 #' @export
 #' @examples
-#'   # Create Positive Probability Measure
-#'   library(mlr3)
-#'   data_task = tsk("adult_train")
-#'   learner = lrn("classif.rpart", cp = .01)
-#'   learner$train(data_task)
-#'   measure = msr("classif.pp")
-#'   predictions = learner$predict(data_task)
-#'   predictions$score(measure, task = data_task)
+#' # Create Positive Probability Measure
+#' library(mlr3)
+#' data_task = tsk("adult_train")
+#' learner = lrn("classif.rpart", cp = .01)
+#' learner$train(data_task)
+#' measure = msr("classif.pp")
+#' predictions = learner$predict(data_task)
+#' predictions$score(measure, task = data_task)
 MeasurePositiveProbability = R6::R6Class("MeasurePositiveProbability",
   inherit = mlr3::Measure,
   public = list(
@@ -181,19 +185,20 @@ MeasurePositiveProbability = R6::R6Class("MeasurePositiveProbability",
         predict_type = "response",
         range = c(0, 1),
         minimize = FALSE)
-      }
-    ),
+    }
+  ),
 
   private = list(
     .score = function(prediction, task, ...) {
       pp = function(response, positive) {
         positive_count = sum(response == positive)
-        return(positive_count/length(response))
-        }
-      pp(prediction$response, task$positive)
+        return(positive_count / length(response))
       }
-    )
+      pp(prediction$response, task$positive)
+    }
+  )
 )
+
 mlr_measures$add("classif.pp", MeasurePositiveProbability)
 
 
@@ -218,7 +223,7 @@ mlr_measures$add("classif.pp", MeasurePositiveProbability)
 #' }
 #'
 #' @examples
-#' # Predfined measures:
+#' # Predefined measures:
 #' msr("fairness.eod")
 #' msr("fairness.fpr")
 #' msr("fairness.acc")
@@ -229,15 +234,15 @@ mlr_measures$add("classif.pp", MeasurePositiveProbability)
 #' msr("fairness.fp")
 #' msr("fairness.fn")
 mlr_measures_fairness = rowwise_table(
-  ~key, ~ description,
-  "fairness.eod" , "Equalized Odds: Sum of abs. difference between true positive and
+  ~key, ~description,
+  "fairness.eod", "Equalized Odds: Sum of abs. difference between true positive and
     false positive rates across groups",
-  "fairness.fpr" , "Abs. difference in false positive rates across groups",
-  "fairness.acc" , "Abs. difference in accuracy across groups (Overall accuracy equality)",
-  "fairness.tpr" , "Abs. difference in true positive rates across groups",
-  "fairness.tnr" , "Abs. difference in true negative rates across groups",
-  "fairness.ppv" , "Abs. difference in positive predictive values across groups ",
-  "fairness.npv" , "Abs. difference in negative predictive values across groups",
-  "fairness.fp"  , "Abs. difference in false positives across groups",
-  "fairness.fn"  , "Abs. difference in false negatives across groups"
- )
+  "fairness.fpr", "Abs. difference in false positive rates across groups",
+  "fairness.acc", "Abs. difference in accuracy across groups (Overall accuracy equality)",
+  "fairness.tpr", "Abs. difference in true positive rates across groups",
+  "fairness.tnr", "Abs. difference in true negative rates across groups",
+  "fairness.ppv", "Abs. difference in positive predictive values across groups ",
+  "fairness.npv", "Abs. difference in negative predictive values across groups",
+  "fairness.fp", "Abs. difference in false positives across groups",
+  "fairness.fn", "Abs. difference in false negatives across groups"
+)

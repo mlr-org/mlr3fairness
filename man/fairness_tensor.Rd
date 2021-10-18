@@ -7,11 +7,11 @@
 fairness_tensor(object, task, ...)
 }
 \arguments{
-\item{object}{\code{\link{data.table}}|\code{\link{PredictionClassif}}\cr
+\item{object}{(\code{\link[=data.table]{data.table()}} | \code{\link{PredictionClassif}})\cr
 A data.table with columns \code{truth} and \code{prediction} or a \code{\link{PredictionClassif}}.}
 
-\item{task}{\code{\link[mlr3:TaskClassif]{TaskClassif}}\cr
-A \code{\link{TaskClassif}}. Needs \code{col_role} \code{"pta"} to be set.}
+\item{task}{(\link{TaskClassif})\cr
+A \link{TaskClassif}. Needs \code{col_role} \code{"pta"} to be set.}
 
 \item{...}{\code{any}\cr
 Currently not used.}
@@ -20,11 +20,11 @@ Currently not used.}
 \code{list} of confusion matrix for every group in \code{"pta"}.
 }
 \description{
-A fairness tensor is a list-of-groupwise confusion matrices.
+A fairness tensor is a list of groupwise confusion matrices.
 }
 \examples{
 library(mlr3)
-t = tsk("compas")
-prd = lrn("classif.rpart")$train(t)$predict(t)
-fairness_tensor(prd, t)
+task = tsk("compas")
+prediction = lrn("classif.rpart")$train(task)$predict(task)
+fairness_tensor(prediction, task)
 }

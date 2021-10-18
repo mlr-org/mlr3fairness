@@ -8,13 +8,13 @@ Compute a composite measure from multiple fairness metrics.
 Aggregates using \code{aggfun}, defaults to \code{mean()}.
 }
 \examples{
-  # Create MeasureFairness to measure the Predictive Parity.
-  library(mlr3)
-  library(mlr3fairness)
-  # Equalized Odds Metric
-  MeasureFairnessComposite$new(measures = list("fairness.fpr", "fairness.tpr"))
-  # Other metrics e.g. based on negative rates
-  MeasureFairnessComposite$new(measures = list("fairness.fnr", "fairness.tnr"))
+# Create MeasureFairness to measure the Predictive Parity.
+library(mlr3)
+library(mlr3fairness)
+# Equalized Odds Metric
+MeasureFairnessComposite$new(measures = list("fairness.fpr", "fairness.tpr"))
+# Other metrics e.g. based on negative rates
+MeasureFairnessComposite$new(measures = list("fairness.fnr", "fairness.tnr"))
 }
 \section{Super class}{
 \code{\link[mlr3:Measure]{mlr3::Measure}} -> \code{MeasureFairnessComposite}
