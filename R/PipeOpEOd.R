@@ -46,14 +46,8 @@
 #'   probabilities in order to satisfy equalized odds constraints.\cr
 #'   NOTE: Carefully assess the correct privileged group.
 #'
-#' @details
-#' For additional details, see: \cr
-#' * M. Hardt, E. Price, and N. Srebro, "Equality of Opportunity in
-#'   Supervised Learning," Conference on Neural Information Processing
-#'   Systems, 2016.
-#' * G. Pleiss, M. Raghavan, F. Wu, J. Kleinberg, and
-#'   K. Q. Weinberger, "On Fairness and Calibration," Conference on Neural
-#'   Information Processing Systems, 2017.
+#' @references
+#' `r format_bib("hardt_2016", "pleiss_2017")`
 #'
 #' @section Construction:
 #' ```

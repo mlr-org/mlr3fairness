@@ -13,17 +13,6 @@ Works by randomly flipping a subset of predictions with pre-computed
 probabilities in order to satisfy equalized odds constraints.\cr
 NOTE: Carefully assess the correct privileged group.
 }
-\details{
-For additional details, see: \cr
-\itemize{
-\item M. Hardt, E. Price, and N. Srebro, "Equality of Opportunity in
-Supervised Learning," Conference on Neural Information Processing
-Systems, 2016.
-\item G. Pleiss, M. Raghavan, F. Wu, J. Kleinberg, and
-K. Q. Weinberger, "On Fairness and Calibration," Conference on Neural
-Information Processing Systems, 2017.
-}
-}
 \section{Construction}{
 \preformatted{PipeOpEOd*$new(id = "eod", param_vals = list())
 }
@@ -85,6 +74,17 @@ glrn$train(task)
 glrn$predict(task)
 # On newdata
 glrn$predict_newdata(task$data(cols = task$feature_names))
+}
+\references{
+Hardt M, Price E, Srebro N (2016).
+\dQuote{Equality of Opportunity in Supervised Learning.}
+In \emph{Advances in Neural Information Processing Systems}, volume 29, 3315--3323.
+\url{https://papers.nips.cc/paper/6374-interaction-screening-efficient-and-sample-optimal-learning-of-ising-models.pdf}.
+
+Pleiss, Geoff, Raghavan, Manish, Wu, Felix, Kleinberg, Jon, Weinberger, Q K (2017).
+\dQuote{On Fairness and Calibration.}
+In Guyon I, Luxburg UV, Bengio S, Wallach H, Fergus R, Vishwanathan S, Garnett R (eds.), \emph{Advances in Neural Information Processing Systems}, volume 30.
+\url{https://proceedings.neurips.cc/paper/2017/file/b8b9c74ac526fffbeb2d39ab038d1cd7-Paper.pdf}.
 }
 \seealso{
 https://mlr3book.mlr-org.com/list-pipeops.html

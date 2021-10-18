@@ -6,5 +6,26 @@ bibentries = c(
     title = "{UCI} Machine Learning Repository",
     url = "http://archive.ics.uci.edu/ml",
     institution = "University of California, Irvine, School of Information and Computer Sciences"
+  ),
+
+  hardt_2016 = bibentry("inproceedings",
+    author = "Moritz Hardt and Eric Price and Nathan Srebro",
+    title = "Equality of Opportunity in Supervised Learning",
+    url = "https://papers.nips.cc/paper/6374-interaction-screening-efficient-and-sample-optimal-learning-of-ising-models.pdf",
+    booktitle = "Advances in Neural Information Processing Systems",
+    volume = "29",
+    year = "2016",
+    pages = "3315--3323"
+  ),
+
+  pleiss_2017 = bibentry("inproceedings",
+    author = "Pleiss, Geoff and Raghavan, Manish and Wu, Felix and Kleinberg, Jon and Weinberger, Kilian Q",
+    booktitle = "Advances in Neural Information Processing Systems",
+    editor = "I. Guyon and U. V. Luxburg and S. Bengio and H. Wallach and R. Fergus and S. Vishwanathan and R. Garnett",
+    publisher = "Curran Associates, Inc.",
+    title = "On Fairness and Calibration",
+    url = "https://proceedings.neurips.cc/paper/2017/file/b8b9c74ac526fffbeb2d39ab038d1cd7-Paper.pdf",
+    volume = "30",
+    year = "2017"
   )
 )
