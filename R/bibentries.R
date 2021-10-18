@@ -27,5 +27,17 @@ bibentries = c(
     url = "https://proceedings.neurips.cc/paper/2017/file/b8b9c74ac526fffbeb2d39ab038d1cd7-Paper.pdf",
     volume = "30",
     year = "2017"
+  ),
+
+  kamiran12 = bibentry("article",
+    title="Data preprocessing techniques for classification without discrimination",
+    author="Kamiran, Faisal and Calders, Toon",
+    journal="Knowledge and Information Systems",
+    volume="33",
+    number="1",
+    pages="1--33",
+    year="2012",
+    publisher="Springer"
   )
+
 )

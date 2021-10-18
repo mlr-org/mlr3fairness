@@ -92,6 +92,11 @@ glrn$train(data)
 tem = glrn$predict(data)
 tem$confusion
 }
+\references{
+Kamiran, Faisal, Calders, Toon (2012).
+\dQuote{Data preprocessing techniques for classification without discrimination.}
+\emph{Knowledge and Information Systems}, \bold{33}(1), 1--33.
+}
 \seealso{
 https://mlr3book.mlr-org.com/list-pipeops.html
 

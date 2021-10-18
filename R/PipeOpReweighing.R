@@ -19,6 +19,9 @@
 #' Caution: Only fairness tasks are supported. Which means tasks need to have protected field.
 #' `tsk$col_roles$pta`.
 #'
+#' @references
+#' `r format_bib("kamiran12")`
+#'
 #' @section Construction:
 #' ```
 #' PipeOpReweighing*$new(id = "reweighing", param_vals = list())
