@@ -27,7 +27,7 @@
 #'     Default measure set to be `msr("fairness.fpr")`
 #'   * `accuracy_measure` ([Measure])\cr
 #'     The accuracy measure that will evaluated.
-#'     Default measure set to be [msr("classif.acc")][mlr3:MeasureClassif].
+#'     Default measure set to be [msr("classif.acc")][mlr3::MeasureClassif].
 #'   * `task` ([TaskClassif])\cr
 #'     The data task that contains the protected column, only required when the class of object is ([PredictionClassif])
 #'

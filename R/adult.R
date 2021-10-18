@@ -44,7 +44,7 @@
 NULL
 
 get_adult_task_train = function() { # nocov start
-  b = as_data_backend(adult_train)
+  b = as_data_backend(mlr3fairness::adult_train)
   task = mlr3::TaskClassif$new("adult_train", b, target = "target")
   task$col_roles$pta = "sex"
   b$hash = task$man = "mlr3fairness::mlr_tasks_adult_train"
@@ -52,7 +52,7 @@ get_adult_task_train = function() { # nocov start
 } # nocov end
 
 get_adult_task_test = function() { # nocov start
-  b = as_data_backend(adult_test)
+  b = as_data_backend(mlr3fairness::adult_test)
   task = mlr3::TaskClassif$new("adult_test", b, target = "target")
   task$col_roles$pta = "sex"
   b$hash = task$man = "mlr3fairness::mlr_tasks_adult_test"

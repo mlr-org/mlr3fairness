@@ -45,7 +45,7 @@
 NULL
 
 get_compas_task = function() { # nocov start
-  b = as_data_backend(compas)
+  b = as_data_backend(mlr3fairness::compas)
   task = mlr3::TaskClassif$new("compas", b, target = "two_year_recid")
   task$col_roles$pta = "sex"
   b$hash = task$man = "mlr3fairness::mlr_tasks_compas"

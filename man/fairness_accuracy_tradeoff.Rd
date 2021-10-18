@@ -29,7 +29,7 @@ The fairness measures that will evaluated.
 Default measure set to be \code{msr("fairness.fpr")}
 \item \code{accuracy_measure} (\link{Measure})\cr
 The accuracy measure that will evaluated.
-Default measure set to be \link[=mlr3:MeasureClassif]{msr("classif.acc")}.
+Default measure set to be \link[mlr3:MeasureClassif]{msr("classif.acc")}.
 \item \code{task} (\link{TaskClassif})\cr
 The data task that contains the protected column, only required when the class of object is (\link{PredictionClassif})
 }}
