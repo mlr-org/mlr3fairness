@@ -173,6 +173,17 @@ predictions$score(fairness_measure, task = task_test)
 fairness_prediction_density(predictions, task_test)
 ```
 
+### Model Cards & Datasheets
+
+An important step towards achieving more equitable outcomes for ML
+models is adequate documentation for datasets and models in machine
+learning.
+
+``` r
+use_datasheet()
+rmarkdown::render("datasheet/datasheet.Rmd")
+```
+
 # Extensions
 
   - The [mcboost](https://github.com/mlr-org/mcboost) package integrates
