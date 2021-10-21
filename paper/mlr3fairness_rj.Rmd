@@ -1,9 +1,9 @@
 ---
-title: Capitalized Title Here
+title: Fairness Audits And Debiasing Using mlr3fairness
 author:
   # see ?rjournal_article for more information
-  - name: Author One
-    affiliation: Affiliation
+  - name: Florian Pfisterer
+    affiliation: LMU Munich
     address:
     - line 1
     - line 2
@@ -30,38 +30,87 @@ author:
     - line 1 affiliation
     - line 2 affiliation
 abstract: >
-  We present the package \CRANpkg{mlr3fairness}.
+  Given an increase in data-driven automated decision making based on machine learning models, it is
+  imparative that along with tools to develop and improve such models there are sufficient capabilities
+  to analyze and assess models with respect to potential biases. We present the package \CRANpkg{mlr3fairness},
+  a collection of metrics and methods that allow for the assessment of bias in machine learning models.
+  Our package implements a variety of widely used fairness metrics that can be used to audit models for potential biases along with a set of visualizations that can help to provide additional insights into such biases. \CRANpkg{mlr3fairness} furthermore integrates debiasing methods that can help aleviate biases in ML models through data preprocessing or post-processing of predictions.
 preamble: |
   % Any extra LaTeX you need in the preamble
 
 # per R journal requirement, the bib filename should be the same as the output
 # tex file. Don't forget to rename the bib file and change this example value.
-bibliography: RJreferences.bib
+bibliography: mlr3fairness_rj.bib
 
 output: rticles::rjournal_article
 ---
 
 ## Introduction
 
-Introductory section which may include references in parentheses
-[@R], or cite a reference such as @R in the text.
+Humans are increasingly subject to data-driven automated decision making. Those automated procedures such as credit risk assessments are often done using statistical or machine learning (ML) models [@galindo2000credit]. It is imparative that along with tools to develop and improve such models, we also develop sufficient capabilities to analyze and assess models with respect to their robustness, predictive performance but also potential biases. While performance metrics are often readily implemented in software providing implementations of statistical models or machine learning models in R [@R] (e.g. \CRANpkg{caret} [@caret], \CRANpkg{tidymodels} [@tidymodels], \CRANpkg{SuperLearner} @superlearner or \CRANpkg{mlr3} @mlr3), fairness metrics are widely missing. This lack of availability can be deterimental to obtaining fair and unbiased models if the result is to forgo bias audits due to the considerable complexity those metrics often pose. Consequently there
+exists considerable neccessity for R packages implementing such metrics.
+If biases are detected in a model and need to be mitigated, we furthermore require debiasing techniques that tightly integrate with the fitting and evaluation of the resulting models in order to obtain optimal trade-offs between the fairness and utility (e.g. predictive accuracy) of a model.
+
+In this manuscript, we present the package \CRANpkg{mlr3fairness}, which implements a wide variety of metrics that can be used to conduct fairness audits for ML algorithms along with visualizations for model predictions and resulting metrics. Our package does not only allow for fairness audits on a single model but also the simultaneous comparison of multiple models. \pkg{mlr3fairness} is tightly integrated into the \CRANpkg{mlr3} [@mlr3] ecosystem which, amongst others, allows for the optimization of machine learning models with respect to multiple criteria such as predictive performance or fairness metrics.
+
+The remainder of this manuscript is structured as follows:
+We provide a brief introduction to fairness  in section \@ref(fairness) and discuss related software implementations in section \@ref(related).
+We furthermore provide a short introduction to \CRANpkg{mlr3} \@ref(mlr3) before introducing our software's functionality in chapter \@ref{main}. We conclude with a short case study demonstrating \CRANpkg{mlr3fairness}'s capabilities on the **Adult Income** dataset in chapter \@ref{usecase}.
 
 
-## Fairness in machine learning
+## Fairness in machine learning {#fairness}
 
-Brief summary over the problem, citing some remarkable articles.
+Studies have found, that data-driven automated decison making systems often improve over human expertise (c.f. @dawes1989clinical) and high stakes decisions can therefore be improved using data-driven systems. This often does not only improve predicttions but can also make decisions more efficient. Such systems, often without human oversight, are now ubiquitous in every day life (@o2016weapons, @eubanks2018automating, @noble2018algorithms). To provide further examples, ML driven systems are now used for highly influential decisions such as loan accomodations (@Chen2018, @Turner2019), job applications [@schumann], healthcare [@Topol2019, @khadani2010], and criminal sentencing (@compas, @corbettcompas, @richardcompas).
+With this proliferation, such decisions have become subject to scrutiny as a result of prominent inadequacies or failures of such methods for example in the case of the COMPAS recidivism prediction system [@compas].
+
+Without proper auditing, those models can unintentionally result in negative consequences for individuals, often from underpriviledged groups [@fairmlbook]. Several sources of such biases are worth mentioning in this context: Data often contains **historical biases** such as gender or racial stereotypes, that - if picked up by the model - will be replicated into the future. Similarly unpriviledged populations are often not represented in data due to **sampling biases** leading to models that perform well in groups sufficiently represented in the data but worse on others [@buolamwini2018gender]. Other biases include biases in the *label generating process* and **feedback** loops where repeated decisions affect the population subject to such decisions. For an in-depth discussion and further sources of biases the interested reader is refered to @mehrabi.
+
+We now turn to the question how such biases can be measured in a model. The answer to this question depends on a societies ethical values and whether we take a neutral or a normative position. Depending on the answer to those questions, different metrics have been proposed. We focus on a subgroup of those, so-called *statistical group fairness* metrics that are usually based on differences in some summary statistics between two groups identified by a protected attribute $A = 0$ and $A = 1$. We now provide and discuss two examples from [@hardt2016equality] to provide further intuition about the purpose of such metrics.
+
+#### Equalized Odds \#(eq:eod)
+
+A predictor $\hat{Y}$ satisfies *equalized odds* with respect to a protected attribute $A$ and observed outcome $Y$ if $\hat{Y}$ and $A$ are conditionally independent given $Y$.
+
+\begin{equation}
+P(\hat{Y} = 1 | A = 0, Y = y) = P(\hat{Y} = 1 | A = 0, Y = y), y \in \{0,1\}
+\end{equation}
+
+In short, we require the same true and false positive rates across both groups $A = 0$ and $A = 1$.
+
+#### Equality of Opportunity \#(eq:eop)
+
+A predictor $\hat{Y}$ satisfies *equality of opportunity* with respect to a protected attribute $A$ and observed outcome $Y$ if $\hat{Y}$ and $A$ are conditionally independent given $Y = 1$ (where $Y = 1$ is the favoured outcome). This is a relaxation of the aforementioned *equalized odds* essentially only requiring equal true positive rates.
+
+\begin{equation} \@ref(eq:eo)
+P(\hat{Y} = 1 | A = 0, Y = 1) = P(\hat{Y} = 1 | A = 0, Y = 1)
+\end{equation}
 
 
-## Related work
+While both metrics are conceptually similar, they encode a different belief of what constitutes *fair* in a given scenario. A discussion of different metrics and their applicability can be found in the Aequitas Fairness Toolkit [@saleiro2018aequitas]. In order to encode the requirements in Equations \@ref(eq:eod) and \@ref(eq:op) into a fairness metrics we often encode differences between measured quantities in two groups e.g.
 
-I guess it is fine for this paper to restrict this to similar implementations, and to not give an overview of the literature.
+\[
+\Delta_{TPR} = TPR_{A=0} - TPR_{A=1}
+\]
 
-\CRANpkg{fairness}, \CRANpkg{aif360}, Julia packages, ...
+We now might consider a model fair e.g. if $|\Delta_{TPR}| < epsilon$ for a given threshold e.g. $\epsilon = 0.05$ to allow for minimal deviations from perfect fairness due to variance in the estimation of $TPR_{A=\star}$ or additional sources of bias. A collection of such metrics can be found e.g. in (@saleiro2018aequitas, @kim2020fact, @mehrab).
+
+The goal of **debiasing techniques** presented e.g. by @kamiran2012data and @hardt2016equality is now to reduce such gaps either using data pre-processing, model inprocessing or prediction post-processing techniques.
+\CRANpkg{mlr3fairness} implements a wide variety of fairness metrics along with the possibility to implement and use custom fairness metrics based on this paradigm. It furthermore implements debiasing techniques described in @kamiran2012data and @hardt2016equality to allow for obtaining fair(er) models.
 
 
-###
+## Related work {#related}
 
-### The mlr3 ecosystem
+We now describe other software implemented in R or other programming languages and briefly describe their functionality and further describe the mlr3 ecosystem to provide an overview over the ecosystem \CRANpkg{mlr3fairness} is integrates with.
+
+### Bias Auditing and Debiasing Software {#othersoft}
+
+Several R packages provide similar capabilities to our software, mostly focussing on fairness metrics and visualization. The \CRANpkg{fairness} package [@fairness] allows for the calculation of a variety of fairness metrics, while \CRANpkg{aif360} [@aif360] wraps the Python ***aif360*** module allowing for the computation of fairness metrics and several debiasing techniques but has only limited interoparability with R objects such as data.frames. The \CRANpkg{fairmodels} package again allows for the computation of fairness metrics for classification and regresison settings.
+
+Outside of R, the fairlearn Python module , the aif360 python module, the aequitas fairness toolkit, fairness.jl
+
+
+### The mlr3 ecosystem {#mlr3}
+
 
 \pkg{mlr3fairness} is tightly integrated into the ecosystem of packages around \CRANpkg{mlr3} [@mlr3].
 Besides the infrastructure implemented in \pkg{mlr3} to fit, resample, or evaluate over 100 ML algorithms using a unified API,
@@ -76,7 +125,7 @@ extension packages bring numerous additional advantages:
 Some of these packages are showcased in the following [use case study](#usecase).
 
 
-### Implemented functionality in mlr3fairness
+## mlr3fairness {#main}
 
 The functionality is split into two tasks, namely detecting bias and debiasing.
 
@@ -92,7 +141,10 @@ There are generally two approaches:
 Reweighting, ...
 
 
-## Use case study {#usecase}
+
+
+
+## Case Study - Adult Income {#usecase}
 Maybe on adult or compas, or do we find something more exciting?
 
 ### The XXX task
@@ -102,6 +154,7 @@ Maybe on adult or compas, or do we find something more exciting?
 ### Correcting for bias
 
 
-## Summary
 
-This file is only a basic article template. For full details of _The R Journal_ style and information on how to prepare your article for submission, see the [Instructions for Authors](https://journal.r-project.org/share/author-guide.pdf).
+
+
+## Summary
