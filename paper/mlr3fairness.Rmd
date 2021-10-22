@@ -40,10 +40,15 @@ preamble: |
 
 # per R journal requirement, the bib filename should be the same as the output
 # tex file. Don't forget to rename the bib file and change this example value.
-bibliography: mlr3fairness_rj.bib
+bibliography: mlr3fairness.bib
 
 output: rticles::rjournal_article
 ---
+
+```{r setup, include = FALSE}
+library("ggplot2")
+```
+
 
 ## Introduction
 
@@ -82,7 +87,7 @@ In short, we require the same true and false positive rates across both groups $
 
 A predictor $\hat{Y}$ satisfies *equality of opportunity* with respect to a protected attribute $A$ and observed outcome $Y$ if $\hat{Y}$ and $A$ are conditionally independent given $Y = 1$ (where $Y = 1$ is the favoured outcome). This is a relaxation of the aforementioned *equalized odds* essentially only requiring equal true positive rates.
 
-\begin{equation} \@ref(eq:eo)
+\begin{equation} \#eq:eo
 P(\hat{Y} = 1 | A = 0, Y = 1) = P(\hat{Y} = 1 | A = 0, Y = 1)
 \end{equation}
 
@@ -128,7 +133,7 @@ extension packages bring numerous additional advantages:
 * Flexible pre- and postprocessing via \CRANpkg{mlr3pipelines} [@mlr3pipelines].\\
   \pkg{mlr3fairness} implements pre- and postprocessing operators as pipeline operators for \CRANpkg{mlr3pipelines}.
   This allows merging debiasing with arbitrary ML algorithms implemented in \CRANpkg{mlr3} as well as comparison of different models
-  through joint resampling and tuning. It furthermore integrates with \CRANpkg{mcboost} [@mcboost], 
+  through joint resampling and tuning. It furthermore integrates with \CRANpkg{mcboost} [@mcboost],
   which implements further debiasing methods.
 
 * Extensive tuning capabilities via \CRANpkg{mlr3tuning}.\\
@@ -144,14 +149,16 @@ In order to provide the required understanding for \pkg{mlr3} we briefly introdu
 terminology and syntax. An extended introduction can be found in the mlr3 book \footnote{https://mlr3book.mlr-org.com}.
 
 A `Task` is a data set including a set of covariates and the target variable along with some meta-information such as which column corresponds to the target variable, strata and other relevant information. It provides a useful abstraction that allows for seamlessly switching between different data formats such as `data.table`s, sparse matrices or data bases. The shorthand constructor `tsk`
-can be used to quickly load example tasks included with \pkg{mlr3}. 
+can be used to quickly load example tasks included with \pkg{mlr3}.
 
 ```{r}
+library("mlr3")
+library("mlr3fairness")
 task = tsk("adult_train")
 ```
 
-A `Learner` is a wrapper around a ML algorithm e.g. logistic regression or decision trees. 
-It can be trained on a `Task` and used for obtaining a `Prediction` which can subsequently be scored using a `Measure`. The shorthand constructors `lrn` and `msr`  allow for the instantiation of 
+A `Learner` is a wrapper around a ML algorithm e.g. logistic regression or decision trees.
+It can be trained on a `Task` and used for obtaining a `Prediction` which can subsequently be scored using a `Measure`. The shorthand constructors `lrn` and `msr`  allow for the instantiation of
 implemented `Learner`'s and `Measures` respectively.
 
 ```{r}
@@ -174,10 +181,10 @@ details discussed there in the following sections.
 #### Detecting bias
 
 For brevity, we start our exposition from a fitted ML model, e.g. obtained through `mlr3`.
-The ML model is trained on the widely used COMPAS data set [@compas] with the goal 
+The ML model is trained on the widely used COMPAS data set [@compas] with the goal
 to predict whether a parolee will re-offend within a span of 2 years. The data set is
 included in \CRANpkg{mlr3fairness} and can be loaded with `tsk("compas")`.
-For simplicity of exposition we use a simplified version of the data set with a binary 
+For simplicity of exposition we use a simplified version of the data set with a binary
 protected attribute *race* ('Caucasian' / 'African American').
 As a ML algorithm, we use a Decision Tree  from \CRANpkg{rpart} trained on the
 first $4000$ observations in our data set.
@@ -194,7 +201,7 @@ dt = task$data()
 rows = which(dt$race %in% c("Caucasian", "African-American"))
 task$filter(rows = rows)
 task$select(
-  c("age", "age_cat", "c_charge_degree", "days_b_screening_arrest", 
+  c("age", "age_cat", "c_charge_degree", "days_b_screening_arrest",
     "decile_score", "length_of_stay", "priors_count", "score_text",
     "sex", "race"
   )
@@ -235,7 +242,8 @@ p2 = compare_metrics(prediction, measures = msrs(c("fairness.fpr", "fairness.tpr
 ```
 
 ```{r, echo = FALSE}
-p1 + xlab("") + p2 + theme(axis.text.x = element_text(angle = 30))
+p1 + xlab("")
+p2 + theme(axis.text.x = element_text(angle = 30))
 ```
 
 #### Debiasing
