@@ -240,19 +240,24 @@ p1 + xlab("") + p2 + theme(axis.text.x = element_text(angle = 30))
 
 #### Debiasing
 
-Reweighting, ...
-
+This section describes and shows debiasing methods.
 
 
 
 
 ## Case Study - Adult Income {#usecase}
 
-
 ```{r}
 library(mlr3)
 ```
-Maybe on adult or compas, or do we find something more exciting?
+
+This section does the following:
+
+* introduce the data
+* benchmark 2-3 models on adult, measure fairness metrics
+* do small autotune for a debiasing pipeline
+* compare everything
+* show fairness accuracy trade off plot.
 
 ### The XXX task
 
@@ -265,3 +270,15 @@ Maybe on adult or compas, or do we find something more exciting?
 
 
 ## Summary
+
+The large-scale availability and use of automated decision making systems have resulted in growing concerns for
+a lack of fairness in the decisions made by such systems. As a result, fairness metrics and debiasing methods that allow
+for investigating un-fairness and hopefully aleviating biases in existing systems have been proposed.
+Widely available implementations of such methods are still not widely available, especially considering the required
+interoperability with machine learning toolkits that allows for ease of use and integration into model evaluation and tuning.
+
+We have presented \CRANpkg{mlr3fairness}, a package for fairness auditing and bias correction on mlr3 models.
+Integrated fairness metrics allow for auditing ML models with respect to a multiplicity of fairness criteria and
+models identified as biased can subsequently be retrained / debiased using implemented debiasing methods.
+
+We hope, that this package can constitute a first step towards more equitable outcomes in automated decision making.
