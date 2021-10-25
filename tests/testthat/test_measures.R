@@ -142,3 +142,29 @@ test_that("fairness. composite no id", {
   msr_obj = msr("fairness.composite", measures = msrs(c("classif.fpr", "classif.fnr")))
   expect_true(msr_obj$id == "fairness.fpr_fnr")
 })
+
+test_that("fairness constraint measures - simulated data", {
+  tsk = test_task_small()
+  prds = list(pred_small())
+  metrics = c("fairness.acc", "fairness.eod")
+  map(prds, function(prd) {
+    map_dbl(metrics, function(m) {
+      fair = prd$score(measures = msr(m), task = tsk)
+      perf = prd$score(measures = msr("classif.acc"), task = tsk)
+      mm = msr("fairness.constraint", msr("classif.acc"), msr(m), epsilon = 1)
+      out = prd$score(measures = mm, task = tsk)
+      expect_true(out == perf)
+      mm = msr("fairness.constraint", msr("classif.acc"), msr(m), epsilon = 0)
+      out = prd$score(measures = mm, task = tsk)
+      expect_true(out == 0 - fair)
+      perf = prd$score(measures = msr("classif.ce"), task = tsk)
+      mm = msr("fairness.constraint", msr("classif.ce"), msr(m), epsilon = 1)
+      out = prd$score(measures = mm, task = tsk)
+      expect_true(out == perf)
+      mm = msr("fairness.constraint", msr("classif.ce"), msr(m), epsilon = 0)
+      out = prd$score(measures = mm, task = tsk)
+      expect_true(out == 1 + fair)
+    })
+  })
+})
+

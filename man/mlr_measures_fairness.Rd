@@ -92,6 +92,7 @@ a single value. Defaults to \code{abs(x - y)}.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{MeasureFairness$new()}}
+\item \href{#method-clone}{\code{MeasureFairness$clone()}}
 }
 }
 \if{html}{
@@ -135,6 +136,23 @@ Should the measure be minimized? Defaults to \code{TRUE}.}
 
 \item{\code{range}}{(\code{numeric})\cr
 Range of the resulting measure. Defaults to \code{c(-Inf, Inf)}.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MeasureFairness$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
 }
 \if{html}{\out{</div>}}
 }

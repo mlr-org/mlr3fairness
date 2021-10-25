@@ -143,6 +143,11 @@ extension packages bring numerous additional advantages:
 In order to provide the required understanding for \pkg{mlr3} we briefly introduce some
 terminology and syntax. An extended introduction can be found in the mlr3 book \footnote{https://mlr3book.mlr-org.com}.
 
+```{r, echo=FALSE, output = "hide"}
+library(mlr3)
+library(mlr3fairness)
+```
+
 A `Task` is a data set including a set of covariates and the target variable along with some meta-information such as which column corresponds to the target variable, strata and other relevant information. It provides a useful abstraction that allows for seamlessly switching between different data formats such as `data.table`s, sparse matrices or data bases. The shorthand constructor `tsk`
 can be used to quickly load example tasks included with \pkg{mlr3}. 
 
@@ -225,8 +230,9 @@ our model might be biased. Looking at the individual components of the fairness 
 ```{r}
 fairness_tensor(prediction, task)
 ```
-```{r, eval = FALSE}
+```{r, echo=FALSE, output='hide'}
 library(patchwork)
+library(ggplot2)
 ```
 
 ```{r}
@@ -235,45 +241,148 @@ p2 = compare_metrics(prediction, measures = msrs(c("fairness.fpr", "fairness.tpr
 ```
 
 ```{r, echo = FALSE}
-p1 + xlab("") + p2 + theme(axis.text.x = element_text(angle = 30))
+(p1 + xlab("") + p2 ) * theme_bw() + theme(axis.text.x = element_text(angle = 30, hjust=.7))
 ```
 
-#### Debiasing
+#### Debiasing  {#debiasing}
 
-This section describes and shows debiasing methods.
+Table \@ref{tab:debiasing} provides an overview over implemented debiasing techniques.
+Debiasing techniques are implemented as `PipeOps` from \pkg{mlr3pipelines} and can be 
+combined with arbitrary learners to form a pipeline.
 
+```{r, eval = FALSE}
+# Automatically reweigh data before training a learner:
+po("reweighing_wts") %>>% po("learner", lrn("classif.glmnet"))
+# Post-process predictions for equalized odds.
+po("learner_cv", lrn("classif.glmnet")) %>>% po("EOd")
+```
 
+Table: (\#tab:debiasing) Overview over available debiasing techniques.
+|key              | Description                                     | Type              | Reference          |
+|:----------------|:------------------------------------------------|:------------------|:-------------------|
+|"EOd"            |Equalized-Odds Debiasing                         |Postprocessing     | @hardt2016equality |
+|"reweighing_os"  |Reweighing (Oversampling)                        |Preprocessing      | @kamiran2012data   |
+|"reweighing_wts" |Reweighing (Instance Weights)                    |Preprocessing      | @kamiran2012data   |
 
+It is simple for users or package developers to extend \pkg{mlr3fairness} with additional
+debiasing methods -- as an example, \pkg{mcboost} package adds further postprocessing methods 
+that can further improve fairness.
 
 ## Case Study - Adult Income {#usecase}
 
+In order to demonstrate a full workflow, we conduct full bias assessment and 
+debiasing on a the popular adult data set [@uci]. The goal is to predict whether an
+individual's income is larger than \$$50.000$ with the protected attribute being *gender*. The data set 
+comes included with \pkg{mlr3fairness} separated into a *train* and *test* task
+and can be instantiated using `tsk("adult_train")` and `tsk("adult_test")`
+respectively. As a fairness metric we consider *predictive parity* [@chouldechova2017fair]
+which calls for equality in true positive rates between groups. We furthermore are 
+interested in the model's utility, e.g. its accuracy.
+
 ```{r}
 library(mlr3)
+library(mlr3fairness)
+task = tsk("adult_train")
+metrics = msrs(c("fairness.tpr", "classif.acc"))
+task
 ```
 
-This section does the following:
 
-* introduce the data
-* benchmark 2-3 models on adult, measure fairness metrics
-* do small autotune for a debiasing pipeline
-* compare everything
-* show fairness accuracy trade off plot.
+In order to get an initial perspective, we benchmark two simple models using 10-fold cross-validation:
 
-### The XXX task
+```{r, message = FALSE, warning=FALSE, cache=TRUE}
+grd = benchmark_grid(
+  tasks = tsks("adult_train"),
+  learners = lrns(c("classif.rpart", "classif.log_reg")),
+  resamplings = rsmp("cv", folds = 3)
+)
+bmr1 = benchmark(grd)
+bmr1$aggregate(metrics)[, c(4,7,8)]
+```
 
-### Detecting bias
+Both baseline models have small bias, and our goal is now to improve over this baseline.
+We use \pkg{mlr3pipelines} to build a pipeline that (1) encodes categorical features 
+(2) reweighs data points as described in Section  \@ref{mlr3} and then fits a 
+penalized logistic regression model.
 
-### Correcting for bias
+```{r}
+library(mlr3pipelines)
+lrn = as_learner(po("encode") %>>% po("reweighing_wts") %>>% po("learner", lrn("classif.glmnet")))
+grd = benchmark_grid(
+  tasks = tsks("adult_train"),
+  learners = list(lrn),
+  resamplings = rsmp("cv", folds = 3)
+)
+bmr2 = benchmark(grd)
+bmr2$aggregate(metrics)[, c(4,7,8)]
+```
+To see if we can improve over those baselines we use \CRANpkg{mlr3tuning} to
+jointly tune all hyperparameters of the *glmnet* model as well as our reweighing 
+hyperparameter. In order to do this, we use a `AutoTuner` from \pkg{mlr3tuning};
+a model that tune's its own hyperparameters during training. The full code for setting up
+this model can be found in the appendix and is omitted here for brevity. A `AutoTuner` 
+requires a specific metric to tune for. Here, we define a fairness-thresholded accuracy
+metric. We set $\epsilon = 0.01$ as a threshold.
+
+\[
+  if \; \Delta_{EOd} \leq \epsilon: accuracy \;\; else: \; 1 + \Delta_{EOd}
+\]
+
+```{r}
+metric = msr("fairness.constraint", msr("classif.acc"), msr("fairness.eod"))
+```
 
 
+```{r, echo = FALSE, message = FALSE}
+library(mlr3misc)
+library(mlr3)
+library(mlr3pipelines)
+library(mlr3fairness)
+library(mlr3tuning)
 
+# Enable paralellization over all cores
+future::plan("multisession")
+
+lrn = as_learner(po("encode") %>>% po("reweighing_wts") %>>% po("learner", lrn("classif.glmnet")))
+# Define the parameter space to optimize over
+vals = list(
+  reweighing_wts.alpha = to_tune(0.8, 1),
+  classif.glmnet.alpha = to_tune(0.8, 1),
+  classif.glmnet.s = to_tune(1e-4, 1e-2, logscale = TRUE)
+)
+# Add search space to the learner
+lrn$param_set$values = insert_named(lrn$param_set$values, vals)
+```
+
+```{r}
+at = AutoTuner$new(lrn, rsmp("holdout"), metric, tuner = mlr3tuning::tnr("random_search"), trm("evals", n_evals = 3))
+grd = benchmark_grid(
+  tasks = tsks("adult_train"),
+  learners = list(at),
+  resamplings = rsmp("cv", folds = 3)
+)
+bmr3 = benchmark(grd, store_models = TRUE)
+bmr3$aggregate(metrics)[, c(4,7,8)]
+```
+The result improves wrt. accuracy while only slightly decreasing the measured fairness. 
+Note, that the generalization error is estimated using a holdout strategy during training 
+and slight violations of the desired threshold $\epsilon$ are therefore normal.
+The different results of all $3$ experiments can then be collected and jointly visualized. 
+In addition to aggregate scores, individual iterations of the 3 fold Cross-Validation are depicted 
+to visualize variations in the individual results.
+
+```{r}
+bmr = c(bmr1, bmr2, bmr3)
+fairness_accuracy_tradeoff(bmr, fairness_measure = metrics[[1]]) 
+```
+Especially when considering optimizing accuracy while still retaining a fair model, 
+tuning can be helpful and further improve 
 
 
 ## Summary
 
 The large-scale availability and use of automated decision making systems have resulted in growing concerns for
-a lack of fairness in the decisions made by such systems. As a result, fairness metrics and debiasing methods that allow
-for investigating un-fairness and hopefully aleviating biases in existing systems have been proposed.
+a lack of fairness in the decisions made by such systems. As a result, fairness metrics and debiasing methods that allow for investigating un-fairness and hopefully aleviating biases in existing systems have been proposed.
 Widely available implementations of such methods are still not widely available, especially considering the required
 interoperability with machine learning toolkits that allows for ease of use and integration into model evaluation and tuning.
 
@@ -282,3 +391,30 @@ Integrated fairness metrics allow for auditing ML models with respect to a multi
 models identified as biased can subsequently be retrained / debiased using implemented debiasing methods.
 
 We hope, that this package can constitute a first step towards more equitable outcomes in automated decision making.
+
+
+
+# Appendix
+
+We include the full code
+
+```{r, eval = FALSE}
+library(mlr3misc)
+library(mlr3)
+library(mlr3pipelines)
+library(mlr3fairness)
+library(mlr3tuning)
+
+# Enable paralellization over all cores
+future::plan("multisession")
+
+lrn = as_learner(po("encode") %>>% po("reweighing_wts") %>>% po("learner", lrn("classif.glmnet")))
+# Define the parameter space to optimize over
+vals = list(
+  reweighing_wts.alpha = to_tune(0.75, 1),
+  classif.glmnet.alpha = to_tune(0.5, 1),
+  classif.glmnet.s = to_tune(1e-4, 1e-2, logscale = TRUE)
+)
+# Add search space to the learner
+lrn$param_set$values = insert_named(lrn$param_set$values, vals)
+```
