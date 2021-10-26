@@ -8,7 +8,7 @@ Machine Learning Fairness Extension for
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
 [![Mattermost](https://img.shields.io/badge/chat-mattermost-orange.svg)](https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/)
 
-# Installation
+## Installation
 
 Install the development version from mlr3 repo
 
@@ -16,7 +16,7 @@ Install the development version from mlr3 repo
 remotes::install_github("mlr-org/mlr3fairness")
 ```
 
-# Why should I care about fairness in machine learning?
+## Why should I care about fairness in machine learning?
 
 Machine Learning model predictions can be skewed by a range of factors
 and thus might be considered unfair towards certain groups or
@@ -148,7 +148,7 @@ rs$score(msr("fairness.acc"))
 
 You can load them using `tsk(<key>)`.
 
-## Demo for Adult Dataset
+### Demo for Adult Dataset
 
 We provide a short example detailing how `mlr3fairness` integrates with
 the `mlr3` ecosystem.
@@ -197,14 +197,14 @@ report_datasheet()
 rmarkdown::render("datasheet/datasheet.Rmd")
 ```
 
-# Extensions
+### Extensions
 
   - The [mcboost](https://github.com/mlr-org/mcboost) package integrates
     with **mlr3** and offers additional debiasing post-processing
     functionality for **classification**, **regression** and
     **survival**.
 
-# Other Fairness Toolkits in R
+### Other Fairness Toolkits in R
 
   - The [AI Fairness 360](https://aif360.mybluemix.net/) toolkit offers
     an R extension that allows for bias auditing, visualization and
@@ -216,28 +216,21 @@ rmarkdown::render("datasheet/datasheet.Rmd")
   - The [fairness](https://github.com/kozodoi/fairness) package allows
     for bias auditing in R.
 
-# Future Development
+### Future Development
 
 Several future developments are currently planned. Contributions are
 highly welcome\!
 
-## Visualizations
+  - Visualizations: Improvement on visualizations, like anchor points
+    and others. See issues.
+  - Metrics: Add support to non-binary target attributes and non-binary
+    protected attributes.
+  - Debiasing Methods: More Debiasing Methods, post-processing and
+    in-processing.
+  - Fairness Report: Add a `report_fairness` that automatically creates
+    a **fairness report**
 
-1.  Improvement on visualizations, like anchor points and others. See
-    issues.
-
-## Metrics
-
-1.  Add support to non-binary target attributes and non-binary protected
-    attributes.
-
-## Debiasing Methods
-
-1.  More Debiasing Methods, post-processing and in-processing.
-
-## Fairness Report
-
-# Bugs, Feedbacks and Questions
+## Bugs, Feedbacks and Questions
 
 `mlr3fairness` is a free and open source software project that
 encourages participation and feedback. If you have any issues,
