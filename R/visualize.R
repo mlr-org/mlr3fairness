@@ -164,7 +164,7 @@ compare_metrics.PredictionClassif = function(object, measures = msr("fairness.ac
   data = melt(scores[, ids(measures), with = FALSE], measure.vars = names(scores))
   ggplot(data, aes(x = variable, y = value)) +
     geom_bar(stat = "identity") +
-    xlab("Metrics") +
+    xlab("Metric") +
     ylab("Value") +
     theme(legend.position = "none") +
     scale_fill_hue(c = 100, l = 60)
@@ -177,7 +177,7 @@ compare_metrics.BenchmarkResult = function(object, measures = msr("fairness.acc"
   data = melt(scores[, c(ids(measures), "learner_id", "task_id"), with = FALSE], id.vars = c("learner_id", "task_id"))
   ggplot(data, aes(x = learner_id, y = value, fill = variable)) +
     geom_bar(stat = "identity", position = "dodge") +
-    xlab("Metrics") +
+    xlab("Metric") +
     ylab("Value") +
     scale_fill_hue(name = "Metric", c = 100, l = 60) +
     facet_wrap(~task_id)

@@ -34,11 +34,10 @@ options(tinytex.verbose = TRUE)
 set.seed(4444L)
 library("mlr3misc")
 library("ggplot2")
-library("mlr3")
-library("mlr3learners")
-library("lgr")
+library("mlr3verse")
 library("bbotk")
 library("mlr3tuning")
+library("patchwork")
 
 lgr::get_logger("bbotk")$set_threshold("warn")
 lgr::get_logger("mlr3")$set_threshold("warn")
@@ -55,12 +54,9 @@ This lack of availability can be detrimental to obtaining fair and unbiased mode
 Consequently, there exists considerable necessity for R packages (a) implementing such metrics and (b) connecting these metrics to existing ML frameworks.
 If biases are detected in a model and need to be mitigated, we furthermore require debiasing techniques that tightly integrate with the fitting and evaluation of the resulting models in order to obtain trade-offs between the fairness and utility (e.g., predictive accuracy) of a model.
 
-In this article, we present the package \CRANpkg{mlr3fairness}, which implements a wide variety of metrics that can be used to conduct fairness audits for ML algorithms along with visualizations for model predictions and resulting metrics.
-Our package does not only allow for fairness audits on a single model but also the simultaneous comparison of multiple models.
-\CRANpkg{mlr3fairness} is tightly integrated into the \CRANpkg{mlr3} [@mlr3] ecosystem which, among others, allows for the optimization of machine learning models with respect to multiple criteria such as predictive performance or fairness metrics.
-<!--
-TODO: Bisschen unstrukturiert der Paragraph ... was ist mit debiasing?
--->
+In this article, we present the \CRANpkg{mlr3fairness} package tightly integrated into the \CRANpkg{mlr3} [@mlr3] ecosystem of packages for ML in R.
+It brings fairness metrics, visualizations, and model-agnostic pre- and postprocessing operators to the table, allowing
+to conveniently perform fairness audits and build unbiased models.
 
 The remainder of this manuscript is structured as follows:
 We provide a brief introduction to the concepts of fairness in ML and discuss related software implementations.
@@ -161,61 +157,96 @@ Similar capabilities are also available in Julia's \pkg{Fairness.jl} [@fairnessj
 ## The mlr3 ecosystem {#mlr3}
 
 \CRANpkg{mlr3fairness} is tightly integrated into the ecosystem of packages around \CRANpkg{mlr3}.
-Besides the infrastructure implemented in \CRANpkg{mlr3} to fit, resample, or evaluate over 100 ML algorithms using a unified API, extension packages bring numerous additional advantages:
+Besides the infrastructure implemented in \CRANpkg{mlr3} to fit, resample, or evaluate over 100 ML algorithms using a unified API, extension packages bring numerous additional advantages.
+In the context of fairness, the following extension packages deserve special mention:
 
-* Flexible pre- and postprocessing via \CRANpkg{mlr3pipelines} [@mlr3pipelines].
+* \CRANpkg{mlr3pipelines} [@mlr3pipelines] for pre- and postprocessing.
   \CRANpkg{mlr3fairness} implements pre- and postprocessing operators as pipeline operators for \CRANpkg{mlr3pipelines}.
   This allows merging debiasing with arbitrary ML algorithms implemented in \CRANpkg{mlr3} as well as comparison of different models through joint resampling and tuning.
   It furthermore integrates with \CRANpkg{mcboost} [@mcboost], which implements further debiasing methods.
-* Extensive tuning capabilities via \CRANpkg{mlr3tuning}.
+* \CRANpkg{mlr3tuning} for its extensive tuning capabilities.
   Fusing debiasing techniques with ML algorithms as well as other often necessary
   preprocessing steps such as imputation of missing values or class balancing allows for joint tuning of hyperparameters with respect to
   arbitrary performance and fairness metrics.
-* Support for survival analysis tasks via \CRANpkg{mlr3proba} [@mlr3proba].
-* Post-hoc analysis of benchmarked approaches via \CRANpkg{mlr3benchmark}.
-* Connector to OpenML, an online scientific platform for collaborative ML [@Vanschoren2014], via \CRANpkg{mlr3oml}.
+* \CRANpkg{mlr3proba} [@mlr3proba] for survival analysis.
+* \CRANpkg{mlr3benchmark} for post-hoc analysis of benchmarked approaches.
+* \CRANpkg{mlr3oml} as a connector to OpenML [@Vanschoren2014], an online scientific platform for collaborative ML.
 
 In order to provide the required understanding for \CRANpkg{mlr3}, we briefly introduce some terminology and syntax.
-An extended introduction can be found in the mlr3 book \footnote{https://mlr3book.mlr-org.com}.
+A full introduction can be found in the mlr3 book \footnote{https://mlr3book.mlr-org.com}.
 
-A `Task` is a data set including a set of covariates and the target variable along with some meta-information such as which column corresponds to the target variable, strata and other relevant information.
-It provides a useful abstraction that allows for seamlessly switching between different data formats such as `data.table`s, sparse matrices or databases.
+A `Task` is the basic building block holding the data, storing covariates and the target variable along with some meta-information.
+It provides a useful abstraction that allows for seamlessly switching between different data formats such as `data.table`s, sparse matrices or (remote) databases.
 The shorthand constructor function `tsk()` can be used to quickly load example tasks shipped with \CRANpkg{mlr3} or \CRANpkg{mlr3fairness}.
 
 ```{r}
-library("mlr3")
+library("mlr3verse")
 library("mlr3fairness")
+
+# get the adult training data set
 task = tsk("adult_train")
 ```
 
-A `Learner` is a wrapper around an ML algorithm, e.g. around an implementation of a logistic regression or a decision trees.
-It can be trained on a `Task` and used for obtaining a `Prediction` which can subsequently be scored using a `Measure`.
+A `Learner` is a wrapper around an ML algorithm, e.g., around an implementation of a logistic regression or a decision tree.
+It can be trained on a `Task` and used for obtaining a `Prediction` which can subsequently be scored using a `Measure` to get an estimate for the predictive performance on new data.
 The shorthand constructors `lrn()` and `msr()` allow for the instantiation of implemented `Learner`s and `Measure`s, respectively.
 
 ```{r}
 # get a classification tree from package rpart
 learner = lrn("classif.rpart")
+
+# performance measure to use - classification accuracy
+measure = msr("classif.acc")
+
 # split into training and test set
 idx = partition(task)
+
 # fit model on training set
 learner$train(task, idx$train)
+
 # predict on observations of test set
 prediction = learner$predict(task, idx$test)
-```
 
-```{r}
 # score with classification accuracy
-prediction$score(msr("classif.acc"))
+prediction$score(measure)
+```
+
+As the split into training set and test set is stochastic, the procedure should be repeated multiple times and the resulting performance values should be aggregated.
+This process is called resampling, and can easily be performed with the `resample()` function, yielding a `ResampleResult` object:
+```{r}
+# use a 3-fold cross-validation strategy
+resampling = rsmp("cv", folds = 3)
+
+# perform resampling
+rr = resample(task, learner, resampling)
+
+# mean classification accuracy across 3 folds:
+rr$aggregate(measure)
+```
+
+To properly compare competing modeling approaches, candidates can be benchmarked against each other using the `benchmark()` function.
+```{r, warning = FALSE}
+# try a logistic regression
+learner2 = lrn("classif.log_reg")
+
+# build an exhaustive grid design
+grid = benchmark_grid(task, list(learner, learner2), resampling)
+
+# perform benchmark
+bmr = benchmark(grid)
+
+# aggregate results
+bmr$aggregate(measure)
 ```
 
 
-## mlr3fairness {#main}
+# mlr3fairness {#main}
 
 We split the exposition of \CRANpkg{mlr3fairness}'s capabilities in two sections, *detecting bias* and *debiasing*.
 A full example is included in the later use case and we therefore omit details discussed there in the following sections.
 
 
-#### Detecting bias
+### Detecting bias
 
 For brevity, we start our exposition from a fitted ML model, e.g. obtained through \CRANpkg{mlr3}.
 The ML model is trained on the widely used COMPAS data set [@compas] with the goal to predict whether a parolee will re-offend within a span of 2 years.
@@ -270,21 +301,16 @@ Looking at the individual components of the fairness this becomes clearer:
 fairness_tensor(prediction, task)
 ```
 
-```{r, echo=FALSE, output='hide'}
-library(patchwork)
-library(ggplot2)
-```
-
 ```{r}
 p1 = fairness_prediction_density(prediction, task)
 p2 = compare_metrics(prediction, msrs(c("fairness.fpr", "fairness.tpr", "fairness.eod")), task)
 ```
 
 ```{r, echo = FALSE, fig.height =3, fig.align='center'}
-(p1 + xlab("") + p2 ) * theme_bw() + theme(axis.text.x = element_text(angle = 30, hjust=.7))
+(p1 + xlab("") + p2) * theme_bw() + theme(axis.text.x = element_text(angle = 30, hjust = .7))
 ```
 
-#### Debiasing  {#debiasing}
+### Debiasing
 
 Table @ref{tab:debiasing} provides an overview over implemented debiasing techniques.
 Debiasing techniques are implemented as `PipeOps` from \pkg{mlr3pipelines} and can be
@@ -309,63 +335,58 @@ It is simple for users or package developers to extend \pkg{mlr3fairness} with a
 debiasing methods -- as an example, \pkg{mcboost} package adds further postprocessing methods
 that can further improve fairness.
 
+<!-- FIXME:
+multi-crit tuning valid?
+-->
+
 ## Case Study - Adult Income {#usecase}
 
-In order to demonstrate a full workflow, we conduct full bias assessment and
-debiasing on the popular adult data set [@uci]. The goal is to predict whether an
-individual's income is larger than \$$50.000$ with the protected attribute being *gender*. The data set
-comes included with \pkg{mlr3fairness} separated into a *train* and *test* task
-and can be instantiated using `tsk("adult_train")` and `tsk("adult_test")`
-respectively. As a fairness metric we consider *predictive parity* [@chouldechova2017fair]
-which calls for equality in true positive rates between groups. We furthermore are
-interested in the model's utility, e.g. its accuracy.
+In order to demonstrate a full workflow, we conduct full bias assessment and debiasing on the popular adult data set [@uci].
+The goal is to predict whether an individual's income is larger than \$$50.000$ with the protected attribute being *gender*.
+The data set ships with \CRANpkg{mlr3fairness}, separated into a *train* and *test* task and can be instantiated using `tsk("adult_train")` and `tsk("adult_test")`,  respectively.
+As a fairness metric we consider *predictive parity* [@chouldechova2017fair] which calls for equality in true positive rates between groups.
+We furthermore are interested in the model's utility, e.g. its accuracy.
 
 ```{r}
-library(mlr3)
-library(mlr3fairness)
+library("mlr3verse")
+library("mlr3fairness")
+
 task = tsk("adult_train")
 metrics = msrs(c("fairness.tpr", "classif.acc"))
-task
+print(task)
 ```
 
 
-In order to get an initial perspective, we benchmark two simple models using 10-fold cross-validation:
+In order to get an initial perspective, we benchmark three models using 3-fold cross-validation:
+
+* a classification tree from the \CRANpkg{rpart} package,
+* a penalized logistic regression from the \CRANpkg{glmnet} package, and
+* a penalized logistic regression from the \CRANpkg{glmnet} package, but with reweighs preprocessing.
+
+The logistic regression in the latter two approaches do not support operating on factor features natively, therefore we pre-process the data with a feature encoder from \CRANpkg{mlr3pipelines}:
 
 ```{r, message = FALSE, warning=FALSE, error=FALSE}
-library(mlr3pipelines)
-grd = benchmark_grid(
-  tasks = tsks("adult_train"),
-  learners = list(
+learners = list(
     lrn("classif.rpart"),
-    as_learner(po("encode") %>>% lrn("classif.glmnet"))),
-  resamplings = rsmp("cv", folds = 3)
+    po("encode") %>>% lrn("classif.glmnet"),
+    po("encode") %>>% po("reweighing_wts") %>>% po("learner", lrn("classif.glmnet"))
 )
-bmr1 = benchmark(grd)
-bmr1$aggregate(metrics)[, c(4,7,8)]
-```
-
-Both baseline models have small bias, and our goal is now to improve over this baseline.
-We use \pkg{mlr3pipelines} to build a pipeline that (1) encodes categorical features
-(2) reweighs data points as described in Section  @ref{mlr3} and then fits a
-penalized logistic regression model.
-
-```{r, warning=FALSE}
-lrn = as_learner(po("encode") %>>% po("reweighing_wts") %>>% po("learner", lrn("classif.glmnet")))
-grd = benchmark_grid(
+grid = benchmark_grid(
   tasks = tsks("adult_train"),
-  learners = list(lrn),
+  learners = learners,
   resamplings = rsmp("cv", folds = 3)
 )
-bmr2 = benchmark(grd)
-bmr2$aggregate(metrics)[, c(4,7,8)]
+
+bmr1 = benchmark(grid)
+bmr1$aggregate(metrics)[, c(4, 7, 8)]
 ```
-To see if we can improve over those baselines we use \CRANpkg{mlr3tuning} to
-jointly tune all hyperparameters of the *glmnet* model as well as our reweighing
-hyperparameter. In order to do this, we use a `AutoTuner` from \pkg{mlr3tuning};
-a model that tune's its own hyperparameters during training. The full code for setting up
-this model can be found in the appendix and is omitted here for brevity. A `AutoTuner`
-requires a specific metric to tune for. Here, we define a fairness-thresholded accuracy
-metric. We set $\epsilon = 0.01$ as a threshold.
+
+The preprocessing step of reweighing already improved the fairness while sacrificing only a tiny bit of performance. <!-- TODO CHECK with seed -->
+
+To see if we can further improve, we use \CRANpkg{mlr3tuning} to jointly tune all hyperparameters of the *glmnet* model as well as our reweighing hyperparameter.
+In order to do this, we use a `AutoTuner` from \CRANpkg{mlr3tuning}; a model that tunes its own hyperparameters during training.
+The full code for setting up this model can be found in the appendix and is omitted here for brevity.
+A `AutoTuner` requires a specific metric to tune for. Here, we define a fairness-thresholded accuracy metric. We set $\epsilon = 0.01$ as a threshold.
 
 \[
   if \; \Delta_{EOd} \leq \epsilon: accuracy \;\; else: \; 1 + \Delta_{EOd}
@@ -410,18 +431,19 @@ grd = benchmark_grid(
   resamplings = rsmp("cv", folds = 3)
 )
 
-bmr3 = benchmark(grd, store_models = TRUE)
-bmr3$aggregate(metrics)[, c(4, 7, 8)]
+bmr2 = benchmark(grd, store_models = TRUE)
+bmr2$aggregate(metrics)[, c(4, 7, 8)]
 ```
-The result improves wrt.\ accuracy while only slightly decreasing the measured fairness.
+
+The result improves w.r.t.\ accuracy while only slightly decreasing the measured fairness.
 Note, that the generalization error is estimated using a holdout strategy during training
 and slight violations of the desired threshold $\epsilon$ are therefore normal.
-The different results of all $3$ experiments can then be collected and jointly visualized.
+The results of both benchmark experiments can then be collected and jointly visualized.
 In addition to aggregate scores, individual iterations of the 3 fold Cross-Validation are depicted
 to visualize variations in the individual results.
 
 ```{r}
-bmr = c(bmr1, bmr2, bmr3)
+bmr = c(bmr1, bmr2)
 fairness_accuracy_tradeoff(bmr, fairness_measure = metrics[[1]])
 ```
 Especially when considering optimizing accuracy while still retaining a fair model,
@@ -430,17 +452,13 @@ tuning can be helpful and further improve
 
 ## Summary
 
-The large-scale availability and use of automated decision making systems have resulted in growing concerns for
-a lack of fairness in the decisions made by such systems. As a result, fairness metrics and debiasing methods that allow for investigating un-fairness and hopefully alleviating biases in existing systems have been proposed.
-Widely available implementations of such methods are still not widely available, especially considering the required
-interoperability with machine learning toolkits that allows for ease of use and integration into model evaluation and tuning.
+The large-scale availability and use of automated decision making systems have resulted in growing concerns for a lack of fairness in the decisions made by such systems.
+As a result, fairness metrics and debiasing methods that allow for investigating un-fairness and hopefully alleviating biases in existing systems have been proposed.
+Widely available implementations of such methods are still not widely available, especially considering the required interoperability with machine learning toolkits that allows for ease of use and integration into model evaluation and tuning.
 
 We have presented \CRANpkg{mlr3fairness}, a package for fairness auditing and bias correction on mlr3 models.
-Integrated fairness metrics allow for auditing ML models with respect to a multiplicity of fairness criteria and
-models identified as biased can subsequently be retrained / debiased using implemented debiasing methods.
-
-We hope, that this package can constitute a first step towards more equitable outcomes in automated decision making.
-
+Integrated fairness metrics allow for auditing ML models with respect to a multiplicity of fairness criteria and models identified as biased can subsequently be retrained / debiased using implemented debiasing methods.
+We hope that this package can constitute a first step towards more equitable outcomes in automated decision making.
 
 
 # Appendix
