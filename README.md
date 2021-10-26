@@ -177,10 +177,23 @@ fairness_prediction_density(predictions, task_test)
 
 An important step towards achieving more equitable outcomes for ML
 models is adequate documentation for datasets and models in machine
-learning.
+learning. `mlr3fairness` comes with reporting aides for `models` and
+`datasets`. This provides empty templates that can be used to create
+interactive reports through `RMarkdown`.
+
+| Report              | Description             | Reference             |
+| ------------------- | ----------------------- | --------------------- |
+| `report_modelcard`  | Modelcard for ML models | Mitchell et al., 2018 |
+| `repoort_datasheet` | Datasheet for data sets | Gebru et al., 2018    |
+
+**Usage:**
+
+The `report_*` functions instantiate a new `.Rmd` template that contains
+a set of pre-defined questions which can be used for reporting. It can
+later be converted into a `html` report using `rmarkdown`’s `render`.
 
 ``` r
-use_datasheet()
+report_datasheet()
 rmarkdown::render("datasheet/datasheet.Rmd")
 ```
 
