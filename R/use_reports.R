@@ -15,10 +15,10 @@
 #' `r format_bib("datasheets")`
 #' @examples
 #' \dontrun{
-#'   use_datasheet"documentation/datasheet.Rmd")
+#'   report_datasheet"documentation/datasheet.Rmd")
 #' }
 #' @export
-use_datasheet = function(filename = "datasheet.Rmd", edit = TRUE) {
+report_datasheet = function(filename = "datasheet.Rmd", edit = TRUE) {
   assert_path_for_output(filename)
   assert_flag(edit)
   rmarkdown::draft(filename, template = "datasheets", package = "mlr3fairness", edit = edit)
@@ -42,10 +42,10 @@ use_datasheet = function(filename = "datasheet.Rmd", edit = TRUE) {
 #' `r format_bib("modelcards")`
 #' @examples
 #' \dontrun{
-#'   use_modelcard("documentation/modelcard.Rmd")
+#'   report_modelcard("documentation/modelcard.Rmd")
 #' }
 #' @export
-use_modelcard = function(filename = "modelcard.Rmd", edit = TRUE) {
+report_modelcard = function(filename = "modelcard.Rmd", edit = TRUE) {
   assert_path_for_output(filename)
   assert_flag(edit)
   rmarkdown::draft(filename, template = "modelcards", package = "mlr3fairness", edit = edit)

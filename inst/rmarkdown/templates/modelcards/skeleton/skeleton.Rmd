@@ -1,5 +1,5 @@
 ---
-title: Model Card for ML Model
+title: Model card for "add model name here"
 author:
   - name: First Author
     affil: 1
@@ -20,8 +20,6 @@ bibliography: references.bib
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
-
-# Model card for "add model name here"
 
 Sections and prompts from the [model cards paper](https://arxiv.org/abs/1810.03993), v2. (@modelcards).
 
