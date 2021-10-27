@@ -181,20 +181,23 @@ learning. `mlr3fairness` comes with reporting aides for `models` and
 `datasets`. This provides empty templates that can be used to create
 interactive reports through `RMarkdown`.
 
-| Report              | Description             | Reference             |
-| ------------------- | ----------------------- | --------------------- |
-| `report_modelcard`  | Modelcard for ML models | Mitchell et al., 2018 |
-| `repoort_datasheet` | Datasheet for data sets | Gebru et al., 2018    |
+| Report             | Description             | Reference             |
+| ------------------ | ----------------------- | --------------------- |
+| `report_modelcard` | Modelcard for ML models | Mitchell et al., 2018 |
+| `report_datasheet` | Datasheet for data sets | Gebru et al., 2018    |
+| `report_fairness`  | Fairness Report         | –                     |
 
 **Usage:**
 
 The `report_*` functions instantiate a new `.Rmd` template that contains
-a set of pre-defined questions which can be used for reporting. It can
-later be converted into a `html` report using `rmarkdown`’s `render`.
+a set of pre-definedquestions which can be used for reporting as well as
+initial graphics. The created `.Rmd` file can then be extended by the
+user. It can later be converted into a `html` report using`rmarkdown`’s
+`render`.
 
 ``` r
-report_datasheet()
-rmarkdown::render("datasheet/datasheet.Rmd")
+rmdfile = report_datasheet()
+rmarkdown::render(rmdfile)
 ```
 
 ### Extensions
