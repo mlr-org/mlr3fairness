@@ -1,0 +1,61 @@
+---
+title: Fairness Report
+author:
+  - name: First Author
+output: html_document
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library("mlr3")
+library("mlr3viz")
+library("mlr3fairness")
+```
+
+```{r child = 'read_data.Rmd'}
+```
+
+Jump to section:
+
+- [Task details](#task-details)
+- [Model details](#model-details)
+
+## Task details
+
+In this fairness report, we investigate the fairness of the following task:
+
+```{r}
+task
+```
+
+We first look at the label distribution:
+
+```{r}
+autoplot(task) + facet_wrap(task$col_roles$pta)
+```
+
+## Model details
+
+### Fairness Metrics
+
+```{r}
+fair_metrics = msrs(c("fairness.acc","fairness.eod","fairness.fnr",
+  "fairness.fpr","fairness.npv","fairness.ppv","fairness.tnr",
+  "fairness.tpr"))
+```
+
+```{r}
+knitr::kable(resample_result$aggregate(fair_metrics))
+```
+
+
+```{r}
+fairness_accuracy_tradeoff(resample_result)
+```
+
+```{r, eval = (rr$learner$predict_type == "prob")}
+fairness_prediction_density(resample_result)
+```
+
+# References
