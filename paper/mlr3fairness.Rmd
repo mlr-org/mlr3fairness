@@ -58,13 +58,18 @@ In this article, we present the \CRANpkg{mlr3fairness} package tightly integrate
 It brings fairness metrics, visualizations, and model-agnostic pre- and postprocessing operators to the table, allowing
 to conveniently perform fairness audits and build unbiased models.
 
+<!--
+TODO: move somewhere else?
 The remainder of this manuscript is structured as follows:
 We provide a brief introduction to the concepts of fairness in ML and discuss related software implementations.
 We furthermore give a brief introduction to \CRANpkg{mlr3} before introducing the functionality shipped with our package.
 We conclude with a short case study demonstrating \CRANpkg{mlr3fairness}'s capabilities on the **Adult Income** data set.
+-->
 
 
-# Fairness in Machine Learning
+## Fairness in Machine Learning
+
+### Fairness Definitions
 
 Studies have found that data-driven automated decision-making systems often improve over human expertise (c.f. @dawes1989clinical) and high stakes decisions can therefore be improved using data-driven systems.
 This often does not only improve predictions but can also make decisions more efficient.
@@ -91,9 +96,8 @@ We now provide and discuss two examples from [@hardt2016equality] to provide fur
 A predictor $\hat{Y}$ satisfies *equalized odds* with respect to a protected attribute $A$ and observed outcome $Y$, if $\hat{Y}$ and $A$ are conditionally independent given $Y$:
 
 \begin{equation} \label{eq:eod}
-\mathbb{P}\left(\hat{Y} = 1 \mid A = 0, Y = y\right) = \mathbb{P}\left(\hat{Y} = 1 \mid A = 0, Y = y\right), \quad y \in \{0,1\}.
+\mathbb{P}\left(\hat{Y} = 1 \mid A = 0, Y = y\right) = \mathbb{P}\left(\hat{Y} = 1 \mid A = 1, Y = y\right), \quad y \in \{0,1\}.
 \end{equation}
-<!-- FIXME: Die Formel stimmt so nicht, LHS == RHS -->
 In short, we require the same true positive rates (TPR) and false positive rates (FPR) across both groups $A = 0$ and $A = 1$.
 
 #### Equality of Opportunity
@@ -101,10 +105,8 @@ In short, we require the same true positive rates (TPR) and false positive rates
 A predictor $\hat{Y}$ satisfies *equality of opportunity* with respect to a protected attribute $A$ and observed outcome $Y$, if $\hat{Y}$ and $A$ are conditionally independent given $Y = 1$ (where $Y = 1$ is the favoured outcome). This is a relaxation of the aforementioned *equalized odds* essentially only requiring equal TPRs:
 
 \begin{equation} \label{eq:eop}
-\mathbb{P}\left(\hat{Y} = 1 \mid A = 0, Y = 1\right) = \mathbb{P}\left(\hat{Y} = 1 \mid A = 0, Y = 1\right).
+\mathbb{P}\left(\hat{Y} = 1 \mid A = 0, Y = 1\right) = \mathbb{P}\left(\hat{Y} = 1 \mid A = 1, Y = 1\right).
 \end{equation}
-<!-- Die Formel stimmt so nicht, LHS == RHS -->
-<!-- FIXME: Die Formel stimmt so nicht, LHS == RHS -->
 
 
 While both metrics are conceptually similar, they encode a different belief of what constitutes *fair* in a given scenario.
@@ -117,15 +119,15 @@ In order to encode the requirements in Equations (\ref{eq:eod}) and (\ref{eq:eop
 
 We now might consider a model fair if $|\Delta_{\mathrm{TPR}}| < \epsilon$ for a given threshold $\epsilon$, e.g., $\epsilon = 0.05$, to allow for small deviations from perfect fairness due to variance in the estimation of $\mathrm{TPR}_{A=\star}$ or additional sources of bias.
 A collection of such metrics can be found e.g. in (@saleiro2018aequitas, @kim2020fact, @mehrabi).
-
 The goal of **debiasing techniques** is now to reduce such gaps, either by using data pre-processing, model inprocessing or post-processing techniques on the predictions.
+<!-- TODO: hier ein bisschen mehr -->
 <!--
 \CRANpkg{mlr3fairness} implements a wide variety of fairness metrics along with the possibility to implement and use custom fairness metrics based on this paradigm.
 It furthermore implements debiasing techniques described in @kamiran2012data and @hardt2016equality to allow for obtaining fair(er) models.
 -->
 
 
-## A short remark on mathematical fairness definitions
+#### A short remark on mathematical fairness definitions
 
 We want to briefly restate a remark similarly stated in @pfisterer2019multiobjective:
 It is important to note that fairness can not be achieved solely through a reduction into mathematical criteria, e.g. statistical and individual notions of fairness such as disparate treatment or disparate impact [@feldman2015certifying].
@@ -135,12 +137,12 @@ While metrics and visualizations proposed in this article can help investigate b
 Consider, for example, fairness metrics based on the TPR from above.
 If the labels $Y$ arise from a biased *label generating process*, there is little hope in obtaining fair outcomes even if fairness metrics indicate this.
 
-# Related work {#related}
+## Related work {#related}
 
 We now describe other software implemented in R or other programming languages and briefly describe their functionality.
 Additionally, we further describe the \CRANpkg{mlr3} to provide an overview over the ecosystem \CRANpkg{mlr3fairness} is integrated in.
 
-## Bias Auditing and Debiasing Software {#othersoft}
+<!-- ## Bias Auditing and Debiasing Software {#othersoft} -->
 
 Several R packages provide similar capabilities to our software, mostly focussing on fairness metrics and visualization.
 The \CRANpkg{fairness} package [@fairness] allows for the calculation of a variety of fairness metrics, while \CRANpkg{aif360} [@aif360] wraps the Python \pkg{aif360} module allowing for the computation of fairness metrics and several debiasing techniques but has only limited interoparability with R objects such as \code{data.frame}s.
@@ -153,6 +155,11 @@ The \pkg{aif360} [@aif360]  module similarly provides metrics as well as debiasi
 Interoperability with the \pkg{scikit-learn} [@sklearn] machine learning framework allow for debiasing a wide variety of machine learning models in all aforementioned systems.
 Similar capabilities are also available in Julia's \pkg{Fairness.jl} [@fairnessjl] library.
 
+
+
+# mlr3fairness {#main}
+
+We first bla mlr3, then bla mlr3fairness ...
 
 ## The mlr3 ecosystem {#mlr3}
 
@@ -240,7 +247,6 @@ bmr$aggregate(measure)
 ```
 
 
-# mlr3fairness {#main}
 
 We split the exposition of \CRANpkg{mlr3fairness}'s capabilities in two sections, *detecting bias* and *debiasing*.
 A full example is included in the later use case and we therefore omit details discussed there in the following sections.
@@ -339,7 +345,7 @@ that can further improve fairness.
 multi-crit tuning valid?
 -->
 
-## Case Study - Adult Income {#usecase}
+# Case Study - Adult Income {#usecase}
 
 In order to demonstrate a full workflow, we conduct full bias assessment and debiasing on the popular adult data set [@uci].
 The goal is to predict whether an individual's income is larger than \$$50.000$ with the protected attribute being *gender*.
@@ -450,7 +456,7 @@ Especially when considering optimizing accuracy while still retaining a fair mod
 tuning can be helpful and further improve
 
 
-## Summary
+# Summary
 
 The large-scale availability and use of automated decision making systems have resulted in growing concerns for a lack of fairness in the decisions made by such systems.
 As a result, fairness metrics and debiasing methods that allow for investigating un-fairness and hopefully alleviating biases in existing systems have been proposed.
