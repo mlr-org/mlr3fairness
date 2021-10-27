@@ -22,3 +22,18 @@ test_that("datasheets", {
   expect_true(readLines(out)[1] == "<!DOCTYPE html>")
   unlink(tmp, recursive = TRUE)
 })
+
+test_that("fairness_report", {
+  skip("Only tested locally")
+  tmp = tempdir()
+  unlink(tmp, recursive = TRUE)
+  task = tsk("compas")
+  learner = lrn("classif.rpart", prob = TRUE)
+  rr = resample(task, learner, rsmp("cv", folds = 5))
+  report_fairness(tmp, list(task = task, resampling_result = rr))
+  expect_true(all(list.files(tmp) %in% c("references.bib", "style.css", paste0(basename(tmp), ".Rmd"), "LICENSE")))
+  out = rmarkdown::render(paste0(tmp, "/", basename(tmp),  ".Rmd"))
+  expect_character(out)
+  expect_true(readLines(out)[1] == "<!DOCTYPE html>")
+  unlink(tmp, recursive = TRUE)
+})
