@@ -83,25 +83,15 @@ report_modelcard = function(filename = "modelcard.Rmd", edit = FALSE) {
 #' @export
 report_fairness = function(filename = "fairness_report.Rmd", objects, edit = FALSE) {
   assert_list(objects)
+  assert_subset(c("resampling_result", "task"), names(objects))
   assert_flag(edit)
+
   if (!dir.exists(dirname(filename))) {
     dir.create(dirname(filename), recursive = TRUE)
   }
   assert_path_for_output(filename)
+
   filepath = rmarkdown::draft(filename, template = "fairness_report", package = "mlr3fairness", edit = edit)
   write_files(objects, dirname(filepath))
-}
-
-
-
-write_files = function(objects, path) {
-  prefix = "```{r read-data, include = FALSE}"
-  reads = pmap_chr(list(objects, names(objects)), function(x, nm) {
-    file = paste0(path, "/", nm, ".RDS")
-    saveRDS(x, file = file)
-    paste0(nm, " = readRDS('", basename(file), "')")
-  })
-  postfix = "```"
-  writeLines(c(prefix, reads, postfix), paste0(path, "/read_data.Rmd"))
-
+  invisible(filepath)
 }

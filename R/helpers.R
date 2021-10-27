@@ -53,3 +53,22 @@ task_filter_ex = function(task, row_ids) {
   row_ids[duplicated(row_ids)] = task$row_ids[new_rows]
   task$filter(row_ids)
 }
+
+
+#' Write objects as .RDS files into path.
+#'
+#' @param objects [list] list of objects
+#' @param path [character] path to save to
+#'
+#' @return NULL
+#' @noRd
+write_files = function(objects, path) {
+  prefix = "```{r read-data, include = FALSE}"
+  reads = pmap_chr(list(objects, names(objects)), function(x, nm) {
+    file = paste0(path, "/", nm, ".RDS")
+    saveRDS(x, file = file)
+    paste0(nm, " = readRDS('", basename(file), "')")
+  })
+  postfix = "```"
+  writeLines(c(prefix, reads, postfix), paste0(path, "/read_data.Rmd"))
+}

@@ -12,7 +12,7 @@ library("mlr3")
 library("mlr3viz")
 library("mlr3fairness")
 ```
-
+<!-- This reads in `objects` provided to report_fairness: resampling_result, task, ...-->
 ```{r child = 'read_data.Rmd'}
 ```
 
@@ -46,16 +46,16 @@ fair_metrics = msrs(c("fairness.acc","fairness.eod","fairness.fnr",
 ```
 
 ```{r}
-knitr::kable(resample_result$aggregate(fair_metrics))
+knitr::kable(resampling_result$aggregate(fair_metrics))
 ```
 
 
 ```{r}
-fairness_accuracy_tradeoff(resample_result)
+fairness_accuracy_tradeoff(resampling_result)
 ```
 
 ```{r, eval = (rr$learner$predict_type == "prob")}
-fairness_prediction_density(resample_result)
+fairness_prediction_density(resampling_result)
 ```
 
 # References
