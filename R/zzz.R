@@ -29,9 +29,11 @@
 
   # Define a set of widely used metrics. Documented in mlr_measures_fairness
   x = getFromNamespace("mlr_measures", ns = "mlr3")
+  # Constructors
   x$add("fairness", MeasureFairness)
   x$add("fairness.composite", MeasureFairnessComposite)
   x$add("fairness.constraint", MeasureFairnessConstraint)
+  # Ratios
   x$add("fairness.fpr", MeasureFairness, base_measure = msr("classif.fpr"), range = c(0, 1))
   x$add("fairness.fnr", MeasureFairness, base_measure = msr("classif.fnr"), range = c(0, 1))
   x$add("fairness.tpr", MeasureFairness, base_measure = msr("classif.tpr"), range = c(0, 1))
@@ -39,10 +41,15 @@
   x$add("fairness.ppv", MeasureFairness, base_measure = msr("classif.ppv"), range = c(0, 1))
   x$add("fairness.npv", MeasureFairness, base_measure = msr("classif.npv"), range = c(0, 1))
   x$add("fairness.acc", MeasureFairness, base_measure = msr("classif.acc"), range = c(0, 1))
+  # Counts
   x$add("fairness.fp", MeasureFairness, base_measure = msr("classif.fp"))
   x$add("fairness.fn", MeasureFairness, base_measure = msr("classif.fn"))
+  # Compositions
   x$add("fairness.eod", MeasureFairnessComposite, measures = list("fairness.fpr", "fairness.tpr"),
     id = "equalized_odds", range = c(0, 1))
+  x$add("fairness.acc_eod=.05", MeasureFairnessConstraint, performance_measure = msr("classif.acc"),
+    fairness_measure = msr("fairness.eod"), epsilon = 0.05, id = "fairness.acc_eod=.05", range = c(-1, 1))
+  # New
   x$add("classif.pp", MeasurePositiveProbability, range = c(0, 1))
 
 

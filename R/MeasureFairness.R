@@ -112,8 +112,7 @@ mlr_measures$add("fairness", MeasureFairness)
 #' msr("fairness.fn")
 mlr_measures_fairness = rowwise_table(
   ~key, ~description,
-  "fairness.eod", "Equalized Odds: Sum of abs. difference between true positive and
-    false positive rates across groups",
+  "fairness.eod", "Equalized Odds: Sum of abs. difference between true pos. and false pos. rates across groups",
   "fairness.fpr", "Abs. difference in false positive rates across groups",
   "fairness.acc", "Abs. difference in accuracy across groups (Overall accuracy equality)",
   "fairness.tpr", "Abs. difference in true positive rates across groups",
@@ -121,5 +120,6 @@ mlr_measures_fairness = rowwise_table(
   "fairness.ppv", "Abs. difference in positive predictive values across groups ",
   "fairness.npv", "Abs. difference in negative predictive values across groups",
   "fairness.fp", "Abs. difference in false positives across groups",
-  "fairness.fn", "Abs. difference in false negatives across groups"
+  "fairness.fn", "Abs. difference in false negatives across groups",
+  "fairness.acc_eod=.05", "Accuracy under equalized odds constraint"
 )
