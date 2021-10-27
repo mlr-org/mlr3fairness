@@ -1,0 +1,23 @@
+body {
+  overflow-x: hidden;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+html {
+    height: 100%;
+}
+body {
+    min-height: 100%;
+}
+
+div.poster_wrap {
+  padding:  1in;
+}
+
+div.title_container {
+  height: calc(81in * 0.066);
+}
+h1#title {
+  font-size: 125pt;
+}

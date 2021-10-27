@@ -3,7 +3,7 @@ bibentries = c(
   dua_2019 = bibentry("misc",
     author = "Dua, Dheeru and Graff, Casey",
     year = "2017",
-    title = "{UCI} Machine Learning Repository",
+    title = "UCI Machine Learning Repository",
     url = "http://archive.ics.uci.edu/ml",
     institution = "University of California, Irvine, School of Information and Computer Sciences"
   ),
@@ -38,6 +38,21 @@ bibentries = c(
     pages="1--33",
     year="2012",
     publisher="Springer"
+  ),
+
+  datasheets = bibentry("article",
+    title="Datasheets for datasets",
+    author="Gebru, Timnit and Morgenstern, Jamie and Vecchione, Briana and Vaughan, Jennifer Wortman and Wallach, Hanna and Daume III, Hal and Crawford, Kate",
+    journal="arXiv preprint arXiv:1803.09010",
+    year="2018"
+  ),
+
+  modelcards = bibentry("inproceedings",
+    title="Model cards for model reporting",
+    author="Mitchell, Margaret and Wu, Simone and Zaldivar, Andrew and Barnes, Parker and Vasserman, Lucy and Hutchinson, Ben and Spitzer, Elena and Raji, Inioluwa Deborah and Gebru, Timnit",
+    booktitle="Proceedings of the conference on fairness, accountability, and transparency",
+    pages="220--229",
+    year="2019"
   )
 
 )
