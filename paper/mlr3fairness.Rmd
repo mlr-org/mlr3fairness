@@ -320,18 +320,18 @@ We provide a list of implemented fairness metrics below. Note, that new fairness
 
 Table: (\#tab:metrics) List of implemented fairness metrics:
 
-|key                  |description                                                                                 |
-|:--------------------|:-------------------------------------------------------------------------------------------|
-|fairness.eod         |Equalized Odds: Sum of abs. difference between true pos. and false pos. rates across groups |
-|fairness.fpr         |Abs. difference in false positive rates across groups                                       |
-|fairness.acc         |Abs. difference in accuracy across groups (Overall accuracy equality)                       |
-|fairness.tpr         |Abs. difference in true positive rates across groups                                        |
-|fairness.tnr         |Abs. difference in true negative rates across groups                                        |
-|fairness.ppv         |Abs. difference in positive predictive values across groups                                 |
-|fairness.npv         |Abs. difference in negative predictive values across groups                                 |
-|fairness.fp          |Abs. difference in false positives across groups                                            |
-|fairness.fn          |Abs. difference in false negatives across groups                                            |
-|fairness.acc\_eod=.05 |Accuracy under equalized odds constraint                                                   |
+|key                   |description                                                                                 |
+|:---------------------|:-------------------------------------------------------------------------------------------|
+|fairness.acc          | accuracy equality \citet{gendershades}                                                     |
+|fairness.fpr          | false positive rate equality/predictive equality \citet{chouldechova2017fair}              |
+|fairness.tpr          | true positive rate equality /equality of opportunity \citet{hardt2016equality}             |
+|fairness.fnr          | false negative / false omission rate equality \citet{richardcompas}                        |
+|fairness.tnr          | true negative rate equality                                                                |
+|fairness.eod          | equalized odds: fairness.fpr + fairness.tpr \citet{hardt2016equality}                      |
+|fairness.ppv          | demographic parity, equalized positive rates \citet{Calders2010}                           |
+|fairness.npv          | equalized negative rates                                                                   |
+|fairness.acc\_eod=.05 |Accuracy under equalized odds constraint \citet{perrone2021fair}                            |
+|fairness.acc\_ppv=.05 |Accuracy under equalized odds constraint \citet{perrone2021fair}                            |
 
 
 ### Debiasing
