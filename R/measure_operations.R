@@ -21,7 +21,7 @@ groupdiff_tau = function(x) {
   }
 
   mat = outer(x, x, FUN = "/")
-  mat = mat[mat <= 1 & (lower.tri(mat) | upper.tri(mat)) & !is.nan(mat)]
+  mat = mat[mat <= 1 & !diag(x) & !is.nan(mat)]
   min(mat, na.rm = TRUE)
 }
 
@@ -45,9 +45,5 @@ groupdiff_absdiff = function(x) {
     return(0)
   }
 
-  mat = outer(x, x, FUN = "-")
-  mat = mat[(lower.tri(mat) | upper.tri(mat)) & !is.nan(mat)]
-
-  # FIXME: WTF?
-  max(abs(mat), na.rm = TRUE)
+  max(dist(x, method = "manhattan"), na.rm = TRUE)
 }
