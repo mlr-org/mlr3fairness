@@ -1,5 +1,0 @@
-```{r read-data, include = FALSE}
-task = readRDS('task.RDS')
-resampling_result = readRDS('resampling_result.RDS')
-foo = readRDS('foo.RDS')
-```
