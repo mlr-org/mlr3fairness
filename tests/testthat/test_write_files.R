@@ -10,5 +10,5 @@ test_that("write_files", {
   })
   ll = readLines(lfiles[!grepl(".RDS", lfiles)])
   expect_true(ll[2] == "one = readRDS('one.RDS')")
-  unlink(tdir, recursive = TRUE)
+  unlink(list.files(tdir, full.names = TRUE), recursive = TRUE)
 })
