@@ -4,7 +4,7 @@
 \name{compas}
 \alias{compas}
 \alias{Compas}
-\title{Compas Dataset}
+\title{COMPAS Dataset}
 \source{
 \url{https://github.com/propublica/compas-analysis}
 }

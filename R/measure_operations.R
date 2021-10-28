@@ -1,15 +1,15 @@
 #' Groupwise Ratio
 #'
 #' @description
-#' Computes `min(x/y, y/x)` i.e. the smallest symmetric ratio between x and y
-#' that is smaller than 1. If x is a vector, the symmetric ratio between all
-#' elements in 'x' is computed.
+#' Computes \eqn{min(x/y, y/x)}, i.e. the smallest symmetric ratio between \eqn{x} and eqn{y}
+#' that is smaller than 1. If \eqn{x} is a vector, the symmetric ratio between all
+#' elements in \eqn{x} is computed.
 #'
-#' @param x (`numeric()`) \cr
+#' @param x (`numeric()`)\cr
 #'   Measured performance in group 1, 2, ...
 #' @export
 #' @examples
-#' groupdiff_tau(runif(3))
+#' groupdiff_tau(1:3)
 groupdiff_tau = function(x) {
   assert_numeric(x, min.len = 2L)
   if (anyMissing(x)) {
@@ -21,20 +21,20 @@ groupdiff_tau = function(x) {
   }
 
   mat = outer(x, x, FUN = "/")
-  mat = mat[mat <= 1 & (lower.tri(mat) | upper.tri(mat)) & !is.nan(mat)]
+  mat = mat[mat <= 1 & !diag(x) & !is.nan(mat)]
   min(mat, na.rm = TRUE)
 }
 
 #' Groupwise Absolute Differences
 #'
-#' Computes `max(abs(x-y, y-x))` i.e. the smallest symmetric ratio between x and y
-#' that is smaller than 1. If x is a vector, the symmetric ratio between all
-#' elements in 'x' is computed.
-#' @param x ´numeric` \cr
+#' Computes \eqn{max(abs(x-y, y-x))}, i.e. the smallest symmetric ratio between \eqn{x} and \eqn{y}
+#' that is smaller than 1. If \eqn{x} is a vector, the symmetric ratio between all
+#' elements in \eqn{x} is computed.
+#' @param x (´numeric()`)\cr
 #'   Measured performance in group 1, 2, ...
 #' @export
 #' @examples
-#' groupdiff_absdiff(runif(3))
+#' groupdiff_absdiff(1:3)
 groupdiff_absdiff = function(x) {
   assert_numeric(x, min.len = 2L)
   if (anyMissing(x)) {
@@ -45,7 +45,5 @@ groupdiff_absdiff = function(x) {
     return(0)
   }
 
-  mat = outer(x, x, FUN = "-")
-  mat = mat[(lower.tri(mat) | upper.tri(mat)) & !is.nan(mat)]
-  max(abs(mat), na.rm = TRUE)
+  max(dist(x, method = "manhattan"), na.rm = TRUE)
 }

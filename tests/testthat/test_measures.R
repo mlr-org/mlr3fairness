@@ -5,31 +5,31 @@ test_that("fairness measures work as expcted", {
     lrn("classif.rpart", predict_type = "prob")$train(tsk)$predict(tsk),
     lrn("classif.featureless", predict_type = "prob")$train(tsk)$predict(tsk)
   )
-  metrics = c("fairness.acc", "fairness.eod", "fairness.fn", "fairness.fnr", "fairness.fp",
-    "fairness.fpr", "fairness.npv", "fairness.ppv", "fairness.tpr")
-  map(prds, function(prd) {
-    map(metrics, function(m) {
+  metrics = mlr_measures_fairness$key
+
+  for (prd in prds) {
+    for (m in metrics) {
       out = prd$score(measures = msr(m), task = tsk)
       expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
       out = prd$score(measures = msr(m, operation = groupdiff_tau), task = tsk)
       expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
       out = prd$score(measures = msr(m, operation = groupdiff_absdiff), task = tsk)
       expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
-    })
-  })
+    }
+  }
 })
 
 test_that("fairness measures work as expected - simulated data", {
   tsk = test_task_small()
   prds = list(pred_small())
-  metrics = c("fairness.acc", "fairness.eod", "fairness.fn", "fairness.fnr", "fairness.fp",
-    "fairness.fpr", "fairness.npv", "fairness.ppv", "fairness.tpr")
-  map(prds, function(prd) {
-    map(metrics, function(m) {
+  metrics = mlr_measures_fairness$key
+
+  for (prd in prds) {
+    for (m in metrics) {
       out = prd$score(measures = msr(m), task = tsk)
       expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
-    })
-  })
+    }
+  }
 })
 
 
@@ -45,11 +45,11 @@ test_that("fairness errors on missing pta, works with", {
     truth = as.factor(c(1, 1, 2, 2, 1, 1, 2, 1, 2, 2, 2, 1, 1, 1, 2, 1)),
     response = as.factor(c(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2))
   )
-  expect_error(prd$score(msr("fairness.acc"), task = task), "must have col_roles")
+  expect_error(prd$score(msr("fairness.acc"), task = task), "role 'pta'", fixed = TRUE)
   task$col_roles$pta = "pta"
-  expect_true(prd$score(msr("fairness.acc"), task = task) == 0.125)
-  expect_true(prd$score(msr("fairness.fpr"), task = task) < 0.1)
-  expect_true(prd$score(msr("fairness.tpr"), task = task) - 0.15 < 1e-8)
+  expect_equal(unname(prd$score(msr("fairness.acc"), task = task)), 0.125)
+  expect_lt(prd$score(msr("fairness.fpr"), task = task), 0.1)
+  expect_lt(prd$score(msr("fairness.tpr"), task = task) - 0.15, 1e-8)
 })
 
 test_that("fairness works with non-binary pta", {
@@ -64,7 +64,7 @@ test_that("fairness works with non-binary pta", {
     truth = as.factor(c(1, 1, 2, 2, 1, 1, 2, 1, 2, 2, 2, 1, 1, 1, 2, 1)),
     response = as.factor(c(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2))
   )
-  expect_error(prd$score(msr("fairness.acc"), task = task), "must have col_roles")
+  expect_error(prd$score(msr("fairness.acc"), task = task), "role 'pta'", fixed = TRUE)
   task$col_roles$pta = "pta"
   expect_number(prd$score(msr("fairness.acc"), task = task), lower = 0, upper = 1)
   expect_number(prd$score(msr("fairness.tpr"), task = task), lower = 0, upper = 1)
@@ -82,7 +82,7 @@ test_that("fairness works on non-binary target", {
     truth = as.factor(c(1, 1, 2, 2, 1, 1, 2, 1, 2, 2, 2, 1, 1, 1, 2, 1)),
     response = as.factor(c(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2))
   )
-  expect_error(prd$score(msr("fairness.acc"), task = task), "must have col_roles")
+  expect_error(prd$score(msr("fairness.acc"), task = task), "role 'pta'", fixed = TRUE)
   task$col_roles$pta = "pta"
   expect_number(prd$score(msr("fairness.acc"), task = task), lower = 0, upper = 1)
   expect_warning(prd$score(msr("fairness.tpr"), task = task), "is missing properties")
@@ -95,52 +95,52 @@ predictions = pred_small()
 
 test_that("fairness.fpr can be loaded and work as expected", {
   msr_obj = msr("fairness", base_measure = msr("classif.fpr"))
-  expect_true(round(predictions$score(msr_obj, test_data), 4) == 0.0833)
+  expect_equal(unname(round(predictions$score(msr_obj, test_data), 4)), 0.0833)
 })
 
 test_that("fairness.acc can be loaded and work as expected", {
   msr_obj = msr("fairness", base_measure = msr("classif.acc"))
-  expect_true(abs(predictions$score(msr_obj, test_data) - 0.125) < delta)
+  expect_lt(abs(predictions$score(msr_obj, test_data) - 0.125), delta)
 })
 
 test_that("fairness.fnr can be loaded and work as expected", {
   msr_obj = msr("fairness", base_measure = msr("classif.fnr"))
-  expect_true(abs(predictions$score(msr_obj, test_data) - 0.15) < delta)
+  expect_lt(abs(predictions$score(msr_obj, test_data) - 0.15), delta)
 })
 
 test_that("fairness.tpr can be loaded and work as expected", {
   msr_obj = msr("fairness", base_measure = msr("classif.tpr"))
-  expect_true(abs(predictions$score(msr_obj, test_data) - 0.15) < delta)
+  expect_lt(abs(predictions$score(msr_obj, test_data) - 0.15), delta)
 })
 
 test_that("fairness.ppv can be loaded and work as expected", {
   msr_obj = msr("fairness", base_measure = msr("classif.ppv"))
-  expect_true(abs(predictions$score(msr_obj, test_data) - 0.25) < delta)
+  expect_lt(abs(predictions$score(msr_obj, test_data) - 0.25), delta)
 })
 
 test_that("fairness.npv can be loaded and work as expected", {
   msr_obj = msr("fairness", base_measure = msr("classif.npv"))
-  expect_true(abs(predictions$score(msr_obj, test_data) - 0) < delta)
+  expect_lt(abs(predictions$score(msr_obj, test_data) - 0), delta)
 })
 
 test_that("fairness.fp can be loaded and work as expected", {
   msr_obj = msr("fairness", base_measure = msr("classif.fp"))
-  expect_true(predictions$score(msr_obj, test_data) == 1)
+  expect_equal(unname(predictions$score(msr_obj, test_data)), 1)
 })
 
 test_that("fairness.fn can be loaded and work as expected", {
   msr_obj = msr("fairness", base_measure = msr("classif.fn"))
-  expect_true(predictions$score(msr_obj, test_data) == 0)
+  expect_equal(unname(predictions$score(msr_obj, test_data)), 0)
 })
 
 test_that("fairness.pp (disparate impact score) can be loaded and work as expected", {
   msr_obj = msr("fairness", base_measure = msr("classif.pp"))
-  expect_true(predictions$score(msr_obj, test_data) == 0)
+  expect_equal(unname(predictions$score(msr_obj, test_data)), 0)
 })
 
-test_that("fairness. composite no id", {
+test_that("fairness.composite no id", {
   msr_obj = msr("fairness.composite", measures = msrs(c("classif.fpr", "classif.fnr")))
-  expect_true(msr_obj$id == "fairness.fpr_fnr")
+  expect_equal(msr_obj$id, "fairness.fpr_fnr")
 })
 
 test_that("fairness constraint measures - simulated data", {

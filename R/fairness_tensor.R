@@ -1,4 +1,4 @@
-#' @title Compute the fairness tensor given a prediction and task.
+#' @title Compute the Fairness Tensor given a Prediction and a Task
 #'
 #' @description
 #' A fairness tensor is a list of groupwise confusion matrices.
@@ -10,10 +10,9 @@
 #' @param ... `any`\cr
 #'   Currently not used.
 #' @return
-#'   `list` of confusion matrix for every group in `"pta"`.
+#'   `list()` of confusion matrix for every group in `"pta"`.
 #' @export
 #' @examples
-#' library(mlr3)
 #' task = tsk("compas")
 #' prediction = lrn("classif.rpart")$train(task)$predict(task)
 #' fairness_tensor(prediction, task)
@@ -23,10 +22,10 @@ fairness_tensor = function(object, task, ...) {
 
 #' @export
 fairness_tensor.data.table = function(object, task, ...) { # nolint
-  assert_true(all(c("truth", "prediction") %in% colnames(object)))
+  assert_names(colnames(object), must.include = c("truth", "prediction"))
 
   dt = data.table(
-    row_ids = seq_len(nrow(object)),
+    row_ids = object$row_ids %??% seq_len(nrow(object)),
     truth = object$truth,
     response = object$prediction
   )
@@ -37,11 +36,11 @@ fairness_tensor.data.table = function(object, task, ...) { # nolint
 #' @export
 fairness_tensor.PredictionClassif = function(object, task, ...) { # nolint
   assert_pta_task(task)
-  ft = map(
-    split(task$data(cols = c(task$backend$primary_key))[[1]], task$data(cols = task$col_roles$pta)),
-    function(rows) {
-      object$clone()$filter(rows)$confusion
-    }
-  )
-  return(ft)
+  get_confusion = function(row_ids) {
+    object$clone()$filter(row_ids)$confusion
+  }
+
+  cols = c(task$backend$primary_key, task$col_roles$pta)
+  data = task$data(cols = cols)
+  map(split(data, by = cols[2L], keep.by = FALSE), function(x) get_confusion(x[[1L]]))
 }

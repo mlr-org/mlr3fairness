@@ -1,4 +1,4 @@
-#' Fairness Accuracy Trade-off
+#' Plot Fairness Accuracy Trade-offs
 #'
 #' @description
 #' Provides visualization wrt. trade-offs between fairness and accuracy metrics across learners and
@@ -33,8 +33,6 @@
 #'
 #' @export
 #' @examples
-#' library(mlr3)
-#' library(mlr3fairness)
 #' library(mlr3learners)
 #' library(ggplot2)
 #'
@@ -126,8 +124,6 @@ fairness_accuracy_tradeoff.ResampleResult = function(object, fairness_measure = 
 #'
 #' @export
 #' @examples
-#' library(mlr3)
-#' library(mlr3fairness)
 #' library(mlr3learners)
 #'
 #' # Setup the Fairness Measures and tasks
@@ -160,7 +156,7 @@ compare_metrics = function(object, ...) {
 #' @export
 compare_metrics.PredictionClassif = function(object, measures = msr("fairness.acc"), task, ...) { # nolint
   measures = as_measures(measures)
-  scores = data.table(as.data.frame(t(object$score(measures, task = task, ...))))
+  scores = setDT(as.data.frame(t(object$score(measures, task = task, ...))))
   data = melt(scores[, ids(measures), with = FALSE], measure.vars = names(scores))
   ggplot(data, aes(x = variable, y = value)) +
     geom_bar(stat = "identity") +
@@ -207,8 +203,6 @@ compare_metrics.ResampleResult = function(object, measures = msr("fairness.acc")
 #'
 #' @export
 #' @examples
-#' library(mlr3)
-#' library(mlr3fairness)
 #' library(mlr3learners)
 #'
 #' task = tsk("adult_train")$filter(1:500)
@@ -258,7 +252,14 @@ fairness_prediction_density.PredictionClassif = function(object, task, ...) { # 
 
 #' @export
 fairness_prediction_density.BenchmarkResult = function(object, ...) { # nolint
-  assert_true(all("prob" %in% map_chr(object$learners$learner, "predict_type")))
+  if (object$task_type != "classif") {
+    stopf("fairness_prediction_density() only works on classification problems")
+  }
+
+  predict_types = map_chr(object$learners$learner, "predict_type")
+  if (any(predict_types != "prob")) {
+    stopf("fairness_prediction_density() requires predict type 'prob'")
+  }
 
   dt = rbindlist(map(object$resample_results$resample_result, function(rr) {
     dt = rbindlist(map(rr$predictions(), as.data.table))

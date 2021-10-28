@@ -1,4 +1,4 @@
-#' @title Compas Dataset
+#' @title COMPAS Dataset
 #'
 #' @name compas
 #' @aliases Compas

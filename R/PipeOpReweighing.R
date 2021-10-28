@@ -61,8 +61,6 @@
 #' @export
 #' @examples
 #' library(mlr3pipelines)
-#' library(mlr3fairness)
-#' library(mlr3)
 #'
 #' reweighing = po("reweighing_wts")
 #' learner_po = po("learner", learner = lrn("classif.rpart"))
@@ -162,6 +160,8 @@ PipeOpReweighingOversampling = R6Class("PipeOpReweighingOversampling",
         stop("Only binary classification Tasks are supported.")
       }
       assert_pta_task(task)
+
+      sel = rnd = NULL
       pv = self$param_set$get_values()
       wtab = compute_reweighing_weights(task, pv$alpha)
       dt = task$data(cols = c(task$target_names, task$col_roles$pta, task$backend$primary_key))

@@ -2,12 +2,13 @@
 #' @import mlr3misc
 #' @import R6
 #' @import checkmate
-#' @import mlr3measures
 #' @import mlr3pipelines
+#' @import mlr3measures
 #' @import ggplot2
-#' @importFrom utils getFromNamespace data
 #' @import paradox
 #' @import data.table
+#' @importFrom utils getFromNamespace data
+#' @importFrom stats runif
 "_PACKAGE"
 
 .onLoad = function(libname, pkgname) { # nolint
@@ -29,31 +30,28 @@
 
   # Define a set of widely used metrics. Documented in mlr_measures_fairness
   x = getFromNamespace("mlr_measures", ns = "mlr3")
-  # Constructors
+  # constructors
   x$add("fairness", MeasureFairness)
   x$add("fairness.composite", MeasureFairnessComposite)
   x$add("fairness.constraint", MeasureFairnessConstraint)
-  # Ratios
-  x$add("fairness.fpr", MeasureFairness, base_measure = msr("classif.fpr"), range = c(0, 1))
-  x$add("fairness.fnr", MeasureFairness, base_measure = msr("classif.fnr"), range = c(0, 1))
-  x$add("fairness.tpr", MeasureFairness, base_measure = msr("classif.tpr"), range = c(0, 1))
-  x$add("fairness.tnr", MeasureFairness, base_measure = msr("classif.tnr"), range = c(0, 1))
-  x$add("fairness.ppv", MeasureFairness, base_measure = msr("classif.ppv"), range = c(0, 1))
-  x$add("fairness.npv", MeasureFairness, base_measure = msr("classif.npv"), range = c(0, 1))
-  x$add("fairness.acc", MeasureFairness, base_measure = msr("classif.acc"), range = c(0, 1))
-  # Counts
-  x$add("fairness.fp", MeasureFairness, base_measure = msr("classif.fp"))
-  x$add("fairness.fn", MeasureFairness, base_measure = msr("classif.fn"))
-  # Compositions
-  x$add("fairness.eod", MeasureFairnessComposite, measures = list("fairness.fpr", "fairness.tpr"),
-    id = "equalized_odds", range = c(0, 1))
+  x$add("classif.pp", MeasurePositiveProbability)
+  # rates
+  for (key in c("fnr", "fpr", "tnr", "tpr", "npv", "ppv", "fomr")) {
+    x$add(sprintf("fairness.%s", key), MeasureFairness,
+      base_measure = msr(sprintf("classif.%s", key), range = c(0,1)))
+  }
+  # counts
+  for (key in c("fn", "fp", "tn", "tp")) {
+    x$add(sprintf("fairness.%s", key), MeasureFairness,
+      base_measure = msr(sprintf("classif.%s", key)))
+  }
+  # compositions
+  x$add("fairness.eod", MeasureFairnessComposite, measures = msrs(c("fairness.fpr", "fairness.tpr")),
+    id = "equalized_odds")
   x$add("fairness.acc_eod=.05", MeasureFairnessConstraint, performance_measure = msr("classif.acc"),
     fairness_measure = msr("fairness.eod"), epsilon = 0.05, id = "fairness.acc_eod=.05", range = c(-1, 1))
-  x$add("fairness.acc_eod=.05", MeasureFairnessConstraint, performance_measure = msr("classif.acc"),
+  x$add("fairness.acc_ppv=.05", MeasureFairnessConstraint, performance_measure = msr("classif.acc"),
     fairness_measure = msr("fairness.ppv"), epsilon = 0.05, id = "fairness.acc_eod=.05", range = c(-1, 1))
-  # New
-  x$add("classif.pp", MeasurePositiveProbability, range = c(0, 1))
-
 
   x = getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
   x$add("reweighing_wts", PipeOpReweighingWeights)
@@ -64,3 +62,5 @@
   utils::globalVariables(c("variable", "value", "learner_id", "n_tgt", "n_pta", "pta", "task_id",
     "pta_cols", "wt", "N", "agg")) # nocov end
 }
+
+mlr3misc::leanify_package()

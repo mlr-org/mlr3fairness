@@ -22,13 +22,14 @@ library(mlr3)
 
 # Why we need fairness visualizations:
 
-Through fairness visualizations allow for first investigations into possible fairness problems in a dataset. In this vignette we will showcase some of the pre-built fairness visualization functions.
-All of the methods showcased below can be used together with objects of type `BenchmarkResult`, `ResampleResult` and `Prediction`.
+Through fairness visualizations allow for first investigations into possible fairness problems in a dataset.
+In this vignette we will showcase some of the pre-built fairness visualization functions.
+All the methods showcased below can be used together with objects of type `BenchmarkResult`, `ResampleResult` and `Prediction`.
 
 # The scenario
 
 For this example, we use the `adult_train` dataset.
-Keep in mind all the datasets from mlr3fairness package already set protected attribute via the `col_role` "pta", here the "sex" column.
+Keep in mind all the datasets from `mlr3fairness` package already set protected attribute via the `col_role` "pta", here the "sex" column.
 
 ```{r}
 t = tsk("adult_train")
