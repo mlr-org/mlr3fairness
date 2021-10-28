@@ -2,19 +2,27 @@
 % Please edit documentation in R/measure_operations.R
 \name{groupdiff_tau}
 \alias{groupdiff_tau}
-\title{Groupwise Ratio}
+\alias{groupdiff_absdiff}
+\title{Groupwise Operations}
 \usage{
 groupdiff_tau(x)
+
+groupdiff_absdiff(x)
 }
 \arguments{
-\item{x}{(\code{numeric()}) \cr
+\item{x}{(\code{numeric()})\cr
 Measured performance in group 1, 2, ...}
 }
 \description{
-Computes \code{min(x/y, y/x)} i.e. the smallest symmetric ratio between x and y
-that is smaller than 1. If x is a vector, the symmetric ratio between all
-elements in 'x' is computed.
+\code{groupdiff_tau()} computes \eqn{min(x/y, y/x)}, i.e. the smallest symmetric ratio between \eqn{x} and eqn{y}
+that is smaller than 1. If \eqn{x} is a vector, the symmetric ratio between all
+elements in \eqn{x} is computed.
+
+\code{groupdiff_absdiff()} computes \eqn{max(abs(x-y, y-x))}, i.e. the smallest absolute difference
+between \eqn{x} and \eqn{y}.
+If \eqn{x} is a vector, the symmetric absolute difference between all elements in \eqn{x} is computed.
 }
 \examples{
-groupdiff_tau(runif(3))
+groupdiff_tau(1:3)
+groupdiff_absdiff(1:3)
 }

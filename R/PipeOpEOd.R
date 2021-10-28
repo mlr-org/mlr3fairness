@@ -38,7 +38,7 @@
 #' @title Equalized Odds Debiasing
 #' @usage NULL
 #' @name mlr_pipeops_equalized_odds
-#' @format [`R6Class`] object inheriting from [`PipeOpTaskPreproc`]/[`PipeOp`].
+#' @format [R6Class] object inheriting from [`PipeOpTaskPreproc`]/[`PipeOp`].
 #'
 #' @description
 #'   Fairness post-processing method to achieve equalized odds fairness.
@@ -53,38 +53,36 @@
 #' ```
 #' PipeOpEOd*$new(id = "eod", param_vals = list())
 #' ```
-#' * `id` :: `character(1)`
-#' * `param_vals` :: `list`
+#' * `id` (`character(1))`.
+#' * `param_vals` (`list()`)
 #'
 #' @section Input and Output Channels:
-#' Input and output channels are inherited from [`PipeOpTaskPreproc`]. Instead of a [`Task`][mlr3::Task], a
-#' [`TaskClassif`][mlr3::TaskClassif] is used as input and output during training and prediction.
+#' Input and output channels are inherited from [PipeOpTaskPreproc]. Instead of a [`Task`][mlr3::Task], a
+#' [TaskClassif][mlr3::TaskClassif] is used as input and output during training and prediction.
 #'
-#' The output during training is the input [`Task`][mlr3::Task]. The output during prediction is
-#' a [`PredictionClassif`][mlr3::PredictionClassif] with partially flipped predictions.
+#' The output during training is the input [Task][mlr3::Task]. The output during prediction is
+#' a [PredictionClassif][mlr3::PredictionClassif] with partially flipped predictions.
 #'
 #' @section State:
-#' The `$state` is a named `list` with the `$state` elements inherited from [`PipeOpTaskPreproc`].
+#' The `$state` is a named `list` with the `$state` elements inherited from [PipeOpTaskPreproc].
 #'
 #' @section Parameters:
-#'  * `alpha` :: `numeric` A number between 0 (no debiasing) and 1 (full debiasing).
+#'  * `alpha` (`numeric()`): A number between 0 (no debiasing) and 1 (full debiasing).
 #'    Controls the debiasing strength by multiplying the flipping probabilities with alpha.
-#'  * `privileged` :: `character` The priviledged group.
+#'  * `privileged` (`character()`): The privileged group.
 #'
 #'
 #' @section Fields:
-#' Only fields inherited from [`PipeOpTaskPreproc`]/[`PipeOp`].
+#' Only fields inherited from [PipeOpTaskPreproc]/[`PipeOp`].
 #'
 #' @section Methods:
-#' Methods inherited from [`PipeOpTaskPreproc`]/[`PipeOp`].
+#' Methods inherited from [PipeOpTaskPreproc]/[PipeOp].
 #'
 #' @family PipeOps
 #' @seealso https://mlr3book.mlr-org.com/list-pipeops.html
 #' @export
 #' @examples
 #' library(mlr3pipelines)
-#' library(mlr3fairness)
-#' library(mlr3)
 #'
 #' eod = po("EOd")
 #' learner_po = po("learner_cv",
@@ -96,15 +94,17 @@
 #' graph = learner_po %>>% eod
 #' glrn = GraphLearner$new(graph)
 #' glrn$train(task)
+#'
 #' # On a Task
 #' glrn$predict(task)
+#'
 #' # On newdata
 #' glrn$predict_newdata(task$data(cols = task$feature_names))
 PipeOpEOd = R6Class("PipeOpEOd",
   inherit = PipeOp,
   public = list(
     #' @description
-    #' Creates a new instance of this [R6][R6::R6Class][`PipeOp`] R6 class.
+    #' Creates a new instance of this [R6][R6::R6Class][PipeOp] R6 class.
     #'
     #' @param id `character` \cr
     #'   The PipeOps identifier in the PipeOps library.
@@ -113,7 +113,7 @@ PipeOpEOd = R6Class("PipeOpEOd",
     initialize = function(id = "EOd", param_vals = list()) {
       ps = ps(
         alpha = p_dbl(0, 1, tags = "train"),
-        priviledged = p_uty(tags = "train")
+        privileged = p_uty(tags = "train")
       )
       ps$values = list(alpha = 1)
       super$initialize(id, param_set = ps, param_vals = param_vals,
@@ -129,7 +129,7 @@ PipeOpEOd = R6Class("PipeOpEOd",
       task = assert_pta_task(input[[1L]])
       params = self$param_set$get_values(tags = "train")
       # FIXME: which_max? -> random sampling in case of ties
-      private$.priviledged = params$priviledged %??% names(which.max(table(task$data(cols = task$col_roles$pta))))
+      private$.privileged = params$privileged %??% names(which.max(table(task$data(cols = task$col_roles$pta))))
       flips = private$.compute_flip_probs(task)
       self$state = list(flip_probs = map(flips, function(x) params$alpha * x))
     },
@@ -141,18 +141,18 @@ PipeOpEOd = R6Class("PipeOpEOd",
       ..pta = task$col_roles$pta
       ..tgt = task$col_roles$target
       prd = task$col_roles$feature
-      prv = private$.priviledged
+      prv = private$.privileged
 
       # Obtain data
       dt = task$data(cols = c(task$backend$primary_key, ..pta, ..tgt, prd))
       dt[, c(..tgt, prd) := map(.SD, as.factor), .SDcols = c(..tgt, prd)]
-      # Binary priviledged group indicator
+      # Binary privileged group indicator
       is_prv = dt[, get(..pta) == prv]
       if (sum(is_prv) < 1) {
-        stop("'priviledged' needs to be a valid value in the 'pta' column!") # nocov
+        stop("'privileged' needs to be a valid value in the 'pta' column!") # nocov
       }
 
-      # Priviledged
+      # privileged
       pn_idx = sample(which(dt[, is_prv & get(prd) == task$negative]))
       pp_idx = sample(which(dt[, is_prv & get(prd) == task$positive]))
       if (flips$sn2p > 0) {
@@ -164,7 +164,7 @@ PipeOpEOd = R6Class("PipeOpEOd",
         dt[p2n_idx, (prd) := task$negative]
       }
 
-      # Unpriviledged
+      # Unprivileged
       pp_idx = sample(which(dt[, !is_prv & get(prd) == task$positive]))
       pn_idx = sample(which(dt[, !is_prv & get(prd) == task$negative]))
       if (flips$op2p > 0) {
@@ -193,19 +193,19 @@ PipeOpEOd = R6Class("PipeOpEOd",
       ..tgt = task$col_roles$target
       prd = task$col_roles$feature
       pos = task$positive
-      prv = private$.priviledged
+      prv = private$.privileged
 
       # Obtain data
       dt = task$data(cols = c(..pta, ..tgt, prd))
       dt[, colnames(dt) := map(.SD, as.factor), .SDcols = colnames(dt)]
 
       # Compute base rates function
-      base_rate = function(truth, prediction, positive) sum(truth == positive) / length(truth)
+      base_rate = function(truth, prediction, positive) mean(truth == positive)
 
       # Compute per-group metrics
       r = dt[, map(list(fpr, fnr, tpr, tnr, base_rate), function(fn) fn(get(..tgt), get(prd), pos)), by = ..pta]
       names(r) = c(..pta, c("fpr", "fnr", "tpr", "tnr", "base_rate"))
-      r[, dpr := fpr - tpr][, dnr := tnr - fnr]
+      r[, "dpr" := fpr - tpr][, "dnr" := tnr - fnr]
 
       # Compute error differences in the different groups and base_rates
       cvec = c(r[get(..pta) == prv]$dpr, r[get(..pta) == prv]$dnr, r[get(..pta) != prv]$dpr, r[get(..pta) != prv]$dnr)
@@ -213,16 +213,16 @@ PipeOpEOd = R6Class("PipeOpEOd",
       obr = r[get(..pta) != prv]$base_rate
 
 
-      # Binary priviledged group indicator
+      # Binary privileged group indicator
       is_prv = dt[, get(..pta) == prv]
       if (sum(is_prv) < 1) {
-        stop("'priviledged' needs to be a valid value in the 'pta' column!")
+        stop("'privileged' needs to be a valid value in the 'pta' column!")
       }
 
       # True target
       y_true = dt[[..tgt]]
 
-      # Compute priviledged/unpriviledged pos. and negative samples
+      # Compute privileged/unprivileged pos. and negative samples
       sconst = dt[is_prv, get(prd) == pos] # Yh[A0] == +
       sflip = dt[is_prv, get(prd) != pos] # Yh[A0] == -
       oconst = dt[!is_prv, get(prd) == pos]
@@ -282,9 +282,9 @@ PipeOpEOd = R6Class("PipeOpEOd",
       const_dir = c(rep("<=", length(b_ineq)), rep("==", length(b_eq)))
       #  Sovle
       sol = linprog::solveLP(cvec, bvec, Amat, const.dir = const_dir, lpSolve = TRUE)
-      setNames(as.list(sol$solution), c("sp2p", "sn2p", "op2p", "on2p"))
+      set_names(as.list(sol$solution), c("sp2p", "sn2p", "op2p", "on2p"))
     },
 
-    .priviledged = character()
+    .privileged = character()
   )
 )

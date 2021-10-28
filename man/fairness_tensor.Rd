@@ -2,13 +2,13 @@
 % Please edit documentation in R/fairness_tensor.R
 \name{fairness_tensor}
 \alias{fairness_tensor}
-\title{Compute the fairness tensor given a prediction and task.}
+\title{Compute the Fairness Tensor given a Prediction and a Task}
 \usage{
 fairness_tensor(object, task, ...)
 }
 \arguments{
-\item{object}{(\code{\link[=data.table]{data.table()}} | \code{\link{PredictionClassif}})\cr
-A data.table with columns \code{truth} and \code{prediction} or a \code{\link{PredictionClassif}}.}
+\item{object}{(\code{\link[=data.table]{data.table()}} | \link{PredictionClassif})\cr
+A data.table with columns \code{truth} and \code{prediction} or a \link{PredictionClassif}.}
 
 \item{task}{(\link{TaskClassif})\cr
 A \link{TaskClassif}. Needs \code{col_role} \code{"pta"} to be set.}
@@ -17,13 +17,12 @@ A \link{TaskClassif}. Needs \code{col_role} \code{"pta"} to be set.}
 Currently not used.}
 }
 \value{
-\code{list} of confusion matrix for every group in \code{"pta"}.
+\code{list()} of confusion matrix for every group in \code{"pta"}.
 }
 \description{
 A fairness tensor is a list of groupwise confusion matrices.
 }
 \examples{
-library(mlr3)
 task = tsk("compas")
 prediction = lrn("classif.rpart")$train(task)$predict(task)
 fairness_tensor(prediction, task)

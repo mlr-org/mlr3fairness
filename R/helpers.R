@@ -54,7 +54,6 @@ task_filter_ex = function(task, row_ids) {
   task$filter(row_ids)
 }
 
-
 #' Write objects as .RDS files into path.
 #'
 #' @param objects [list] list of objects
@@ -72,3 +71,26 @@ write_files = function(objects, path) {
   postfix = "```"
   writeLines(c(prefix, reads, postfix), paste0(path, "/read_data.Rmd"))
 }
+
+replace_prefix = function(str, prefix, replacement) {
+  assert_character(prefix, any.missing = FALSE)
+  assert_string(replacement)
+  pattern = sprintf("^(%s)\\.", paste0(prefix, collapse = "|"))
+  sub(pattern, replacement, str)
+}
+
+tabular = function(df, ...) {
+ stopifnot(is.data.frame(df))
+
+ align = function(x) if (is.numeric(x)) "r" else "l"
+ col_align = map_chr(df, align)
+
+ cols = lapply(df, format, ...)
+ contents = do.call("paste",
+   c(cols, list(sep = " \\tab ", collapse = "\\cr\n   ")))
+
+ paste("\\tabular{", paste(col_align, collapse = ""), "}{\n   ",
+   paste0("\\strong{", names(df), "}", sep = "", collapse = " \\tab "), " \\cr\n   ",
+   contents, "\n }\n", sep = "")
+}
+

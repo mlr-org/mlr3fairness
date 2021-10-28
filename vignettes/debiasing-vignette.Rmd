@@ -16,8 +16,10 @@ knitr::opts_chunk$set(
 
 # Introduction: Fairness Pipeline Operators
 
-Given we detected some form of bias during bias auditing, we are often interested in obtaining fair(er) models. There are several ways to achieve this, such as collecting additonal data or finding and fixing errors in the data, but given there are no biases in the labelling process one other option is to debias models using either **preprocessing**, **postprocessing** and **inprocessing** methods. `mlr3fairness` provides some operators as `PipeOp`s for `mlr3pipelines`. If you are not
-familiar with [mlr3pipelines](), the [mlr3 book](https://mlr3book.mlr-org.com/pipelines.html)
+Given we detected some form of bias during bias auditing, we are often interested in obtaining fair(er) models.
+There are several ways to achieve this, such as collecting additional data or finding and fixing errors in the data, but given there are no biases in the labelling process one other option is to debias models using either **preprocessing**, **postprocessing** and **inprocessing** methods.
+`mlr3fairness` provides some operators as `PipeOp`s for `mlr3pipelines`.
+If you are not familiar with [mlr3pipelines](), the [mlr3 book](https://mlr3book.mlr-org.com/pipelines.html)
 
 We again showcase debiasing using the `adult_train` task:
 ```{r}
@@ -31,7 +33,7 @@ task = tsk("adult_train")
 #  Reweighing algorithms
 
 `mlr3fairness` implements 2 reweighing-based algorithms:
-`reweighing_wts` and `reweighing_os`. `reweighing_wts` adds observation weights to a `Task` that can counteract imbalancies between the conditional probabilities $P(Y | pta)$.
+`reweighing_wts` and `reweighing_os`. `reweighing_wts` adds observation weights to a `Task` that can counteract imbalances between the conditional probabilities $P(Y | pta)$.
 
 ```{r, echo = FALSE}
 library(mlr3misc)
