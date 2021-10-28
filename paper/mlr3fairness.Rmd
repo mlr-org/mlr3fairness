@@ -54,17 +54,13 @@ This lack of availability can be detrimental to obtaining fair and unbiased mode
 Consequently, there exists considerable necessity for R packages (a) implementing such metrics and (b) connecting these metrics to existing ML frameworks.
 If biases are detected in a model and need to be mitigated, we furthermore require debiasing techniques that tightly integrate with the fitting and evaluation of the resulting models in order to obtain trade-offs between the fairness and utility (e.g., predictive accuracy) of a model.
 
-In this article, we present the \CRANpkg{mlr3fairness} package tightly integrated into the \CRANpkg{mlr3} [@mlr3] ecosystem of packages for ML in R.
-It brings fairness metrics, visualizations, and model-agnostic pre- and postprocessing operators to the table, allowing
-to conveniently perform fairness audits and build unbiased models.
-
-<!--
-TODO: move somewhere else?
-The remainder of this manuscript is structured as follows:
-We provide a brief introduction to the concepts of fairness in ML and discuss related software implementations.
-We furthermore give a brief introduction to \CRANpkg{mlr3} before introducing the functionality shipped with our package.
-We conclude with a short case study demonstrating \CRANpkg{mlr3fairness}'s capabilities on the **Adult Income** data set.
--->
+In this article, we present the \CRANpkg{mlr3fairness} package.
+<!-- tightly integrated into the \CRANpkg{mlr3} [@mlr3] ecosystem of packages for ML in R.-->
+It contains fairness metrics, visualizations, and model-agnostic pre- and postprocessing operators as well as reporting functionality to allow for fairness audits and conveniently build unbiased models.
+In the remainder of the manuscript, we first provide an introduction to fairness in machine learning.
+We then briefly introduce the \CRANpkg{mlr3} package before introducing the functionality
+shipped with our package.
+We conclude with a short case study demonstrating \CRANpkg{mlr3fairness}'s capabilities.
 
 
 ## Fairness in Machine Learning
@@ -119,12 +115,12 @@ In order to encode the requirements in Equations (\ref{eq:eod}) and (\ref{eq:eop
 
 We now might consider a model fair if $|\Delta_{\mathrm{TPR}}| < \epsilon$ for a given threshold $\epsilon$, e.g., $\epsilon = 0.05$, to allow for small deviations from perfect fairness due to variance in the estimation of $\mathrm{TPR}_{A=\star}$ or additional sources of bias.
 A collection of such metrics can be found e.g. in (@saleiro2018aequitas, @kim2020fact, @mehrabi).
-The goal of **debiasing techniques** is now to reduce such gaps, either by using data pre-processing, model inprocessing or post-processing techniques on the predictions.
-<!-- TODO: hier ein bisschen mehr -->
-<!--
-\CRANpkg{mlr3fairness} implements a wide variety of fairness metrics along with the possibility to implement and use custom fairness metrics based on this paradigm.
-It furthermore implements debiasing techniques described in @kamiran2012data and @hardt2016equality to allow for obtaining fair(er) models.
--->
+
+The goal of **debiasing techniques** is now to reduce such gaps, either by using data pre-processing, model inprocessing or post-processing techniques on the predictions. This can be achieved by changing
+instance weights before training [@kamiran2012data], directly learning fair models [@Zafar2017] or subsequent adaption of model predictions [@hart2016equality]. While perfect fairness is often an elusive goal, a more practical goal is often to optimize utility under a maximum un-fairness constraint.
+Since debiasing techniques are often tailored towards a particular fairness metric, the optimal choice
+of debiasing technique is often not trivial and a combination of algorithms and debiasing techniques
+determined through tuning might result in an optimal model.
 
 
 #### A short remark on mathematical fairness definitions
@@ -159,7 +155,8 @@ Similar capabilities are also available in Julia's \pkg{Fairness.jl} [@fairnessj
 
 # mlr3fairness {#main}
 
-We first bla mlr3, then bla mlr3fairness ...
+Before we present new functionalities in **mlr3fairness**, we provide a short introduction to \CRANpkg{mlr3} to facilitate understanding of the following sections.
+
 
 ## The mlr3 ecosystem {#mlr3}
 
@@ -246,13 +243,11 @@ bmr = benchmark(grid)
 bmr$aggregate(measure)
 ```
 
-
-
 We split the exposition of \CRANpkg{mlr3fairness}'s capabilities in two sections, *detecting bias* and *debiasing*.
 A full example is included in the later use case and we therefore omit details discussed there in the following sections.
 
 
-### Detecting bias
+## Detecting bias
 
 For brevity, we start our exposition from a fitted ML model, e.g. obtained through \CRANpkg{mlr3}.
 The ML model is trained on the widely used COMPAS data set [@compas] with the goal to predict whether a parolee will re-offend within a span of 2 years.
@@ -332,7 +327,7 @@ Table: (\#tab:metrics) Selection of implemented fairness metrics. The full list 
 |fairness.acc\_ppv=.05 |Accuracy under equalized odds constraint \citet{perrone2021fair}                            |
 
 
-### Debiasing
+## Debiasing
 
 Table @ref{tab:debiasing} provides an overview over implemented debiasing techniques.
 Debiasing techniques are implemented as `PipeOps` from \pkg{mlr3pipelines} and can be
@@ -361,7 +356,7 @@ that can further improve fairness.
 multi-crit tuning valid?
 -->
 
-###  Reports
+##  Reports
 
 Because fairness aspects can not always be investigated based on the fairness definitions
 above (e.g. due to biased sampling or labelling procedures), it is important to document data collection and the resulting data as well as the models resulting from this data.
