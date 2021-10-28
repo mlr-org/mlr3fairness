@@ -32,13 +32,13 @@
   x = getFromNamespace("mlr_measures", ns = "mlr3")
   x$add("fairness", MeasureFairness)
   x$add("fairness.composite", MeasureFairnessComposite)
-  x$add("fairness.eod", MeasureFairnessComposite, measures = msrs(c("fairness.fpr", "fairness.tpr")),
-    id = "equalized_odds")
   x$add("classif.pp", MeasurePositiveProbability)
   for (key in c("fn", "fnr", "fp", "fpr", "npv", "ppv", "tn", "tnr", "tp", "tpr")) {
     x$add(sprintf("fairness.%s", key), MeasureFairness,
       base_measure = msr(sprintf("classif.%s", key)))
   }
+  x$add("fairness.eod", MeasureFairnessComposite, measures = msrs(c("fairness.fpr", "fairness.tpr")),
+    id = "equalized_odds")
 
   x = getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
   x$add("reweighing_wts", PipeOpReweighingWeights)
