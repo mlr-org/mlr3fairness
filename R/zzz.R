@@ -8,7 +8,7 @@
 #' @import paradox
 #' @import data.table
 #' @importFrom utils getFromNamespace data
-#' @importFrom stats runif
+#' @importFrom stats runif dist
 "_PACKAGE"
 
 .onLoad = function(libname, pkgname) { # nolint
