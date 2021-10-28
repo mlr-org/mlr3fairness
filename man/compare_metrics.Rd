@@ -35,8 +35,6 @@ Compare learners with respect to to one or multiple metrics.
 Metrics can but be but are not limited to fairness metrics.
 }
 \examples{
-library(mlr3)
-library(mlr3fairness)
 library(mlr3learners)
 
 # Setup the Fairness Measures and tasks

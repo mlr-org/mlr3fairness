@@ -79,8 +79,6 @@ Methods inherited from \code{\link{PipeOpTaskPreproc}}/\code{\link{PipeOp}}.
 
 \examples{
 library(mlr3pipelines)
-library(mlr3fairness)
-library(mlr3)
 
 reweighing = po("reweighing_wts")
 learner_po = po("learner", learner = lrn("classif.rpart"))

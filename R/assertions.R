@@ -1,4 +1,4 @@
-#' @title Assertion for mlr3fairness
+#' @title Assertions for mlr3fairness
 #'
 #' @description
 #' Functions intended to be used in packages extending \pkg{mlr3fairness}.
@@ -13,7 +13,8 @@ NULL
 # Assert task contains a pta column.
 assert_pta_task = function(task, measure = NULL) {
   if (length(task$col_roles$pta) == 0L) {
-    stop("Task must have col_roles 'pta' (protected attribute) for fairness operations")
+    stopf("Task '%s' must have a column with role 'pta' (protected attribute) for fairness operations", task$id)
   }
+
   assert_task(task)
 }

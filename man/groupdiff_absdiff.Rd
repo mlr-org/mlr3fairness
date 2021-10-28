@@ -7,14 +7,14 @@
 groupdiff_absdiff(x)
 }
 \arguments{
-\item{x}{´numeric` \cr
+\item{x}{(´numeric()`)\cr
 Measured performance in group 1, 2, ...}
 }
 \description{
-Computes \code{max(abs(x-y, y-x))} i.e. the smallest symmetric ratio between x and y
-that is smaller than 1. If x is a vector, the symmetric ratio between all
-elements in 'x' is computed.
+Computes \eqn{max(abs(x-y, y-x))}, i.e. the smallest symmetric ratio between \eqn{x} and \eqn{y}
+that is smaller than 1. If \eqn{x} is a vector, the symmetric ratio between all
+elements in \eqn{x} is computed.
 }
 \examples{
-groupdiff_absdiff(runif(3))
+groupdiff_absdiff(1:3)
 }

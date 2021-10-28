@@ -5,12 +5,11 @@
 \alias{MeasurePositiveProbability}
 \title{Positive Probability Measure}
 \description{
-Return the positive probability of the predictions. Formula: P(positive prediction) =
-positive_predictions / all_predictions
+Return the positive probability of the predictions.
+This is defined as count of positive predictions divided by the number of observations.
 }
 \examples{
 # Create Positive Probability Measure
-library(mlr3)
 data_task = tsk("adult_train")
 learner = lrn("classif.rpart", cp = .01)
 learner$train(data_task)

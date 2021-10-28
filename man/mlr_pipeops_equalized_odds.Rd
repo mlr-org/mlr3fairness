@@ -57,8 +57,6 @@ Methods inherited from \code{\link{PipeOpTaskPreproc}}/\code{\link{PipeOp}}.
 
 \examples{
 library(mlr3pipelines)
-library(mlr3fairness)
-library(mlr3)
 
 eod = po("EOd")
 learner_po = po("learner_cv",
@@ -70,8 +68,10 @@ task = tsk("compas")
 graph = learner_po \%>>\% eod
 glrn = GraphLearner$new(graph)
 glrn$train(task)
+
 # On a Task
 glrn$predict(task)
+
 # On newdata
 glrn$predict_newdata(task$data(cols = task$feature_names))
 }

@@ -8,6 +8,8 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
+library(mlr3)
+library(mlr3fairness)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -47,18 +49,14 @@ knitr::kable(mlr3fairness:::mlr_measures_fairness)
 This vignette assumes that you are familiar with the basics of `mlr3` and it's core objects.
 The [mlr3 book](https://mlr3book.mlr-org.com/index.html) can be a great ressource in case you want to learn more about mlr3's internals.
 
-We first start by training a model for which we want to conduct an audit:
-
-```{r}
-library(mlr3)
-library(mlr3fairness)
-library(mlr3learners)
-```
-
+We first start by training a model for which we want to conduct an audit.
 For this example, we use the `adult_train` dataset.
 Keep in mind all the datasets from mlr3fairness package already set protected attribute via the `col_role` "pta", here the "sex" column. To speed things up, we only use the first 1000 rows.
 
 ```{r}
+library(mlr3fairness)
+library(mlr3learners)
+
 t = tsk("adult_train")$filter(1:1000)
 t$col_roles$pta
 ```
@@ -110,14 +108,14 @@ This measure does the following steps:
 In some cases, we might also want to replace the operation with a different operation, e.g. `x[1] / x[2]` in order to compute a different perspective.
 
 `mlr3fairness` comes with two built-in functions that can be used to compute fairness metrics
-also across protected attributes that have more then two classes_
+also across protected attributes that have more than two classes.
 
 - `groupdiff_absdiff`: maximum absolute difference between all classes (the default for all metrics)
 - `groupdiff_tau`: minimum quotient between all classes
 
-**Note**: Depdending on the `operation` we need to set a different `minimize` flag for the measure so subsequent operations based on the measure automatically know if the measure is to be minimized or maximized e.g. during tuning.
+**Note**: Depending on the `operation` we need to set a different `minimize` flag for the measure, so subsequent operations based on the measure automatically know if the measure is to be minimized or maximized e.g. during tuning.
 
-We can also use those operations to construct a measure using `msr()`, since `MeasureFairness` (key: `msr("fairness")` can be constructed from the dictionary with additional arguments.
+We can also use those operations to construct a measure using `msr()`, since `MeasureFairness` (key: `msr("fairness")`) can be constructed from the dictionary with additional arguments.
 
 ```{r}
 m2 = msr("fairness", operation = groupdiff_absdiff, base_measure = msr("classif.tpr"))
@@ -142,19 +140,16 @@ and `operation` therefore always has to result in a single scalar value.
 ## Composite Fairness Measures
 
 Some fairness measures also require a combination of multiple Fairness Metrics.
-In the following example we e.g. want to compute the mean of two fairness metrics,
-here false negative and true negative rates.
+In the following example we show how to compute the mean of two fairness metrics,
+here false negative and true negative rates and create a new `Measure` that computes the mean (see `aggfun`) of those metrics:
 
 ```{r}
 ms = list(msr("fairness.fnr"), msr("fairness.tnr"))
 ms
-```
 
-and create a new `Measure` that compute the mean (see `aggfun`) of those metrics.
-
-```{r}
 m = MeasureFairnessComposite$new(measures = ms, aggfun = mean)
 ```
+
 
 ## How to compare the fairness performance between different learners using Benchmarks
 

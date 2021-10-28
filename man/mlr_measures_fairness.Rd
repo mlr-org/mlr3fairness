@@ -4,7 +4,7 @@
 \name{mlr_measures_fairness}
 \alias{mlr_measures_fairness}
 \alias{MeasureFairness}
-\title{Fairness Measure}
+\title{Fairness Measures}
 \format{
 An object of class \code{data.table} (inherits from \code{data.frame}) with 9 rows and 2 columns.
 }
@@ -14,43 +14,45 @@ mlr_measures_fairness
 \description{
 This measure specializes \code{\link[mlr3:Measure]{mlr3::Measure()}} to allow for measuring statistical group fairness:
 A common approach to quantifying a model's fairness is to compute the difference between a
-protected and an
-unprotected group according to some performance metric such as \verb{classification error},
-\verb{false positive rate} or others.
-This measure allows for the composition of a fairness-metric from such a \code{base_measure} by computing
-group-wise difference. This difference metric can be specified using the  'operation' parameter.
+protected and an unprotected group according to some performance metric such as
+\verb{classification error} (\link{mlr_measures_classif.ce}), \verb{false positive rate}
+(\link{mlr_measures_classif.fpr}) or others.
+This measure allows for the composition of a fairness-metric from such a "base_measure" by comparing
+the group-wise scores. The operation for comparison (e.g., difference or quotient) can be
+specified using the \code{operation} parameter.
 }
 \section{Overview}{
 
-For an overview of measures see \code{\link{mlr_measures_fairness}}.
 Composite measures encompasing multiple fairness metrics can be built using
-\code{\link{MeasureFairnessComposite}}.
+\link{MeasureFairnessComposite}.
 
 Predefined measures can be found in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_measures}.
 }
 
 \section{Predefined measures}{
 
-\code{mlr3fairness} comes with a set of predefined fairness measures listed below.
-For full flexibility, \code{\link{MeasureFairness}} can be used to construct classical
+\CRANpkg{mlr3fairness} comes with a set of predefined fairness measures as listed below.
+For full flexibility, \link{MeasureFairness} can be used to construct classical
 group fairness measures based on a difference between a performance metrics across groups
 by combining a performance measure with an operation for measuring differences.
 
 \tabular{ll}{
-fairness.eod \tab Equalized Odds: Abs. difference between true positive and false positive rates across groups \cr
-fairness.fpr \tab Abs. difference in false positive rates across groups \cr
-fairness.acc \tab Abs. difference in accuracy across groups (Overall accuracy equality) \cr
-fairness.tpr \tab Abs. difference in True positive rates across groups \cr
-fairness.ppv \tab Abs. difference in Positive predictive values across groups \cr
-fairness.npv \tab Abs. difference in Negative predictive values across groups \cr
-fairness.fp  \tab Abs. difference in False positives across groups  \cr
-fairness.fn  \tab Abs. difference in False negatives across groups
+\strong{key} \tab \strong{description} \cr
+fairness.eod \tab Equalized Odds: Sum of absolute differences between true positive and
+false positive rates across groups\cr
+fairness.fpr \tab Absolute differences in false positive rates across groups                                                   \cr
+fairness.acc \tab Absolute differences in accuracy across groups (Overall accuracy equality)                                   \cr
+fairness.tpr \tab Absolute differences in true positive rates across groups                                                    \cr
+fairness.tnr \tab Absolute differences in true negative rates across groups                                                    \cr
+fairness.ppv \tab Absolute differences in positive predictive values across groups                                             \cr
+fairness.npv \tab Absolute differences in negative predictive values across groups                                             \cr
+fairness.fp  \tab Absolute differences in false positives across groups                                                        \cr
+fairness.fn  \tab Absolute differences in false negatives across groups
 }
 }
 
 \examples{
 # Create MeasureFairness to measure the Predictive Parity.
-library(mlr3)
 data_task = tsk("adult_train")
 learner = lrn("classif.rpart", cp = .01)
 learner$train(data_task)
@@ -128,12 +130,12 @@ The measure used to perform fairness operations.}
 \item{\code{operation}}{(\code{function})\cr
 The operation used to compute the difference. A function that returns
 a single value given input: computed metric for each subgroup.
-Defaults to \code{groupdiff_absdiff}.}
+Defaults to \link{groupdiff_absdiff}.}
 
 \item{\code{minimize}}{(\code{logical})\cr
 Should the measure be minimized? Defaults to \code{TRUE}.}
 
-\item{\code{range}}{(\code{numeric})\cr
+\item{\code{range}}{(\code{numeric(2)})\cr
 Range of the resulting measure. Defaults to \code{c(-Inf, Inf)}.}
 }
 \if{html}{\out{</div>}}

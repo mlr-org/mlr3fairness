@@ -2,12 +2,13 @@
 #' @import mlr3misc
 #' @import R6
 #' @import checkmate
-#' @import mlr3measures
 #' @import mlr3pipelines
+#' @import mlr3measures
 #' @import ggplot2
-#' @importFrom utils getFromNamespace data
 #' @import paradox
 #' @import data.table
+#' @importFrom utils getFromNamespace data
+#' @importFrom stats runif
 "_PACKAGE"
 
 .onLoad = function(libname, pkgname) { # nolint
@@ -40,7 +41,7 @@
   x$add("fairness.acc", MeasureFairness, base_measure = msr("classif.acc"))
   x$add("fairness.fp", MeasureFairness, base_measure = msr("classif.fp"))
   x$add("fairness.fn", MeasureFairness, base_measure = msr("classif.fn"))
-  x$add("fairness.eod", MeasureFairnessComposite, measures = list("fairness.fpr", "fairness.tpr"),
+  x$add("fairness.eod", MeasureFairnessComposite, measures = msrs(c("fairness.fpr", "fairness.tpr")),
     id = "equalized_odds")
   x$add("classif.pp", MeasurePositiveProbability)
 
@@ -53,3 +54,5 @@
   utils::globalVariables(c("variable", "value", "learner_id", "n_tgt", "n_pta", "pta", "task_id",
     "pta_cols", "wt", "N", "agg")) # nocov end
 }
+
+mlr3misc::leanify_package()

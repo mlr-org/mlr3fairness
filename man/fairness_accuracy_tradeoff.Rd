@@ -2,7 +2,7 @@
 % Please edit documentation in R/visualize.R
 \name{fairness_accuracy_tradeoff}
 \alias{fairness_accuracy_tradeoff}
-\title{Fairness Accuracy Trade-off}
+\title{Plot Fairness Accuracy Trade-offs}
 \usage{
 fairness_accuracy_tradeoff(object, ...)
 }
@@ -41,8 +41,6 @@ This can assist in gauging the optimal model from a set of options along with es
 (through individual resampling iterations).
 }
 \examples{
-library(mlr3)
-library(mlr3fairness)
 library(mlr3learners)
 library(ggplot2)
 

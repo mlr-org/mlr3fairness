@@ -40,3 +40,25 @@ navbar:
     rss:
       icon: fa-rss
       href: https://mlr-org.com/
+
+reference:
+  - title: Measuring Bias
+    contents:
+      - MeasureFairness
+      - MeasureFairnessComposite
+      - groupdiff_absdiff
+      - groupdiff_tau
+      - mlr_measures_positive_probability
+  - title: Detecting Bias
+    contents:
+      - fairness_tensor
+      - fairness_accuracy_tradeoff
+      - fairness_prediction_density
+  - title: Correcting Bias
+    contents:
+      - mlr_pipeops_equalized_odds
+      - mlr_pipeops_reweighing
+  - title: Data sets
+    contents:
+      - adult
+      - compas

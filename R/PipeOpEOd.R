@@ -83,8 +83,6 @@
 #' @export
 #' @examples
 #' library(mlr3pipelines)
-#' library(mlr3fairness)
-#' library(mlr3)
 #'
 #' eod = po("EOd")
 #' learner_po = po("learner_cv",
@@ -96,8 +94,10 @@
 #' graph = learner_po %>>% eod
 #' glrn = GraphLearner$new(graph)
 #' glrn$train(task)
+#'
 #' # On a Task
 #' glrn$predict(task)
+#'
 #' # On newdata
 #' glrn$predict_newdata(task$data(cols = task$feature_names))
 PipeOpEOd = R6Class("PipeOpEOd",
@@ -200,12 +200,12 @@ PipeOpEOd = R6Class("PipeOpEOd",
       dt[, colnames(dt) := map(.SD, as.factor), .SDcols = colnames(dt)]
 
       # Compute base rates function
-      base_rate = function(truth, prediction, positive) sum(truth == positive) / length(truth)
+      base_rate = function(truth, prediction, positive) mean(truth == positive)
 
       # Compute per-group metrics
       r = dt[, map(list(fpr, fnr, tpr, tnr, base_rate), function(fn) fn(get(..tgt), get(prd), pos)), by = ..pta]
       names(r) = c(..pta, c("fpr", "fnr", "tpr", "tnr", "base_rate"))
-      r[, dpr := fpr - tpr][, dnr := tnr - fnr]
+      r[, "dpr" := fpr - tpr][, "dnr" := tnr - fnr]
 
       # Compute error differences in the different groups and base_rates
       cvec = c(r[get(..pta) == prv]$dpr, r[get(..pta) == prv]$dnr, r[get(..pta) != prv]$dpr, r[get(..pta) != prv]$dnr)
@@ -213,10 +213,10 @@ PipeOpEOd = R6Class("PipeOpEOd",
       obr = r[get(..pta) != prv]$base_rate
 
 
-      # Binary priviledged group indicator
+      # Binary privileged group indicator
       is_prv = dt[, get(..pta) == prv]
       if (sum(is_prv) < 1) {
-        stop("'priviledged' needs to be a valid value in the 'pta' column!")
+        stop("'privileged' needs to be a valid value in the 'pta' column!")
       }
 
       # True target
@@ -282,7 +282,7 @@ PipeOpEOd = R6Class("PipeOpEOd",
       const_dir = c(rep("<=", length(b_ineq)), rep("==", length(b_eq)))
       #  Sovle
       sol = linprog::solveLP(cvec, bvec, Amat, const.dir = const_dir, lpSolve = TRUE)
-      setNames(as.list(sol$solution), c("sp2p", "sn2p", "op2p", "on2p"))
+      set_names(as.list(sol$solution), c("sp2p", "sn2p", "op2p", "on2p"))
     },
 
     .priviledged = character()
