@@ -6,14 +6,14 @@
 \alias{PipeOpReweighingOversampling}
 \title{Reweighing to balance disparate impact metric}
 \format{
-\code{\link{R6Class}} object inheriting from \code{\link{PipeOpTaskPreproc}}/\code{\link{PipeOp}}.
+\link{R6Class} object inheriting from \code{\link{PipeOpTaskPreproc}}/\code{\link{PipeOp}}.
 }
 \description{
 Adjusts class balance and protected group balance in order to achieve fair(er) outcomes.
 }
 \section{PipeOpReweighingWeights}{
 
-Adds a class weight column to the \code{\link[mlr3:Task]{Task}} that different \code{\link[mlr3:Learner]{Learner}}s
+Adds a class weight column to the \link[mlr3:Task]{Task} that different \code{\link[mlr3:Learner]{Learner}}s
 may be using. In case initial weights are present, those are multiplied with new weights.
 Caution: Only fairness tasks are supported. Which means tasks need to have protected field.
 \code{tsk$col_roles$pta}.
@@ -21,7 +21,7 @@ Caution: Only fairness tasks are supported. Which means tasks need to have prote
 
 \section{PipeOpReweighingOversampling}{
 
-Oversamples a \code{\link[mlr3:Task]{Task}} for more balanced ratios in subgroups and protected groups.
+Oversamples a \link[mlr3:Task]{Task} for more balanced ratios in subgroups and protected groups.
 Can be used if a learner does not support weights.
 Caution: Only fairness tasks are supported. Which means tasks need to have protected field.
 \code{tsk$col_roles$pta}.
@@ -31,36 +31,36 @@ Caution: Only fairness tasks are supported. Which means tasks need to have prote
 \preformatted{PipeOpReweighing*$new(id = "reweighing", param_vals = list())
 }
 \itemize{
-\item \code{id} :: \code{character(1)}
-\item \code{param_vals} :: \code{list}
+\item \code{id} (\code{character(1)}).
+\item \code{param_vals} (\code{list()})
 }
 }
 
 \section{Input and Output Channels}{
 
-Input and output channels are inherited from \code{\link{PipeOpTaskPreproc}}. Instead of a \code{\link[mlr3:Task]{Task}}, a
-\code{\link[mlr3:TaskClassif]{TaskClassif}} is used as input and output during training and prediction.
+Input and output channels are inherited from \link{PipeOpTaskPreproc}. Instead of a \code{\link[mlr3:Task]{Task}}, a
+\link[mlr3:TaskClassif]{TaskClassif} is used as input and output during training and prediction.
 
-The output during training is the input \code{\link[mlr3:Task]{Task}} with added weights column according
+The output during training is the input \link[mlr3:Task]{Task} with added weights column according
 to target class. The output during prediction is the unchanged input.
 }
 
 \section{State}{
 
-The \verb{$state} is a named \code{list} with the \verb{$state} elements inherited from \code{\link{PipeOpTaskPreproc}}.
+The \verb{$state} is a named \code{list} with the \verb{$state} elements inherited from \link{PipeOpTaskPreproc}.
 }
 
 \section{Parameters}{
 
 \itemize{
-\item \code{alpha} :: \code{numeric} A number between 0 (no debiasing) and 1 (full debiasing).
+\item \code{alpha} (\code{numeric()}): A number between 0 (no debiasing) and 1 (full debiasing).
 }
 }
 
 \section{Internals}{
 
-Introduces, or overwrites, the "weights" column in the \code{\link[mlr3:Task]{Task}}.
-However, the \code{\link[mlr3:Learner]{Learner}} method needs to
+Introduces, or overwrites, the "weights" column in the \link[mlr3:Task]{Task}.
+However, the \link[mlr3:Learner]{Learner} method needs to
 respect weights for this to have an effect.
 
 The newly introduced column is named \code{reweighing.WEIGHTS}; there will be a naming conflict if this
@@ -69,12 +69,12 @@ column already exists and is \emph{not} a weight column itself.
 
 \section{Fields}{
 
-Only fields inherited from \code{\link{PipeOpTaskPreproc}}/\code{\link{PipeOp}}.
+Only fields inherited from \link{PipeOpTaskPreproc}/\code{\link{PipeOp}}.
 }
 
 \section{Methods}{
 
-Methods inherited from \code{\link{PipeOpTaskPreproc}}/\code{\link{PipeOp}}.
+Methods inherited from \link{PipeOpTaskPreproc}/\code{\link{PipeOp}}.
 }
 
 \examples{
@@ -125,7 +125,7 @@ Other PipeOps:
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Creates a new instance of this [R6][R6::R6Class][\code{PipeOp}] R6 class.
+Creates a new instance of this [R6][R6::R6Class][PipeOp] R6 class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{PipeOpReweighingWeights$new(id = "reweighing_wts", param_vals = list())}\if{html}{\out{</div>}}
 }

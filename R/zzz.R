@@ -33,7 +33,7 @@
   x$add("fairness", MeasureFairness)
   x$add("fairness.composite", MeasureFairnessComposite)
   x$add("classif.pp", MeasurePositiveProbability)
-  for (key in c("fn", "fnr", "fp", "fpr", "npv", "ppv", "tn", "tnr", "tp", "tpr")) {
+  for (key in c("acc", "fn", "fnr", "fp", "fpr", "npv", "ppv", "tn", "tnr", "tp", "tpr")) {
     x$add(sprintf("fairness.%s", key), MeasureFairness,
       base_measure = msr(sprintf("classif.%s", key)))
   }
