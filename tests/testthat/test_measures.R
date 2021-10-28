@@ -5,8 +5,8 @@ test_that("fairness measures work as expcted", {
     lrn("classif.rpart", predict_type = "prob")$train(tsk)$predict(tsk),
     lrn("classif.featureless", predict_type = "prob")$train(tsk)$predict(tsk)
   )
-  metrics = c("fairness.acc", "fairness.eod", "fairness.fn", "fairness.fnr", "fairness.fp",
-    "fairness.fpr", "fairness.npv", "fairness.ppv", "fairness.tpr")
+  metrics = mlr_measures_fairness$key
+
   for (prd in prds) {
     for (m in metrics) {
       out = prd$score(measures = msr(m), task = tsk)
@@ -22,8 +22,8 @@ test_that("fairness measures work as expcted", {
 test_that("fairness measures work as expected - simulated data", {
   tsk = test_task_small()
   prds = list(pred_small())
-  metrics = c("fairness.acc", "fairness.eod", "fairness.fn", "fairness.fnr", "fairness.fp",
-    "fairness.fpr", "fairness.npv", "fairness.ppv", "fairness.tpr")
+  metrics = mlr_measures_fairness$key
+
   for (prd in prds) {
     for (m in metrics) {
       out = prd$score(measures = msr(m), task = tsk)

@@ -1,5 +1,4 @@
 #' @title Fairness Measures
-#' @name mlr_measures_fairness
 #'
 #' @description
 #'   This measure specializes [mlr3::Measure()] to allow for measuring statistical group fairness:
@@ -188,40 +187,3 @@ MeasurePositiveProbability = R6::R6Class("MeasurePositiveProbability",
 )
 
 mlr_measures$add("classif.pp", MeasurePositiveProbability)
-
-
-#' @title Fairness Measures in mlr3
-#' @name mlr_measures_fairness
-#'
-#' @section Predefined measures:
-#' \CRANpkg{mlr3fairness} comes with a set of predefined fairness measures as listed below.
-#' For full flexibility, [MeasureFairness] can be used to construct classical
-#' group fairness measures based on a difference between a performance metrics across groups
-#' by combining a performance measure with an operation for measuring differences.
-#'
-#' `r tabular(mlr_measures_fairness)`
-#'
-#' @examples
-#' # Predefined measures:
-#' msr("fairness.eod")
-#' msr("fairness.fpr")
-#' msr("fairness.acc")
-#' msr("fairness.fnr")
-#' msr("fairness.tpr")
-#' msr("fairness.ppv")
-#' msr("fairness.npv")
-#' msr("fairness.fp")
-#' msr("fairness.fn")
-mlr_measures_fairness = rowwise_table(
-  ~key, ~description,
-  "fairness.eod", "Equalized Odds: Sum of absolute differences between true positive and
-    false positive rates across groups",
-  "fairness.fpr", "Absolute differences in false positive rates across groups",
-  "fairness.acc", "Absolute differences in accuracy across groups (Overall accuracy equality)",
-  "fairness.tpr", "Absolute differences in true positive rates across groups",
-  "fairness.tnr", "Absolute differences in true negative rates across groups",
-  "fairness.ppv", "Absolute differences in positive predictive values across groups ",
-  "fairness.npv", "Absolute differences in negative predictive values across groups",
-  "fairness.fp", "Absolute differences in false positives across groups",
-  "fairness.fn", "Absolute differences in false negatives across groups"
-)
