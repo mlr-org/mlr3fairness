@@ -42,6 +42,7 @@ Imports:
     mlr3pipelines,
     ggplot2
 Suggests:
+    mlr3viz,
     rmarkdown,
     knitr,
     rpart,
