@@ -8,7 +8,7 @@ set.seed(1)
 options(datatable.print.class = FALSE, datatable.print.keys = FALSE)
 ```
 
-# [mlr3fairness](https://github.com/mlr-org/mlr3fairness)
+# [mlr3fairness](https://github.com/mlr-org/mlr3fairness)  <img src="man/figures/scale_mlr3.png" align="right" />
 
 Machine Learning Fairness Extension for [mlr3](https://github.com/mlr-org/mlr3).
 
