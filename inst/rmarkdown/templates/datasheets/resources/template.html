@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"$if(lang)$ lang="$lang$" xml:lang="$lang$"$endif$>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<!--
+Font-awesome icons ie github or twitter
+-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/brands.css" integrity="sha384-n9+6/aSqa9lBidZMRCQHTHKJscPq6NW4pCQBiMmHdUCvPN8ZOg2zJJTkC7WIezWv" crossorigin="anonymous">
+
+<!--
+Google fonts api stuff
+-->
+$if(font_family)$
+<link href='https://fonts.googleapis.com/css?family=$font_family$' rel='stylesheet'>
+$endif$
+$if(titletext_fontfamily)$
+<link href='https://fonts.googleapis.com/css?family=$titletext_fontfamily$' rel='stylesheet'>
+$endif$
+
+$for(author-meta)$<meta name="author" content="$author-meta$" />$endfor$
+$if(date-meta)$<meta name="date" content="$date-meta$" />$endif$
+<title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+$if(highlightjs)$
+<link rel="stylesheet" href="$highlightjs$/$if(highlightjs-theme)$$highlightjs-theme$$else$default$endif$.css" $if(html5)$$else$type="text/css" $endif$/>
+<script src="$highlightjs$/highlight.js"></script>
+<script type="text/javascript">hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+$endif$
+
+$if(highlighting-css)$<style type="text/css">$highlighting-css$</style>$endif$
+$for(css)$
+<link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
+$endfor$
+
+<style>
+@page {
+size: $if(poster_width)$$poster_width$$else$45in$endif$ $if(poster_height)$$poster_height$$else$38in$endif$;
+margin: 0;
+padding: 0;
+}
+body {
+margin: 0;
+font-size: $if(body_textsize)$$body_textsize$$else$45px$endif$;
+width: $if(poster_width)$$poster_width$$else$45in$endif$;
+height: $if(poster_height)$$poster_height$$else$38in$endif$;
+padding: 0;
+text-align: justify;
+font-family: $if(font_family)$$font_family$$else$Palatino$endif$;
+}
+.poster_wrap {
+width: $if(poster_width)$$poster_width$$else$45in$endif$;
+height: $if(poster_height)$$poster_height$$else$38in$endif$;
+padding: 0cm;
+}
+.title_container {
+width: $if(titlebox_borderwidth)$calc(100% - $titlebox_borderwidth$ - $titlebox_borderwidth$)$else$100%$endif$;
+height: $if(titlebox_borderwidth)$calc($if(titlebox_height)$$titlebox_height$$else$15%$endif$ - $titlebox_borderwidth$ - $titlebox_borderwidth$)$else$$if(titlebox_height)$$titlebox_height$$else$15%$endif$$endif$;
+overflow: hidden;
+background-color: $if(primary_colour)$$primary_colour$$else$#0b4545$endif$;
+border: $if(titlebox_borderwidth)$$titlebox_borderwidth$$else$0$endif$ solid $if(titlebox_bordercol)$$titlebox_bordercol$$else$$if(primary_colour)$$primary_colour$$else$#0b4545$endif$
+$endif$;
+}
+.logo_left {
+float: left;
+width: 10%;
+height: 100%;
+background-color: $if(primary_colour)$$primary_colour$$else$#0b4545$endif$;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.logo_right {
+float: right;
+width: 10%;
+height: 100%;
+background-color: $if(primary_colour)$$primary_colour$$else$#0b4545$endif$;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.poster_title {
+text-align: center;
+position: relative;
+float: left;
+width: 80%;
+height: 100%;
+color: $if(title_textcol)$$title_textcol$$else$#FFFFFF$endif$;
+top: 50%;
+transform: translateY(-50%);
+-webkit-transform: translateY(-50%);
+}
+#title {
+font-family: $if(titletext_fontfamily)$$titletext_fontfamily$$else$$if(font_family)$$font_family$$else$Palatino$endif$$endif$;
+}
+/* unvisited link */
+a:link {
+color: $if(link_col)$$link_col$$else$$if(accent_colour)$$accent_colour$$else$#008080$endif$$endif$;
+text-decoration: none;
+}
+.mybreak {
+  break-before: column;
+}
+/* visited link */
+a:visited {
+color: $if(link_col)$$link_col$$else$$if(accent_colour)$$accent_colour$$else$#008080$endif$$endif$;
+text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+color: $if(link_col)$$link_col$$else$$if(accent_colour)$$accent_colour$$else$#008080$endif$$endif$;
+text-decoration: none;
+}
+
+/* selected link */
+a:active {
+color: $if(link_col)$$link_col$$else$$if(accent_colour)$$accent_colour$$else$#008080$endif$$endif$;
+text-decoration: none;
+}
+.poster_body {
+-webkit-column-count: $if(column_numbers)$$column_numbers$$else$3$endif$; /* Chrome, Safari, Opera */
+-moz-column-count: $if(column_numbers)$$column_numbers$$else$3$endif$; /* Firefox */
+column-count: $if(column_numbers)$$column_numbers$$else$3$endif$;
+-webkit-column-fill: auto;
+-moz-column-fill: auto;
+column-fill: auto;
+-webkit-column-rule-width: $if(columnline_width)$$columnline_width$$else$1mm$endif$;
+-moz-column-rule-width: $if(columnline_width)$$columnline_width$$else$1mm$endif$;
+column-rule-width: $if(columnline_width)$$columnline_width$$else$1mm$endif$;
+-webkit-column-rule-style: $if(columnline_style)$$columnline_style$$else$dashed$endif$;
+-moz-column-rule-style: $if(columnline_style)$$columnline_style$$else$dashed$endif$;
+column-rule-style: $if(columnline_style)$$columnline_style$$else$dashed$endif$;
+-webkit-column-rule-color: $if(columnline_col)$$columnline_col$$else$$if(primary_colour)$$primary_colour$$else$#0b4545$endif$$endif$;
+-moz-column-rule-color: $if(columnline_col)$$columnline_col$$else$$if(primary_colour)$$primary_colour$$else$#0b4545$endif$$endif$;
+column-rule-color: $if(columnline_col)$$columnline_col$$else$$if(primary_colour)$$primary_colour$$else$#0b4545$endif$$endif$;
+column-gap: 1em;
+padding-left: 0.5em;
+padding-right: 0.5em;
+height: 100%;
+color: $if(body_textcol)$$body_textcol$$else$#000000$endif$
+background-color: $if(body_bgcol)$$body_bgcol$$else$#ffffff$endif$;
+}
+.poster_title h1 {
+font-size: $if(title_textsize)$$title_textsize$$else$75pt$endif$;
+margin: 0;
+border: 0;
+font-weight: normal;
+}
+.poster_body_wrap{
+width: $if(poster_width)$$poster_width$$else$45in$endif$;
+height: calc(100% - $if(titlebox_height)$$titlebox_height$$else$17%$endif$);
+padding-top: calc($if(poster_height)$$poster_height$$else$38in$endif$ * 0.01);
+padding-bottom: calc($if(poster_height)$$poster_height$$else$38in$endif$ * 0.01);
+background-color: $if(body_bgcol)$$body_bgcol$$else$#ffffff$endif$;
+}
+.poster_title h3 {
+color: $if(author_textcol)$$author_textcol$$else$$if(secondary_colour)$$secondary_colour$$else$#ffffff$endif$$endif$;
+font-size: $if(author_textsize)$$author_textsize$$else$50pt$endif$;
+margin: 0;
+border: 0;
+font-weight: normal;
+}
+.poster_title h3 > sup {
+  font-size: 35pt;
+  margin-left: 0.02em;
+}
+.poster_title h5 {
+color: $if(affiliation_textcol)$$affiliation_textcol$$else$#FFFFFF$endif$;
+font-size: $if(affiliation_textsize)$$affiliation_texsize$$else$35pt$endif$;
+margin: 0;
+border: 0;
+font-weight: normal;
+}
+img {
+margin-top: 0;
+margin-bottom: 0;
+}
+.section {
+  padding: 0.2em;
+}
+.poster_body h1 {
+text-align: center;
+color: $if(sectitle_textcol)$$sectitle_textcol$$else$#FFFFFF$endif$;
+font-size: $if(sectitle_textsize)$$sectitle_textsize$$else$65pt$endif$;
+border: $if(sectitle_borderwidth)$$sectitle_borderwidth$$else$2mm$endif$ solid $if(sectitle_bordercol)$$sectitle_bordercol$$else$$if(primary_colour)$$primary_colour$$else$#0b4545$endif$$endif$;
+background-color: $if(sectitle_bgcol)$$sectitle_bgcol$$else$$if(primary_colour)$$primary_colour$$else$#0b4545$endif$$endif$;
+border-radius: $if(sectitle_boxshape)$$sectitle_boxshape$$else$4mm 0mm$endif$;
+margin-top: 2mm;
+margin-bottom: 2mm;
+font-weight: normal;
+}
+.poster_body h2 {
+color: $if(sectitle2_textcol)$$sectitle2_textcol$$else$#000000$endif$;
+font-size: $if(sectitle2_textsize)$$sectitle2_textsize$$else$40pt$endif$;
+padding-left: 4mm;
+font-weight: normal;
+}
+.span {
+width: 200%;
+}
+/* center align leaflet map,
+from https://stackoverflow.com/questions/52112119/center-leaflet-in-a-rmarkdown-document */
+.html-widget {
+margin: auto;
+position: sticky;
+margin-top: 2cm;
+margin-bottom: 2cm;
+}
+.leaflet.html-widget.html-widget-static-bound.leaflet-container.leaflet-touch.leaflet-fade-anim.leaflet-grab.leaflet-touch-drag.leaflet-touch-zoom {
+position: sticky;
+width: 100%;
+}
+pre.sourceCode.r, pre.sourceCode.python {
+background-color: #ffffff20;
+border: solid $if(secondary_colour)$$secondary_colour$$else$#008080$endif$ 1mm;
+border-radius: 0.5em;
+padding: 4mm;
+margin: auto;
+margin-top: 1em;
+margin-bottom: 1em;
+/* align-items: center; */
+}
+div.sourceCode {
+background-color: transparent;
+width: $if(codechunk_width)$$codechunk_width$$else$85%$endif$;
+margin-left: auto;
+margin-right: auto;
+}
+code.sourceCode.r, code.sourceCode.python {
+background-color: transparent;
+font-size: $if(codechunk_textsize)$$codechunk_textsize$$else$20pt$endif$;
+border-radius: 2mm;
+}
+code {
+font-size: 25pt;
+font-family: monospace;
+background-color: $if(secondary_colour)$$secondary_colour$24$else$#00808024$endif$;
+color: $if(secondary_colour)$$secondary_colour$$else$#008080$endif$;
+padding: 1.2mm;
+line-height: 1;
+border-radius: 2mm;
+}
+.caption {
+font-size: 20pt;
+}
+.table caption {
+font-size: 20pt;
+padding-bottom: 3mm;
+
+}
+code {
+font-size: 1em;
+font-family: monospace;
+background-color: $if(secondary_colour)$$secondary_colour$24$else$#00808024$endif$;
+color: $if(primary_colour)$$primary_colour$$else$#0b4545$endif$;
+padding: 1.2mm;
+border-radius: 2mm;
+}
+.poster_title code {
+font-size: 1em;
+}
+table {
+font-size: 40px;
+margin: auto;
+border-top: 3px solid #666;
+border-bottom: 3px solid #666;
+}
+table thead th {
+border-bottom: 3px solid #ddd;
+}
+td {
+padding: 8px;
+}
+th {
+padding: 15px;
+}
+caption {
+margin-bottom: 10px;
+}
+.poster_body p {
+margin-right: 4mm;
+margin-left: 4mm;
+margin-top: 6mm;
+margin-bottom: 10mm;
+color: $if(body_textcol)$$body_textcol$$else$#000000$endif$
+}
+.poster_body ol {
+margin-right: 4mm;
+margin-left: 4mm;
+}
+#ul {
+margin-right: 4mm;
+margin-left: 4mm;
+}
+.references p {
+font-size: 20pt;
+}
+.orcid img {
+  width: 1em;
+}
+</style>
+$if(custom_css)$
+<link rel="stylesheet" href=$custom_css$>
+$else$$endif$
+</head>
+<body>
+
+$for(include-before)$
+$include-before$
+$endfor$
+
+<div class="poster_wrap">
+<div class="title_container">
+<!-- Left Logo  -->
+<div class="logo_left">
+$if(logoleft_name)$
+<img src=$logoleft_name$ style="width: 80%">
+$endif$
+</div>
+<!-- Poster Title -->
+<div class= "poster_title">
+$if(title)$<h1 id="title">$title$</h1>$endif$
+$if(author)$<h3 id="author">$for(author)$$author.name$<sup>$author.affil$$if(author.orcid)$, <a class="orcid" href="https://orcid.org/$author.orcid$"><img src="https://raw.githubusercontent.com/brentthorne/posterdown/master/images/orcid.jpg"></a>$else$$endif$</sup>$sep$, $endfor$</h3>$endif$
+$if(affiliation)$<h5 id="affiliation">$for(affiliation)$<sup>$affiliation.num$</sup> $affiliation.address$$sep$; $endfor$</h5>$endif$
+</div>
+<!-- Right Logo  -->
+<div class="logo_right">
+$if(logoright_name)$
+<img src=$logoright_name$ style="width: 80%">
+$endif$
+</div>
+</div>
+
+<div class='poster_body_wrap'>
+<div class='poster_body'>
+$body$
+</div>
+</div>
+
+</div>
+
+$if(math)$
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+var script = document.createElement("script");
+script.type = "text/javascript";
+var src = "$if(mathjax)$$mathjax$$endif$";
+if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+if (location.protocol !== "file:" && /^https?:/.test(src))
+src = src.replace(/^https?:/, '');
+script.src = src;
+document.getElementsByTagName("head")[0].appendChild(script);
+})();
+</script>
+$endif$
+
+$for(include-after)$
+$include-after$
+$endfor$
+
+</body>
+</html>

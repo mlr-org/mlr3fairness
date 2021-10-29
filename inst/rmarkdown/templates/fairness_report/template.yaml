@@ -1,0 +1,4 @@
+name: Fairness Report
+description: >
+ Fairness Report for a ML Model
+create_dir: true

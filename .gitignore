@@ -104,3 +104,7 @@ $RECYCLE.BIN/
 .vscode
 /doc/
 /Meta/
+
+# Ignore local symlinks
+rmarkdown
+!inst/rmarkdown

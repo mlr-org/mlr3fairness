@@ -54,6 +54,24 @@ task_filter_ex = function(task, row_ids) {
   task$filter(row_ids)
 }
 
+#' Write objects as .RDS files into path.
+#'
+#' @param objects [list] list of objects
+#' @param path [character] path to save to
+#'
+#' @return NULL
+#' @noRd
+write_files = function(objects, path) {
+  prefix = "```{r read-data, include = FALSE}"
+  reads = pmap_chr(list(objects, names(objects)), function(x, nm) {
+    file = paste0(path, "/", nm, ".RDS")
+    saveRDS(x, file = file)
+    paste0(nm, " = readRDS('", basename(file), "')")
+  })
+  postfix = "```"
+  writeLines(c(prefix, reads, postfix), paste0(path, "/read_data.Rmd"))
+}
+
 replace_prefix = function(str, prefix, replacement) {
   assert_character(prefix, any.missing = FALSE)
   assert_string(replacement)
@@ -75,3 +93,4 @@ tabular = function(df, ...) {
    paste0("\\strong{", names(df), "}", sep = "", collapse = " \\tab "), " \\cr\n   ",
    contents, "\n }\n", sep = "")
 }
+

@@ -1,5 +1,5 @@
 
-# [mlr3fairness](https://github.com/mlr-org/mlr3fairness)
+# [mlr3fairness](https://github.com/mlr-org/mlr3fairness) <img src="man/figures/scale_mlr3.png" align="right" />
 
 Machine Learning Fairness Extension for
 [mlr3](https://github.com/mlr-org/mlr3).
@@ -8,7 +8,7 @@ Machine Learning Fairness Extension for
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
 [![Mattermost](https://img.shields.io/badge/chat-mattermost-orange.svg)](https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/)
 
-# Installation
+## Installation
 
 Install the development version from mlr3 repo
 
@@ -16,7 +16,7 @@ Install the development version from mlr3 repo
 remotes::install_github("mlr-org/mlr3fairness")
 ```
 
-# Why should I care about fairness in machine learning?
+## Why should I care about fairness in machine learning?
 
 Machine Learning model predictions can be skewed by a range of factors
 and thus might be considered unfair towards certain groups or
@@ -86,18 +86,20 @@ library(mlr3)
 library(mlr3fairness)
 ```
 
-| key                                | description                                                           |
-| :--------------------------------- | :-------------------------------------------------------------------- |
-| fairness.eod                       | Equalized Odds: Sum of abs. difference between true positive and      |
-| false positive rates across groups |                                                                       |
-| fairness.fpr                       | Abs. difference in false positive rates across groups                 |
-| fairness.acc                       | Abs. difference in accuracy across groups (Overall accuracy equality) |
-| fairness.tpr                       | Abs. difference in true positive rates across groups                  |
-| fairness.tnr                       | Abs. difference in true negative rates across groups                  |
-| fairness.ppv                       | Abs. difference in positive predictive values across groups           |
-| fairness.npv                       | Abs. difference in negative predictive values across groups           |
-| fairness.fp                        | Abs. difference in false positives across groups                      |
-| fairness.fn                        | Abs. difference in false negatives across groups                      |
+| key          | description                                                                                              |
+| :----------- | :------------------------------------------------------------------------------------------------------- |
+| fairness.acc | Absolute differences in accuracy across groups (Overall accuracy equality)                               |
+| fairness.eod | Equalized Odds: Sum of absolute differences between true positive and false positive rates across groups |
+| fairness.fn  | Absolute differences in false negatives across groups                                                    |
+| fairness.fnr | Absolute differences in false negative rates across groups                                               |
+| fairness.fp  | Absolute differences in false positives across groups                                                    |
+| fairness.fpr | Absolute differences in false positive rates across groups                                               |
+| fairness.npv | Absolute differences in negative predictive values across groups                                         |
+| fairness.ppv | Absolute differences in positive predictive values across groups                                         |
+| fairness.tn  | Absolute differences in true negatives across groups                                                     |
+| fairness.tnr | Absolute differences in true negative rates across groups                                                |
+| fairness.tp  | Absolute differences in true positives across groups                                                     |
+| fairness.tpr | Absolute differences in true positive rates across groups                                                |
 
 The `fairness_tensor` function can be used with a `Prediction` in order
 to print group-wise confusion matrices for each protected attribute
@@ -148,7 +150,7 @@ rs$score(msr("fairness.acc"))
 
 You can load them using `tsk(<key>)`.
 
-## Demo for Adult Dataset
+### Demo for Adult Dataset
 
 We provide a short example detailing how `mlr3fairness` integrates with
 the `mlr3` ecosystem.
@@ -173,14 +175,41 @@ predictions$score(fairness_measure, task = task_test)
 fairness_prediction_density(predictions, task_test)
 ```
 
-# Extensions
+### Model Cards & Datasheets
+
+An important step towards achieving more equitable outcomes for ML
+models is adequate documentation for datasets and models in machine
+learning. `mlr3fairness` comes with reporting aides for `models` and
+`datasets`. This provides empty templates that can be used to create
+interactive reports through `RMarkdown`.
+
+| Report             | Description             | Reference             |
+| ------------------ | ----------------------- | --------------------- |
+| `report_modelcard` | Modelcard for ML models | Mitchell et al., 2018 |
+| `report_datasheet` | Datasheet for data sets | Gebru et al., 2018    |
+| `report_fairness`  | Fairness Report         | –                     |
+
+**Usage:**
+
+The `report_*` functions instantiate a new `.Rmd` template that contains
+a set of pre-definedquestions which can be used for reporting as well as
+initial graphics. The created `.Rmd` file can then be extended by the
+user. It can later be converted into a `html` report using`rmarkdown`’s
+`render`.
+
+``` r
+rmdfile = report_datasheet()
+rmarkdown::render(rmdfile)
+```
+
+### Extensions
 
   - The [mcboost](https://github.com/mlr-org/mcboost) package integrates
     with **mlr3** and offers additional debiasing post-processing
     functionality for **classification**, **regression** and
     **survival**.
 
-# Other Fairness Toolkits in R
+### Other Fairness Toolkits in R
 
   - The [AI Fairness 360](https://aif360.mybluemix.net/) toolkit offers
     an R extension that allows for bias auditing, visualization and
@@ -192,28 +221,21 @@ fairness_prediction_density(predictions, task_test)
   - The [fairness](https://github.com/kozodoi/fairness) package allows
     for bias auditing in R.
 
-# Future Development
+### Future Development
 
 Several future developments are currently planned. Contributions are
 highly welcome\!
 
-## Visualizations
+  - Visualizations: Improvement on visualizations, like anchor points
+    and others. See issues.
+  - Metrics: Add support to non-binary target attributes and non-binary
+    protected attributes.
+  - Debiasing Methods: More Debiasing Methods, post-processing and
+    in-processing.
+  - Fairness Report: Add a `report_fairness` that automatically creates
+    a **fairness report**
 
-1.  Improvement on visualizations, like anchor points and others. See
-    issues.
-
-## Metrics
-
-1.  Add support to non-binary target attributes and non-binary protected
-    attributes.
-
-## Debiasing Methods
-
-1.  More Debiasing Methods, post-processing and in-processing.
-
-## Fairness Report
-
-# Bugs, Feedbacks and Questions
+## Bugs, Feedbacks and Questions
 
 `mlr3fairness` is a free and open source software project that
 encourages participation and feedback. If you have any issues,

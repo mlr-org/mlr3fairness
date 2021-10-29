@@ -42,6 +42,7 @@ Imports:
     mlr3pipelines,
     ggplot2
 Suggests:
+    mlr3viz,
     rmarkdown,
     knitr,
     rpart,
@@ -49,7 +50,8 @@ Suggests:
     patchwork,
     ranger,
     mlr3learners,
-    linprog
+    linprog,
+    posterdown
 RoxygenNote: 7.1.2
 Remotes:
     mlr-org/mlr3

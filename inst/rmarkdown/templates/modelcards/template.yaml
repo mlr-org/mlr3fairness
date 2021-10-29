@@ -1,0 +1,4 @@
+name: Modelcard
+description: >
+ Modelcard for a ML Model
+create_dir: true
