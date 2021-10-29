@@ -6,9 +6,6 @@
 #'
 #' @export
 #' @examples
-#' # Create MeasureFairness to measure the Predictive Parity.
-#' library(mlr3)
-#' library(mlr3fairness)
 #' # Equalized Odds Metric
 #' MeasureFairnessComposite$new(measures = msrs(c("fairness.fpr", "fairness.tpr")))
 #'
