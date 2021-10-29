@@ -11,9 +11,11 @@ knitr::opts_chunk$set(echo = FALSE)
 library("mlr3")
 library("mlr3viz")
 library("mlr3fairness")
+library("ggplot2")
 ```
-<!-- This reads in `objects` provided to report_fairness: resampling_result, task, ...-->
-```{r child = 'read_data.Rmd'}
+<!-- This reads in `objects` provided to report_fairness: resample_result, task, ...-->
+
+```{r, child = 'read_data.Rmd'}
 ```
 
 Jump to section:
@@ -46,16 +48,16 @@ fair_metrics = msrs(c("fairness.acc","fairness.eod","fairness.fnr",
 ```
 
 ```{r}
-knitr::kable(resampling_result$aggregate(fair_metrics))
+knitr::kable(resample_result$aggregate(fair_metrics))
 ```
 
 
 ```{r}
-fairness_accuracy_tradeoff(resampling_result)
+fairness_accuracy_tradeoff(resample_result)
 ```
 
 ```{r, eval = (rr$learner$predict_type == "prob")}
-fairness_prediction_density(resampling_result)
+fairness_prediction_density(resample_result)
 ```
 
 # References

@@ -2,7 +2,7 @@
 title: "Reports"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{reports}
+  %\VignetteIndexEntry{Reports}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,10 +14,16 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup-load}
+```{r setup-load, echo = FALSE}
 library(mlr3fairness)
+td = tempdir()
+unlink(list.files(td, full.names = TRUE), recursive = TRUE)
 ```
 
+`mlr3fairness` contains several templates that allow for creating reports based on `RMarkdown` files.
+The `report_*` functions instantiate a new `.Rmd` file that can be furher adapted by the user.
+
+The following reports are currently available in `mlr3fairness`.
 
 | Report             | Description             | Reference             |
 | ------------------ | ----------------------- | --------------------- |
@@ -27,36 +33,45 @@ library(mlr3fairness)
 
 **Usage:**
 
-The `report_*` functions instantiate a new `.Rmd` template that contains
-a set of pre-definedquestions which can be used for reporting as well as
+
+Templates contain a set of pre-defined questions which can be used for reporting as well as
 initial graphics. The created `.Rmd` file can then be extended by the
 user. It can later be converted into a `html` report using`rmarkdown`’s
-`render`.
+`render` function.
 
 
-```{r, eval = FALSE}
+```{r eval_false_example_for_vignette, eval = FALSE, results = 'hide', message = FALSE}
+library(mlr3fairness)
 rmdfile = report_datasheet()
 rmarkdown::render(rmdfile)
 ```
 
-# Example: Model Card
 
-```{r}
-rmdfile = report_modelcard()
+```{r build_modelcard_example_for_vignette, echo = FALSE, results = 'hide', message = FALSE}
+rmdfile = report_modelcard(paste0(td, "/modelcard"))
+rmarkdown::render(rmdfile)
+```
+## Examples
+
+#### [Example: Model Card](`r gsub(".Rmd", ".html", rmdfile)`)
+
+
+```{r build_datasheet_example_for_vignette, echo = FALSE, results = 'hide', message = FALSE}
+rmdfile = report_datasheet(paste0(td, "/datasheet"))
 rmarkdown::render(rmdfile)
 ```
 
-# Example: Datasheet
+#### [Example: Data Sheet](`r gsub(".Rmd", ".html", rmdfile)`)
 
-```{r}
-rmdfile = report_datasheet()
+
+
+
+```{r build_fairness_example_for_vignette, echo = FALSE, results = 'hide', message = FALSE, warning = FALSE, error = FALSE}
+task = tsk("compas")
+learner = lrn("classif.rpart", predict_type = "prob")
+rr = resample(task, learner, rsmp("cv", folds = 5))
+rmdfile = report_fairness(paste0(td, "/fairness"), list(task = task, resample_result = rr))
 rmarkdown::render(rmdfile)
 ```
 
-# Example: Fairness Report
-
-
-```{r}
-rmdfile = report_fairness()
-rmarkdown::render(rmdfile)
-```
+#### [Example: Fairness Report](`r gsub(".Rmd", ".html", rmdfile)`)

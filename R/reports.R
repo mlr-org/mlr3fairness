@@ -78,7 +78,7 @@ report_modelcard = function(filename = "modelcard.Rmd", edit = FALSE) {
 #' @examples
 #' \dontrun{
 #'   task = tsk("compas")
-#'   learner = lrn("classif.rpart", prob = TRUE)
+#'   learner = lrn("classif.rpart", predict_type = "prob")
 #'   rr = resample(task, learner, rsmp("cv", folds = 5))
 #'   report_fairness("documentation/fairness.Rmd", list(task = task, resample_result = rr))
 #' }
