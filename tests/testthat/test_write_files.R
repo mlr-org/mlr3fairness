@@ -1,6 +1,7 @@
 test_that("write_files", {
   skip_on_cran()
   tdir = tempdir()
+  unlink(list.files(tdir, full.names = TRUE), recursive = TRUE)
   object = list("one" = 1, "two" = 1)
   write_files(object, tdir)
   lfiles = list.files(tdir, full.names = TRUE)
