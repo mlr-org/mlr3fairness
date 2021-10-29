@@ -70,7 +70,7 @@ report_modelcard = function(filename = "modelcard.Rmd", edit = FALSE) {
 #'   Objects are saved as `<name>.RDS` in the new folder created for the report.
 #'   * `task` :: The [`Task`] a report should be created for.
 #'   * `resample_result` ::  A [mlr3::ResampleResult] result to be analyzed.
-.` :: any other objects passed on for the report.
+#'   * `...` :: any other objects passed on for the report.
 #' @param edit (`logical`)\cr
 #'   `TRUE` to edit the template immediately.
 #' @param check_objects (`logical`)\cr
