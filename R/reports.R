@@ -70,20 +70,27 @@ report_modelcard = function(filename = "modelcard.Rmd", edit = FALSE) {
 #'   Objects are saved as `<name>.RDS` in the new folder created for the report.
 #'   * `task` :: The [`Task`] a report should be created for.
 #'   * `resample_result` ::  A [mlr3::ResampleResult] result to be analyzed.
-#'   * `...` :: any other objects required for the report.
+.` :: any other objects passed on for the report.
 #' @param edit (`logical`)\cr
 #'   `TRUE` to edit the template immediately.
+#' @param check_objects (`logical`)\cr
+#'   Should items in `objects` be checked? If `FALSE`, no checks on `object` are performed.
 #' @examples
 #' \dontrun{
 #'   task = tsk("compas")
 #'   learner = lrn("classif.rpart", prob = TRUE)
 #'   rr = resample(task, learner, rsmp("cv", folds = 5))
-#'   report_fairness("documentation/fairness.Rmd", list(task = task, resampling_result = rr))
+#'   report_fairness("documentation/fairness.Rmd", list(task = task, resample_result = rr))
 #' }
 #' @export
-report_fairness = function(filename = "fairness_report.Rmd", objects, edit = FALSE) {
+report_fairness = function(filename = "fairness_report.Rmd", objects, edit = FALSE, check_objects = FALSE) {
   assert_list(objects)
-  assert_subset(c("resampling_result", "task"), names(objects))
+  assert_flag(check_objects)
+  if (check_objects) {
+    assert_subset(c("resample_result", "task"), names(objects))
+    assert_resample_result(objects$resample_result)
+    assert_task(objects$task)
+  }
   assert_flag(edit)
 
   if (!dir.exists(dirname(filename))) {

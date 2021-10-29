@@ -1,5 +1,5 @@
 
-# [mlr3fairness](https://github.com/mlr-org/mlr3fairness)
+# [mlr3fairness](https://github.com/mlr-org/mlr3fairness) <img src="man/figures/scale_mlr3.png" align="right" />
 
 Machine Learning Fairness Extension for
 [mlr3](https://github.com/mlr-org/mlr3).
@@ -86,18 +86,20 @@ library(mlr3)
 library(mlr3fairness)
 ```
 
-| key                                | description                                                           |
-| :--------------------------------- | :-------------------------------------------------------------------- |
-| fairness.eod                       | Equalized Odds: Sum of abs. difference between true positive and      |
-| false positive rates across groups |                                                                       |
-| fairness.fpr                       | Abs. difference in false positive rates across groups                 |
-| fairness.acc                       | Abs. difference in accuracy across groups (Overall accuracy equality) |
-| fairness.tpr                       | Abs. difference in true positive rates across groups                  |
-| fairness.tnr                       | Abs. difference in true negative rates across groups                  |
-| fairness.ppv                       | Abs. difference in positive predictive values across groups           |
-| fairness.npv                       | Abs. difference in negative predictive values across groups           |
-| fairness.fp                        | Abs. difference in false positives across groups                      |
-| fairness.fn                        | Abs. difference in false negatives across groups                      |
+| key          | description                                                                                              |
+| :----------- | :------------------------------------------------------------------------------------------------------- |
+| fairness.acc | Absolute differences in accuracy across groups (Overall accuracy equality)                               |
+| fairness.eod | Equalized Odds: Sum of absolute differences between true positive and false positive rates across groups |
+| fairness.fn  | Absolute differences in false negatives across groups                                                    |
+| fairness.fnr | Absolute differences in false negative rates across groups                                               |
+| fairness.fp  | Absolute differences in false positives across groups                                                    |
+| fairness.fpr | Absolute differences in false positive rates across groups                                               |
+| fairness.npv | Absolute differences in negative predictive values across groups                                         |
+| fairness.ppv | Absolute differences in positive predictive values across groups                                         |
+| fairness.tn  | Absolute differences in true negatives across groups                                                     |
+| fairness.tnr | Absolute differences in true negative rates across groups                                                |
+| fairness.tp  | Absolute differences in true positives across groups                                                     |
+| fairness.tpr | Absolute differences in true positive rates across groups                                                |
 
 The `fairness_tensor` function can be used with a `Prediction` in order
 to print group-wise confusion matrices for each protected attribute
@@ -181,20 +183,39 @@ learning. `mlr3fairness` comes with reporting aides for `models` and
 `datasets`. This provides empty templates that can be used to create
 interactive reports through `RMarkdown`.
 
+<<<<<<< HEAD
 | Report              | Description             | Reference             |
 | ------------------- | ----------------------- | --------------------- |
 | `report_modelcard`  | Modelcard for ML models | Mitchell et al., 2018 |
 | `repoort_datasheet` | Datasheet for data sets | Gebru et al., 2018    |
+=======
+| Report             | Description             | Reference             |
+| ------------------ | ----------------------- | --------------------- |
+| `report_modelcard` | Modelcard for ML models | Mitchell et al., 2018 |
+| `report_datasheet` | Datasheet for data sets | Gebru et al., 2018    |
+| `report_fairness`  | Fairness Report         | –                     |
+>>>>>>> origin
 
 **Usage:**
 
 The `report_*` functions instantiate a new `.Rmd` template that contains
+<<<<<<< HEAD
 a set of pre-defined questions which can be used for reporting. It can
 later be converted into a `html` report using `rmarkdown`’s `render`.
 
 ``` r
 report_datasheet()
 rmarkdown::render("datasheet/datasheet.Rmd")
+=======
+a set of pre-definedquestions which can be used for reporting as well as
+initial graphics. The created `.Rmd` file can then be extended by the
+user. It can later be converted into a `html` report using`rmarkdown`’s
+`render`.
+
+``` r
+rmdfile = report_datasheet()
+rmarkdown::render(rmdfile)
+>>>>>>> origin
 ```
 
 ### Extensions

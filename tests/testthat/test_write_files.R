@@ -1,4 +1,5 @@
 test_that("write_files", {
+  skip_on_cran()
   tdir = tempdir()
   object = list("one" = 1, "two" = 1)
   write_files(object, tdir)
@@ -8,7 +9,7 @@ test_that("write_files", {
     x = readRDS(x)
     expect_true(x == 1)
   })
-  ll = readLines(lfiles[!grepl(".RDS", lfiles)])
+  ll = readLines(lfiles[grepl("read_data.Rmd", lfiles)])
   expect_true(ll[2] == "one = readRDS('one.RDS')")
-  unlink(tdir, recursive = TRUE)
+  unlink(list.files(tdir, full.names = TRUE), recursive = TRUE)
 })

@@ -93,3 +93,4 @@ tabular = function(df, ...) {
    paste0("\\strong{", names(df), "}", sep = "", collapse = " \\tab "), " \\cr\n   ",
    contents, "\n }\n", sep = "")
 }
+

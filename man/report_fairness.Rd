@@ -4,7 +4,16 @@
 \alias{report_fairness}
 \title{Create a fairness report for a ML model}
 \usage{
+<<<<<<< HEAD
 report_fairness(filename = "fairness_report.Rmd", objects, edit = FALSE)
+=======
+report_fairness(
+  filename = "fairness_report.Rmd",
+  objects,
+  edit = FALSE,
+  check_objects = FALSE
+)
+>>>>>>> origin
 }
 \arguments{
 \item{filename}{(\code{character})\cr
@@ -17,11 +26,21 @@ Objects are saved as \verb{<name>.RDS} in the new folder created for the report.
 \itemize{
 \item \code{task} :: The \code{\link{Task}} a report should be created for.
 \item \code{resample_result} ::  A \link[mlr3:ResampleResult]{mlr3::ResampleResult} result to be analyzed.
+<<<<<<< HEAD
 \item \code{...} :: any other objects required for the report.
+=======
+\item \code{...} :: any other objects passed on for the report.
+>>>>>>> origin
 }}
 
 \item{edit}{(\code{logical})\cr
 \code{TRUE} to edit the template immediately.}
+<<<<<<< HEAD
+=======
+
+\item{check_objects}{(\code{logical})\cr
+Should items in \code{objects} be checked? If \code{FALSE}, no checks on \code{object} are performed.}
+>>>>>>> origin
 }
 \description{
 Instantiates a new R Markdown template with a skeleton of reported
@@ -32,6 +51,10 @@ metrics and visualizations that can be used to create a fairness report.
   task = tsk("compas")
   learner = lrn("classif.rpart", prob = TRUE)
   rr = resample(task, learner, rsmp("cv", folds = 5))
+<<<<<<< HEAD
   report_fairness("documentation/fairness.Rmd", list(task = task, resampling_result = rr))
+=======
+  report_fairness("documentation/fairness.Rmd", list(task = task, resample_result = rr))
+>>>>>>> origin
 }
 }
