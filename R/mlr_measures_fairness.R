@@ -9,6 +9,7 @@
 #'
 #' `r tabular(mlr_measures_fairness)`
 #'
+#' @export
 #' @examples
 #' # Predefined measures:
 #' mlr_measures_fairness$key

@@ -30,10 +30,10 @@ test_that("PipeOpEOd technically works for trivial cases priv 0", {
   expect_true(all(!dft[, 2]))
 
   # Errors as epxected
-  poed = po("EOd", priviledged = "5")
+  poed = po("EOd", privileged = "5")
   expect_error(poed$train(list(t)), "needs to be a valid value")
   # Trains as expected
-  poed = po("EOd", priviledged = "0")
+  poed = po("EOd", privileged = "0")
   poed$train(list(t))
   expect_true(all(unlist(poed$state) == c(1, 0.5, 1, 0)))
   prd = poed$predict(list(t))[[1]]
@@ -42,7 +42,7 @@ test_that("PipeOpEOd technically works for trivial cases priv 0", {
   expect_true(all(fairness_tensor(prd, t)[[1]] == fairness_tensor(prd, t)[[2]]))
 
   # No changes as expected
-  poed = po("EOd", priviledged = "1")
+  poed = po("EOd", privileged = "1")
   poed$train(list(t))
   expect_true(all(unlist(poed$state) == c(1, 0, 1, 0.5)))
   prd = poed$predict(list(t))[[1]]
@@ -62,7 +62,7 @@ test_that("PipeOpEOd technically works for trivial cases priv 1", {
   # Debias
   t = TaskClassif$new("test_task", dt, target = "truth", positive = "0")
   t$set_col_roles("pta", "pta")
-  poed = po("EOd", priviledged = "1")
+  poed = po("EOd", privileged = "1")
   poed$train(list(t))
   expect_true(all(unlist(poed$state) == c(0.5, 0, 1, 0)))
   prd = poed$predict(list(t))[[1]]

@@ -2,13 +2,12 @@
 #' @name mlr_measures_positive_probability
 #'
 #' @description
-#' Return the positive probability of the predictions. Formula: P(positive prediction) =
-#' positive_predictions / all_predictions
+#' Return the positive probability of the predictions.
+#' This is defined as count of positive predictions divided by the number of observations.
 #'
 #' @export
 #' @examples
 #' # Create Positive Probability Measure
-#' library(mlr3)
 #' data_task = tsk("adult_train")
 #' learner = lrn("classif.rpart", cp = .01)
 #' learner$train(data_task)
@@ -24,8 +23,6 @@ MeasurePositiveProbability = R6::R6Class("MeasurePositiveProbability",
     initialize = function() {
       super$initialize(
         id = "classif.pp",
-        packages = character(),
-        properties = character(),
         predict_type = "response",
         range = c(0, 1),
         minimize = FALSE)
@@ -34,13 +31,10 @@ MeasurePositiveProbability = R6::R6Class("MeasurePositiveProbability",
 
   private = list(
     .score = function(prediction, task, ...) {
-      pp = function(response, positive) {
-        positive_count = sum(response == positive)
-        return(positive_count / length(response))
-      }
-      pp(prediction$response, task$positive)
+      mean(prediction$response == task$positive)
     }
   )
 )
 
 mlr_measures$add("classif.pp", MeasurePositiveProbability)
+

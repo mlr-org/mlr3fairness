@@ -1,22 +1,20 @@
-#' @title Fairness Measures
+#' @title Base Measure for Fairness
 #'
 #' @description
-#'   This measure specializes [mlr3::Measure()] to allow for measuring statistical group fairness:
-#'   A common approach to quantifying a model's fairness is to compute the difference between a
-#'   protected and an unprotected group according to some performance metric such as
-#'   `classification error` ([mlr_measures_classif.ce]), `false positive rate`
-#'   ([mlr_measures_classif.fpr]) or others.
-#'   This measure allows for the composition of a fairness-metric from such a "base_measure" by comparing
-#'   the group-wise scores. The operation for comparison (e.g., difference or quotient) can be
-#'   specified using the `operation` parameter.
+#' This measure extends [mlr3::Measure()] with statistical group fairness:
+#' A common approach to quantifying a model's fairness is to compute the difference between a
+#' protected and an unprotected group according w.r.t. some performance metric, e.g.
+#' `classification error` ([mlr_measures_classif.ce]) or `false positive rate`
+#' ([mlr_measures_classif.fpr]).
+#' The operation for comparison (e.g., difference or quotient) can be specified using the `operation`
+#' parameter, e.g. [groupdiff_absdiff()] or [groupdiff_tau()].
 #'
-#' @section Overview:
-#'   Composite measures encompasing multiple fairness metrics can be built using
-#'   [MeasureFairnessComposite].
+#' Composite measures encompasing multiple fairness metrics can be built using
+#' [MeasureFairnessComposite].
 #'
-#'   Predefined measures can be found in the [dictionary][mlr3misc::Dictionary] [mlr_measures].
+#' Some popular predefined measures can be found in the [dictionary][mlr3misc::Dictionary] [mlr_measures].
 #'
-#' @seealso groupdiff_tau groupdiff_absdiff
+#' @seealso [MeasureFairnessComposite]
 #' @export
 #' @examples
 #' # Create MeasureFairness to measure the Predictive Parity.
@@ -43,7 +41,7 @@ MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure,
     #'   The operation used to compute the difference. A function that returns
     #'   a single value given input: computed metric for each subgroup.
     #'   Defaults to [groupdiff_absdiff].
-    #' @param minimize (`logical`)\cr
+    #' @param minimize (`logical()`)\cr
     #'   Should the measure be minimized? Defaults to `TRUE`.
     #' @param range (`numeric(2)`)\cr
     #'   Range of the resulting measure. Defaults to `c(-Inf, Inf)`.

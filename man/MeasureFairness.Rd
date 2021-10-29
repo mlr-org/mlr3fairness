@@ -2,25 +2,21 @@
 % Please edit documentation in R/MeasureFairness.R
 \name{MeasureFairness}
 \alias{MeasureFairness}
-\title{Fairness Measures}
+\title{Base Measure for Fairness}
 \description{
-This measure specializes \code{\link[mlr3:Measure]{mlr3::Measure()}} to allow for measuring statistical group fairness:
+This measure extends \code{\link[mlr3:Measure]{mlr3::Measure()}} with statistical group fairness:
 A common approach to quantifying a model's fairness is to compute the difference between a
-protected and an unprotected group according to some performance metric such as
-\verb{classification error} (\link{mlr_measures_classif.ce}), \verb{false positive rate}
-(\link{mlr_measures_classif.fpr}) or others.
-This measure allows for the composition of a fairness-metric from such a "base_measure" by comparing
-the group-wise scores. The operation for comparison (e.g., difference or quotient) can be
-specified using the \code{operation} parameter.
-}
-\section{Overview}{
+protected and an unprotected group according w.r.t. some performance metric, e.g.
+\verb{classification error} (\link{mlr_measures_classif.ce}) or \verb{false positive rate}
+(\link{mlr_measures_classif.fpr}).
+The operation for comparison (e.g., difference or quotient) can be specified using the \code{operation}
+parameter, e.g. \code{\link[=groupdiff_absdiff]{groupdiff_absdiff()}} or \code{\link[=groupdiff_tau]{groupdiff_tau()}}.
 
 Composite measures encompasing multiple fairness metrics can be built using
 \link{MeasureFairnessComposite}.
 
-Predefined measures can be found in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_measures}.
+Some popular predefined measures can be found in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_measures}.
 }
-
 \examples{
 # Create MeasureFairness to measure the Predictive Parity.
 data_task = tsk("adult_train")
@@ -31,7 +27,7 @@ predictions = learner$predict(data_task)
 predictions$score(measure, task = data_task)
 }
 \seealso{
-groupdiff_tau groupdiff_absdiff
+\link{MeasureFairnessComposite}
 }
 \section{Super class}{
 \code{\link[mlr3:Measure]{mlr3::Measure}} -> \code{MeasureFairness}
@@ -92,7 +88,7 @@ The operation used to compute the difference. A function that returns
 a single value given input: computed metric for each subgroup.
 Defaults to \link{groupdiff_absdiff}.}
 
-\item{\code{minimize}}{(\code{logical})\cr
+\item{\code{minimize}}{(\code{logical()})\cr
 Should the measure be minimized? Defaults to \code{TRUE}.}
 
 \item{\code{range}}{(\code{numeric(2)})\cr

@@ -7,8 +7,8 @@
 fairness_tensor(object, task, ...)
 }
 \arguments{
-\item{object}{(\code{\link[=data.table]{data.table()}} | \code{\link{PredictionClassif}})\cr
-A data.table with columns \code{truth} and \code{prediction} or a \code{\link{PredictionClassif}}.}
+\item{object}{(\code{\link[=data.table]{data.table()}} | \link{PredictionClassif})\cr
+A data.table with columns \code{truth} and \code{prediction} or a \link{PredictionClassif}.}
 
 \item{task}{(\link{TaskClassif})\cr
 A \link{TaskClassif}. Needs \code{col_role} \code{"pta"} to be set.}

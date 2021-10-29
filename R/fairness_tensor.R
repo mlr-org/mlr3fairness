@@ -3,8 +3,8 @@
 #' @description
 #' A fairness tensor is a list of groupwise confusion matrices.
 #'
-#' @param object ([`data.table()`] | [`PredictionClassif`])\cr
-#'   A data.table with columns `truth` and `prediction` or a [`PredictionClassif`].
+#' @param object ([data.table()] | [PredictionClassif])\cr
+#'   A data.table with columns `truth` and `prediction` or a [PredictionClassif].
 #' @param task ([TaskClassif])\cr
 #'   A [TaskClassif]. Needs `col_role` `"pta"` to be set.
 #' @param ... `any`\cr
