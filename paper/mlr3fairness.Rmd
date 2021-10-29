@@ -6,18 +6,24 @@ author:
     affiliation: LMU Munich
     orcid: 0000-0001-8867-762X
     email:  author1@work
+  - name: Sebastian Vollmer
+    email: svollmer@stat.uni-muenchen.de
+    affiliation: DFKI
+    affiliation2: University of Kaiserslautern
+    affiliation3: Univeristy of Warwick
   - name: Michel Lang
     url: https://journal.r-project.org
     email: Michel.Lang@stat.uni-muenchen.de
     orcid: 0000-0001-9754-0393
     affiliation: LMU Munich
     affiliation2: TU Dortmund University
+    
 abstract: >
   Given an increase in data-driven automated decision-making based on machine learning models, it is
   imparative that along with tools to develop and improve such models there are sufficient capabilities
   to analyze and assess models with respect to potential biases. We present the package \CRANpkg{mlr3fairness},
   a collection of metrics and methods that allow for the assessment of bias in machine learning models.
-  Our package implements a variety of widely used fairness metrics that can be used to audit models for potential biases along with a set of visualizations that can help to provide additional insights into such biases. \CRANpkg{mlr3fairness} furthermore integrates debiasing methods that can help aleviate biases in ML models through data preprocessing or post-processing of predictions.
+  Our package implements a variety of widely used fairness metrics that can be used to audit models for potential biases along with a set of visualizations that can help to provide additional insights into such biases. \CRANpkg{mlr3fairness} furthermore integrates debiasing methods that can help aleviate biases in ML models through data preprocessing or post-processing of predictions. These allow practioners to trade-off performance and fairness metric(s) that are appropriate for their use case.
 preamble: |
   \usepackage{longtable}
   \usepackage{bbm}
@@ -48,7 +54,7 @@ lgr::get_logger("mlr3")$set_threshold("warn")
 
 Humans are increasingly subject to data-driven automated decision-making.
 Those automated procedures such as credit risk assessments are often done using statistical or machine learning (ML) models [@galindo2000credit].
-It is imperative that along with tools to develop and improve such models, we also develop sufficient capabilities to analyze and assess models with respect to their robustness and predictive performance, but also address potential biases.
+It is imperative that along with tools to develop and improve such models, we also develop sufficient capabilities to analyze and assess models with respect to their robustness and predictive performance, but also address potential biases. This is highlighted by the GDPR requirement to process data "fairly".
 While a plethora of performance metrics are readily implemented in statistical modeling frameworks in R [@R]  (e.g., \CRANpkg{caret} [@caret], \CRANpkg{tidymodels} [@tidymodels], \CRANpkg{SuperLearner} [@superlearner], or \CRANpkg{mlr} [@mlr]), fairness metrics are widely missing.
 This lack of availability can be detrimental to obtaining fair and unbiased models if the result is to forgo bias audits due to the considerable complexity those metrics often pose.
 Consequently, there exists considerable necessity for R packages (a) implementing such metrics and (b) connecting these metrics to existing ML frameworks.
@@ -71,13 +77,13 @@ Studies have found that data-driven automated decision-making systems often impr
 This often does not only improve predictions but can also make decisions more efficient.
 Such systems, often without human oversight, are now ubiquitous in everyday life (@o2016weapons, @eubanks2018automating, @noble2018algorithms).
 To provide further examples, ML driven systems are now used for highly influential decisions such as loan accommodations (@Chen2018, @Turner2019), job applications [@schumann], healthcare [@Topol2019], and criminal sentencing (@compas, @corbettcompas, @richardcompas).
-With this proliferation, such decisions have become subject to scrutiny as a result of prominent inadequacies or failures of such methods for example in the case of the COMPAS recidivism prediction system [@compas].
+With this proliferation, such decisions have become subject to scrutiny as a result of prominent inadequacies or failures of such methods for example in the case of the COMPAS recidivism prediction system [@compas] - heavily influencing decisions about bail or parolle for suspects and offenders .
 
 Without proper auditing, those models can unintentionally result in negative consequences for individuals, often from underprivileged groups [@fairmlbook].
 Several sources of such biases are worth mentioning in this context: Data often contains **historical biases** such as gender or racial stereotypes, that -- if picked up by the model -- will be replicated into the future.
-Similarly, unprivileged populations are often not represented in data due to **sampling biases** leading to models that perform well in groups sufficiently represented in the data but worse on others [@buolamwini2018gender].
+Similarly, unprivileged populations are often not represented in data due to **sampling biases** leading to models that perform well in groups sufficiently represented in the data but worse on others [@buolamwini2018gender] - this includes higher rate of missing data.
 Other biases include biases in the *label generating process* and **feedback** loops where repeated decisions affect the population subject to such decisions.
-For an in-depth discussion and further sources of biases the interested reader is referred to @mehrabi.
+For an in-depth discussion and further sources of biases the interested reader is referred to [@mehrabi].
 
 We now turn to the question of how such biases can be measured in a model.
 The answer to this question depends on a society's ethical values and whether we take a neutral or a normative position.
@@ -131,7 +137,7 @@ Many problems with such metrics still persist and require additional research.
 Furthermore, practitioners need not only take into account the model itself, but also the data used to train the algorithm and the process behind collecting and labeling of such data, including possible feedback loops emerging from potentially biased models.
 While metrics and visualizations proposed in this article can help investigate biases in ML models, they do by no means guarantee that a model does not contain any undetected bias.
 Consider, for example, fairness metrics based on the TPR from above.
-If the labels $Y$ arise from a biased *label generating process*, there is little hope in obtaining fair outcomes even if fairness metrics indicate this.
+If the labels $Y$ arise from a biased *label generating process*, such as past loan decisions, there is little hope in obtaining fair outcomes even if fairness metrics indicate this.
 
 ## Related work {#related}
 
@@ -297,7 +303,9 @@ prediction$score(list(acc, eod), task = task)
 We can clearly see a comparatively large difference in equalized odds indicating that our model might be biased.
 Looking at the individual components of the fairness this becomes clearer:
 
-
+<!-- FIXME:
+?Comment?: do you want to introduce cite fairnes tensor paper
+-->
 ```{r}
 fairness_tensor(prediction, task)
 ```
@@ -484,13 +492,18 @@ tuning can be helpful and further improve
 
 # Summary
 
-The large-scale availability and use of automated decision making systems have resulted in growing concerns for a lack of fairness in the decisions made by such systems.
-As a result, fairness metrics and debiasing methods that allow for investigating un-fairness and hopefully alleviating biases in existing systems have been proposed.
-Widely available implementations of such methods are still not widely available, especially considering the required interoperability with machine learning toolkits that allows for ease of use and integration into model evaluation and tuning.
+The large-scale availability and use of automated decision making systems have resulted in growing concerns for a lack of fairness in the decisions made by such systems. 
+As a result, fairness metrics and debiasing methods that allow for investigating un-fairness and hopefully alleviating biases in existing systems have been proposed. 
+
+Implementations of such methods are still not widely available, especially considering the required interoperability with machine learning toolkits that allows for ease of use and integration into model evaluation and tuning.
 
 We have presented \CRANpkg{mlr3fairness}, a package for fairness auditing and bias correction on mlr3 models.
 Integrated fairness metrics allow for auditing ML models with respect to a multiplicity of fairness criteria and models identified as biased can subsequently be retrained / debiased using implemented debiasing methods.
 We hope that this package can constitute a first step towards more equitable outcomes in automated decision making.
+
+# Future Work
+
+Is this required.
 
 
 # Appendix
