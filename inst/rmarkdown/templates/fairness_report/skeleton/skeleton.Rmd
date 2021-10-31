@@ -23,7 +23,8 @@ Jump to section:
 
 ## Task details
 
-In this fairness report, we investigate the fairness of the following task:
+The background of this task is `background`.
+In this fairness report, we investigate the fairness of this task:
 
 ```{r}
 task
@@ -36,6 +37,14 @@ autoplot(task) + facet_wrap(task$col_roles$pta)
 ```
 
 ## Model details
+
+### Choice of Models
+
+We would like to introduce model `models` for this task.
+
+```{r}
+models
+```
 
 ### Fairness Metrics
 
@@ -56,6 +65,14 @@ fairness_accuracy_tradeoff(resampling_result)
 
 ```{r, eval = (rr$learner$predict_type == "prob")}
 fairness_prediction_density(resampling_result)
+```
+
+### Fairness Problems
+
+From the above reporting metrics and benchmark results. We could see there are some potential fairness problems.
+
+```{r}
+
 ```
 
 # References
