@@ -6,7 +6,7 @@ template:
     bootswatch: journal
     docsearch:
       api_key: f1cf73c2e68173ef3c0ac36d6ac6f448
-      index_name: mlr3db
+      index_name: mlr3fairness
   default_assets: false
 
 development:
@@ -46,11 +46,14 @@ reference:
     desc: >
       Performance measures for fairness, based on [Measure].
     contents:
+      - mlr_measures_fairness
       - MeasureFairness
       - MeasureFairnessComposite
+      - mlr_measures_fairness_constraint
       - groupdiff_absdiff
       - groupdiff_tau
       - mlr_measures_positive_probability
+
   - title: Detecting Bias
     contents:
       - fairness_tensor
@@ -61,6 +64,11 @@ reference:
     contents:
       - mlr_pipeops_equalized_odds
       - mlr_pipeops_reweighing
+  - title: Reports
+    contents:
+      - report_datasheet
+      - report_modelcard
+      - report_fairness
   - title: Data sets
     contents:
       - adult
