@@ -37,4 +37,3 @@ MeasurePositiveProbability = R6::R6Class("MeasurePositiveProbability",
 )
 
 mlr_measures$add("classif.pp", MeasurePositiveProbability)
-

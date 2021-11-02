@@ -30,15 +30,28 @@
 
   # Define a set of widely used metrics. Documented in mlr_measures_fairness
   x = getFromNamespace("mlr_measures", ns = "mlr3")
+  # constructors
   x$add("fairness", MeasureFairness)
   x$add("fairness.composite", MeasureFairnessComposite)
+  x$add("fairness.constraint", MeasureFairnessConstraint)
   x$add("classif.pp", MeasurePositiveProbability)
-  for (key in c("acc", "fn", "fnr", "fp", "fpr", "npv", "ppv", "tn", "tnr", "tp", "tpr")) {
+  # rates
+  for (key in c("fnr", "fpr", "tnr", "tpr", "npv", "ppv", "fomr")) {
+    x$add(sprintf("fairness.%s", key), MeasureFairness,
+      base_measure = msr(sprintf("classif.%s", key), range = c(0,1)))
+  }
+  # counts
+  for (key in c("fn", "fp", "tn", "tp")) {
     x$add(sprintf("fairness.%s", key), MeasureFairness,
       base_measure = msr(sprintf("classif.%s", key)))
   }
+  # compositions
   x$add("fairness.eod", MeasureFairnessComposite, measures = msrs(c("fairness.fpr", "fairness.tpr")),
     id = "equalized_odds")
+  x$add("fairness.acc_eod=.05", MeasureFairnessConstraint, performance_measure = msr("classif.acc"),
+    fairness_measure = msr("fairness.eod"), epsilon = 0.05, id = "fairness.acc_eod=.05", range = c(-1, 1))
+  x$add("fairness.acc_ppv=.05", MeasureFairnessConstraint, performance_measure = msr("classif.acc"),
+    fairness_measure = msr("fairness.ppv"), epsilon = 0.05, id = "fairness.acc_eod=.05", range = c(-1, 1))
 
   x = getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
   x$add("reweighing_wts", PipeOpReweighingWeights)

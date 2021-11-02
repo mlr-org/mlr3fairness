@@ -8,7 +8,6 @@ Computes a composite measure from multiple fairness metrics and aggregates them
 using \code{aggfun} (defaulting to \code{\link[=mean]{mean()}}).
 }
 \examples{
-# Create MeasureFairness to measure the Predictive Parity.
 # Equalized Odds Metric
 MeasureFairnessComposite$new(measures = msrs(c("fairness.fpr", "fairness.tpr")))
 

@@ -15,16 +15,24 @@
 #' mlr_measures_fairness$key
 mlr_measures_fairness = rowwise_table(
   ~key, ~description,
-  "fairness.acc", "Absolute differences in accuracy across groups (Overall accuracy equality)",
-  "fairness.eod", "Equalized Odds: Sum of absolute differences between true positive and false positive rates across groups",
-  "fairness.fn", "Absolute differences in false negatives across groups",
+  "fairness.acc", "Absolute differences in accuracy across groups",
+
   "fairness.fnr", "Absolute differences in false negative rates across groups",
-  "fairness.fp", "Absolute differences in false positives across groups",
   "fairness.fpr", "Absolute differences in false positive rates across groups",
+  "fairness.tnr", "Absolute differences in true negative rates across groups",
+  "fairness.tpr", "Absolute differences in true positive rates across groups",
+
   "fairness.npv", "Absolute differences in negative predictive values across groups",
   "fairness.ppv", "Absolute differences in positive predictive values across groups ",
-  "fairness.tn", "Absolute differences in true negatives across groups",
-  "fairness.tnr", "Absolute differences in true negative rates across groups",
+  "fairness.fomr", "Absolute differences in false omission rates across groups ",
+
+  "fairness.fp", "Absolute differences in false positives across groups",
   "fairness.tp", "Absolute differences in true positives across groups",
-  "fairness.tpr", "Absolute differences in true positive rates across groups"
+  "fairness.tn", "Absolute differences in true negatives across groups",
+  "fairness.fn", "Absolute differences in false negatives across groups",
+
+  "fairness.eod", "Equalized Odds: Sum of absolute differences between true positive and false positive rates across groups",
+
+  "fairness.acc_eod=.05", "Accuracy under equalized odds < 0.05 constraint",
+  "fairness.acc_ppv=.05", "Accuracy under equalized odds < 0.05 constraint"
 )

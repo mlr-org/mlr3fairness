@@ -24,7 +24,7 @@
 #' measure = msr("fairness", base_measure = msr("classif.ppv"))
 #' predictions = learner$predict(data_task)
 #' predictions$score(measure, task = data_task)
-MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure, cloneable = FALSE,
+MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure,
   public = list(
     #' @template field_base_measure
     base_measure = NULL,
@@ -71,6 +71,4 @@ MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure, cloneable = 
     }
   )
 )
-
 mlr_measures$add("fairness", MeasureFairness)
-
