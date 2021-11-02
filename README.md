@@ -33,20 +33,27 @@ The **goal of `mlr3fairness`** is to allow for auditing of `mlr3`
 learners, visualization and subsequently trying to improve fairness
 using debiasing strategies.
 
+> :warning: **Note** Bias auditing and debiasing solely based on
+> observational data **can not** guarantee fairness of a decision making
+> system. Several biases, for example comming from the data can not be
+> detected using the approaches implemented in `mlr3fairness`. This goal
+> of this software is thus to allow for a better understanding and first
+> hints at possible fairness problems in a studied model.
+
 ## Feature Overview
 
-  - **Fairness Measures:** Audit algorithmms for fairness using a
-    variety of fairness criteria. This also allows for designing custom
-    criteria.
+  - [**Fairness Measures:**](#metrics) Audit algorithmms for fairness
+    using a variety of fairness criteria. This also allows for designing
+    custom criteria.
 
-  - **Fairness Visualizations:** Diagnose fairness problems through
-    visualizations.
+  - [**Fairness Visualizations:**](#viz) Diagnose fairness problems
+    through visualizations.
 
-  - **Debiasing Methods:** Correct fairness problems in three lines of
-    code.
+  - [**Debiasing Methods:**](#debiasing) Correct fairness problems in
+    three lines of code.
 
-  - **Fairness Report:** Obtain a report regarding an algorithm’s
-    fairness. (Under development)
+  - [**Fairness Report:**](#reports) Obtain a report regarding an
+    algorithm’s fairness. (Under development)
 
 **More Information**
 
@@ -54,6 +61,7 @@ using debiasing strategies.
   - [Fairness
     Metrics](https://mlr3fairness.mlr-org.com/articles/measures-vignette.html)
   - [Visualizations](https://mlr3fairness.mlr-org.com/articles/visualization-vignette.html)
+  - [Reports](https://mlr3fairness.mlr-org.com/articles/reports-vignette.html)
 
 ### Protected Attribute
 
@@ -86,20 +94,23 @@ library(mlr3)
 library(mlr3fairness)
 ```
 
-| key          | description                                                                                              |
-| :----------- | :------------------------------------------------------------------------------------------------------- |
-| fairness.acc | Absolute differences in accuracy across groups (Overall accuracy equality)                               |
-| fairness.eod | Equalized Odds: Sum of absolute differences between true positive and false positive rates across groups |
-| fairness.fn  | Absolute differences in false negatives across groups                                                    |
-| fairness.fnr | Absolute differences in false negative rates across groups                                               |
-| fairness.fp  | Absolute differences in false positives across groups                                                    |
-| fairness.fpr | Absolute differences in false positive rates across groups                                               |
-| fairness.npv | Absolute differences in negative predictive values across groups                                         |
-| fairness.ppv | Absolute differences in positive predictive values across groups                                         |
-| fairness.tn  | Absolute differences in true negatives across groups                                                     |
-| fairness.tnr | Absolute differences in true negative rates across groups                                                |
-| fairness.tp  | Absolute differences in true positives across groups                                                     |
-| fairness.tpr | Absolute differences in true positive rates across groups                                                |
+| key                   | description                                                                                              |
+| :-------------------- | :------------------------------------------------------------------------------------------------------- |
+| fairness.acc          | Absolute differences in accuracy across groups                                                           |
+| fairness.fnr          | Absolute differences in false negative rates across groups                                               |
+| fairness.fpr          | Absolute differences in false positive rates across groups                                               |
+| fairness.tnr          | Absolute differences in true negative rates across groups                                                |
+| fairness.tpr          | Absolute differences in true positive rates across groups                                                |
+| fairness.npv          | Absolute differences in negative predictive values across groups                                         |
+| fairness.ppv          | Absolute differences in positive predictive values across groups                                         |
+| fairness.fomr         | Absolute differences in false omission rates across groups                                               |
+| fairness.fp           | Absolute differences in false positives across groups                                                    |
+| fairness.tp           | Absolute differences in true positives across groups                                                     |
+| fairness.tn           | Absolute differences in true negatives across groups                                                     |
+| fairness.fn           | Absolute differences in false negatives across groups                                                    |
+| fairness.eod          | Equalized Odds: Sum of absolute differences between true positive and false positive rates across groups |
+| fairness.acc\_eod=.05 | Accuracy under equalized odds \< 0.05 constraint                                                         |
+| fairness.acc\_ppv=.05 | Accuracy under equalized odds \< 0.05 constraint                                                         |
 
 The `fairness_tensor` function can be used with a `Prediction` in order
 to print group-wise confusion matrices for each protected attribute
@@ -150,6 +161,33 @@ rs$score(msr("fairness.acc"))
 
 You can load them using `tsk(<key>)`.
 
+### Model Cards & Datasheets
+
+An important step towards achieving more equitable outcomes for ML
+models is adequate documentation for datasets and models in machine
+learning. `mlr3fairness` comes with reporting aides for `models` and
+`datasets`. This provides empty templates that can be used to create
+interactive reports through `RMarkdown`.
+
+| Report             | Description             | Reference             |
+| ------------------ | ----------------------- | --------------------- |
+| `report_modelcard` | Modelcard for ML models | Mitchell et al., 2018 |
+| `report_datasheet` | Datasheet for data sets | Gebru et al., 2018    |
+| `report_fairness`  | Fairness Report         | –                     |
+
+**Usage:**
+
+The `report_*` functions instantiate a new `.Rmd` template that contains
+a set of pre-definedquestions which can be used for reporting as well as
+initial graphics. The created `.Rmd` file can then be extended by the
+user. It can later be converted into a `html` report using`rmarkdown`’s
+`render`.
+
+``` r
+rmdfile = report_datasheet()
+rmarkdown::render(rmdfile)
+```
+
 ### Demo for Adult Dataset
 
 We provide a short example detailing how `mlr3fairness` integrates with
@@ -173,49 +211,6 @@ predictions$score(fairness_measure, task = task_test)
 
 #Visualize the predicted probability score based on protected attribute.
 fairness_prediction_density(predictions, task_test)
-```
-
-### Model Cards & Datasheets
-
-An important step towards achieving more equitable outcomes for ML
-models is adequate documentation for datasets and models in machine
-learning. `mlr3fairness` comes with reporting aides for `models` and
-`datasets`. This provides empty templates that can be used to create
-interactive reports through `RMarkdown`.
-
-<<<<<<< HEAD
-| Report              | Description             | Reference             |
-| ------------------- | ----------------------- | --------------------- |
-| `report_modelcard`  | Modelcard for ML models | Mitchell et al., 2018 |
-| `repoort_datasheet` | Datasheet for data sets | Gebru et al., 2018    |
-=======
-| Report             | Description             | Reference             |
-| ------------------ | ----------------------- | --------------------- |
-| `report_modelcard` | Modelcard for ML models | Mitchell et al., 2018 |
-| `report_datasheet` | Datasheet for data sets | Gebru et al., 2018    |
-| `report_fairness`  | Fairness Report         | –                     |
->>>>>>> origin
-
-**Usage:**
-
-The `report_*` functions instantiate a new `.Rmd` template that contains
-<<<<<<< HEAD
-a set of pre-defined questions which can be used for reporting. It can
-later be converted into a `html` report using `rmarkdown`’s `render`.
-
-``` r
-report_datasheet()
-rmarkdown::render("datasheet/datasheet.Rmd")
-=======
-a set of pre-definedquestions which can be used for reporting as well as
-initial graphics. The created `.Rmd` file can then be extended by the
-user. It can later be converted into a `html` report using`rmarkdown`’s
-`render`.
-
-``` r
-rmdfile = report_datasheet()
-rmarkdown::render(rmdfile)
->>>>>>> origin
 ```
 
 ### Extensions
