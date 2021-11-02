@@ -40,7 +40,7 @@ report_datasheet = function(filename = "datasheet.Rmd", edit = FALSE) {
 #'   Filepath or name for new file that should be created.
 #'   Defaults to `"modelcard.Rmd"` which creates a new file called "modelcard.Rmd" in your local working directory.
 #' @param edit (`logical`)\cr
-#'   `TRUE` to edit the template immediately.
+#'   `TRUE` to edit the template immediately. Defaults to `FALSE`.
 #' @references
 #' `r format_bib("modelcards")`
 #' @examples

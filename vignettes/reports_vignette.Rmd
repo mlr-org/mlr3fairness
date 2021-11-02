@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ```{r setup-load, echo = FALSE}
 library(mlr3fairness)
-td = tempdir()
+td = "doc"
 unlink(list.files(td, full.names = TRUE), recursive = TRUE)
 ```
 
