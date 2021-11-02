@@ -325,6 +325,7 @@ Table: (\#tab:metrics) Selection of implemented fairness metrics. The full list 
 |key                   |description                                                                                 |
 |:---------------------|:-------------------------------------------------------------------------------------------|
 |fairness.acc          | accuracy equality \citet{gendershades}                                                     |
+|fairness.mse          | mean squared error equality (regression)                                                   |
 |fairness.fpr          | false positive rate equality/predictive equality \citet{chouldechova2017fair}              |
 |fairness.tpr          | true positive rate equality /equality of opportunity \citet{hardt2016equality}             |
 |fairness.fnr          | false negative / false omission rate equality \citet{richardcompas}                        |

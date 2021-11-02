@@ -16,6 +16,7 @@
 mlr_measures_fairness = rowwise_table(
   ~key, ~description,
   "fairness.acc", "Absolute differences in accuracy across groups",
+  "fairness.mse", "Absolute differences in mean squared error across groups",
 
   "fairness.fnr", "Absolute differences in false negative rates across groups",
   "fairness.fpr", "Absolute differences in false positive rates across groups",

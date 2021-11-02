@@ -5,7 +5,7 @@
 \alias{mlr_measures_fairness}
 \title{Fairness Measures in mlr3}
 \format{
-An object of class \code{data.table} (inherits from \code{data.frame}) with 15 rows and 2 columns.
+An object of class \code{data.table} (inherits from \code{data.frame}) with 16 rows and 2 columns.
 }
 \usage{
 mlr_measures_fairness
@@ -23,6 +23,7 @@ by combining a performance measure with an operation for measuring differences.
 \tabular{ll}{
 \strong{key} \tab \strong{description} \cr
 fairness.acc         \tab Absolute differences in accuracy across groups                                                          \cr
+fairness.mse         \tab Absolute differences in mean squared error across groups                                                \cr
 fairness.fnr         \tab Absolute differences in false negative rates across groups                                              \cr
 fairness.fpr         \tab Absolute differences in false positive rates across groups                                              \cr
 fairness.tnr         \tab Absolute differences in true negative rates across groups                                               \cr
