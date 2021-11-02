@@ -1,80 +1,65 @@
-#' Create a datasheet for documenting a dataset
+#' Create a Datasheet for Documenting a Dataset
 #'
-#' Instantiates a new R Markdown template with a skeleton questionaire that allows for creating
-#' a model card for a given ML model.
-#' The interplay of code and markdown text allowed throu R Markdown
-#' allows for heavily improved documentation through the use of visualizations or summary statistics.
+#' Creates a new \CRANpkg{rmarkdown} template with a skeleton questionnaire for dataset documentation.
 #' Uses the awesome markdown template created by Chris Garbin
-#' \href{https://github.com/fau-masters-collected-works-cgarbin/datasheet-for-dataset-template}{from Github}.
-#' @param filename (`character`)\cr
-#'   Filepath or name for new file that should be created.
-#'   Defaults to `"datasheet.Rmd"` which creates a new file called "datasheet.Rmd" in your local working directory.
-#' @param edit (`logical`)\cr
+#' \href{https://github.com/fau-masters-collected-works-cgarbin/model-card-template}{from Github}.
+#'
+#' @param filename (`character(1)`)\cr
+#'   File path or name for new file that should be created.
+#' @param edit (`logical(1)`)\cr
 #'   `TRUE` to edit the template immediately.
 #' @references
 #' `r format_bib("datasheets")`
+#' @family fairness_reports
+#' @export
 #' @examples
 #' \dontrun{
-#'   report_datasheet"documentation/datasheet.Rmd")
+#'   report_datasheet("documentation/datasheet.Rmd")
 #' }
-#' @export
 report_datasheet = function(filename = "datasheet.Rmd", edit = FALSE) {
   assert_flag(edit)
-  if (!dir.exists(dirname(filename))) {
-    dir.create(dirname(filename), recursive = TRUE)
-  }
   assert_path_for_output(filename)
-  rmarkdown::draft(filename, template = "datasheets", package = "mlr3fairness", edit = edit)
+  rmarkdown::draft(filename, template = "datasheets", package = "mlr3fairness", create_dir = TRUE, edit = edit)
 }
 
-#' Create a modelcard for documenting a ML model
+#' Create a Modelcard
 #'
-#' Instantiates a new R Markdown template with a skeleton questionaire that allows for creating
-#' dataset documentation for a given dataset.
-#' The interplay of code and markdown text allowed throu R Markdown
-#' allows for heavily improved documentation through the use of visualizations or summary statistics.
-#'
+#' Creates a new \CRANpkg{rmarkdown} template with a skeleton questionnaire for a model card.
 #' Uses the awesome markdown template created by Chris Garbin
 #' \href{https://github.com/fau-masters-collected-works-cgarbin/model-card-template}{from Github}.
-#' @param filename (`character`)\cr
-#'   Filepath or name for new file that should be created.
-#'   Defaults to `"modelcard.Rmd"` which creates a new file called "modelcard.Rmd" in your local working directory.
-#' @param edit (`logical`)\cr
-#'   `TRUE` to edit the template immediately. Defaults to `FALSE`.
+#'
+#' @inheritParams report_datasheet
 #' @references
 #' `r format_bib("modelcards")`
+#' @family fairness_reports
+#' @export
 #' @examples
 #' \dontrun{
 #'   report_modelcard("documentation/modelcard.Rmd")
 #' }
-#' @export
 report_modelcard = function(filename = "modelcard.Rmd", edit = FALSE) {
-  assert_flag(edit)
-  if (!dir.exists(dirname(filename))) {
-    dir.create(dirname(filename), recursive = TRUE)
-  }
   assert_path_for_output(filename)
-  rmarkdown::draft(filename, template = "modelcards", package = "mlr3fairness", edit = edit)
+  assert_flag(edit)
+  rmarkdown::draft(filename, template = "modelcards", package = "mlr3fairness", create_dir = TRUE, edit = edit)
 }
 
-#' Create a fairness report for a ML model
+#' Create a Fairness Report
 #'
-#' Instantiates a new R Markdown template with a skeleton of reported
-#' metrics and visualizations that can be used to create a fairness report.
+#' Creates a new \CRANpkg{rmarkdown} template with a skeleton of  reported metrics and visualizations.
+#' Uses the awesome markdown template created by Chris Garbin
+#' \href{https://github.com/fau-masters-collected-works-cgarbin/model-card-template}{from Github}.
 #'
-#' @param filename (`character`)\cr
-#'   Filepath or name for new file that should be created.
-#'   Defaults to `"modelcard.Rmd"` which creates a new file called "modelcard.Rmd" in your local working directory.
-#' @param objects (`list`)\cr
+#' @inheritParams report_datasheet
+#' @param objects (`list()`)\cr
 #'   A named list of objects required for the fairness report.
-#'   Objects are saved as `<name>.RDS` in the new folder created for the report.
+#'   Objects are saved as `<name>.rds` in the new folder created for the report.
 #'   * `task` :: The [`Task`] a report should be created for.
 #'   * `resample_result` ::  A [mlr3::ResampleResult] result to be analyzed.
 #'   * `...` :: any other objects passed on for the report.
-#' @param edit (`logical`)\cr
-#'   `TRUE` to edit the template immediately.
-#' @param check_objects (`logical`)\cr
+#' @param check_objects (`logical(1)`)\cr
 #'   Should items in `objects` be checked? If `FALSE`, no checks on `object` are performed.
+#' @family fairness_reports
+#' @export
 #' @examples
 #' \dontrun{
 #'   task = tsk("compas")
@@ -82,23 +67,18 @@ report_modelcard = function(filename = "modelcard.Rmd", edit = FALSE) {
 #'   rr = resample(task, learner, rsmp("cv", folds = 5))
 #'   report_fairness("documentation/fairness.Rmd", list(task = task, resample_result = rr))
 #' }
-#' @export
 report_fairness = function(filename = "fairness_report.Rmd", objects, edit = FALSE, check_objects = FALSE) {
-  assert_list(objects)
+  assert_path_for_output(filename)
+  assert_list(objects, names = "unique")
+  assert_flag(edit)
   assert_flag(check_objects)
   if (check_objects) {
     assert_subset(c("resample_result", "task"), names(objects))
     assert_resample_result(objects$resample_result)
     assert_task(objects$task)
   }
-  assert_flag(edit)
 
-  if (!dir.exists(dirname(filename))) {
-    dir.create(dirname(filename), recursive = TRUE)
-  }
-  assert_path_for_output(filename)
-
-  filepath = rmarkdown::draft(filename, template = "fairness_report", package = "mlr3fairness", edit = edit)
+  filepath = rmarkdown::draft(filename, template = "fairness_report", package = "mlr3fairness", create_dir = TRUE, edit = edit)
   write_files(objects, dirname(filepath))
   invisible(filepath)
 }

@@ -5,12 +5,12 @@ test_that("write_files", {
   object = list("one" = 1, "two" = 1)
   write_files(object, tdir)
   lfiles = list.files(tdir, full.names = TRUE)
-  expect_true(all(basename(lfiles) %in% c("one.RDS", "two.RDS", "read_data.Rmd")))
-  map_lgl(lfiles[grepl(".RDS", lfiles)], function(x) {
+  expect_true(all(basename(lfiles) %in% c("one.rds", "two.rds", "read_data.Rmd")))
+  map_lgl(lfiles[grepl(".rds", lfiles)], function(x) {
     x = readRDS(x)
     expect_true(x == 1)
   })
   ll = readLines(lfiles[grepl("read_data.Rmd", lfiles)])
-  expect_true(ll[2] == "one = readRDS('one.RDS')")
+  expect_true(ll[2] == "one = readRDS('one.rds')")
   unlink(list.files(tdir, full.names = TRUE), recursive = TRUE)
 })

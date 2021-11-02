@@ -21,7 +21,7 @@ unlink(list.files(td, full.names = TRUE), recursive = TRUE)
 ```
 
 `mlr3fairness` contains several templates that allow for creating reports based on `RMarkdown` files.
-The `report_*` functions instantiate a new `.Rmd` file that can be furher adapted by the user.
+The `report_*` functions instantiate a new `.Rmd` file that can be further adapted by the user.
 
 The following reports are currently available in `mlr3fairness`.
 
@@ -36,8 +36,7 @@ The following reports are currently available in `mlr3fairness`.
 
 Templates contain a set of pre-defined questions which can be used for reporting as well as
 initial graphics. The created `.Rmd` file can then be extended by the
-user. It can later be converted into a `html` report using`rmarkdown`’s
-`render` function.
+user. It can later be converted into a `html` report using `rmarkdown::render()`.
 
 
 ```{r eval_false_example_for_vignette, eval = FALSE, results = 'hide', message = FALSE}
@@ -51,6 +50,7 @@ rmarkdown::render(rmdfile)
 rmdfile = report_modelcard(paste0(td, "/modelcard"))
 rmarkdown::render(rmdfile)
 ```
+
 ## Examples
 
 #### [Example: Model Card](`r gsub(".Rmd", ".html", rmdfile)`)
