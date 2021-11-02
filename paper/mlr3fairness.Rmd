@@ -1,11 +1,10 @@
 ---
 title: Fairness Audits And Debiasing Using mlr3fairness
 author:
-  # see ?rjournal_article for more information
   - name: Florian Pfisterer
     affiliation: LMU Munich
     orcid: 0000-0001-8867-762X
-    email:  author1@work
+    email:  florian.pfisterer@stat.uni-muenchen.de
   - name: Sebastian Vollmer
     email: svollmer@stat.uni-muenchen.de
     affiliation: DFKI
