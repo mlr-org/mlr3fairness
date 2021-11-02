@@ -1,0 +1,13 @@
+create_learner(classname = "fairnlcm",
+               algorithm = "non-convex fair regression",
+               type = "regr",
+               key = "fairnlcm",
+               package = "fairml",
+               caller = "regr.fairnlcm",
+               feature_types = c("integer", "numeric"),
+               predict_types = "response",
+               properties = NULL,
+               importance = FALSE,
+               oob_error = FALSE,
+               references = FALSE,
+               gh_name = "pfistfl")
