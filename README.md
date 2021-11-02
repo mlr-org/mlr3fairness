@@ -42,18 +42,18 @@ using debiasing strategies.
 
 ## Feature Overview
 
-  - [**Fairness Measures:**](#metrics) Audit algorithmms for fairness
-    using a variety of fairness criteria. This also allows for designing
-    custom criteria.
+  - [**Fairness Measures:**](#fairness-metrics) Audit algorithmms for
+    fairness using a variety of fairness criteria. This also allows for
+    designing custom criteria.
 
-  - [**Fairness Visualizations:**](#viz) Diagnose fairness problems
-    through visualizations.
+  - [**Fairness Visualizations:**](#fairness-visualizations) Diagnose
+    fairness problems through visualizations.
 
-  - [**Debiasing Methods:**](#debiasing) Correct fairness problems in
-    three lines of code.
+  - [**Debiasing Methods:**](#debiasing-methods) Correct fairness
+    problems in three lines of code.
 
-  - [**Fairness Report:**](#reports) Obtain a report regarding an
-    algorithm’s fairness. (Under development)
+  - [**Fairness Report:**](#model-cards--datasheets) Obtain a report
+    regarding an algorithm’s fairness. (Under development)
 
 **More Information**
 
