@@ -2,7 +2,7 @@
 % Please edit documentation in R/reports.R
 \name{report_fairness}
 \alias{report_fairness}
-\title{Create a fairness report for a ML model}
+\title{Create a Fairness Report}
 \usage{
 report_fairness(
   filename = "fairness_report.Rmd",
@@ -12,34 +12,40 @@ report_fairness(
 )
 }
 \arguments{
-\item{filename}{(\code{character})\cr
-Filepath or name for new file that should be created.
-Defaults to \code{"modelcard.Rmd"} which creates a new file called "modelcard.Rmd" in your local working directory.}
+\item{filename}{(\code{character(1)})\cr
+File path or name for new file that should be created.}
 
-\item{objects}{(\code{list})\cr
+\item{objects}{(\code{list()})\cr
 A named list of objects required for the fairness report.
-Objects are saved as \verb{<name>.RDS} in the new folder created for the report.
+Objects are saved as \verb{<name>.rds} in the new folder created for the report.
 \itemize{
 \item \code{task} :: The \code{\link{Task}} a report should be created for.
 \item \code{resample_result} ::  A \link[mlr3:ResampleResult]{mlr3::ResampleResult} result to be analyzed.
 \item \code{...} :: any other objects passed on for the report.
 }}
 
-\item{edit}{(\code{logical})\cr
+\item{edit}{(\code{logical(1)})\cr
 \code{TRUE} to edit the template immediately.}
 
-\item{check_objects}{(\code{logical})\cr
+\item{check_objects}{(\code{logical(1)})\cr
 Should items in \code{objects} be checked? If \code{FALSE}, no checks on \code{object} are performed.}
 }
 \description{
-Instantiates a new R Markdown template with a skeleton of reported
-metrics and visualizations that can be used to create a fairness report.
+Creates a new \CRANpkg{rmarkdown} template with a skeleton of  reported metrics and visualizations.
+Uses the awesome markdown template created by Chris Garbin
+\href{https://github.com/fau-masters-collected-works-cgarbin/model-card-template}{from Github}.
 }
 \examples{
 \dontrun{
   task = tsk("compas")
-  learner = lrn("classif.rpart", prob = TRUE)
+  learner = lrn("classif.rpart", predict_type = "prob")
   rr = resample(task, learner, rsmp("cv", folds = 5))
   report_fairness("documentation/fairness.Rmd", list(task = task, resample_result = rr))
 }
 }
+\seealso{
+Other fairness_reports: 
+\code{\link{report_datasheet}()},
+\code{\link{report_modelcard}()}
+}
+\concept{fairness_reports}

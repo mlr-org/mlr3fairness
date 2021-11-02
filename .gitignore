@@ -108,3 +108,4 @@ $RECYCLE.BIN/
 # Ignore local symlinks
 rmarkdown
 !inst/rmarkdown
+inst/doc

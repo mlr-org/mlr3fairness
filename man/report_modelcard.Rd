@@ -2,25 +2,19 @@
 % Please edit documentation in R/reports.R
 \name{report_modelcard}
 \alias{report_modelcard}
-\title{Create a modelcard for documenting a ML model}
+\title{Create a Modelcard}
 \usage{
 report_modelcard(filename = "modelcard.Rmd", edit = FALSE)
 }
 \arguments{
-\item{filename}{(\code{character})\cr
-Filepath or name for new file that should be created.
-Defaults to \code{"modelcard.Rmd"} which creates a new file called "modelcard.Rmd" in your local working directory.}
+\item{filename}{(\code{character(1)})\cr
+File path or name for new file that should be created.}
 
-\item{edit}{(\code{logical})\cr
+\item{edit}{(\code{logical(1)})\cr
 \code{TRUE} to edit the template immediately.}
 }
 \description{
-Instantiates a new R Markdown template with a skeleton questionaire that allows for creating
-dataset documentation for a given dataset.
-The interplay of code and markdown text allowed throu R Markdown
-allows for heavily improved documentation through the use of visualizations or summary statistics.
-}
-\details{
+Creates a new \CRANpkg{rmarkdown} template with a skeleton questionnaire for a model card.
 Uses the awesome markdown template created by Chris Garbin
 \href{https://github.com/fau-masters-collected-works-cgarbin/model-card-template}{from Github}.
 }
@@ -34,3 +28,9 @@ Mitchell, Margaret, Wu, Simone, Zaldivar, Andrew, Barnes, Parker, Vasserman, Luc
 \dQuote{Model cards for model reporting.}
 In \emph{Proceedings of the conference on fairness, accountability, and transparency}, 220--229.
 }
+\seealso{
+Other fairness_reports: 
+\code{\link{report_datasheet}()},
+\code{\link{report_fairness}()}
+}
+\concept{fairness_reports}

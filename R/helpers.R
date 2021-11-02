@@ -62,14 +62,16 @@ task_filter_ex = function(task, row_ids) {
 #' @return NULL
 #' @noRd
 write_files = function(objects, path) {
-  prefix = "```{r read-data, include = FALSE}"
   reads = pmap_chr(list(objects, names(objects)), function(x, nm) {
-    file = paste0(path, "/", nm, ".RDS")
-    saveRDS(x, file = file)
-    paste0(nm, " = readRDS('", basename(file), "')")
+    fn = sprintf("%s.rds", nm)
+    saveRDS(x, file = file.path(path, fn))
+    paste0(nm, " = readRDS('", fn, "')")
   })
-  postfix = "```"
-  writeLines(c(prefix, reads, postfix), paste0(path, "/read_data.Rmd"))
+
+  writeLines(con = paste0(path, "/read_data.Rmd"), c(
+    "```{r read-data, include = FALSE}",
+    reads,
+    "```"))
 }
 
 replace_prefix = function(str, prefix, replacement) {
@@ -80,17 +82,16 @@ replace_prefix = function(str, prefix, replacement) {
 }
 
 tabular = function(df, ...) {
- stopifnot(is.data.frame(df))
+  stopifnot(is.data.frame(df))
 
- align = function(x) if (is.numeric(x)) "r" else "l"
- col_align = map_chr(df, align)
+  align = function(x) if (is.numeric(x)) "r" else "l"
+  col_align = map_chr(df, align)
 
- cols = lapply(df, format, ...)
- contents = do.call("paste",
-   c(cols, list(sep = " \\tab ", collapse = "\\cr\n   ")))
+  cols = lapply(df, format, ...)
+  contents = do.call("paste",
+    c(cols, list(sep = " \\tab ", collapse = "\\cr\n   ")))
 
- paste("\\tabular{", paste(col_align, collapse = ""), "}{\n   ",
-   paste0("\\strong{", names(df), "}", sep = "", collapse = " \\tab "), " \\cr\n   ",
-   contents, "\n }\n", sep = "")
+  paste("\\tabular{", paste(col_align, collapse = ""), "}{\n   ",
+    paste0("\\strong{", names(df), "}", sep = "", collapse = " \\tab "), " \\cr\n   ",
+    contents, "\n }\n", sep = "")
 }
-

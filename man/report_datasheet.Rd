@@ -2,29 +2,25 @@
 % Please edit documentation in R/reports.R
 \name{report_datasheet}
 \alias{report_datasheet}
-\title{Create a datasheet for documenting a dataset}
+\title{Create a Datasheet for Documenting a Dataset}
 \usage{
 report_datasheet(filename = "datasheet.Rmd", edit = FALSE)
 }
 \arguments{
-\item{filename}{(\code{character})\cr
-Filepath or name for new file that should be created.
-Defaults to \code{"datasheet.Rmd"} which creates a new file called "datasheet.Rmd" in your local working directory.}
+\item{filename}{(\code{character(1)})\cr
+File path or name for new file that should be created.}
 
-\item{edit}{(\code{logical})\cr
+\item{edit}{(\code{logical(1)})\cr
 \code{TRUE} to edit the template immediately.}
 }
 \description{
-Instantiates a new R Markdown template with a skeleton questionaire that allows for creating
-a model card for a given ML model.
-The interplay of code and markdown text allowed throu R Markdown
-allows for heavily improved documentation through the use of visualizations or summary statistics.
+Creates a new \CRANpkg{rmarkdown} template with a skeleton questionnaire for dataset documentation.
 Uses the awesome markdown template created by Chris Garbin
-\href{https://github.com/fau-masters-collected-works-cgarbin/datasheet-for-dataset-template}{from Github}.
+\href{https://github.com/fau-masters-collected-works-cgarbin/model-card-template}{from Github}.
 }
 \examples{
 \dontrun{
-  report_datasheet"documentation/datasheet.Rmd")
+  report_datasheet("documentation/datasheet.Rmd")
 }
 }
 \references{
@@ -32,3 +28,9 @@ Gebru, Timnit, Morgenstern, Jamie, Vecchione, Briana, Vaughan, Wortman J, Wallac
 \dQuote{Datasheets for datasets.}
 \emph{arXiv preprint arXiv:1803.09010}.
 }
+\seealso{
+Other fairness_reports: 
+\code{\link{report_fairness}()},
+\code{\link{report_modelcard}()}
+}
+\concept{fairness_reports}
