@@ -17,7 +17,7 @@ File path or name for new file that should be created.}
 
 \item{objects}{(\code{list()})\cr
 A named list of objects required for the fairness report.
-Objects are saved as \verb{<name>.RDS} in the new folder created for the report.
+Objects are saved as \verb{<name>.rds} in the new folder created for the report.
 \itemize{
 \item \code{task} :: The \code{\link{Task}} a report should be created for.
 \item \code{resample_result} ::  A \link[mlr3:ResampleResult]{mlr3::ResampleResult} result to be analyzed.
