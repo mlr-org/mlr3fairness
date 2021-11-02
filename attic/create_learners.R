@@ -7,7 +7,55 @@ create_learner(classname = "fairnlcm",
                feature_types = c("integer", "numeric"),
                predict_types = "response",
                properties = NULL,
-               importance = FALSE,
-               oob_error = FALSE,
-               references = FALSE,
+               references = TRUE,
+               gh_name = "pfistfl")
+
+
+create_learner(classname = "fairfrrm",
+               algorithm = "fair ridge regression",
+               type = "regr",
+               key = "fairfrrm",
+               package = "fairml",
+               caller = "regr.fairfrrm",
+               feature_types = c("integer", "numeric"),
+               predict_types = "response",
+               properties = NULL,
+               references = TRUE,
+               gh_name = "pfistfl")
+
+create_learner(classname = "fairfgrrm",
+               algorithm = "fair generalized ridge regression",
+               type = "classif",
+               key = "fairfgrrm",
+               package = "fairml",
+               caller = "classif.fairfgrrm",
+               feature_types = c("integer", "numeric"),
+               predict_types = "response",
+               properties = NULL,
+               references = TRUE,
+               gh_name = "pfistfl")
+
+
+create_learner(classname = "fairzlrm",
+               algorithm = "fair logistic regression with covariance constraints",
+               type = "classif",
+               key = "fairzlrm",
+               package = "fairml",
+               caller = "classif.fairzlrm",
+               feature_types = c("integer", "numeric"),
+               predict_types = "response",
+               properties = NULL,
+               references = TRUE,
+               gh_name = "pfistfl")
+
+create_learner(classname = "fairzlm",
+               algorithm = "fair regression with covariance constraints",
+               type = "regr",
+               key = "fairzlm",
+               package = "fairml",
+               caller = "regr.fairzlm",
+               feature_types = c("integer", "numeric"),
+               predict_types = "response",
+               properties = NULL,
+               references = TRUE,
                gh_name = "pfistfl")

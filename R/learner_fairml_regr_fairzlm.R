@@ -1,0 +1,67 @@
+#' @title Regression Fair Regression With Covariance Constraints Learner
+#' @author pfistfl
+#' @name mlr_learners_regr.fairzlm
+#'
+#' @template class_learner
+#' @templateVar id regr.fairzlm
+#' @templateVar caller regr.fairzlm
+#'
+#' @references
+#' <FIXME - DELETE THIS AND LINE ABOVE IF OMITTED>
+#'
+#' @template seealso_learner
+#' @template example
+#' @export
+LearnerRegrFairzlm = R6Class("LearnerRegrFairzlm",
+  inherit = LearnerRegr,
+
+  public = list(
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    initialize = function() {
+      ps = ps(unfairness = p_dbl(lower = 0, upper = 1, tags = "train")
+      super$initialize(
+        id = "regr.fairzlm",
+        packages = "fairml",
+        feature_types = c("integer", "numeric"),
+        predict_types = c("response"),
+        param_set = ps,
+        man = "mlr3extralearners::mlr_learners_regr.fairzlm"
+      )
+    }
+  ),
+
+  private = list(
+
+    .train = function(task) {
+      # get parameters for training
+      pars = self$param_set$get_values(tags = "train")
+
+      # set column names to ensure consistency in fit and predict
+      self$state$feature_names = task$feature_names
+
+      pta = task$col_roles$pta
+      r = task$truth())
+      s = task$data(cols = pta)[[1]]
+      p = task$data(cols = setdiff(task$feature_names, pta))
+
+      # use the mlr3misc::invoke function (it's similar to do.call())
+      mlr3misc::invoke(fairml::zlrm, response = r, sensitive = s,
+        predictors = p, .args = pars)
+    },
+
+    .predict = function(task) {
+      # get parameters with tag "predict"
+      pars = self$param_set$get_values(tags = "predict")
+
+      pta = task$col_roles$pta
+      s = task$data(cols = pta)[[1]]
+      p = task$data(cols = setdiff(self$state$feature_names, pta))
+
+      pred = mlr3misc::invoke(predict, self$model,
+        new.predictors = p, new.sensitive = s, type = type, .args = pars)
+    }
+  )
+)
+
+.extralrns_dict$add("regr.fairzlm", LearnerRegrFairzlm)
