@@ -14,7 +14,7 @@
 #' data_task = tsk("adult_train")
 #' learner = lrn("classif.rpart", cp = .01)
 #' learner$train(data_task)
-#' measure = msr("fairness.constraint", msr("classif.acc"), msr("fairness.tpr"))
+#' measure = msr("fairness.constraint", id = "acc_tpr", msr("classif.acc"), msr("fairness.tpr"))
 #' predictions = learner$predict(data_task)
 #' predictions$score(measure, task = data_task)
 MeasureFairnessConstraint = R6::R6Class("MeasureFairnessConstraint", inherit = Measure,
