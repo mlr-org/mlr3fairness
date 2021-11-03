@@ -35,5 +35,5 @@ mlr_measures_fairness = rowwise_table(
   "fairness.eod", "Equalized Odds: Sum of absolute differences between true positive and false positive rates across groups",
 
   "fairness.acc_eod=.05", "Accuracy under equalized odds < 0.05 constraint",
-  "fairness.acc_ppv=.05", "Accuracy under equalized odds < 0.05 constraint"
+  "fairness.acc_ppv=.05", "Accuracy under ppv difference < 0.05 constraint"
 )
