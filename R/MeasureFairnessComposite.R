@@ -36,6 +36,7 @@ MeasureFairnessComposite = R6::R6Class("MeasureFairnessComposite", inherit = Mea
 
       private$.measures = assert_measures(as_measures(measures))
       private$.aggfun = assert_function(aggfun)
+      assert_true(all(map_chr(private$.measures, "task_type") == private$.measures[[1]]$task_type))
 
       if (is.null(id)) {
         id = paste0(replace_prefix(ids(measures), c(mlr_reflections$task_types$type, "fairness"), ""),
@@ -48,6 +49,7 @@ MeasureFairnessComposite = R6::R6Class("MeasureFairnessComposite", inherit = Mea
         properties = "requires_task",
         minimize = minimize,
         predict_type = unique(unlist(map(measures, "predict_type"))),
+        task_type = private$.measures[[1]]$task_type,
         packages = "mlr3fairness",
         man = "mlr_measures_fairness_composite"
       )

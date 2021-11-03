@@ -1,3 +1,40 @@
+test_that("measure constructors work", {
+  m = MeasureFairness$new(base_measure = msr("classif.acc"))
+  expect_equal(m$id, "fairness.acc")
+  expect_equal(m$base_measure, msr("classif.acc"))
+  expect_equal(m$range, c(-Inf, Inf))
+  expect_equal(m$task_type, "classif")
+
+  m = MeasureFairness$new(base_measure = msr("classif.fpr"), range = c(0, 100), id="test.it")
+  expect_equal(m$id, "test.it")
+  expect_equal(m$base_measure, msr("classif.fpr"))
+  expect_equal(m$range, c(0, 100))
+  expect_equal(m$task_type, "classif")
+
+  m = MeasureFairness$new(base_measure = msr("classif.fpr"), range = c(0, 100), operation = function(x) 5)
+  expect_true(m$operation(1) == 5)
+
+  m = MeasureFairness$new(base_measure = msr("regr.mse"), range = c(0, 100))
+  expect_equal(m$id, "fairness.mse")
+  expect_equal(m$base_measure, msr("regr.mse"))
+  expect_equal(m$range, c(0, 100))
+  expect_equal(m$task_type, "regr")
+})
+
+# test_that("dictionary constructors work", {
+#   # Construction in zzz.R
+#   m = msr("fairness.acc")
+#   expect_equal(m$base_measure, msr("classif.acc"))
+#   expect_equal(m$range, c(0, 1))
+#   expect_equal(m$task_type, "classif")
+
+#   # Construction from base measure
+#   m = msr("fairness", base_measure = msr("classif.acc"), range = c(0, 1))
+#   expect_equal(m$base_measure, msr("classif.acc"))
+#   expect_equal(m$range, c(0, 1))
+#   expect_equal(m$task_type, "classif")
+# })
+
 test_that("fairness measures work as expcted", {
   tsk = tsk("compas")
   prds = list(
@@ -9,12 +46,15 @@ test_that("fairness measures work as expcted", {
 
   for (prd in prds) {
     for (m in metrics) {
-      out = prd$score(measures = msr(m), task = tsk)
-      expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
-      out = prd$score(measures = msr(m, operation = groupdiff_tau), task = tsk)
-      expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
-      out = prd$score(measures = msr(m, operation = groupdiff_absdiff), task = tsk)
-      expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
+      ms = msr(m)
+      if (ms$task_type == "classif" && is(ms, "MeasureFairness")) {
+        out = prd$score(measures = ms, task = tsk)
+        expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
+        out = prd$score(measures = msr(m, operation = groupdiff_tau), task = tsk)
+        expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
+        out = prd$score(measures = msr(m, operation = groupdiff_absdiff), task = tsk)
+        expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
+      }
     }
   }
 })
@@ -26,12 +66,14 @@ test_that("fairness measures work as expected - simulated data", {
 
   for (prd in prds) {
     for (m in metrics) {
-      out = prd$score(measures = msr(m), task = tsk)
-      expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
+      ms = msr(m)
+      if (ms$task_type == "classif" & is(ms, "MeasureFairness")) {
+        out = prd$score(measures = ms, task = tsk)
+        expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
+      }
     }
   }
 })
-
 
 test_that("fairness errors on missing pta, works with", {
   df = data.frame(
@@ -143,28 +185,27 @@ test_that("fairness.composite no id", {
   expect_equal(msr_obj$id, "fairness.fpr_fnr")
 })
 
-test_that("fairness constraint measures - simulated data", {
-  tsk = test_task_small()
-  prds = list(pred_small())
-  metrics = c("fairness.acc", "fairness.eod")
-  map(prds, function(prd) {
-    map_dbl(metrics, function(m) {
-      fair = prd$score(measures = msr(m), task = tsk)
-      perf = prd$score(measures = msr("classif.acc"), task = tsk)
-      mm = msr("fairness.constraint", msr("classif.acc"), msr(m), epsilon = 1)
-      out = prd$score(measures = mm, task = tsk)
-      expect_true(out == perf)
-      mm = msr("fairness.constraint", msr("classif.acc"), msr(m), epsilon = 0)
-      out = prd$score(measures = mm, task = tsk)
-      expect_true(out == 0 - fair)
-      perf = prd$score(measures = msr("classif.ce"), task = tsk)
-      mm = msr("fairness.constraint", msr("classif.ce"), msr(m), epsilon = 1)
-      out = prd$score(measures = mm, task = tsk)
-      expect_true(out == perf)
-      mm = msr("fairness.constraint", msr("classif.ce"), msr(m), epsilon = 0)
-      out = prd$score(measures = mm, task = tsk)
-      expect_true(out == 1 + fair)
-    })
-  })
-})
-
+# test_that("fairness constraint measures - simulated data", {
+#   tsk = test_task_small()
+#   prds = list(pred_small())
+#   metrics = c("fairness.acc", "fairness.eod")
+#   map(prds, function(prd) {
+#     map_dbl(metrics, function(m) {
+#       fair = prd$score(measures = msr(m), task = tsk)
+#       perf = prd$score(measures = msr("classif.acc"), task = tsk)
+#       mm = msr("fairness.constraint", msr("classif.acc"), msr(m), epsilon = 1)
+#       out = prd$score(measures = mm, task = tsk)
+#       expect_true(out == perf)
+#       mm = msr("fairness.constraint", msr("classif.acc"), msr(m), epsilon = 0)
+#       out = prd$score(measures = mm, task = tsk)
+#       expect_true(out == 0 - fair)
+#       perf = prd$score(measures = msr("classif.ce"), task = tsk)
+#       mm = msr("fairness.constraint", msr("classif.ce"), msr(m), epsilon = 1)
+#       out = prd$score(measures = mm, task = tsk)
+#       expect_true(out == perf)
+#       mm = msr("fairness.constraint", msr("classif.ce"), msr(m), epsilon = 0)
+#       out = prd$score(measures = mm, task = tsk)
+#       expect_true(out == 1 + fair)
+#     })
+#   })
+# })

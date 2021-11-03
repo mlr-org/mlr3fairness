@@ -63,6 +63,7 @@ Deviation from perfect fairness that is allowed.}
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MeasureFairnessConstraint$new(
+  id = NULL,
   performance_measure,
   fairness_measure,
   epsilon = 0.01,
@@ -73,6 +74,9 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{id}}{(\code{character})\cr
+The measure's id. Set to 'fairness.<base_measure_id>' if ommited.}
+
 \item{\code{performance_measure}}{(\code{Measure()})\cr
 The measure used to perform fairness operations.}
 

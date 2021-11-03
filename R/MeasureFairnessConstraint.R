@@ -31,7 +31,8 @@ MeasureFairnessConstraint = R6::R6Class("MeasureFairnessConstraint", inherit = M
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #'
+    #' @param id (`character`)\cr
+    #'   The measure's id. Set to 'fairness.<base_measure_id>' if ommited.
     #' @param performance_measure (`Measure()`)\cr
     #' The measure used to perform fairness operations.
     #' @param fairness_measure (`Measure()`)\cr
@@ -40,24 +41,29 @@ MeasureFairnessConstraint = R6::R6Class("MeasureFairnessConstraint", inherit = M
     #' Allowed divergence from perfect fairness. Initialized to 0.01.
     #' @param range (`numeric`)\cr
     #' Range of the resulting measure. Defaults to `c(-Inf, Inf)`.
-    initialize = function(performance_measure,
-                          fairness_measure,
-                          epsilon = 0.01,
-                          range = c(-Inf, Inf)) {
+    initialize = function(
+      id = NULL,
+      performance_measure,
+      fairness_measure,
+      epsilon = 0.01,
+      range = c(-Inf, Inf)) {
       self$performance_measure = assert_measure(performance_measure)
       self$fairness_measure = assert_measure(fairness_measure)
+      assert_true(all(self$performance_measure$task_type == self$fairness_measure$task_type))
       self$epsilon = assert_number(epsilon)
 
       # fix up prefixes: regr|classif|... to fairness
       metrics_short = gsub(
         paste0(c(mlr_reflections$task_types$type, "fairness"), collapse = "|"),
         "", c(performance_measure$id, fairness_measure$id))
-      id = paste0("fairness.", paste0(gsub("\\.", "", metrics_short), collapse = "_"), "_cstrt")
-
+      if (is.null(id)) {
+        id = paste0("fairness.", paste0(gsub("\\.", "", metrics_short), collapse = "_"), "_cstrt")
+      }
       super$initialize(
         id = id,
         range = assert_numeric(range, len = 2),
         properties = "requires_task",
+        task_type = self$performance_measure$task_type,
         minimize = assert_flag(self$performance_measure$minimize),
         predict_type = performance_measure$predict_type,
         packages = "mlr3fairness",

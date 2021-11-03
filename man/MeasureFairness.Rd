@@ -70,6 +70,7 @@ a single value. Defaults to \code{abs(x - y)}.}
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MeasureFairness$new(
+  id = NULL,
   base_measure,
   operation = groupdiff_absdiff,
   minimize = TRUE,
@@ -80,6 +81,9 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{id}}{(\code{character})\cr
+The measure's id. Set to 'fairness.<base_measure_id>' if ommited.}
+
 \item{\code{base_measure}}{(\code{Measure()})\cr
 The measure used to perform fairness operations.}
 

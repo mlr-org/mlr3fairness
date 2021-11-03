@@ -38,12 +38,12 @@
   # regression
   for (key in c("mse")) {
     x$add(sprintf("fairness.%s", key), MeasureFairness,
-      base_measure = msr(sprintf("regr.%s", key), range = c(0,1)))
+      base_measure = msr(sprintf("regr.%s", key), range = c(-Inf, Inf)))
   }
   # rates classif
   for (key in c("acc", "fnr", "fpr", "tnr", "tpr", "npv", "ppv", "fomr")) {
     x$add(sprintf("fairness.%s", key), MeasureFairness,
-      base_measure = msr(sprintf("classif.%s", key), range = c(0,1)))
+      base_measure = msr(sprintf("classif.%s", key), range = c(0, 1)))
   }
   # counts
   for (key in c("fn", "fp", "tn", "tp")) {

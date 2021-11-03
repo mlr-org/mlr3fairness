@@ -35,6 +35,8 @@ MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure,
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
+    #' @param id (`character`)\cr
+    #'   The measure's id. Set to 'fairness.<base_measure_id>' if ommited.
     #' @param base_measure (`Measure()`)\cr
     #'   The measure used to perform fairness operations.
     #' @param operation (`function`)\cr
@@ -45,15 +47,18 @@ MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure,
     #'   Should the measure be minimized? Defaults to `TRUE`.
     #' @param range (`numeric(2)`)\cr
     #'   Range of the resulting measure. Defaults to `c(-Inf, Inf)`.
-    initialize = function(base_measure, operation = groupdiff_absdiff, minimize = TRUE,
+    initialize = function(id = NULL, base_measure, operation = groupdiff_absdiff, minimize = TRUE,
       range = c(-Inf, Inf)) {
       self$operation = assert_function(operation)
       self$base_measure = assert_measure(as_measure(base_measure))
-      id = replace_prefix(base_measure$id, mlr_reflections$task_types$type, "fairness.")
 
+      if (is.null(id)) {
+        id = replace_prefix(base_measure$id, mlr_reflections$task_types$type, "fairness.")
+      }
       super$initialize(
         id = id,
         range = range,
+        task_type = self$base_measure$task_type,
         properties = "requires_task",
         minimize = minimize,
         predict_type = base_measure$predict_type,
