@@ -84,13 +84,13 @@ MeasureFairnessConstraint = R6::R6Class("MeasureFairnessConstraint", inherit = M
       assert_number(perf, lower = 0)
       prange = self$performance_measure$range
       frange = self$fairness_measure$range
-
       opt_fairness = ifelse(self$fairness_measure$minimize, min(frange), max(frange))
-      is_fair = abs(opt_fairness - fair) > eps
+      if (is.infinite(opt_fairness)) warning("Fairness measure has infinite range!")
+      is_fair = abs(opt_fairness - fair) < eps
       if (self$minimize) {
-        out = (is_fair) * (max(prange) + fair) + (!is_fair) * perf
+        out = (!is_fair) * (max(prange) + fair) + (is_fair) * perf
       } else {
-        out = (is_fair) * (min(prange) - fair) + (!is_fair) * perf
+        out = (!is_fair) * (min(prange) - fair) + (is_fair) * perf
       }
       return(out)
     }
