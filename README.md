@@ -97,6 +97,7 @@ library(mlr3fairness)
 | key                   | description                                                                                              |
 | :-------------------- | :------------------------------------------------------------------------------------------------------- |
 | fairness.acc          | Absolute differences in accuracy across groups                                                           |
+| fairness.mse          | Absolute differences in mean squared error across groups                                                 |
 | fairness.fnr          | Absolute differences in false negative rates across groups                                               |
 | fairness.fpr          | Absolute differences in false positive rates across groups                                               |
 | fairness.tnr          | Absolute differences in true negative rates across groups                                                |
@@ -110,7 +111,7 @@ library(mlr3fairness)
 | fairness.fn           | Absolute differences in false negatives across groups                                                    |
 | fairness.eod          | Equalized Odds: Sum of absolute differences between true positive and false positive rates across groups |
 | fairness.acc\_eod=.05 | Accuracy under equalized odds \< 0.05 constraint                                                         |
-| fairness.acc\_ppv=.05 | Accuracy under equalized odds \< 0.05 constraint                                                         |
+| fairness.acc\_ppv=.05 | Accuracy under ppv difference \< 0.05 constraint                                                         |
 
 The `fairness_tensor` function can be used with a `Prediction` in order
 to print group-wise confusion matrices for each protected attribute

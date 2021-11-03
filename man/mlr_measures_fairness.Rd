@@ -37,7 +37,7 @@ fairness.tn          \tab Absolute differences in true negatives across groups  
 fairness.fn          \tab Absolute differences in false negatives across groups                                                   \cr
 fairness.eod         \tab Equalized Odds: Sum of absolute differences between true positive and false positive rates across groups\cr
 fairness.acc_eod=.05 \tab Accuracy under equalized odds < 0.05 constraint                                                         \cr
-fairness.acc_ppv=.05 \tab Accuracy under equalized odds < 0.05 constraint
+fairness.acc_ppv=.05 \tab Accuracy under ppv difference < 0.05 constraint
 }
 }
 
