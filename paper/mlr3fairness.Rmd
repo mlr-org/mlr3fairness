@@ -16,7 +16,7 @@ author:
     orcid: 0000-0001-9754-0393
     affiliation: LMU Munich
     affiliation2: TU Dortmund University
-    
+
 abstract: >
   Given an increase in data-driven automated decision-making based on machine learning models, it is
   imparative that along with tools to develop and improve such models there are sufficient capabilities
@@ -60,10 +60,9 @@ Consequently, there exists considerable necessity for R packages (a) implementin
 If biases are detected in a model and need to be mitigated, we furthermore require debiasing techniques that tightly integrate with the fitting and evaluation of the resulting models in order to obtain trade-offs between the fairness and utility (e.g., predictive accuracy) of a model.
 
 In this article, we present the \CRANpkg{mlr3fairness} package.
-<!-- tightly integrated into the \CRANpkg{mlr3} [@mlr3] ecosystem of packages for ML in R.-->
 It contains fairness metrics, visualizations, and model-agnostic pre- and postprocessing operators as well as reporting functionality to allow for fairness audits and conveniently build unbiased models.
 In the remainder of the manuscript, we first provide an introduction to fairness in machine learning.
-We then briefly introduce the \CRANpkg{mlr3} package before introducing the functionality
+We then briefly introduce the \CRANpkg{mlr3} [@mlr3] package before introducing the functionality
 shipped with our package.
 We conclude with a short case study demonstrating \CRANpkg{mlr3fairness}'s capabilities.
 
@@ -366,9 +365,11 @@ multi-crit tuning valid?
 
 ##  Reports
 
-Because fairness aspects can not always be investigated based on the fairness definitions
-above (e.g. due to biased sampling or labelling procedures), it is important to document data collection and the resulting data as well as the models resulting from this data.
-Informing auditors about those aspects of a deployed model can lead to better assessments of a model's fairness. Questionaires for ML models [@modelcards] and data sets [@datasheets] have been proposed in literature. We further add a fairness report that creates an automated report using large variety of fairness metrics and visualization. Functions generate a R Markdown file [@rmarkdown] that can and should be further customized by the user to
+Because fairness aspects can not always be investigated based on the fairness definitions above (e.g., due to biased sampling or labelling procedures), it is important to document data collection and the resulting data as well as the models resulting from this data.
+Informing auditors about those aspects of a deployed model can lead to better assessments of a model's fairness.
+Questionnaires for ML models [@modelcards] and data sets [@datasheets] have been proposed in literature.
+We further add a fairness report that creates an automated report using large variety of fairness metrics and visualization.
+Functions generate a R Markdown file [@rmarkdown] that can and should be further customized by the user to
 generate final report.
 
 
@@ -444,7 +445,7 @@ library(mlr3pipelines)
 library(mlr3fairness)
 library(mlr3tuning)
 
-# Enable paralellization over all cores
+# Enable paralellization utilizing all cores
 # future::plan("multisession")
 
 lrn = as_learner(po("encode") %>>% po("reweighing_wts") %>>% po("learner", lrn("classif.glmnet")))
@@ -492,8 +493,8 @@ tuning can be helpful and further improve
 
 # Summary
 
-The large-scale availability and use of automated decision making systems have resulted in growing concerns for a lack of fairness in the decisions made by such systems. 
-As a result, fairness metrics and debiasing methods that allow for investigating un-fairness and hopefully alleviating biases in existing systems have been proposed. 
+The large-scale availability and use of automated decision making systems have resulted in growing concerns for a lack of fairness in the decisions made by such systems.
+As a result, fairness metrics and debiasing methods that allow for investigating un-fairness and hopefully alleviating biases in existing systems have been proposed.
 
 Implementations of such methods are still not widely available, especially considering the required interoperability with machine learning toolkits that allows for ease of use and integration into model evaluation and tuning.
 
@@ -522,7 +523,7 @@ library(mlr3pipelines)
 library(mlr3fairness)
 library(mlr3tuning)
 
-# Enable paralellization over all cores
+# Enable paralellization utilizing all cores
 # future::plan("multisession")
 ```
 
