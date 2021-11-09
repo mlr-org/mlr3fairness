@@ -85,8 +85,8 @@ compute one metric for every unique value in the `pta` column.
 prefixed with `fairness.` and can be found in the `msr()` dictionary.
 Most fairness metrics are based on a difference between two protected
 groups (e.g. male and female) for a given metric (e.g. the false
-positive rate: `fpr`). See
-[here](https://textbook.coleridgeinitiative.org/chap-bias.html) for a
+positive rate: `fpr`). See [the
+vignette](https://textbook.coleridgeinitiative.org/chap-bias.html) for a
 more in-depth introduction to fairness metrics and how to choose them.
 
 ``` r
@@ -113,9 +113,11 @@ library(mlr3fairness)
 | fairness.acc\_eod=.05 | Accuracy under equalized odds \< 0.05 constraint                                                         |
 | fairness.acc\_ppv=.05 | Accuracy under ppv difference \< 0.05 constraint                                                         |
 
-The `fairness_tensor` function can be used with a `Prediction` in order
-to print group-wise confusion matrices for each protected attribute
-group.
+Additional **custom fairness metrics** can be easily constructed, [the
+vignette](https://textbook.coleridgeinitiative.org/chap-bias.html)
+contains more details. The `fairness_tensor()` function can be used with
+a `Prediction` in order to print group-wise confusion matrices for each
+protected attribute group.
 
 ### Fairness Visualizations
 
@@ -226,12 +228,16 @@ fairness_prediction_density(predictions, task_test)
   - The [AI Fairness 360](https://aif360.mybluemix.net/) toolkit offers
     an R extension that allows for bias auditing, visualization and
     mitigation.
-  - The [Fairmodels](https://github.com/ModelOriented/fairmodels/)
+  - [fairmodels](https://github.com/ModelOriented/fairmodels/)
     integrates with the [DALEX](https://github.com/ModelOriented/DALEX)
     R-packages and similarly allows for bias auditing, visualization and
     mitigation.
   - The [fairness](https://github.com/kozodoi/fairness) package allows
     for bias auditing in R.
+  - The
+    [fairml](https://cran.r-project.org/web/packages/fairml/index.html)
+    package contains methods for learning de-biased regression and
+    classification models.
 
 ### Future Development
 
@@ -240,8 +246,6 @@ highly welcome\!
 
   - Visualizations: Improvement on visualizations, like anchor points
     and others. See issues.
-  - Metrics: Add support to non-binary target attributes and non-binary
-    protected attributes.
   - Debiasing Methods: More Debiasing Methods, post-processing and
     in-processing.
   - Fairness Report: Add a `report_fairness` that automatically creates
