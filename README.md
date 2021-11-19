@@ -67,8 +67,7 @@ using debiasing strategies.
 
 `mlr3fairness` requires information about the protected attribute wrt.
 which we want to assess fairness. This can be set via the `col_role`
-“pta” (protected attribute). Currently `mlr3fairness` allows only a
-single column as `"pta"`.
+“pta” (protected attribute).
 
 ``` r
 task$col_roles$pta = "variable_name"
