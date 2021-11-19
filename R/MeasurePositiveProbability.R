@@ -8,12 +8,12 @@
 #' @export
 #' @examples
 #' # Create Positive Probability Measure
-#' data_task = tsk("adult_train")
+#' t = tsk("adult_train")
 #' learner = lrn("classif.rpart", cp = .01)
-#' learner$train(data_task)
+#' learner$train(t)
 #' measure = msr("classif.pp")
-#' predictions = learner$predict(data_task)
-#' predictions$score(measure, task = data_task)
+#' predictions = learner$predict(t)
+#' predictions$score(measure, task = t)
 MeasurePositiveProbability = R6::R6Class("MeasurePositiveProbability",
   inherit = mlr3::Measure,
   public = list(

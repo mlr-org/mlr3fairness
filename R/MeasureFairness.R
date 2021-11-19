@@ -18,12 +18,12 @@
 #' @export
 #' @examples
 #' # Create MeasureFairness to measure the Predictive Parity.
-#' data_task = tsk("adult_train")
+#' t = tsk("adult_train")
 #' learner = lrn("classif.rpart", cp = .01)
-#' learner$train(data_task)
+#' learner$train(t)
 #' measure = msr("fairness", base_measure = msr("classif.ppv"))
-#' predictions = learner$predict(data_task)
-#' predictions$score(measure, task = data_task)
+#' predictions = learner$predict(t)
+#' predictions$score(measure, task = t)
 MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure,
   public = list(
     #' @template field_base_measure
@@ -37,8 +37,7 @@ MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure,
     #'
     #' @param id (`character`)\cr
     #'   The measure's id. Set to 'fairness.<base_measure_id>' if ommited.
-    #' @param base_measure (`Measure()`)\cr
-    #'   The measure used to perform fairness operations.
+    #' @template param_base_measure
     #' @param operation (`function`)\cr
     #'   The operation used to compute the difference. A function that returns
     #'   a single value given input: computed metric for each subgroup.
@@ -76,4 +75,5 @@ MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure,
     }
   )
 )
+
 mlr_measures$add("fairness", MeasureFairness)

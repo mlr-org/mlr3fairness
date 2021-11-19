@@ -11,12 +11,12 @@
 #' @examples
 #' # Accurcy subject to equalized odds fairness constraint:
 #' library(mlr3)
-#' data_task = tsk("adult_train")
+#' t = tsk("adult_train")
 #' learner = lrn("classif.rpart", cp = .01)
-#' learner$train(data_task)
+#' learner$train(t)
 #' measure = msr("fairness.constraint", id = "acc_tpr", msr("classif.acc"), msr("fairness.tpr"))
-#' predictions = learner$predict(data_task)
-#' predictions$score(measure, task = data_task)
+#' predictions = learner$predict(t)
+#' predictions$score(measure, task = t)
 MeasureFairnessConstraint = R6::R6Class("MeasureFairnessConstraint", inherit = Measure,
   public = list(
     #' @field performance_measure (`Measure()`)\cr
@@ -34,9 +34,9 @@ MeasureFairnessConstraint = R6::R6Class("MeasureFairnessConstraint", inherit = M
     #' @param id (`character`)\cr
     #'   The measure's id. Set to 'fairness.<base_measure_id>' if ommited.
     #' @param performance_measure (`Measure()`)\cr
-    #' The measure used to perform fairness operations.
+    #' The measure used to measure performance (e.g. accuracy).
     #' @param fairness_measure (`Measure()`)\cr
-    #' The measure used to perform fairness operations.
+    #' The measure used to measure fairness (e.g. equalized odds).
     #' @param epsilon (`numeric`)\cr
     #' Allowed divergence from perfect fairness. Initialized to 0.01.
     #' @param range (`numeric`)\cr

@@ -11,12 +11,12 @@ This measure allows constructing for 'constraint' measures of the following form
 \examples{
 # Accurcy subject to equalized odds fairness constraint:
 library(mlr3)
-data_task = tsk("adult_train")
+t = tsk("adult_train")
 learner = lrn("classif.rpart", cp = .01)
-learner$train(data_task)
+learner$train(t)
 measure = msr("fairness.constraint", id = "acc_tpr", msr("classif.acc"), msr("fairness.tpr"))
-predictions = learner$predict(data_task)
-predictions$score(measure, task = data_task)
+predictions = learner$predict(t)
+predictions$score(measure, task = t)
 }
 \seealso{
 mlr_measures_fairness
@@ -78,10 +78,10 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 The measure's id. Set to 'fairness.<base_measure_id>' if ommited.}
 
 \item{\code{performance_measure}}{(\code{Measure()})\cr
-The measure used to perform fairness operations.}
+The measure used to measure performance (e.g. accuracy).}
 
 \item{\code{fairness_measure}}{(\code{Measure()})\cr
-The measure used to perform fairness operations.}
+The measure used to measure fairness (e.g. equalized odds).}
 
 \item{\code{epsilon}}{(\code{numeric})\cr
 Allowed divergence from perfect fairness. Initialized to 0.01.}

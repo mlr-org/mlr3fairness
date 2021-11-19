@@ -6,6 +6,8 @@
 #' For full flexibility, [MeasureFairness] can be used to construct classical
 #' group fairness measures based on a difference between a performance metrics across groups
 #' by combining a performance measure with an operation for measuring differences.
+#' Furthermore [MeasureSubgroup] can be used to measure performance in a given subgroup, or alternatively
+#' ggroupwise_metrics(measure, task) to instantiate a measure for each subgroup in a [Task].
 #'
 #' `r tabular(mlr_measures_fairness)`
 #'

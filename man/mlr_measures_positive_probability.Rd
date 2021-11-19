@@ -10,12 +10,12 @@ This is defined as count of positive predictions divided by the number of observ
 }
 \examples{
 # Create Positive Probability Measure
-data_task = tsk("adult_train")
+t = tsk("adult_train")
 learner = lrn("classif.rpart", cp = .01)
-learner$train(data_task)
+learner$train(t)
 measure = msr("classif.pp")
-predictions = learner$predict(data_task)
-predictions$score(measure, task = data_task)
+predictions = learner$predict(t)
+predictions$score(measure, task = t)
 }
 \section{Super class}{
 \code{\link[mlr3:Measure]{mlr3::Measure}} -> \code{MeasurePositiveProbability}
