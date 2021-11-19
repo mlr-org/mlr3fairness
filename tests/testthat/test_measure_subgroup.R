@@ -30,6 +30,15 @@ test_that("measure", {
   out = l$train(t)$predict(t)$score(m, t)
   expect_numeric(out, len = 2L, upper = 1, lower = 0)
   expect_true(all(names(out) == c("subgroup.acc_Female", "subgroup.acc_Male")))
+
+  pta = get_pta(t, rows = t$row_ids)
+  rw_1 = t$row_ids[pta == levels(pta)[1]]
+  rw_2 = t$row_ids[pta == levels(pta)[2]]
+  outi = c(
+    l$predict(t, row_ids = rw_1)$score(msr("classif.acc")),
+    l$predict(t, row_ids = rw_2)$score(msr("classif.acc"))
+  )
+  expect_true(all(sort(out) == sort(outi)))
 })
 
 test_that("multi pta", {
