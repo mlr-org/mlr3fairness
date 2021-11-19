@@ -117,7 +117,8 @@ Additional **custom fairness metrics** can be easily constructed, [the
 vignette](https://textbook.coleridgeinitiative.org/chap-bias.html)
 contains more details. The `fairness_tensor()` function can be used with
 a `Prediction` in order to print group-wise confusion matrices for each
-protected attribute group.
+protected attribute group. We can furthermore measure fairrness in each
+group separately using `MeasureSubgroup` and `groupwise_metrics`.
 
 ### Fairness Visualizations
 

@@ -35,6 +35,7 @@
   x$add("fairness.composite", MeasureFairnessComposite)
   x$add("fairness.constraint", MeasureFairnessConstraint)
   x$add("classif.pp", MeasurePositiveProbability)
+  x$add("subgroup", MeasureSubgroup)
   # regression
   for (key in c("mse")) {
     x$add(sprintf("fairness.%s", key), MeasureFairness,

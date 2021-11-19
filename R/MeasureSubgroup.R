@@ -67,8 +67,6 @@ MeasureSubgroup = R6::R6Class("MeasureSubgroup", inherit = Measure,
   )
 )
 
-mlr_measures$add("subgroup", MeasureSubgroup)
-
 #' @title Evaluate a metric on each protected subgroup in a task.
 #'
 #' @description

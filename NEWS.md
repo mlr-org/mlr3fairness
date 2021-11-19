@@ -1,7 +1,9 @@
+
 # mlr3fairness 0.2.0
 
 * Added 3 types of reports: `report_modelcard`, `report_datasheet`, `report_fairness`
 * Added several new fairness metrics
+* Added `MeasureSubgroup` and `groupwise_metrics` that allow for inspecing dis-aggregated fairness metrics.
 
 
 # mlr3fairness 0.1.0
