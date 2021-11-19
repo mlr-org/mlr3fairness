@@ -209,3 +209,44 @@ test_that("fairness constraint measures - simulated data", {
     })
   })
 })
+
+test_that("Args are passed on correctly", {
+
+  MeasureTestArgs = R6::R6Class("MeasureTestArgs",
+    inherit = mlr3::Measure,
+    public = list(
+      initialize = function() {
+        private$.args = list(train_set = 1:10, learner = NULL)
+        super$initialize(
+          id = "classif.testargs",
+          predict_type = "response",
+          range = c(0, 1),
+          minimize = TRUE,
+          task_type = "classif"
+        )
+      }
+    ),
+    private = list(
+      .args = NULL,
+      .score = function(prediction, task, ...) {
+        args = list(...)
+        pmap(list(args[names(private$.args)], private$.args), function(x, y) {
+          expect_equal(x, y)
+        })
+        return(1)
+      }
+    )
+  )
+
+  mta = MeasureTestArgs$new()
+  t = tsk("compas")
+  l = lrn("classif.rpart")
+  prd = l$train(t)$predict(t)
+  prd$score(mta, task = t, train_set = 1:10)
+  expect_error(prd$score(mta, task = t, train_set = 1:2))
+
+  mfa = msr("fairness", base_measure = mta)
+  prd$score(mfa, task = t, train_set = 1:10)
+  prd$score(groupwise_metrics(mta, t), task = t, train_set = 1:10)
+  prd$score(msr("fairness.constraint", fairness_measure = mta, performance_measure = mta), task = t, train_set = 1:10)
+})

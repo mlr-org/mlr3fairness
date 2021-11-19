@@ -70,7 +70,7 @@ MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure,
   private = list(
     .score = function(prediction, task, ...) {
       assert_pta_task(task)
-      mvals = score_groupwise(prediction, self$base_measure, task)
+      mvals = score_groupwise(prediction, self$base_measure, task, ...)
       invoke(self$operation, mvals)
     }
   )

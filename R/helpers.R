@@ -3,17 +3,17 @@
 #' @param prediction [Prediction] A prediction
 #' @param base_measure [Measure] The measure to compute in each group.
 #' @param task [Task] the task prediction was made on.
-#'
+#' @param ... `any` passed on to respective measure.
 #' @return [numeric] Computed score
 #'
 #' @noRd
-score_groupwise = function(prediction, base_measure, task) {
+score_groupwise = function(prediction, base_measure, task, ...) {
   # Get protected attribute vector
   groups = task$data(cols = task$col_roles$pta, rows = prediction$row_ids)[[1]]
 
   # Split prediction
   map_dbl(split(prediction$row_ids, groups), function(rws) {
-    prediction$clone()$filter(rws)$score(base_measure, task = task)
+    prediction$clone()$filter(rws)$score(base_measure, task = task, ...)
   })
 }
 

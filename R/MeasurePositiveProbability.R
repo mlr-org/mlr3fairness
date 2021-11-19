@@ -25,7 +25,9 @@ MeasurePositiveProbability = R6::R6Class("MeasurePositiveProbability",
         id = "classif.pp",
         predict_type = "response",
         range = c(0, 1),
-        minimize = FALSE)
+        minimize = FALSE,
+        task_type = "classif"
+      )
     }
   ),
 

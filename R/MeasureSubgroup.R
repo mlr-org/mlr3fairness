@@ -62,7 +62,7 @@ MeasureSubgroup = R6::R6Class("MeasureSubgroup", inherit = Measure,
       groups = task$data(cols = task$col_roles$pta, rows = prediction$row_ids)[[1]]
       assert_choice(self$subgroup, levels(groups))
       rws = prediction$row_ids[groups == self$subgroup]
-      prediction$clone()$filter(rws)$score(self$base_measure, task = task)
+      prediction$clone()$filter(rws)$score(self$base_measure, task = task, ...)
     }
   )
 )
