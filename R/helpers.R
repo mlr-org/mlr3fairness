@@ -9,7 +9,7 @@
 #' @noRd
 score_groupwise = function(prediction, base_measure, task, ...) {
   # Get protected attribute vector
-  groups = task$data(cols = task$col_roles$pta, rows = prediction$row_ids)[[1]]
+  groups = get_pta(task, rows = prediction$row_ids)
 
   # Split prediction
   map_dbl(split(prediction$row_ids, groups), function(rws) {
@@ -94,4 +94,22 @@ tabular = function(df, ...) {
   paste("\\tabular{", paste(col_align, collapse = ""), "}{\n   ",
     paste0("\\strong{", names(df), "}", sep = "", collapse = " \\tab "), " \\cr\n   ",
     contents, "\n }\n", sep = "")
+}
+
+#' Score weights per group (indicated by 'pta')
+#'
+#' @param task [Task]
+#' @param rows (`integer`) rows to get
+#' @param intersectional (`logical`) should groups be intersected? If `FALSE` only first pta is used.
+#' @return character vector of group assignments
+#'
+#' @noRd
+get_pta = function(task, rows, intersectional = TRUE) {
+  assert_flag(intersectional)
+  groups = task$data(cols = task$col_roles$pta, rows = rows)
+  if (ncol(groups) >= 2L && intersectional) {
+    factor(pmap_chr(groups, paste, sep = "_"))
+  } else {
+    factor(groups[[1]])
+  }
 }

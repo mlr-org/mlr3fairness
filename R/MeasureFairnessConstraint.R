@@ -81,6 +81,7 @@ MeasureFairnessConstraint = R6::R6Class("MeasureFairnessConstraint", inherit = M
       } # nocov end
       fair = self$fairness_measure$score(prediction, task, ...)
       perf = self$performance_measure$score(prediction, task, ...)
+
       assert_number(perf, lower = 0)
       prange = self$performance_measure$range
       frange = self$fairness_measure$range

@@ -31,3 +31,19 @@ test_that("measure", {
   expect_numeric(out, len = 2L, upper = 1, lower = 0)
   expect_true(all(names(out) == c("subgroup.acc_Female", "subgroup.acc_Male")))
 })
+
+test_that("multi pta", {
+  t = tsk("compas")
+  t$col_roles$pta = c("sex", "race")
+  l = lrn("classif.rpart")
+  m = groupwise_metrics(msr("classif.acc"), t)
+  map(m, expect_class, "Measure")
+  expect_true(length(map(m, "subgroup")) == 12L)
+  prd = l$train(t)$predict(t)
+  out = prd$score(m, t)
+  expect_numeric(out, len = 12L, upper = 1, lower = 0)
+
+  m = msr("fairness.acc")
+  out2 = prd$score(m, t)
+  expect_true(out2 == max(out) - min(out))
+})

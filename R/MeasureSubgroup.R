@@ -56,10 +56,10 @@ MeasureSubgroup = R6::R6Class("MeasureSubgroup", inherit = Measure,
   private = list(
     .score = function(prediction, task, ...) {
       assert_pta_task(task)
+      groups = get_pta(task, prediction$row_ids)
       if (is.integer(self$subgroup)) {
-        self$subgroup = task$levels(cols = task$col_roles$pta)[[1]][self$subgroup]
+        self$subgroup = levels(groups)[self$subgroup]
       }
-      groups = task$data(cols = task$col_roles$pta, rows = prediction$row_ids)[[1]]
       assert_choice(self$subgroup, levels(groups))
       rws = prediction$row_ids[groups == self$subgroup]
       prediction$clone()$filter(rws)$score(self$base_measure, task = task, ...)
@@ -88,5 +88,5 @@ MeasureSubgroup = R6::R6Class("MeasureSubgroup", inherit = Measure,
 groupwise_metrics = function(base_measure, task) {
   assert_pta_task(task)
   base_measure = assert_measure(as_measure(base_measure))
-  map(task$levels(cols = task$col_roles$pta)[[1]], MeasureSubgroup$new, base_measure = base_measure, id = NULL)
+  map(levels(get_pta(task, rows = NULL)), MeasureSubgroup$new, base_measure = base_measure, id = NULL)
 }
