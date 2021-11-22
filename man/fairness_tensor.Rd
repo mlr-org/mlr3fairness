@@ -2,19 +2,29 @@
 % Please edit documentation in R/fairness_tensor.R
 \name{fairness_tensor}
 \alias{fairness_tensor}
+\alias{fairness_tensor.data.table}
+\alias{fairness_tensor.PredictionClassif}
+\alias{fairness_tensor.ResampleResult}
 \title{Compute the Fairness Tensor given a Prediction and a Task}
 \usage{
-fairness_tensor(object, task, ...)
+fairness_tensor(object, ...)
+
+\method{fairness_tensor}{data.table}(object, task, ...)
+
+\method{fairness_tensor}{PredictionClassif}(object, task, ...)
+
+\method{fairness_tensor}{ResampleResult}(object, ...)
 }
 \arguments{
-\item{object}{(\code{\link[=data.table]{data.table()}} | \link{PredictionClassif})\cr
-A data.table with columns \code{truth} and \code{prediction} or a \link{PredictionClassif}.}
-
-\item{task}{(\link{TaskClassif})\cr
-A \link{TaskClassif}. Needs \code{col_role} \code{"pta"} to be set.}
+\item{object}{(\code{\link[=data.table]{data.table()}} | \link{PredictionClassif} | \link{ResampleResult})\cr
+A data.table with columns \code{truth} and \code{prediction},
+a \link{PredictionClassif} or a \link{ResampleResult}.}
 
 \item{...}{\code{any}\cr
 Currently not used.}
+
+\item{task}{(\link{TaskClassif})\cr
+A \link{TaskClassif}. Needs \code{col_role} \code{"pta"} to be set.}
 }
 \value{
 \code{list()} of confusion matrix for every group in \code{"pta"}.

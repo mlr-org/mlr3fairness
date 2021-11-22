@@ -53,7 +53,7 @@
       base_measure = msr(sprintf("classif.%s", key)))
   }
   # compositions
-  x$add("fairness.eod", MeasureFairnessComposite, measures = msrs(c("fairness.fpr", "fairness.tpr")), range = c(0,1),
+  x$add("fairness.eod", MeasureFairnessComposite, measures = msrs(c("fairness.fpr", "fairness.tpr")), range = c(0, 1),
     id = "equalized_odds")
   x$add("fairness.acc_eod=.05", MeasureFairnessConstraint, performance_measure = msr("classif.acc"),
     fairness_measure = msr("fairness.eod"), epsilon = 0.05, id = "fairness.acc_eod=.05", range = c(-1, 1))
