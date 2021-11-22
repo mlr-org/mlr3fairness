@@ -17,6 +17,7 @@
   x$add("adult_train", get_adult_task_train)
   x$add("adult_test", get_adult_task_test)
   x$add("compas", get_compas_task)
+  x$add("compas_race_binary", get_compas_task_race_binary)
 
   # teach mlr3 about the new column role "pta" (protected attribute)
   x = getFromNamespace("mlr_reflections", ns = "mlr3")
