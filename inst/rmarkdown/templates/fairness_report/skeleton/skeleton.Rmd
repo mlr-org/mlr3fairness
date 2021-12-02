@@ -12,6 +12,7 @@ library("mlr3")
 library("mlr3viz")
 library("mlr3fairness")
 library("ggplot2")
+library("kableExtra")
 ```
 <!-- This reads in `objects` provided to report_fairness: resample_result, task, ...-->
 
@@ -29,6 +30,32 @@ In this fairness report, we investigate the fairness of the following task:
 
 ```{r}
 task
+```
+
+The General Task Documentation for the task:
+
+```{r}
+# Create the report attributes
+report_attr = list(
+  "Number of observations: ",
+  "Number of features: ",
+  "The Protected Attribute: "
+)
+
+# Create the skeleton of summary table
+summary_table <- data.frame(Value=rep(NA, length(report_attr)))
+rownames(summary_table) <- report_attr
+
+#Assign the value to the table
+summary_table$Value = c(
+  task$nrow,
+  task$ncol,
+  task$col_roles$pta
+)
+
+summary_table %>%
+  kbl() %>%
+  kable_classic(full_width = F, html_font = "Cambria", font_size = 20)
 ```
 
 We first look at the label distribution:
