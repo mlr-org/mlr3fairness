@@ -23,6 +23,7 @@ Jump to section:
 
 - [Task details](#task-details)
 - [Model details](#model-details)
+- [Interpretability](#Interpretability)
 
 ## Task details
 
@@ -32,13 +33,17 @@ In this fairness report, we investigate the fairness of the following task:
 task
 ```
 
-The General Task Documentation for the task:
+### The General Task Documentation for the task:
 
 ```{r}
 # Create the report attributes
 report_attr = list(
+  "Audit Date: ",
+  "Task Name: ",
   "Number of observations: ",
   "Number of features: ",
+  "Target Name: ",
+  "Feature Names: ",
   "The Protected Attribute: "
 )
 
@@ -48,14 +53,32 @@ rownames(summary_table) <- report_attr
 
 #Assign the value to the table
 summary_table$Value = c(
+  as.character(Sys.Date()),
+  task$id,
   task$nrow,
   task$ncol,
+  task$target_names,
+  paste(task$feature_names, collapse = ", "),
   task$col_roles$pta
 )
 
 summary_table %>%
   kbl() %>%
-  kable_classic(full_width = F, html_font = "Cambria", font_size = 20)
+  kable_paper("hover", full_width = F)
+```
+### Audit Results: Summary
+TBD
+
+### Exploratory Data Analysis: 
+The number of missing values, type and the levels for each feature:
+
+```{r}
+df_summary = data.frame(task$col_info)[task$col_info$id != "..row_id",
+                                       !(names(task$col_info) %in% c("id", "label"))]
+data.frame("Count_of_Missing_Value" = task$missings()) %>%
+  cbind(df_summary) %>%
+  kbl() %>%
+  kable_paper("hover", full_width = F)
 ```
 
 We first look at the label distribution:
@@ -78,7 +101,6 @@ fair_metrics = msrs(c("fairness.acc","fairness.eod","fairness.fnr",
 knitr::kable(resample_result$aggregate(fair_metrics))
 ```
 
-
 ```{r}
 fairness_accuracy_tradeoff(resample_result)
 ```
@@ -86,5 +108,7 @@ fairness_accuracy_tradeoff(resample_result)
 ```{r, eval = (resample_result$learner$predict_type == "prob")}
 fairness_prediction_density(resample_result)
 ```
+
+## Interpretability
 
 # References
