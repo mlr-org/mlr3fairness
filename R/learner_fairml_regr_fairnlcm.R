@@ -1,11 +1,17 @@
 #' @title Regression Non-convex Fair Regression Learner
 #' @author pfistfl
+#' 
+#' @details 
+#' Fair regression model based on nonconvex optimization from Komiyama et al. (2018).
+#' Implemented via package `fairml`.
+#' The 'unfairness' parameter is set to 0.05 as a default.
+#' 
 #' @name mlr_learners_regr.fairnlcm
-#'
 #' @template class_learner
 #' @templateVar id regr.fairnlcm
 #' @templateVar caller regr.fairnlcm
-#'
+#' @references
+#' <FIXME - DELETE THIS AND LINE ABOVE IF OMITTED>
 #'
 #' @template seealso_learner
 #' @template example
@@ -17,12 +23,13 @@ LearnerRegrFairnlcm = R6Class("LearnerRegrFairnlcm",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      # FIXME - MANUALLY ADD PARAM_SET BELOW AND THEN DELETE THIS LINE
-      ps = <param_set>
-
-      # FIXME - MANUALLY UPDATE PARAM VALUES BELOW IF APPLICABLE THEN DELETE THIS LINE.
-      # OTHERWISE DELETE THIS AND LINE BELOW.
-      ps$values = list(<param_vals>)
+      ps = ps(
+        lambda = p_dbl(lower = 0, upper = Inf, tags = "train", default = 0),
+        save.auxiliary = p_lgl(default = FALSE, tags = "train"),
+        covfun = p_uty(tags = "train", default = stats::cov),
+        unfairness = p_dbl(lower = 0, upper = 1, default = NULL)
+      )
+      ps$values = list(unfairness = 0.05)
 
       super$initialize(
         id = "regr.fairnlcm",
@@ -46,40 +53,21 @@ LearnerRegrFairnlcm = R6Class("LearnerRegrFairnlcm",
       # set column names to ensure consistency in fit and predict
       self$state$feature_names = task$feature_names
 
-      # FIXME - If learner does not have 'weights' property then delete these lines.
-      if ("weights" %in% task$properties) {
-        pars = insert_named(pars, list(weights = task$weights$weight))
-      }
-
-      # FIXME - <Create objects for the train call>
-      # <At least "data" and "formula" are required>
-      formula = task$formula()
-      data = task$data()
-
-      # FIXME - <here is space for some custom adjustments before proceeding to the
-      # train call. Check other learners for what can be done here>
-
-      # use the mlr3misc::invoke function (it's similar to do.call())
-      mlr3misc::invoke(fairml::regr.fairnlcm,
-                       formula = formula,
-                       data = data,
-                       .args = pars)
+      predictors = task$data(cols = setdiff(task$feature_names, task$col_roles$pta))
+      sensitive = task$data(cols = task$col_roles$pta)
+      response = task$data(cols = task$target_names)
+      mlr3misc::invoke(fairml::classif.fainclmn, response = response, predictors = predictors, sensitive = sensitive, .args = pars)
     },
 
     .predict = function(task) {
       # get parameters with tag "predict"
       pars = self$param_set$get_values(tags = "predict")
 
-      # get newdata and ensure same ordering in train and predict
-      newdata = task$data(cols = self$state$feature_names)
+      pta = task$col_roles$pta
+      s = task$data(cols = pta)[[1]]
+      p = task$data(cols = setdiff(self$state$feature_names, pta))
 
-      pred = mlr3misc::invoke(predict, self$model, newdata = newdata,
-                              type = type, .args = pars)
-
-      # FIXME - ADD PREDICTIONS TO LIST BELOW
-      list(...)
+      pred = mlr3misc::invoke(predict, self$model, new.predictors = p, new.sensitive = s, type = type, .args = pars)
     }
   )
 )
-
-.extralrns_dict$add("regr.fairnlcm", LearnerRegrFairnlcm)
