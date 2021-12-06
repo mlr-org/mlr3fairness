@@ -9,6 +9,7 @@
 #' @import data.table
 #' @importFrom utils getFromNamespace data
 #' @importFrom stats runif dist predict
+#' @keywords internal
 "_PACKAGE"
 
 .onLoad = function(libname, pkgname) { # nolint

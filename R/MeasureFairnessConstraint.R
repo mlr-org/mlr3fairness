@@ -1,6 +1,4 @@
-
 #' @title Fairness Constraint Measure
-#' @name mlr_measures_fairness_constraint
 #'
 #' @description
 #'   This measure allows constructing for 'constraint' measures of the following form:\cr

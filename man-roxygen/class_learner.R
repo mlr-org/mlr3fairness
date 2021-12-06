@@ -19,3 +19,4 @@ lrn = mlr3::lrn(id)
 #' * Properties: <%=mlr3misc::str_collapse(lrn$properties)%>
 #'
 #' @family fairness_learners
+#' @keywords internal

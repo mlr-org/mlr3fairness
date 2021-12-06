@@ -56,6 +56,7 @@ Other fairness_learners:
 pfistfl
 }
 \concept{fairness_learners}
+\keyword{internal}
 \section{Super classes}{
 \code{\link[mlr3:Learner]{mlr3::Learner}} -> \code{\link[mlr3:LearnerClassif]{mlr3::LearnerClassif}} -> \code{LearnerClassifFairfgrrm}
 }

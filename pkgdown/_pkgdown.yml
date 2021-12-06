@@ -49,11 +49,12 @@ reference:
       - mlr_measures_fairness
       - MeasureFairness
       - MeasureFairnessComposite
-      - mlr_measures_fairness_constraint
+      - MeasureFairnessConstraint
       - groupdiff_absdiff
       - groupdiff_tau
+      - MeasureSubgroup
+      - groupwise_metrics
       - mlr_measures_positive_probability
-
   - title: Detecting Bias
     contents:
       - fairness_tensor
@@ -64,12 +65,15 @@ reference:
     contents:
       - mlr_pipeops_equalized_odds
       - mlr_pipeops_reweighing
+  - title: Fair Learners
+    contens:
+      - mlr_learners_fairness
   - title: Reports
     contents:
       - report_datasheet
       - report_modelcard
       - report_fairness
-  - title: Data sets
+  - title: Integrated data & tasks
     contents:
       - adult
       - compas
