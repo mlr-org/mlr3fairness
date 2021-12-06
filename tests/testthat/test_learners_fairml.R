@@ -1,6 +1,7 @@
 load_learner_tests()
 
 test_that("classif.fairfgrrm", {
+    skip_if_not_installed("fairml")
     learner = lrn("classif.fairfgrrm")
     out = expect_learner(learner)
     simple_autotest(learner, tsk("compas")$select(cols = c("age_cat", "priors_count")))
@@ -9,6 +10,7 @@ test_that("classif.fairfgrrm", {
 })
 
 test_that("regr.fairfrrm", {
+    skip_if_not_installed("fairml")
     learner = lrn("regr.fairfrrm")
     out = expect_learner(learner)
 
@@ -20,6 +22,7 @@ test_that("regr.fairfrrm", {
 })
 
 test_that("regr.fairzlm", {
+    skip_if_not_installed("fairml")
     learner = lrn("regr.fairzlm")
     out = expect_learner(learner)
     
@@ -32,6 +35,7 @@ test_that("regr.fairzlm", {
 })
 
 test_that("classif.fairzlrm", {
+    skip_if_not_installed("fairml")
     learner = lrn("classif.fairzlrm")
     out = expect_learner(learner)
 
@@ -42,6 +46,7 @@ test_that("classif.fairzlrm", {
 })
 
 test_that("regr.fairnclm", {
+    skip_if_not_installed("fairml")
     learner = lrn("regr.fairnclm")
     out = expect_learner(learner)
 
