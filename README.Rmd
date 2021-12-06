@@ -143,6 +143,21 @@ dt = as.data.table(mlr_pipeops)
 knitr::kable(dt[map_lgl(dt$tags, function(x) "fairness" %in% x)][, c(1,7,8,9,10)])
 ```
 
+### Fair Learners
+
+`mlr3fairness` furthermore contains several learners that can be used to directly learn fair models:
+
+```{r, echo = FALSE}
+tab = rowwise_table(~key, ~package, ~reference,
+  "regr.fairfrrm", "fairml", "Komiyama et al., 2018",
+  "classif.fairfgrrm", "fairml","Komiyama et al., 2018",
+  "regr.fairzlm", "fairml", "Zafar et al., 2019",
+  "classif.fairzlrm", "fairml", "Zafar et al., 2019",
+  "classif.fairnclm", "fairml", "Scutari et al., 2021"
+)
+knitr::kable(tab)
+```
+
 ### Datasets
 
 `mlr3fairness` includes two fairness datasets: `adult` and `compas`.

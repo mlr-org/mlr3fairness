@@ -76,5 +76,12 @@ bibentries = c(
     author="Marco Scutari and Francesca Panero and Manuel Proissl",
     journal="arXiv preprint arXiv:2105.13817",
     year="2021"
+  ),
+
+  saleiro18 = bibentry("article",
+    title="Aequitas: A bias and fairness audit toolkit",
+    author="Saleiro, Pedro and Kuester, Benedict and Hinkson, Loren and London, Jesse and Stevens, Abby and Anisfeld, Ari and Rodolfa, Kit T and Ghani, Rayid",
+    journal="arXiv preprint arXiv preprint arXiv:1811.05577",
+    year="2018"
   )
 )

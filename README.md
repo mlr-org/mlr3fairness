@@ -157,6 +157,19 @@ rs$score(msr("fairness.acc"))
 | reweighing\_os  | TaskClassif      | TaskClassif        | TaskClassif       | TaskClassif         |
 | reweighing\_wts | TaskClassif      | TaskClassif        | TaskClassif       | TaskClassif         |
 
+### Fair Learners
+
+`mlr3fairness` furthermore contains several learners that can be used to
+directly learn fair models:
+
+| key               | package | reference             |
+| :---------------- | :------ | :-------------------- |
+| regr.fairfrrm     | fairml  | Komiyama et al., 2018 |
+| classif.fairfgrrm | fairml  | Komiyama et al., 2018 |
+| regr.fairzlm      | fairml  | Zafar et al., 2019    |
+| classif.fairzlrm  | fairml  | Zafar et al., 2019    |
+| classif.fairnclm  | fairml  | Scutari et al., 2021  |
+
 ### Datasets
 
 `mlr3fairness` includes two fairness datasets: `adult` and `compas`. See

@@ -249,6 +249,3 @@ test_that("Args are passed on correctly", {
   prd$score(groupwise_metrics(mta, t), task = t, train_set = 1:10)
   prd$score(msr("fairness.constraint", fairness_measure = mta, performance_measure = mta), task = t, train_set = 1:10)
 })
-
-
-
