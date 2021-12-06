@@ -45,17 +45,10 @@ test_that("fairness measures work as expcted", {
   metrics = mlr_measures_fairness$key
   for (prd in prds) {
     for (m in metrics) {
-<<<<<<< HEAD
-      mm = msr(m)
-      out = prd$score(measures = mm, task = tsk)
-      expect_number(out, upper = Inf, na.ok = TRUE)
-      if (is(mm, "MeasureFairness")) {
-=======
       ms = msr(m)
       if (ms$task_type == "classif" && is(ms, "MeasureFairness")) {
         out = prd$score(measures = ms, task = tsk)
         expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
->>>>>>> origin
         out = prd$score(measures = msr(m, operation = groupdiff_tau), task = tsk)
         expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
         out = prd$score(measures = msr(m, operation = groupdiff_absdiff), task = tsk)
@@ -72,16 +65,11 @@ test_that("fairness measures work as expected - simulated data", {
 
   for (prd in prds) {
     for (m in metrics) {
-<<<<<<< HEAD
-      out = prd$score(measures = msr(m), task = tsk)
-      expect_number(out, upper = Inf, na.ok = TRUE)
-=======
       ms = msr(m)
       if (ms$task_type == "classif" & is(ms, "MeasureFairness")) {
         out = prd$score(measures = ms, task = tsk)
         expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
       }
->>>>>>> origin
     }
   }
 })
@@ -202,7 +190,6 @@ test_that("fairness constraint measures - simulated data", {
   metrics = c("fairness.acc", "fairness.eod")
   map(prds, function(prd) {
     map_dbl(metrics, function(m) {
-      browser()
       fair = prd$score(measures = msr(m), task = tsk)
       perf = prd$score(measures = msr("classif.acc"), task = tsk)
       mm = msr("fairness.constraint", performance_measure = msr("classif.acc"), fairness_measure = msr(m), epsilon = Inf)
@@ -262,4 +249,6 @@ test_that("Args are passed on correctly", {
   prd$score(groupwise_metrics(mta, t), task = t, train_set = 1:10)
   prd$score(msr("fairness.constraint", fairness_measure = mta, performance_measure = mta), task = t, train_set = 1:10)
 })
+
+
 

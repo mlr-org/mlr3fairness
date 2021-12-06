@@ -34,30 +34,15 @@ MeasureFairnessConstraint = R6::R6Class("MeasureFairnessConstraint", inherit = M
     #' @param id (`character`)\cr
     #'   The measure's id. Set to 'fairness.<base_measure_id>' if ommited.
     #' @param performance_measure (`Measure()`)\cr
-<<<<<<< HEAD
-    #' The performance measure we want to optimize for.
-    #' @param fairness_measure (`Measure()`)\cr
-    #' The fairness measure that should be constrained.
-=======
     #' The measure used to measure performance (e.g. accuracy).
     #' @param fairness_measure (`Measure()`)\cr
     #' The measure used to measure fairness (e.g. equalized odds).
->>>>>>> origin
     #' @param epsilon (`numeric`)\cr
     #' Allowed divergence from perfect fairness. Initialized to 0.01.
     #' @param range (`numeric`)\cr
     #' Range of the resulting measure. Defaults to `c(-Inf, Inf)`.
-<<<<<<< HEAD
-    initialize = function(id = NULL, performance_measure, fairness_measure,
-      epsilon = 0.01, range = c(-Inf, Inf)) {
-=======
     initialize = function(
-      id = NULL,
-      performance_measure,
-      fairness_measure,
-      epsilon = 0.01,
-      range = c(-Inf, Inf)) {
->>>>>>> origin
+      id = NULL,  performance_measure, fairness_measure, epsilon = 0.01, range = c(-Inf, Inf)) {
       self$performance_measure = assert_measure(performance_measure)
       self$fairness_measure = assert_measure(fairness_measure)
       assert_true(all(self$performance_measure$task_type == self$fairness_measure$task_type))

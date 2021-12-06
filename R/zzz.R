@@ -36,8 +36,6 @@
   x$add("fairness.composite", MeasureFairnessComposite)
   x$add("fairness.constraint", MeasureFairnessConstraint)
   x$add("classif.pp", MeasurePositiveProbability)
-  # rates
-  for (key in c("fnr", "fpr", "tnr", "tpr", "npv", "ppv", "fomr", "acc")) {
   x$add("subgroup", MeasureSubgroup)
   # regression
   for (key in c("mse")) {
