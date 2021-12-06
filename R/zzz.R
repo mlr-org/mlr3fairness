@@ -63,7 +63,7 @@
   x$add("classif.fairzlrm", LearnerClassifFairzlrm)
   x$add("regr.fairfrrm", LearnerRegrFairfrrm)
   x$add("classif.fairfgrrm", LearnerClassifFairfgrrm)
-  x$add("regr.fairnlcm", LearnerRegrFairnlcm)
+  x$add("regr.fairnclm", LearnerRegrFairnclm)
 
   # static code checks should not complain about commonly used data.table columns
   utils::globalVariables(c("variable", "value", "learner_id", "n_tgt", "n_pta", "pta", "task_id",

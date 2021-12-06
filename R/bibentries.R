@@ -53,6 +53,28 @@ bibentries = c(
     booktitle="Proceedings of the conference on fairness, accountability, and transparency",
     pages="220--229",
     year="2019"
-  )
+  ),
 
+  komiyama = bibentry("inproceedings",
+    title="Nonconvex Optimization for Regression with Fairness Constraints",
+    author="Komiyama J, Takeda A, Honda J, Shimao H",
+    booktitle="Proceedings of the 35th International Conference on Machine Learning (ICML), PMLR 80",
+    pages="2737–2746",
+    year="2018"
+  ),
+
+  zafar19a = bibentry("inproceedings",
+    title="Fairness Constraints: a Flexible Approach for Fair Classification",
+    author="Zafar BJ, Valera I, Gomez-Rodriguez M, Gummadi KP",
+    booktitle="Journal of Machine Learning Research, 30",
+    pages="1-42",
+    year="2019"
+  ),
+
+  scutari21 = bibentry("article",
+    title="Achieving Fairness with a Simple Ridge Penalty",
+    author="Marco Scutari and Francesca Panero and Manuel Proissl",
+    journal="arXiv preprint arXiv:2105.13817",
+    year="2021"
+  )
 )

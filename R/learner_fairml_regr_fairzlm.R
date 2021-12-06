@@ -9,10 +9,10 @@
 #'
 #' @template class_learner
 #' @templateVar id regr.fairzlm
-#' @templateVar caller regr.fairzlm
+#' @templateVar caller zlm
 #'
 #' @references
-#' <FIXME - DELETE THIS AND LINE ABOVE IF OMITTED>
+#' `r format_bib("zafar19a")`
 #'
 #' @template seealso_learner
 #' @template example
@@ -25,16 +25,16 @@ LearnerRegrFairzlm = R6Class("LearnerRegrFairzlm",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       ps = ps(
-        unfairness = p_dbl(lower = 0, upper = 1, default = NULL)
+        unfairness = p_dbl(lower = 0, upper = 1, tags = "train")
       )
       ps$values = list(unfairness = 0.05)
       super$initialize(
         id = "regr.fairzlm",
         packages = "fairml",
-        feature_types = c("integer", "numeric", "factor"),
+        feature_types = c("integer", "numeric", "factor", "ordered"),
         predict_types = c("response"),
         param_set = ps,
-        man = "mlr3extralearners::mlr_learners_regr.fairzlm"
+        man = "mlr3fairness::mlr_learners_regr.fairzlm"
       )
     }
   ),
@@ -42,6 +42,7 @@ LearnerRegrFairzlm = R6Class("LearnerRegrFairzlm",
   private = list(
 
     .train = function(task) {
+      assert_pta_task(task)
       # get parameters for training
       pars = self$param_set$get_values(tags = "train")
 
@@ -49,25 +50,23 @@ LearnerRegrFairzlm = R6Class("LearnerRegrFairzlm",
       self$state$feature_names = task$feature_names
 
       pta = task$col_roles$pta
-      r = task$truth())
+      r = task$truth()
       s = task$data(cols = pta)[[1]]
       p = task$data(cols = setdiff(task$feature_names, pta))
-
+      p = int_to_numeric(p)
       # use the mlr3misc::invoke function (it's similar to do.call())
-      mlr3misc::invoke(fairml::zlrm, response = r, sensitive = s,
-        predictors = p, .args = pars)
+      mlr3misc::invoke(fairml::zlm, response = r, sensitive = s, predictors = p, .args = pars)
     },
 
     .predict = function(task) {
       # get parameters with tag "predict"
       pars = self$param_set$get_values(tags = "predict")
-
       pta = task$col_roles$pta
       s = task$data(cols = pta)[[1]]
       p = task$data(cols = setdiff(self$state$feature_names, pta))
-
-      pred = mlr3misc::invoke(predict, self$model,
-        new.predictors = p, new.sensitive = s, type = type, .args = pars)
+      p = int_to_numeric(p)
+      pred = mlr3misc::invoke(predict, self$model, new.predictors = p, .args = pars)
+      list(response = pred)
     }
   )
 )

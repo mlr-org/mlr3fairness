@@ -9,11 +9,11 @@
 #'
 #' @template class_learner
 #' @templateVar id classif.fairzlrm
-#' @templateVar caller classif.fairzlrm
+#' @templateVar caller zlrm
 #'
 #' @references
-#' <FIXME - DELETE THIS AND LINE ABOVE IF OMITTED>
-#'
+#' `r format_bib("zafar19a")`
+#' 
 #' @template seealso_learner
 #' @template example
 #' @export
@@ -25,16 +25,17 @@ LearnerClassifFairzlrm = R6Class("LearnerClassifFairzlrm",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       ps = ps(
-        unfairness = p_dbl(lower = 0, upper = 1, default = NULL)
+        unfairness = p_dbl(lower = 0, upper = 1, tags = "train")
       )
       ps$values = list(unfairness = 0.05)
       super$initialize(
         id = "classif.fairzlrm",
         packages = "fairml",
-        feature_types = c("integer", "numeric", "factor"),
-        predict_types = c("response"),
+        feature_types = c("integer", "numeric", "factor", "ordered"),
+        predict_types = c("response", "prob"),
+        properties = "twoclass",
         param_set = ps,
-        man = "mlr3extralearners::mlr_learners_classif.fairzlrm"
+        man = "mlr3fairness::mlr_learners_classif.fairzlrm"
       )
     }
   ),
@@ -42,32 +43,40 @@ LearnerClassifFairzlrm = R6Class("LearnerClassifFairzlrm",
   private = list(
 
     .train = function(task) {
+      assert_pta_task(task)
       # get parameters for training
       pars = self$param_set$get_values(tags = "train")
 
       # set column names to ensure consistency in fit and predict
       self$state$feature_names = task$feature_names
-
       pta = task$col_roles$pta
-      r = task$truth())
+      r = task$truth()
       s = task$data(cols = pta)[[1]]
       p = task$data(cols = setdiff(task$feature_names, pta))
-
+      p = int_to_numeric(p)
       # use the mlr3misc::invoke function (it's similar to do.call())
       mlr3misc::invoke(fairml::zlrm, response = r, sensitive = s,
         predictors = p, .args = pars)
     },
 
     .predict = function(task) {
-      # get parameters with tag "predict"
-      pars = self$param_set$get_values(tags = "predict")
-
       pta = task$col_roles$pta
       s = task$data(cols = pta)[[1]]
       p = task$data(cols = setdiff(self$state$feature_names, pta))
-
-      pred = mlr3misc::invoke(predict, self$model,
-        new.predictors = p, new.sensitive = s, type = type, .args = pars)
+      p = int_to_numeric(p)
+      if (self$predict_type == "response") {
+        pred = mlr3misc::invoke(predict, self$model, new.predictors = p, type = "class")
+        list(response = drop(pred))
+      } else {
+        prob = mlr3misc::invoke(predict, self$model, new.predictors = p, type = "response")
+        if (length(task$class_names) == 2L) {
+          prob = pprob_to_matrix(prob, task)
+        } else {
+          prob = prob[, , 1L]
+        }
+        list(prob = prob)
+      }
     }
   )
 )
+

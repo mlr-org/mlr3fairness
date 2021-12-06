@@ -95,3 +95,15 @@ tabular = function(df, ...) {
     paste0("\\strong{", names(df), "}", sep = "", collapse = " \\tab "), " \\cr\n   ",
     contents, "\n }\n", sep = "")
 }
+
+pprob_to_matrix <- function(pp, task) {
+  y <- matrix(c(pp, 1 - pp), ncol = 2L, nrow = length(pp))
+  colnames(y) <- task$class_names
+  y
+}
+
+int_to_numeric = function(p) {
+  ints = colnames(keep(p, is.integer))
+  if (length(ints)) p = p[, (ints) := map(.SD, as.numeric), .SDcols = ints]
+  return(p)
+}
