@@ -41,7 +41,7 @@ learner$param_set$ids()
 \references{
 J K, A T, J H, H S (2018).
 \dQuote{Nonconvex Optimization for Regression with Fairness Constraints.}
-In \emph{Proceedings of the 35th International Conference on Machine Learning (ICML), PMLR 80}, 2737–2746.
+In \emph{Proceedings of the 35th International Conference on Machine Learning (ICML), PMLR 80}, 2737-2746.
 }
 \seealso{
 \link[mlr3misc:Dictionary]{Dictionary} of \link[mlr3:Learner]{Learners}:

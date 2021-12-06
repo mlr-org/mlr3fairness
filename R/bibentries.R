@@ -59,7 +59,7 @@ bibentries = c(
     title="Nonconvex Optimization for Regression with Fairness Constraints",
     author="Komiyama J, Takeda A, Honda J, Shimao H",
     booktitle="Proceedings of the 35th International Conference on Machine Learning (ICML), PMLR 80",
-    pages="2737–2746",
+    pages="2737-2746",
     year="2018"
   ),
 
@@ -81,7 +81,7 @@ bibentries = c(
   saleiro18 = bibentry("article",
     title="Aequitas: A bias and fairness audit toolkit",
     author="Saleiro, Pedro and Kuester, Benedict and Hinkson, Loren and London, Jesse and Stevens, Abby and Anisfeld, Ari and Rodolfa, Kit T and Ghani, Rayid",
-    journal="arXiv preprint arXiv preprint arXiv:1811.05577",
+    journal="arXiv preprint arXiv:1811.05577",
     year="2018"
   )
 )
