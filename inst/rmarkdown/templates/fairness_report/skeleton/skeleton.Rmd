@@ -13,7 +13,6 @@ library("mlr3viz")
 library("mlr3fairness")
 library("ggplot2")
 library("kableExtra")
-library("iml")
 ```
 <!-- This reads in `objects` provided to report_fairness: resample_result, task, ...-->
 
@@ -51,7 +50,7 @@ general_summary(task) %>%
 ```
 ### Exploratory Data Analysis: 
 
-We could also report the number of missing values, type and the levels for each feature:
+We could also report the number of missing values, types and the levels for each feature:
 
 ```{r}
 df_summary = data.frame(task$col_info)[task$col_info$id != "..row_id",
@@ -70,7 +69,15 @@ autoplot(task) + facet_wrap(task$col_roles$pta)
 
 ## Model details
 
+We could see the model that has been used in `resample_result`:
+
+```{r}
+resample_result$learner
+```
+
 ### Fairness Metrics
+
+We could report more than one fairness metric, but keep in mind. Below the metrics are the mean of all the resample results.
 
 ```{r}
 fair_metrics = msrs(c("fairness.acc","fairness.eod","fairness.fnr",
@@ -79,17 +86,47 @@ fair_metrics = msrs(c("fairness.acc","fairness.eod","fairness.fnr",
 ```
 
 ```{r}
-knitr::kable(resample_result$aggregate(fair_metrics))
+resample_result$aggregate(fair_metrics) %>%
+  kbl() %>%
+  kable_paper("hover", full_width = F)
 ```
 
+We could also use visualization to report the fairness.
+For example, the fairness and accuracy trade off, compare metrics visualization and the fairness prediction density of the model `classif.rpart` .
+For more detailed usage and examples, you may want to check the visualization vignette.
+
 ```{r}
-fairness_accuracy_tradeoff(resample_result)
+fairness_accuracy_tradeoff(resample_result, msr("fairness.fnr"))
 ```
 
 ```{r, eval = (resample_result$learner$predict_type == "prob")}
 fairness_prediction_density(resample_result)
 ```
 
+```{r}
+compare_metrics(resample_result, fair_metrics)
+```
+
 ## Interpretability
+
+Finally, we could use the external package to analyze the interpretability of the parameters. For the following example we choose `iml` as a demonstration. We need first extract the learner from `resample_result` and retrain it.
+
+For more details of interpretability, you might want to check the documentation of `iml`.
+
+```{r, warning = F}
+library("iml")
+
+target = task$target_names
+learner = resample_result$learner
+learner$train(task)
+
+model = Predictor$new(model = learner,
+                      data = task$data()[,.SD, .SDcols = !target],
+                      y = task$data()[, ..target])
+
+effect = FeatureEffects$new(model, method = "pdp")
+effect$plot(features = c("days_b_screening_arrest", "length_of_stay"))
+```
+
 
 # References
