@@ -5,3 +5,8 @@ check_plots = function(ggplot_obj) {
   expect_error(ggplot_obj, NA)
   expect_warning(ggplot_obj, NA)
 }
+
+load_learner_tests = function() {
+  library(mlr3)
+  lapply(list.files(system.file("testthat", package = "mlr3"), pattern = "helper", full.names = TRUE), source)
+}

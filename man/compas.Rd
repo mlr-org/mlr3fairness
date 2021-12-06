@@ -5,6 +5,11 @@
 \alias{compas}
 \alias{Compas}
 \title{COMPAS Dataset}
+\format{
+\link[R6:R6Class]{R6::R6Class} inheriting from \link{TaskClassif}.
+
+\link[R6:R6Class]{R6::R6Class} inheriting from \link{TaskClassif}.
+}
 \source{
 \url{https://github.com/propublica/compas-analysis}
 }
@@ -14,6 +19,13 @@ The data cleaning process followed the guidance in the original COMPAS repo.
 Contains 6172 observations and 14 features.
 The target column could either be "is_recid" or "two_year_recid", but often "two_year_recid" is prefered.
 The column \code{"sex"} is set as protected attribute, but more often \code{"race"} is used.
+
+A classification task for the \link{compas} data set.
+
+A classification task for the \link{compas} data set.
+The observations have been filtered, keeping only observations with race
+\code{"Caucasian"} and \code{"African-American"}. The protected attribute has been set
+to \code{"race"}.
 }
 \section{Pre-processing}{
 
@@ -46,6 +58,16 @@ that indicate the screening date happened before the arrest date.
 \item (integer) is_recid: Binary variable indicate whether defendant is rearrested at any time.
 \item (factor) two_year_recid: Binary variable indicate whether defendant is rearrested at within two years.
 \item (numeric) length_of_stay: The count of days stay in jail.
+}
+}
+
+\section{Construction}{
+\preformatted{mlr_tasks$get("compas")
+tsk("compas")
+}
+
+\preformatted{mlr_tasks$get("compas_race_binary")
+tsk("compas_race_binary")
 }
 }
 

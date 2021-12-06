@@ -2,6 +2,14 @@
 output: github_document
 ---
 
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/"
+)
+```
+
 ```{r, include = FALSE}
 lgr::get_logger("mlr3")$set_threshold("warn")
 set.seed(1)
@@ -141,6 +149,15 @@ library(mlr3misc)
 library(mlr3pipelines)
 dt = as.data.table(mlr_pipeops)
 knitr::kable(dt[map_lgl(dt$tags, function(x) "fairness" %in% x)][, c(1,7,8,9,10)])
+```
+
+### Fair Learners
+
+`mlr3fairness` furthermore contains several learners that can be used to directly learn fair models:
+
+```{r, echo = FALSE}
+tab = mlr_learners_fairness
+knitr::kable(tab)
 ```
 
 ### Datasets

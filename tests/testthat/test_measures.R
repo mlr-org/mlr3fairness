@@ -43,7 +43,6 @@ test_that("fairness measures work as expcted", {
     lrn("classif.featureless", predict_type = "prob")$train(tsk)$predict(tsk)
   )
   metrics = mlr_measures_fairness$key
-
   for (prd in prds) {
     for (m in metrics) {
       ms = msr(m)
@@ -193,17 +192,17 @@ test_that("fairness constraint measures - simulated data", {
     map_dbl(metrics, function(m) {
       fair = prd$score(measures = msr(m), task = tsk)
       perf = prd$score(measures = msr("classif.acc"), task = tsk)
-      mm = msr("fairness.constraint", performance_measure = msr("classif.acc"), fairness_measure = msr(m), epsilon = 1)
+      mm = msr("fairness.constraint", performance_measure = msr("classif.acc"), fairness_measure = msr(m), epsilon = Inf)
       out = prd$score(measures = mm, task = tsk)
       expect_true(out == perf)
-      mm = msr("fairness.constraint", performance_measure = msr("classif.acc"), fairness_measure =  msr(m), epsilon = 0)
+      mm = msr("fairness.constraint", performance_measure = msr("classif.acc"), fairness_measure = msr(m), epsilon = 0)
       out = prd$score(measures = mm, task = tsk)
       expect_true(out == 0 - fair)
       perf = prd$score(measures = msr("classif.ce"), task = tsk)
-      mm = msr("fairness.constraint",  performance_measure = msr("classif.ce"), fairness_measure = msr(m), epsilon = 1)
+      mm = msr("fairness.constraint", performance_measure = msr("classif.ce"), fairness_measure = msr(m), epsilon = 1)
       out = prd$score(measures = mm, task = tsk)
       expect_true(out == perf)
-      mm = msr("fairness.constraint",  performance_measure = msr("classif.ce"), fairness_measure = msr(m), epsilon = 0)
+      mm = msr("fairness.constraint", performance_measure = msr("classif.ce"), fairness_measure = msr(m), epsilon = 0)
       out = prd$score(measures = mm, task = tsk)
       expect_true(out == 1 + fair)
     })

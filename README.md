@@ -134,7 +134,7 @@ refer to the [mlr3 book](https://mlr3book.mlr-org.com/basics.html).
   - **fairness\_prediction\_density**: Density plots for each protected
     attribute.
 
-![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](man/figures/unnamed-chunk-6-1.png)<!-- -->
 
 ### Debiasing Methods
 
@@ -156,6 +156,19 @@ rs$score(msr("fairness.acc"))
 | EOd             | TaskClassif      | TaskClassif        | NULL              | PredictionClassif   |
 | reweighing\_os  | TaskClassif      | TaskClassif        | TaskClassif       | TaskClassif         |
 | reweighing\_wts | TaskClassif      | TaskClassif        | TaskClassif       | TaskClassif         |
+
+### Fair Learners
+
+`mlr3fairness` furthermore contains several learners that can be used to
+directly learn fair models:
+
+| key               | package | reference             |
+| :---------------- | :------ | :-------------------- |
+| regr.fairfrrm     | fairml  | Komiyama et al., 2018 |
+| classif.fairfgrrm | fairml  | Komiyama et al., 2018 |
+| regr.fairzlm      | fairml  | Zafar et al., 2019    |
+| classif.fairzlrm  | fairml  | Zafar et al., 2019    |
+| classif.fairnclm  | fairml  | Scutari et al., 2021  |
 
 ### Datasets
 

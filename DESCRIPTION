@@ -51,7 +51,8 @@ Suggests:
     ranger,
     mlr3learners,
     linprog,
-    posterdown
+    posterdown,
+    fairml
 RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
