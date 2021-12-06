@@ -1,6 +1,7 @@
 test_that("model cards", {
   skip("Only tested locally")
   tmp = tempdir()
+  tmp = paste0(tmp, "/report")
   unlink(tmp, recursive = TRUE)
   use_modelcard(tmp, edit = FALSE)
   expect_true(all(list.files(tmp) %in% c("references.bib", "style.css", paste0(basename(tmp), ".Rmd"), "LICENSE")))
@@ -14,6 +15,7 @@ test_that("model cards", {
 test_that("datasheets", {
   skip("Only tested locally")
   tmp = tempdir()
+  tmp = paste0(tmp, "/report")
   unlink(tmp, recursive = TRUE)
   use_datasheet(tmp, edit = FALSE)
   expect_true(all(list.files(tmp) %in% c("references.bib", "style.css", paste0(basename(tmp), ".Rmd"), "LICENSE")))
@@ -26,6 +28,7 @@ test_that("datasheets", {
 test_that("fairness_report", {
   skip("Only tested locally")
   tmp = tempdir()
+  tmp = paste0(tmp, "/report")
   unlink(tmp, recursive = TRUE)
   task = tsk("compas")
   learner = lrn("classif.rpart", predict_type = "prob")

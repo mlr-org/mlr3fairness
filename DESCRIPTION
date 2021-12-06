@@ -31,7 +31,7 @@ Encoding: UTF-8
 LazyData: true
 Depends:
     R (>= 3.5.0),
-    mlr3
+    mlr3 (>= 0.13.0)
 Imports:
     checkmate,
     R6 (>= 2.4.1),
@@ -54,7 +54,5 @@ Suggests:
     posterdown,
     fairml
 RoxygenNote: 7.1.2
-Remotes:
-    mlr-org/mlr3
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr

@@ -17,6 +17,7 @@
   x$add("adult_train", get_adult_task_train)
   x$add("adult_test", get_adult_task_test)
   x$add("compas", get_compas_task)
+  x$add("compas_race_binary", get_compas_task_race_binary)
 
   # teach mlr3 about the new column role "pta" (protected attribute)
   x = getFromNamespace("mlr_reflections", ns = "mlr3")
@@ -37,8 +38,16 @@
   x$add("classif.pp", MeasurePositiveProbability)
   # rates
   for (key in c("fnr", "fpr", "tnr", "tpr", "npv", "ppv", "fomr", "acc")) {
+  x$add("subgroup", MeasureSubgroup)
+  # regression
+  for (key in c("mse")) {
     x$add(sprintf("fairness.%s", key), MeasureFairness,
-      base_measure = msr(sprintf("classif.%s", key), range = c(0,1)))
+      base_measure = msr(sprintf("regr.%s", key)), range = c(-Inf, Inf))
+  }
+  # rates classif
+  for (key in c("acc", "fnr", "fpr", "tnr", "tpr", "npv", "ppv", "fomr")) {
+    x$add(sprintf("fairness.%s", key), MeasureFairness,
+      base_measure = msr(sprintf("classif.%s", key)), range = c(0, 1))
   }
   # counts
   for (key in c("fn", "fp", "tn", "tp")) {
@@ -46,7 +55,7 @@
       base_measure = msr(sprintf("classif.%s", key)))
   }
   # compositions
-  x$add("fairness.eod", MeasureFairnessComposite, measures = msrs(c("fairness.fpr", "fairness.tpr")),
+  x$add("fairness.eod", MeasureFairnessComposite, measures = msrs(c("fairness.fpr", "fairness.tpr")), range = c(0, 1),
     id = "equalized_odds")
   x$add("fairness.acc_eod=.05", MeasureFairnessConstraint, performance_measure = msr("classif.acc"),
     fairness_measure = msr("fairness.eod"), epsilon = 0.05, id = "fairness.acc_eod=.05", range = c(-1, 1))

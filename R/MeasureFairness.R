@@ -18,12 +18,12 @@
 #' @export
 #' @examples
 #' # Create MeasureFairness to measure the Predictive Parity.
-#' data_task = tsk("adult_train")
+#' t = tsk("adult_train")
 #' learner = lrn("classif.rpart", cp = .01)
-#' learner$train(data_task)
+#' learner$train(t)
 #' measure = msr("fairness", base_measure = msr("classif.ppv"))
-#' predictions = learner$predict(data_task)
-#' predictions$score(measure, task = data_task)
+#' predictions = learner$predict(t)
+#' predictions$score(measure, task = t)
 MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure,
   public = list(
     #' @template field_base_measure
@@ -35,8 +35,9 @@ MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure,
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
-    #' @param base_measure (`Measure()`)\cr
-    #'   The measure used to perform fairness operations.
+    #' @param id (`character`)\cr
+    #'   The measure's id. Set to 'fairness.<base_measure_id>' if ommited.
+    #' @template param_base_measure
     #' @param operation (`function`)\cr
     #'   The operation used to compute the difference. A function that returns
     #'   a single value given input: computed metric for each subgroup.
@@ -45,15 +46,18 @@ MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure,
     #'   Should the measure be minimized? Defaults to `TRUE`.
     #' @param range (`numeric(2)`)\cr
     #'   Range of the resulting measure. Defaults to `c(-Inf, Inf)`.
-    initialize = function(base_measure, operation = groupdiff_absdiff, minimize = TRUE,
+    initialize = function(id = NULL, base_measure, operation = groupdiff_absdiff, minimize = TRUE,
       range = c(-Inf, Inf)) {
       self$operation = assert_function(operation)
       self$base_measure = assert_measure(as_measure(base_measure))
-      id = replace_prefix(base_measure$id, mlr_reflections$task_types$type, "fairness.")
 
+      if (is.null(id)) {
+        id = replace_prefix(base_measure$id, mlr_reflections$task_types$type, "fairness.")
+      }
       super$initialize(
         id = id,
         range = range,
+        task_type = self$base_measure$task_type,
         properties = "requires_task",
         minimize = minimize,
         predict_type = base_measure$predict_type,
@@ -66,9 +70,10 @@ MeasureFairness = R6::R6Class("MeasureFairness", inherit = Measure,
   private = list(
     .score = function(prediction, task, ...) {
       assert_pta_task(task)
-      mvals = score_groupwise(prediction, self$base_measure, task)
+      mvals = score_groupwise(prediction, self$base_measure, task, ...)
       invoke(self$operation, mvals)
     }
   )
 )
+
 mlr_measures$add("fairness", MeasureFairness)

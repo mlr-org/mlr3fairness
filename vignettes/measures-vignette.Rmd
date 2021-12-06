@@ -83,6 +83,13 @@ prd$score(msr("fairness.tpr"), task = test)
 
 The exact measure to choose is often data-set and situation dependent. The [Aequitas Fairness Tree](https://textbook.coleridgeinitiative.org/chap-bias.html) can be a great ressource to get started.
 
+We can furthermore simply look at the per-group measures:
+
+```{r}
+meas = groupwise_metrics(msr("classif.tpr"), test)
+prd$score(meas, task = test)
+```
+
 ## Fairness Measures - An in-depth look
 
 Before, we have used `msr("fairness.tpr")` to assess differences in false positive rates across groups. But what happens internally?

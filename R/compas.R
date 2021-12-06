@@ -4,7 +4,7 @@
 #' @aliases Compas
 #'
 #' @description
-#' This dataset include the processed COMPAS data between 2013-2014.
+#' The COMPAS dataset includes the processed COMPAS data between 2013-2014.
 #' The data cleaning process followed the guidance in the original COMPAS repo.
 #' Contains 6172 observations and 14 features.
 #' The target column could either be "is_recid" or "two_year_recid", but often "two_year_recid" is prefered.
@@ -44,10 +44,57 @@
 #' data("compas", package = "mlr3fairness")
 NULL
 
+
+#' @title COMPAS Classification Task
+#'
+#' @name mlr_tasks_compas
+#' @format [R6::R6Class] inheriting from [TaskClassif].
+#'
+#' @section Construction:
+#' ```
+#' mlr_tasks$get("compas")
+#' tsk("compas")
+#' ```
+#'
+#' @description
+#' A classification task for the [compas] data set.
+NULL
+
 get_compas_task = function() { # nocov start
   b = as_data_backend(mlr3fairness::compas)
   task = mlr3::TaskClassif$new("compas", b, target = "two_year_recid")
   task$col_roles$pta = "sex"
   b$hash = task$man = "mlr3fairness::mlr_tasks_compas"
+  task
+} # nocov end
+
+
+#' @title COMPAS Classification Task
+#'
+#' @name mlr_tasks_compas_race_binary
+#' @format [R6::R6Class] inheriting from [TaskClassif].
+#'
+#' @section Construction:
+#' ```
+#' mlr_tasks$get("compas_race_binary")
+#' tsk("compas_race_binary")
+#' ```
+#'
+#' @description
+#' A classification task for the [compas] data set.
+#' The observations have been filtered, keeping only observations with race
+#' `"Caucasian"` and `"African-American"`. The protected attribute has been set
+#' to `"race"`.
+NULL
+
+get_compas_task_race_binary = function() { # nocov start
+  keep = c("age", "age_cat", "c_charge_degree", "days_b_screening_arrest",
+    "decile_score", "length_of_stay", "priors_count", "score_text",
+    "sex", "race", "two_year_recid")
+  data = mlr3fairness::compas[get("race") %in% c("Caucasian", "African-American"), keep, with = FALSE]
+  b = as_data_backend(droplevels(data))
+  task = mlr3::TaskClassif$new("compas_race_binary", b, target = "two_year_recid")
+  task$col_roles$pta = "race"
+  b$hash = task$man = "mlr3fairness::mlr_tasks_compas_race_binary"
   task
 } # nocov end

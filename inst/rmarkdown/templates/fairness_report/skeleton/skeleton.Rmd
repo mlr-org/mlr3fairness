@@ -56,7 +56,7 @@ knitr::kable(resample_result$aggregate(fair_metrics))
 fairness_accuracy_tradeoff(resample_result)
 ```
 
-```{r, eval = (rr$learner$predict_type == "prob")}
+```{r, eval = (resample_result$learner$predict_type == "prob")}
 fairness_prediction_density(resample_result)
 ```
 

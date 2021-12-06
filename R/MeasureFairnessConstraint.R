@@ -11,12 +11,12 @@
 #' @examples
 #' # Accurcy subject to equalized odds fairness constraint:
 #' library(mlr3)
-#' data_task = tsk("adult_train")
+#' t = tsk("adult_train")
 #' learner = lrn("classif.rpart", cp = .01)
-#' learner$train(data_task)
-#' measure = msr("fairness.constraint", msr("classif.acc"), msr("fairness.tpr"))
-#' predictions = learner$predict(data_task)
-#' predictions$score(measure, task = data_task)
+#' learner$train(t)
+#' measure = msr("fairness.constraint", id = "acc_tpr", msr("classif.acc"), msr("fairness.tpr"))
+#' predictions = learner$predict(t)
+#' predictions$score(measure, task = t)
 MeasureFairnessConstraint = R6::R6Class("MeasureFairnessConstraint", inherit = Measure,
   public = list(
     #' @field performance_measure (`Measure()`)\cr
@@ -31,31 +31,50 @@ MeasureFairnessConstraint = R6::R6Class("MeasureFairnessConstraint", inherit = M
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #'
+    #' @param id (`character`)\cr
+    #'   The measure's id. Set to 'fairness.<base_measure_id>' if ommited.
     #' @param performance_measure (`Measure()`)\cr
+<<<<<<< HEAD
     #' The performance measure we want to optimize for.
     #' @param fairness_measure (`Measure()`)\cr
     #' The fairness measure that should be constrained.
+=======
+    #' The measure used to measure performance (e.g. accuracy).
+    #' @param fairness_measure (`Measure()`)\cr
+    #' The measure used to measure fairness (e.g. equalized odds).
+>>>>>>> origin
     #' @param epsilon (`numeric`)\cr
     #' Allowed divergence from perfect fairness. Initialized to 0.01.
     #' @param range (`numeric`)\cr
     #' Range of the resulting measure. Defaults to `c(-Inf, Inf)`.
+<<<<<<< HEAD
     initialize = function(id = NULL, performance_measure, fairness_measure,
       epsilon = 0.01, range = c(-Inf, Inf)) {
+=======
+    initialize = function(
+      id = NULL,
+      performance_measure,
+      fairness_measure,
+      epsilon = 0.01,
+      range = c(-Inf, Inf)) {
+>>>>>>> origin
       self$performance_measure = assert_measure(performance_measure)
       self$fairness_measure = assert_measure(fairness_measure)
+      assert_true(all(self$performance_measure$task_type == self$fairness_measure$task_type))
       self$epsilon = assert_number(epsilon)
 
       # fix up prefixes: regr|classif|... to fairness
       metrics_short = gsub(
         paste0(c(mlr_reflections$task_types$type, "fairness"), collapse = "|"),
         "", c(performance_measure$id, fairness_measure$id))
-      id = paste0("fairness.", paste0(gsub("\\.", "", metrics_short), collapse = "_"), "_cstrt")
-
+      if (is.null(id)) {
+        id = paste0("fairness.", paste0(gsub("\\.", "", metrics_short), collapse = "_"), "_cstrt")
+      }
       super$initialize(
         id = id,
         range = assert_numeric(range, len = 2),
         properties = "requires_task",
+        task_type = self$performance_measure$task_type,
         minimize = assert_flag(self$performance_measure$minimize),
         predict_type = performance_measure$predict_type,
         packages = "mlr3fairness",
@@ -73,12 +92,14 @@ MeasureFairnessConstraint = R6::R6Class("MeasureFairnessConstraint", inherit = M
       } # nocov end
       fair = self$fairness_measure$score(prediction, task, ...)
       perf = self$performance_measure$score(prediction, task, ...)
+
       assert_number(perf, lower = 0)
       prange = self$performance_measure$range
       frange = self$fairness_measure$range
-
       opt_fairness = ifelse(self$fairness_measure$minimize, min(frange), max(frange))
-      is_fair = abs(opt_fairness - fair) <= eps
+
+      if (is.infinite(opt_fairness)) warning("Fairness measure has infinite range!")
+      is_fair = abs(opt_fairness - fair) < eps
       if (self$minimize) {
         out = (!is_fair) * (max(prange) + fair) + (is_fair) * perf
       } else {

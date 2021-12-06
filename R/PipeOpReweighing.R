@@ -92,7 +92,8 @@ PipeOpReweighingWeights = R6Class("PipeOpReweighingWeights",
       )
       ps$values = list(alpha = 1)
       super$initialize(id, param_set = ps, param_vals = param_vals,
-        task_type = "TaskClassif", tags = c("imbalanced data", "fairness"))
+        task_type = "TaskClassif", packages = "mlr3fairness",
+        tags = c("imbalanced data", "fairness"))
     }
   ),
 

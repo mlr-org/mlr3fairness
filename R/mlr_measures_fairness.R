@@ -6,6 +6,8 @@
 #' For full flexibility, [MeasureFairness] can be used to construct classical
 #' group fairness measures based on a difference between a performance metrics across groups
 #' by combining a performance measure with an operation for measuring differences.
+#' Furthermore [MeasureSubgroup] can be used to measure performance in a given subgroup, or alternatively
+#' ggroupwise_metrics(measure, task) to instantiate a measure for each subgroup in a [Task].
 #'
 #' `r tabular(mlr_measures_fairness)`
 #'
@@ -16,6 +18,7 @@
 mlr_measures_fairness = rowwise_table(
   ~key, ~description,
   "fairness.acc", "Absolute differences in accuracy across groups",
+  "fairness.mse", "Absolute differences in mean squared error across groups",
 
   "fairness.fnr", "Absolute differences in false negative rates across groups",
   "fairness.fpr", "Absolute differences in false positive rates across groups",
@@ -34,5 +37,5 @@ mlr_measures_fairness = rowwise_table(
   "fairness.eod", "Equalized Odds: Sum of absolute differences between true positive and false positive rates across groups",
 
   "fairness.acc_eod=.05", "Accuracy under equalized odds < 0.05 constraint",
-  "fairness.acc_ppv=.05", "Accuracy under equalized odds < 0.05 constraint"
+  "fairness.acc_ppv=.05", "Accuracy under ppv difference < 0.05 constraint"
 )

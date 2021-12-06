@@ -119,7 +119,7 @@ PipeOpEOd = R6Class("PipeOpEOd",
       super$initialize(id, param_set = ps, param_vals = param_vals,
         input = data.table(name = "input", train = "TaskClassif", predict = "TaskClassif"),
         output = data.table(name = "output", train = "NULL", predict = "PredictionClassif"),
-        tags = "fairness", package = "linprog"
+        tags = "fairness", packages = c("mlr3fairness", "linprog")
       )
     }
   ),

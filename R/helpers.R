@@ -3,17 +3,17 @@
 #' @param prediction [Prediction] A prediction
 #' @param base_measure [Measure] The measure to compute in each group.
 #' @param task [Task] the task prediction was made on.
-#'
+#' @param ... `any` passed on to respective measure.
 #' @return [numeric] Computed score
 #'
 #' @noRd
-score_groupwise = function(prediction, base_measure, task) {
+score_groupwise = function(prediction, base_measure, task, ...) {
   # Get protected attribute vector
-  groups = task$data(cols = task$col_roles$pta, rows = prediction$row_ids)[[1]]
+  groups = get_pta(task, rows = prediction$row_ids)
 
   # Split prediction
   map_dbl(split(prediction$row_ids, groups), function(rws) {
-    prediction$clone()$filter(rws)$score(base_measure, task = task)
+    prediction$clone()$filter(rws)$score(base_measure, task = task, ...)
   })
 }
 
@@ -106,4 +106,22 @@ int_to_numeric = function(p) {
   ints = colnames(keep(p, is.integer))
   if (length(ints)) p = p[, (ints) := map(.SD, as.numeric), .SDcols = ints]
   return(p)
+}
+
+#' Score weights per group (indicated by 'pta')
+#'
+#' @param task [Task]
+#' @param rows (`integer`) rows to get
+#' @param intersectional (`logical`) should groups be intersected? If `FALSE` only first pta is used.
+#' @return character vector of group assignments
+#'
+#' @noRd
+get_pta = function(task, rows, intersectional = TRUE) {
+  assert_flag(intersectional)
+  groups = task$data(cols = task$col_roles$pta, rows = rows)
+  if (ncol(groups) >= 2L && intersectional) {
+    factor(pmap_chr(groups, paste, sep = "_"))
+  } else {
+    factor(groups[[1]])
+  }
 }

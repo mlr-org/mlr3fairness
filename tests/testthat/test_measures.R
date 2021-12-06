@@ -1,3 +1,40 @@
+test_that("measure constructors work", {
+  m = MeasureFairness$new(base_measure = msr("classif.acc"))
+  expect_equal(m$id, "fairness.acc")
+  expect_equal(m$base_measure, msr("classif.acc"))
+  expect_equal(m$range, c(-Inf, Inf))
+  expect_equal(m$task_type, "classif")
+
+  m = MeasureFairness$new(base_measure = msr("classif.fpr"), range = c(0, 100), id="test.it")
+  expect_equal(m$id, "test.it")
+  expect_equal(m$base_measure, msr("classif.fpr"))
+  expect_equal(m$range, c(0, 100))
+  expect_equal(m$task_type, "classif")
+
+  m = MeasureFairness$new(base_measure = msr("classif.fpr"), range = c(0, 100), operation = function(x) 5)
+  expect_true(m$operation(1) == 5)
+
+  m = MeasureFairness$new(base_measure = msr("regr.mse"), range = c(0, 100))
+  expect_equal(m$id, "fairness.mse")
+  expect_equal(m$base_measure, msr("regr.mse"))
+  expect_equal(m$range, c(0, 100))
+  expect_equal(m$task_type, "regr")
+})
+
+test_that("dictionary constructors work", {
+  # Construction in zzz.R
+  m = msr("fairness.acc")
+  expect_equal(m$base_measure, msr("classif.acc"))
+  expect_equal(m$range, c(0, 1))
+  expect_equal(m$task_type, "classif")
+
+  # Construction from base measure
+  m = msr("fairness", base_measure = msr("classif.acc"), range = c(0, 1))
+  expect_equal(m$base_measure, msr("classif.acc"))
+  expect_equal(m$range, c(0, 1))
+  expect_equal(m$task_type, "classif")
+})
+
 test_that("fairness measures work as expcted", {
   tsk = tsk("compas")
   prds = list(
@@ -8,10 +45,17 @@ test_that("fairness measures work as expcted", {
   metrics = mlr_measures_fairness$key
   for (prd in prds) {
     for (m in metrics) {
+<<<<<<< HEAD
       mm = msr(m)
       out = prd$score(measures = mm, task = tsk)
       expect_number(out, upper = Inf, na.ok = TRUE)
       if (is(mm, "MeasureFairness")) {
+=======
+      ms = msr(m)
+      if (ms$task_type == "classif" && is(ms, "MeasureFairness")) {
+        out = prd$score(measures = ms, task = tsk)
+        expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
+>>>>>>> origin
         out = prd$score(measures = msr(m, operation = groupdiff_tau), task = tsk)
         expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
         out = prd$score(measures = msr(m, operation = groupdiff_absdiff), task = tsk)
@@ -28,12 +72,19 @@ test_that("fairness measures work as expected - simulated data", {
 
   for (prd in prds) {
     for (m in metrics) {
+<<<<<<< HEAD
       out = prd$score(measures = msr(m), task = tsk)
       expect_number(out, upper = Inf, na.ok = TRUE)
+=======
+      ms = msr(m)
+      if (ms$task_type == "classif" & is(ms, "MeasureFairness")) {
+        out = prd$score(measures = ms, task = tsk)
+        expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
+      }
+>>>>>>> origin
     }
   }
 })
-
 
 test_that("fairness errors on missing pta, works with", {
   df = data.frame(
@@ -154,6 +205,7 @@ test_that("fairness constraint measures - simulated data", {
       browser()
       fair = prd$score(measures = msr(m), task = tsk)
       perf = prd$score(measures = msr("classif.acc"), task = tsk)
+<<<<<<< HEAD
       mm = msr("fairness.constraint", performance_measure = msr("classif.acc"), fairness_measure = msr(m), epsilon = Inf)
       out = prd$score(measures = mm, task = tsk)
       expect_true(out == perf)
@@ -165,10 +217,66 @@ test_that("fairness constraint measures - simulated data", {
       out = prd$score(measures = mm, task = tsk)
       expect_true(out == perf)
       mm = msr("fairness.constraint", performance_measure = msr("classif.ce"), fairness_measure = msr(m), epsilon = 0)
+=======
+      mm = msr("fairness.constraint", performance_measure = msr("classif.acc"), fairness_measure = msr(m), epsilon = 1)
+      out = prd$score(measures = mm, task = tsk)
+      expect_true(out == perf)
+      mm = msr("fairness.constraint", performance_measure = msr("classif.acc"), fairness_measure =  msr(m), epsilon = 0)
+      out = prd$score(measures = mm, task = tsk)
+      expect_true(out == 0 - fair)
+      perf = prd$score(measures = msr("classif.ce"), task = tsk)
+      mm = msr("fairness.constraint",  performance_measure = msr("classif.ce"), fairness_measure = msr(m), epsilon = 1)
+      out = prd$score(measures = mm, task = tsk)
+      expect_true(out == perf)
+      mm = msr("fairness.constraint",  performance_measure = msr("classif.ce"), fairness_measure = msr(m), epsilon = 0)
+>>>>>>> origin
       out = prd$score(measures = mm, task = tsk)
       expect_true(out == 1 + fair)
     })
   })
 })
 
+<<<<<<< HEAD
 
+=======
+test_that("Args are passed on correctly", {
+
+  MeasureTestArgs = R6::R6Class("MeasureTestArgs",
+    inherit = mlr3::Measure,
+    public = list(
+      initialize = function() {
+        private$.args = list(train_set = 1:10, learner = NULL)
+        super$initialize(
+          id = "classif.testargs",
+          predict_type = "response",
+          range = c(0, 1),
+          minimize = TRUE,
+          task_type = "classif"
+        )
+      }
+    ),
+    private = list(
+      .args = NULL,
+      .score = function(prediction, task, ...) {
+        args = list(...)
+        pmap(list(args[names(private$.args)], private$.args), function(x, y) {
+          expect_equal(x, y)
+        })
+        return(1)
+      }
+    )
+  )
+
+  mta = MeasureTestArgs$new()
+  t = tsk("compas")
+  l = lrn("classif.rpart")
+  prd = l$train(t)$predict(t)
+  prd$score(mta, task = t, train_set = 1:10)
+  expect_error(prd$score(mta, task = t, train_set = 1:2))
+
+  mfa = msr("fairness", base_measure = mta)
+  prd$score(mfa, task = t, train_set = 1:10)
+  prd$score(groupwise_metrics(mta, t), task = t, train_set = 1:10)
+  prd$score(msr("fairness.constraint", fairness_measure = mta, performance_measure = mta), task = t, train_set = 1:10)
+})
+>>>>>>> origin
