@@ -8,8 +8,8 @@
 #'
 #' @export
 #' @examples
-#' Available learners:
-#' mlr_learners_fairness$key
+#' # Available learners:
+#' mlr_learners_fairness
 mlr_learners_fairness = rowwise_table(~key, ~package, ~reference,
   "regr.fairfrrm", "fairml", "Komiyama et al., 2018",
   "classif.fairfgrrm", "fairml","Komiyama et al., 2018",

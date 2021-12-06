@@ -28,7 +28,7 @@ classif.fairnclm  \tab fairml \tab Scutari et al., 2021
 }
 
 \examples{
-Available learners:
-mlr_learners_fairness$key
+# Available learners:
+mlr_learners_fairness
 }
 \keyword{datasets}

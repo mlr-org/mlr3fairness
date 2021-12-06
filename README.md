@@ -134,7 +134,7 @@ refer to the [mlr3 book](https://mlr3book.mlr-org.com/basics.html).
   - **fairness\_prediction\_density**: Density plots for each protected
     attribute.
 
-![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](man/figures/unnamed-chunk-6-1.png)<!-- -->
 
 ### Debiasing Methods
 

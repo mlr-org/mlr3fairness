@@ -2,6 +2,14 @@
 output: github_document
 ---
 
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/"
+)
+```
+
 ```{r, include = FALSE}
 lgr::get_logger("mlr3")$set_threshold("warn")
 set.seed(1)
