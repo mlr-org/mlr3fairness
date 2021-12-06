@@ -205,7 +205,6 @@ test_that("fairness constraint measures - simulated data", {
       browser()
       fair = prd$score(measures = msr(m), task = tsk)
       perf = prd$score(measures = msr("classif.acc"), task = tsk)
-<<<<<<< HEAD
       mm = msr("fairness.constraint", performance_measure = msr("classif.acc"), fairness_measure = msr(m), epsilon = Inf)
       out = prd$score(measures = mm, task = tsk)
       expect_true(out == perf)
@@ -217,28 +216,12 @@ test_that("fairness constraint measures - simulated data", {
       out = prd$score(measures = mm, task = tsk)
       expect_true(out == perf)
       mm = msr("fairness.constraint", performance_measure = msr("classif.ce"), fairness_measure = msr(m), epsilon = 0)
-=======
-      mm = msr("fairness.constraint", performance_measure = msr("classif.acc"), fairness_measure = msr(m), epsilon = 1)
-      out = prd$score(measures = mm, task = tsk)
-      expect_true(out == perf)
-      mm = msr("fairness.constraint", performance_measure = msr("classif.acc"), fairness_measure =  msr(m), epsilon = 0)
-      out = prd$score(measures = mm, task = tsk)
-      expect_true(out == 0 - fair)
-      perf = prd$score(measures = msr("classif.ce"), task = tsk)
-      mm = msr("fairness.constraint",  performance_measure = msr("classif.ce"), fairness_measure = msr(m), epsilon = 1)
-      out = prd$score(measures = mm, task = tsk)
-      expect_true(out == perf)
-      mm = msr("fairness.constraint",  performance_measure = msr("classif.ce"), fairness_measure = msr(m), epsilon = 0)
->>>>>>> origin
       out = prd$score(measures = mm, task = tsk)
       expect_true(out == 1 + fair)
     })
   })
 })
 
-<<<<<<< HEAD
-
-=======
 test_that("Args are passed on correctly", {
 
   MeasureTestArgs = R6::R6Class("MeasureTestArgs",
@@ -279,4 +262,4 @@ test_that("Args are passed on correctly", {
   prd$score(groupwise_metrics(mta, t), task = t, train_set = 1:10)
   prd$score(msr("fairness.constraint", fairness_measure = mta, performance_measure = mta), task = t, train_set = 1:10)
 })
->>>>>>> origin
+
