@@ -33,17 +33,15 @@ MeasureFairnessConstraint = R6::R6Class("MeasureFairnessConstraint", inherit = M
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @param performance_measure (`Measure()`)\cr
-    #' The measure used to perform fairness operations.
+    #' The performance measure we want to optimize for.
     #' @param fairness_measure (`Measure()`)\cr
-    #' The measure used to perform fairness operations.
+    #' The fairness measure that should be constrained.
     #' @param epsilon (`numeric`)\cr
     #' Allowed divergence from perfect fairness. Initialized to 0.01.
     #' @param range (`numeric`)\cr
     #' Range of the resulting measure. Defaults to `c(-Inf, Inf)`.
-    initialize = function(performance_measure,
-                          fairness_measure,
-                          epsilon = 0.01,
-                          range = c(-Inf, Inf)) {
+    initialize = function(id = NULL, performance_measure, fairness_measure,
+      epsilon = 0.01, range = c(-Inf, Inf)) {
       self$performance_measure = assert_measure(performance_measure)
       self$fairness_measure = assert_measure(fairness_measure)
       self$epsilon = assert_number(epsilon)
@@ -80,11 +78,11 @@ MeasureFairnessConstraint = R6::R6Class("MeasureFairnessConstraint", inherit = M
       frange = self$fairness_measure$range
 
       opt_fairness = ifelse(self$fairness_measure$minimize, min(frange), max(frange))
-      is_fair = abs(opt_fairness - fair) > eps
+      is_fair = abs(opt_fairness - fair) <= eps
       if (self$minimize) {
-        out = (is_fair) * (max(prange) + fair) + (!is_fair) * perf
+        out = (!is_fair) * (max(prange) + fair) + (is_fair) * perf
       } else {
-        out = (is_fair) * (min(prange) - fair) + (!is_fair) * perf
+        out = (!is_fair) * (min(prange) - fair) + (is_fair) * perf
       }
       return(out)
     }

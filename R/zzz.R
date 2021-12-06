@@ -36,7 +36,7 @@
   x$add("fairness.constraint", MeasureFairnessConstraint)
   x$add("classif.pp", MeasurePositiveProbability)
   # rates
-  for (key in c("fnr", "fpr", "tnr", "tpr", "npv", "ppv", "fomr")) {
+  for (key in c("fnr", "fpr", "tnr", "tpr", "npv", "ppv", "fomr", "acc")) {
     x$add(sprintf("fairness.%s", key), MeasureFairness,
       base_measure = msr(sprintf("classif.%s", key), range = c(0,1)))
   }
