@@ -13,11 +13,18 @@ library("mlr3viz")
 library("mlr3fairness")
 library("ggplot2")
 library("kableExtra")
+library("iml")
 ```
 <!-- This reads in `objects` provided to report_fairness: resample_result, task, ...-->
 
 ```{r, child = 'read_data.Rmd'}
 ```
+
+## Audit Report: Summary
+
+This document introduces on how to use `mlr3fairness` to create audit reports with different tasks throughout the fairness exploration process.
+
+There are three main sections for this document. Which describe the details for the task, the model and the interpretability of the parameters.
 
 Jump to section:
 
@@ -35,42 +42,16 @@ task
 
 ### The General Task Documentation for the task:
 
+Here we could get the basic details for the task.
+
 ```{r}
-# Create the report attributes
-report_attr = list(
-  "Audit Date: ",
-  "Task Name: ",
-  "Number of observations: ",
-  "Number of features: ",
-  "Target Name: ",
-  "Feature Names: ",
-  "The Protected Attribute: "
-)
-
-# Create the skeleton of summary table
-summary_table <- data.frame(Value=rep(NA, length(report_attr)))
-rownames(summary_table) <- report_attr
-
-#Assign the value to the table
-summary_table$Value = c(
-  as.character(Sys.Date()),
-  task$id,
-  task$nrow,
-  task$ncol,
-  task$target_names,
-  paste(task$feature_names, collapse = ", "),
-  task$col_roles$pta
-)
-
-summary_table %>%
+general_summary(task) %>%
   kbl() %>%
   kable_paper("hover", full_width = F)
 ```
-### Audit Results: Summary
-TBD
-
 ### Exploratory Data Analysis: 
-The number of missing values, type and the levels for each feature:
+
+We could also report the number of missing values, type and the levels for each feature:
 
 ```{r}
 df_summary = data.frame(task$col_info)[task$col_info$id != "..row_id",

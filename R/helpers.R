@@ -113,3 +113,49 @@ get_pta = function(task, rows, intersectional = TRUE) {
     factor(groups[[1]])
   }
 }
+
+#' General Task Documentation for fairness report
+#'
+#' Create the general task documentation in a dataframe for fairness report.
+#' The information include
+#' * Audit Date
+#' * Task Name
+#' * Number of observations
+#' * Number of features
+#' * Target Name
+#' * Feature Names
+#' * The Protected Attribute
+#'
+#' @param task [Task]
+#' @return dataframe the contains the reported information
+#'
+#' @noRd
+general_summary = function(task) {
+  # Create the report attributes
+  report_attr = list(
+    "Audit Date: ",
+    "Task Name: ",
+    "Number of observations: ",
+    "Number of features: ",
+    "Target Name: ",
+    "Feature Names: ",
+    "The Protected Attribute: "
+  )
+
+  # Create the skeleton of summary table
+  summary_table <- data.frame(Value=rep(NA, length(report_attr)))
+  rownames(summary_table) <- report_attr
+
+  #Assign the value to the table
+  summary_table$Value = c(
+    as.character(Sys.Date()),
+    task$id,
+    task$nrow,
+    task$ncol,
+    task$target_names,
+    paste(task$feature_names, collapse = ", "),
+    task$col_roles$pta
+  )
+
+  return(summary_table)
+}
