@@ -20,6 +20,7 @@ lrn = mlr3::lrn(id)
 #'
 #' @family fairness_learners
 #' @keywords internal
+<<<<<<< HEAD
 #' 
 #' @section Meta Information:
 #' `r mlr3misc::rd_info(mlr3::lrn("<%= id %>"))`
@@ -28,3 +29,5 @@ lrn = mlr3::lrn(id)
 #' @section Parameters:
 #' `r mlr3misc::rd_info(mlr3::lrn("<%= id %>")$param_set)`
 #' @md
+=======
+>>>>>>> origin
