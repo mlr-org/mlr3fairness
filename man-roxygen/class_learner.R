@@ -11,12 +11,14 @@ lrn = mlr3::lrn(id)
 #' mlr_learners$get("<%= id %>")
 #' lrn("<%= id %>")
 #' ```
-#' @section Traits:
+#' 
+#' @section Meta Information:
+#' `r mlr3misc::rd_info(mlr3::lrn("<%= id %>"))`
+#' @md
 #'
-#' * Packages: <%=mlr3misc::str_collapse(lrn$packages)%>
-#' * Predict Types: <%=mlr3misc::str_collapse(lrn$predict_types)%>
-#' * Feature Types: <%=mlr3misc::str_collapse(lrn$feature_types)%>
-#' * Properties: <%=mlr3misc::str_collapse(lrn$properties)%>
-#'
+#' @section Parameters:
+#' `r mlr3misc::rd_info(mlr3::lrn("<%= id %>")$param_set)`
+#' @md
+#' 
 #' @family fairness_learners
 #' @keywords internal

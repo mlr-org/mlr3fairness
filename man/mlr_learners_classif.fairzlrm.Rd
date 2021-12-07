@@ -20,13 +20,20 @@ lrn("classif.fairzlrm")
 }
 }
 
-\section{Traits}{
+\section{Meta Information}{
 
 \itemize{
-\item Packages: mlr3, fairml
-\item Predict Types: response, prob
-\item Feature Types: integer, numeric, factor, ordered
-\item Properties: twoclass
+\item Task type: \dQuote{classif}
+\item Predict Types: \dQuote{response}, \dQuote{prob}
+\item Feature Types: \dQuote{integer}, \dQuote{numeric}, \dQuote{factor}, \dQuote{ordered}
+\item Required Packages: \CRANpkg{mlr3}, \CRANpkg{fairml}
+}
+}
+
+\section{Parameters}{
+\tabular{lllll}{
+   Id \tab Type \tab Default \tab Range \tab Levels \cr
+   unfairness \tab numeric \tab - \tab \eqn{[0, 1]}{[0, 1]} \tab - \cr
 }
 }
 

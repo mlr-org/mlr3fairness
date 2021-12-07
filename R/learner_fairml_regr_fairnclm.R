@@ -26,7 +26,7 @@ LearnerRegrFairnclm = R6Class("LearnerRegrFairnclm",
       ps = ps(
         lambda = p_dbl(lower = 0, upper = Inf, tags = "train", default = 0),
         save.auxiliary = p_lgl(default = FALSE, tags = "train"),
-        covfun = p_uty(tags = "train", default = stats::cov),
+        covfun = p_uty(tags = "train", default = "stats::cov"),
         unfairness = p_dbl(lower = 0, upper = 1, tags = "train")
       )
       ps$values = list(unfairness = 0.05)

@@ -19,13 +19,24 @@ lrn("classif.fairfgrrm")
 }
 }
 
-\section{Traits}{
+\section{Meta Information}{
 
 \itemize{
-\item Packages: mlr3, fairml
-\item Predict Types: response, prob
-\item Feature Types: integer, numeric, factor, ordered
-\item Properties: twoclass
+\item Task type: \dQuote{classif}
+\item Predict Types: \dQuote{response}, \dQuote{prob}
+\item Feature Types: \dQuote{integer}, \dQuote{numeric}, \dQuote{factor}, \dQuote{ordered}
+\item Required Packages: \CRANpkg{mlr3}, \CRANpkg{fairml}
+}
+}
+
+\section{Parameters}{
+\tabular{lllll}{
+   Id \tab Type \tab Default \tab Range \tab Levels \cr
+   lambda \tab numeric \tab 0 \tab \eqn{[0, \infty)}{[0, Inf)} \tab - \cr
+   definition \tab character \tab sp-komiyama \tab - \tab sp-komiyama, eo-komiyama \cr
+   save.auxiliary \tab logical \tab FALSE \tab - \tab TRUE, FALSE \cr
+   unfairness \tab numeric \tab - \tab \eqn{[0, 1]}{[0, 1]} \tab - \cr
+   family \tab character \tab binomial \tab - \tab gaussian, binomial \cr
 }
 }
 
