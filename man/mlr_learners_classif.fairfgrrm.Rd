@@ -19,16 +19,6 @@ lrn("classif.fairfgrrm")
 }
 }
 
-\section{Traits}{
-
-\itemize{
-\item Packages: mlr3, fairml
-\item Predict Types: response, prob
-\item Feature Types: integer, numeric, factor, ordered
-\item Properties: twoclass
-}
-}
-
 \section{Meta Information}{
 
 \itemize{

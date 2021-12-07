@@ -20,16 +20,6 @@ lrn("regr.fairzlm")
 }
 }
 
-\section{Traits}{
-
-\itemize{
-\item Packages: mlr3, fairml
-\item Predict Types: response
-\item Feature Types: integer, numeric, factor, ordered
-\item Properties:
-}
-}
-
 \section{Meta Information}{
 
 \itemize{
