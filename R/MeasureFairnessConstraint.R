@@ -1,6 +1,4 @@
-
 #' @title Fairness Constraint Measure
-#' @name mlr_measures_fairness_constraint
 #'
 #' @description
 #'   This measure allows constructing for 'constraint' measures of the following form:\cr
@@ -42,11 +40,7 @@ MeasureFairnessConstraint = R6::R6Class("MeasureFairnessConstraint", inherit = M
     #' @param range (`numeric`)\cr
     #' Range of the resulting measure. Defaults to `c(-Inf, Inf)`.
     initialize = function(
-      id = NULL,
-      performance_measure,
-      fairness_measure,
-      epsilon = 0.01,
-      range = c(-Inf, Inf)) {
+      id = NULL,  performance_measure, fairness_measure, epsilon = 0.01, range = c(-Inf, Inf)) {
       self$performance_measure = assert_measure(performance_measure)
       self$fairness_measure = assert_measure(fairness_measure)
       assert_true(all(self$performance_measure$task_type == self$fairness_measure$task_type))
@@ -86,6 +80,7 @@ MeasureFairnessConstraint = R6::R6Class("MeasureFairnessConstraint", inherit = M
       prange = self$performance_measure$range
       frange = self$fairness_measure$range
       opt_fairness = ifelse(self$fairness_measure$minimize, min(frange), max(frange))
+
       if (is.infinite(opt_fairness)) warning("Fairness measure has infinite range!")
       is_fair = abs(opt_fairness - fair) < eps
       if (self$minimize) {

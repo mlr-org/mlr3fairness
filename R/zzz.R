@@ -8,7 +8,8 @@
 #' @import paradox
 #' @import data.table
 #' @importFrom utils getFromNamespace data
-#' @importFrom stats runif dist
+#' @importFrom stats runif dist predict
+#' @keywords internal
 "_PACKAGE"
 
 .onLoad = function(libname, pkgname) { # nolint
@@ -64,6 +65,13 @@
   x$add("reweighing_wts", PipeOpReweighingWeights)
   x$add("reweighing_os", PipeOpReweighingOversampling)
   x$add("EOd", PipeOpEOd)
+  
+  x = getFromNamespace("mlr_learners", ns = "mlr3")
+  x$add("regr.fairzlm", LearnerRegrFairzlm)
+  x$add("classif.fairzlrm", LearnerClassifFairzlrm)
+  x$add("regr.fairfrrm", LearnerRegrFairfrrm)
+  x$add("classif.fairfgrrm", LearnerClassifFairfgrrm)
+  x$add("regr.fairnclm", LearnerRegrFairnclm)
 
   # static code checks should not complain about commonly used data.table columns
   utils::globalVariables(c("variable", "value", "learner_id", "n_tgt", "n_pta", "pta", "task_id",

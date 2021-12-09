@@ -52,7 +52,8 @@ Suggests:
     mlr3learners,
     linprog,
     posterdown,
-    kableExtra
+    kableExtra,
+    fairml
 RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr

@@ -1,13 +1,8 @@
 url: https://mlr3fairness.mlr-org.com
 
 template:
+  bootstrap: 5
   package: mlr3pkgdowntemplate
-  params:
-    bootswatch: journal
-    docsearch:
-      api_key: f1cf73c2e68173ef3c0ac36d6ac6f448
-      index_name: mlr3fairness
-  default_assets: false
 
 development:
   mode: auto
@@ -49,11 +44,12 @@ reference:
       - mlr_measures_fairness
       - MeasureFairness
       - MeasureFairnessComposite
-      - mlr_measures_fairness_constraint
+      - MeasureFairnessConstraint
       - groupdiff_absdiff
       - groupdiff_tau
+      - MeasureSubgroup
+      - groupwise_metrics
       - mlr_measures_positive_probability
-
   - title: Detecting Bias
     contents:
       - fairness_tensor
@@ -64,12 +60,15 @@ reference:
     contents:
       - mlr_pipeops_equalized_odds
       - mlr_pipeops_reweighing
+  - title: Fair Learners
+    contents:
+      - mlr_learners_fairness
   - title: Reports
     contents:
       - report_datasheet
       - report_modelcard
       - report_fairness
-  - title: Data sets
+  - title: Integrated data & tasks
     contents:
       - adult
       - compas

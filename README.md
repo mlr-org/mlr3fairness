@@ -4,7 +4,7 @@
 Machine Learning Fairness Extension for
 [mlr3](https://github.com/mlr-org/mlr3).
 
-[![tic](https://github.com/mlr-org/mlr3proba/workflows/tic/badge.svg?branch=main)](https://github.com/mlr-org/mlr3fairness/actions)
+[![tic](https://github.com/mlr-org/mlr3fairness/workflows/tic/badge.svg?branch=main)](https://github.com/mlr-org/mlr3fairness/actions)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
 [![Mattermost](https://img.shields.io/badge/chat-mattermost-orange.svg)](https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/)
 
@@ -134,7 +134,7 @@ refer to the [mlr3 book](https://mlr3book.mlr-org.com/basics.html).
   - **fairness\_prediction\_density**: Density plots for each protected
     attribute.
 
-![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](man/figures/unnamed-chunk-6-1.png)<!-- -->
 
 ### Debiasing Methods
 
@@ -156,6 +156,19 @@ rs$score(msr("fairness.acc"))
 | EOd             | TaskClassif      | TaskClassif        | NULL              | PredictionClassif   |
 | reweighing\_os  | TaskClassif      | TaskClassif        | TaskClassif       | TaskClassif         |
 | reweighing\_wts | TaskClassif      | TaskClassif        | TaskClassif       | TaskClassif         |
+
+### Fair Learners
+
+`mlr3fairness` furthermore contains several learners that can be used to
+directly learn fair models:
+
+| key               | package | reference             |
+| :---------------- | :------ | :-------------------- |
+| regr.fairfrrm     | fairml  | Komiyama et al., 2018 |
+| classif.fairfgrrm | fairml  | Komiyama et al., 2018 |
+| regr.fairzlm      | fairml  | Zafar et al., 2019    |
+| classif.fairzlrm  | fairml  | Zafar et al., 2019    |
+| classif.fairnclm  | fairml  | Scutari et al., 2021  |
 
 ### Datasets
 
