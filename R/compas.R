@@ -47,7 +47,7 @@ NULL
 
 #' @title COMPAS Classification Task
 #'
-#' @name mlr_tasks_compas
+#' @name compas
 #' @format [R6::R6Class] inheriting from [TaskClassif].
 #'
 #' @section Construction:
@@ -71,7 +71,7 @@ get_compas_task = function() { # nocov start
 
 #' @title COMPAS Classification Task
 #'
-#' @name mlr_tasks_compas_race_binary
+#' @name compas
 #' @format [R6::R6Class] inheriting from [TaskClassif].
 #'
 #' @section Construction:
