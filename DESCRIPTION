@@ -53,7 +53,8 @@ Suggests:
     linprog,
     posterdown,
     kableExtra,
-    fairml
+    fairml,
+    iml
 RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
