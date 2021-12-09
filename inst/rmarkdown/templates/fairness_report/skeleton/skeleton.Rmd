@@ -111,9 +111,9 @@ compare_metrics(resample_result, fair_metrics)
 
 Finally, we could use the external package to analyze the interpretability of the parameters. For the following example we choose `iml` as a demonstration. We need first extract the learner from `resample_result` and retrain it.
 
-For more details of interpretability, you might want to check the documentation of `iml`.
+You could generate the variable importance plot like this
 
-```{r, warning = F}
+```{r}
 library("iml")
 
 target = task$target_names
@@ -124,9 +124,17 @@ model = Predictor$new(model = learner,
                       data = task$data()[,.SD, .SDcols = !target],
                       y = task$data()[, ..target])
 
-effect = FeatureEffects$new(model, method = "pdp")
-effect$plot(features = c("days_b_screening_arrest", "length_of_stay"))
+imp <- FeatureImp$new(model, loss = "ce")
+plot(imp)
 ```
 
+Or generate the feature effectness plot use the following code:
+
+```{r, warning = F}
+effect = FeatureEffects$new(model, method = "pdp")
+effect$plot(features = c("age", "c_charge_degree"))
+```
+
+For more details of interpretability, you might want to check the documentation of `iml`.
 
 # References
