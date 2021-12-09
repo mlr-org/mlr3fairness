@@ -1,0 +1,181 @@
+---
+title: "Fairness Metrics"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Fairness Metrics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+library(mlr3)
+library(mlr3fairness)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+# FairnessMeasures
+
+Fairness measures (or metrics) allow us to assess and audit for possible biases in a trained model. There are several types of metrics that are widely used in order to assess a model's fairness. They can be coarsely classified into three groups:
+
+- **Statistical Group Fairness Metrics**: Given a set of predictions from our model, we assess for differences in one or multiple metrics across groups.
+
+- **Individual Fairness**: Basically requires that similar people are treated similar independent of the protected attribute. This is more of a philosophical concept and concrete implementations of this fairness notion are not immediately clear.
+
+- **Causal Fairness Notions**: An important realization in the context of Fairness is, that whether a process is fair is often subject to the underlying causal directed acyclic graph (DAG). Knowledge of the DAG allows for causally assessing reasons for (un-)fairness. Since DAG's are often hard to construct for a given dataset, we currently do not provide any causal fairness metrics.
+
+## Core Idea: Statistical Group Fairness
+
+A simple way to assess the fairness of a model is to find a definition of fairness that is relevant to a problem at hand. We might for example define a model to be fair if the chance to be accepted for a job given you are qualified is independent of a protected attribute e.g. `gender`. This can e.g. be measured using the `true positive rate`(TPR): in `mlr3` this metric is called `"classif.tpr"`. In this case we measure discrepancies between groups by computing differences `(-)` but we could also compute quotients.
+In practice, we often compute absolute differences.
+
+$$
+  \Delta_{TPR} = TPR_{Group 1} - TPR_{Group 2}
+$$
+
+We will use metrics like the one defined above throughout the remainder of this vignette.
+Some predefined measures are readily available in `mlr3fairness`, but we will also showcase how custom measures can be constructed below.
+
+In general, fairness measures have a `fairness.` prefix followed by the metric that is compared across groups. We will thus e.g. call the difference in accuracies across groups `fairness.acc`.
+A full list can be found below.
+
+```{r, echo = FALSE}
+knitr::kable(mlr3fairness:::mlr_measures_fairness)
+```
+
+## Assessing for Bias: A first look
+
+This vignette assumes that you are familiar with the basics of `mlr3` and it's core objects.
+The [mlr3 book](https://mlr3book.mlr-org.com/index.html) can be a great ressource in case you want to learn more about mlr3's internals.
+
+We first start by training a model for which we want to conduct an audit.
+For this example, we use the `adult_train` dataset.
+Keep in mind all the datasets from mlr3fairness package already set protected attribute via the `col_role` "pta", here the "sex" column. To speed things up, we only use the first 1000 rows.
+
+```{r}
+library(mlr3fairness)
+library(mlr3learners)
+
+t = tsk("adult_train")$filter(1:1000)
+t$col_roles$pta
+```
+
+Our model is a random forest model fitted on the dataset:
+
+```{r}
+l = lrn("classif.ranger")
+l$train(t)
+```
+
+We can now predict on a new dataset and use those predictions to assess for bias:
+
+```{r}
+test = tsk("adult_test")
+prd = l$predict(test)
+```
+
+Using the `$score` method and a measure we can e.g. compute the absolute differences in true positive rates.
+
+```{r}
+prd$score(msr("fairness.tpr"), task = test)
+```
+
+The exact measure to choose is often data-set and situation dependent. The [Aequitas Fairness Tree](https://textbook.coleridgeinitiative.org/chap-bias.html) can be a great ressource to get started.
+
+We can furthermore simply look at the per-group measures:
+
+```{r}
+meas = groupwise_metrics(msr("classif.tpr"), test)
+prd$score(meas, task = test)
+```
+
+## Fairness Measures - An in-depth look
+
+Before, we have used `msr("fairness.tpr")` to assess differences in false positive rates across groups. But what happens internally?
+
+The `msr()` function is used to obtain a `Measure` from a dictionary of pre-defined `Measure`s. We can use `msr()` without any arguments in order to print a list of available measures.
+In the following example, we will build a `Measure` that computes differences in False Positive Rates making use of the `"classif.fpr"` measure readily implemented in `mlr3`.
+
+```{r}
+# Binary Class false positive rates
+msr("classif.fpr")
+```
+
+The core `Measure` in `mlr3fairness` is a `MeasureFairness`. It can be used to construct arbitrary measures that compute a difference between a specific metric across groups. We can therefore build a new metric as follows:
+
+```{r}
+m1 = MeasureFairness$new(base_measure = msr("classif.fpr"), operation = function(x) {abs(x[1] - x[2])})
+m1
+```
+This measure does the following steps:
+- Compute the metric supplied as `base_measure` in each group defined by the `"pta"` column.
+- Compute `operation` (here `abs(x[1] - x[2])`) and return the result.
+
+In some cases, we might also want to replace the operation with a different operation, e.g. `x[1] / x[2]` in order to compute a different perspective.
+
+`mlr3fairness` comes with two built-in functions that can be used to compute fairness metrics
+also across protected attributes that have more than two classes.
+
+- `groupdiff_absdiff`: maximum absolute difference between all classes (the default for all metrics)
+- `groupdiff_tau`: minimum quotient between all classes
+
+**Note**: Depending on the `operation` we need to set a different `minimize` flag for the measure, so subsequent operations based on the measure automatically know if the measure is to be minimized or maximized e.g. during tuning.
+
+We can also use those operations to construct a measure using `msr()`, since `MeasureFairness` (key: `msr("fairness")`) can be constructed from the dictionary with additional arguments.
+
+```{r}
+m2 = msr("fairness", operation = groupdiff_absdiff, base_measure = msr("classif.tpr"))
+```
+
+This allows us to construct pretty flexible metrics e.g. for regression settings:
+
+```{r}
+m2 = msr("fairness", operation = groupdiff_absdiff, base_measure = msr("regr.mse"))
+```
+
+### Non-binary protected groups
+
+While fairness measures are widely defined or used with binary protected attributes, we can easily extend
+fairness measures such that they work with non-binary valued protected attributes.
+
+In order to do this, we have to supply an `operation` that reduces the desired metric measured in each subgroup
+to a single value. Two examples for such operations are `groupdiff_absdiff` and `groupdiff_tau` but
+custom functions can also be applied. Note, that **mlr3** `Measure`s are designed for a scalar output
+and `operation` therefore always has to result in a single scalar value.
+
+## Composite Fairness Measures
+
+Some fairness measures also require a combination of multiple Fairness Metrics.
+In the following example we show how to compute the mean of two fairness metrics,
+here false negative and true negative rates and create a new `Measure` that computes the mean (see `aggfun`) of those metrics:
+
+```{r}
+ms = list(msr("fairness.fnr"), msr("fairness.tnr"))
+ms
+
+m = MeasureFairnessComposite$new(measures = ms, aggfun = mean)
+```
+
+
+## How to compare the fairness performance between different learners using Benchmarks
+
+In this example, we create a `BenchmarkInstance`. Then by using `aggregate()` function they could access the fairness measures easily. The following example demonstrates the process to evaluate the fairness metrics on Benchmark Results:
+
+```{r}
+design = benchmark_grid(
+  tasks = tsks("compas"),
+  learners = lrns(c("classif.ranger", "classif.rpart"),
+    predict_type = "prob", predict_sets = c("train", "test")),
+  resamplings = rsmps("cv", folds = 3)
+)
+
+bmr = benchmark(design)
+
+# Operations have been set to `groupwise_quotient()`
+measures = list( msr("fairness.tpr"), msr("fairness.npv"), msr("fairness.acc"), msr("classif.acc") )
+
+tab = bmr$aggregate(measures)
+tab
+```
+
