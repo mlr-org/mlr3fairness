@@ -44,7 +44,7 @@ task
 Here we could get the basic details for the task.
 
 ```{r}
-general_summary(task) %>%
+task_summary(task) %>%
   kbl() %>%
   kable_paper("hover", full_width = F)
 ```
