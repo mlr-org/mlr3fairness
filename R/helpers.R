@@ -126,7 +126,7 @@ get_pta = function(task, rows, intersectional = TRUE) {
   }
 }
 
-#' General Task Documentation for fairness report
+#' Task summary for fairness report
 #'
 #' @description
 #' Create the general task documentation in a dataframe for fairness report.
@@ -143,7 +143,7 @@ get_pta = function(task, rows, intersectional = TRUE) {
 #' @return dataframe the contains the reported information
 #'
 #' @export
-general_summary = function(task) {
+task_summary = function(task) {
   # Create the report attributes
   report_attr = list(
     "Audit Date: ",

@@ -4,7 +4,7 @@
 \alias{report_modelcard}
 \title{Create a Modelcard}
 \usage{
-report_modelcard(filename = "modelcard.Rmd", edit = FALSE)
+report_modelcard(filename = "modelcard.Rmd", edit = FALSE, build = FALSE)
 }
 \arguments{
 \item{filename}{(\code{character(1)})\cr
@@ -12,6 +12,9 @@ File path or name for new file that should be created.}
 
 \item{edit}{(\code{logical(1)})\cr
 \code{TRUE} to edit the template immediately.}
+
+\item{build}{(\code{logical(1)})\cr
+Should the report be built after creation? Initialized to \code{FALSE}.}
 }
 \description{
 Creates a new \CRANpkg{rmarkdown} template with a skeleton questionnaire for a model card.

@@ -10,7 +10,7 @@ Machine Learning Fairness Extension for
 
 ## Installation
 
-Install the development version from mlr3 repo
+Install the development version from github:
 
 ``` r
 remotes::install_github("mlr-org/mlr3fairness")
@@ -194,10 +194,11 @@ interactive reports through `RMarkdown`.
 **Usage:**
 
 The `report_*` functions instantiate a new `.Rmd` template that contains
-a set of pre-definedquestions which can be used for reporting as well as
-initial graphics. The created `.Rmd` file can then be extended by the
-user. It can later be converted into a `html` report using`rmarkdown`’s
-`render`.
+a set of pre-defined questions which can be used for reporting as well
+as initial graphics. The goal is that a user extends this `.Rmd` file to
+create comprehensive documentation for datasets, ML models or to
+document a model’s fairness. It can later be converted into a `html`
+report using`rmarkdown`’s `render`.
 
 ``` r
 rmdfile = report_datasheet()
@@ -250,7 +251,8 @@ fairness_prediction_density(predictions, task_test)
   - The
     [fairml](https://cran.r-project.org/web/packages/fairml/index.html)
     package contains methods for learning de-biased regression and
-    classification models.
+    classification models. Learners from `fairml` are included as
+    learners in `mlr3fairness`.
 
 ### Future Development
 

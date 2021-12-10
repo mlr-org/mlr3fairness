@@ -31,9 +31,9 @@ lrn("classif.fairzlrm")
 }
 
 \section{Parameters}{
-\tabular{lllll}{
-   Id \tab Type \tab Default \tab Range \tab Levels \cr
-   unfairness \tab numeric \tab - \tab \eqn{[0, 1]}{[0, 1]} \tab - \cr
+\tabular{llll}{
+   Id \tab Type \tab Default \tab Range \cr
+   unfairness \tab numeric \tab - \tab \eqn{[0, 1]}{[0, 1]} \cr
 }
 }
 
