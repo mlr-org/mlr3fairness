@@ -1,6 +1,7 @@
-library(testthat)
-library(mlr3)
-library(mlr3pipelines)
-library(mlr3fairness)
-
-test_check("mlr3fairness")
+if (requireNamespace("testthat", quietly = TRUE)) {
+  library("testthat")
+  library("mlr3")
+  library("mlr3pipelines")
+  library("mlr3fairness")
+  test_check("mlr3fairness")
+}
