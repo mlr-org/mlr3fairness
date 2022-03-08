@@ -1,0 +1,116 @@
+---
+title: Fairness Audits and Bias Mitigation with mlr3fairness
+author:
+  - name: Florian Pfisterer
+    affil: 1
+    main: true
+  - name: Siyi Wei
+  - name: Sebastian Vollmer
+  - affil: 3
+  - name: Michel Lang
+    affil: 2
+  - name: Bernd Bischl
+    affil: 1
+affiliation:
+  - num: 1
+    address: LMU Munich
+  - num: 2
+    address: TU Dortmund
+  - num: 3
+    address: DFKI Kaiserslautern
+primary_colour:	"#0b4545"
+secondary_colour:	"#008080"
+accent_colour: "#cc0000"
+body_textsize: "50px"
+author_textsize: "55px"
+authorextra_textsize: "45px"
+affiliation_textsize: "45px"
+affiliation_textcol: '#606060'
+main_width: 0.42
+main_findings:
+  - "Fairness Audits and Bias Mitigation with **mlr3fairness**"
+  - '![](images/center.png){.main_pic}'
+logoleft_name: '![](images/qr.png){.main-img-left}'
+logoright_name: '![](https://github.com/mlr-org/mlr3fairness/raw/main/man/figures/scale_mlr3.png){.main-img-right}'
+output: 
+  posterdown::posterdown_betterland:
+    css: "style.css"
+    self_contained: false
+    pandoc_args: --mathjax
+    number_sections: false
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library("mlr3fairness")
+```
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+# TL;DR
+
+- If we make decisions based on models, they should not discriminate against sub-populations 
+- Broadly, a model is considered fair if it treats people equally independent of the group they belong to.
+- We present software that helps users detect and mitigate un-fairness in models:
+  - Fairness Metrics allow for detecting biases
+  - Bias mitigation techniques can help to make models fairer
+  - Data and Model reporting can inform developers and users!
+
+# What is algorithmic fairness?
+
+Algorithmic fairness studies potentially negative effects of decisions derived from statistical / machine learning models.
+Biases in models can occur due to many reasons for example biases in the data, miss-specification of the model.
+In practice, biases are often measured based on differences in predictions between two groups.
+
+# Bias Audits
+
+Bias audits apply a **Measure** to score predictions.
+
+Our software currently contains `r sum(grepl("fair", msr()$keys()))` different fairnes metrics..
+We can construct a measure using the `msr()` shorthand, here the `"fairness.fpr"`, measuring differences in FPR.
+
+```{r, eval = FALSE, echo = TRUE}
+m = msr("fairness.tpr")
+prediction$score(m)
+```
+
+# Bias Mitigation
+
+Combining **bias mitigation** techniques with learning algorithm can help 
+creating fair(er) learners!
+
+
+```{r, eval = FALSE, echo = TRUE}
+# Reweigh data before training a learner
+lrn = po("reweighing_wts") %>>% 
+  po("learner", lrn("classif.glmnet"))
+```
+
+# Integration with mlr3 
+
+Integration with **mlr3** (@mlr3) allows for:
+- Bias audits for any **mlr3** learner
+- Model debiasing as part of a **mlr3 pipeline**
+- Joint tuning of debiasing and ML model!
+
+# Reporting
+
+Unfairness can not always be detected if it is already in the data we use to build models.
+Better documentation of data and models can help make users aware of potential problems
+and are therefore an integral part of developing fair models.
+
+
+| Report             |  Description             |
+|--------------------|--------------------------|
+| `report_modelcard()` | Modelcard for ML models <br> (@modelcards)         |
+| `report_datasheet()` | Datasheet for data sets <br> (@datasheets)         |
+| `report_fairness()`  | Fairness Report                                    |
+
+
+# Contribute!
+
+We are looking for contributors to further improve `mlr3fairness`.
+We have several additions in mind, but are also open to input from the outside.
+Get in touch via GitHub issues or email!
+
+# References

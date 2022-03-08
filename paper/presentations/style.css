@@ -1,0 +1,56 @@
+body {
+  overflow-x: hidden;
+}
+.level1 h1 {
+  text-align: center;
+  color: #000000;
+  font-size: 65pt;
+  border: 2mm solid #040808;
+  background-color: #fdffff;
+  border-radius: 2mm 0mm;
+  margin-top: 0mm;
+  margin-bottom: 0mm;
+  font-weight: normal;
+}
+.level1 h2 {
+  color: #000000;
+  font-size: 40pt;
+  padding-left: 4mm;
+  font-weight: normal;
+}
+
+img.main-img-left {
+  width: 18%;
+  left: 0.5in;
+  bottom: 0.2in;
+  position: absolute;
+}
+
+img.main-img-right {
+  width: 25%;
+  right: 0.5in;
+  bottom: 0.4in;
+  position: absolute;
+}
+
+img.main_pic {
+  width: 63%;
+  display: block;
+  margin-top: 0%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.main p {
+  padding-top: 10%;
+}
+
+div.sourceCode  {
+  margin: 0.3em;
+}
+
+pre.sourceCode.r  {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em
+}
+

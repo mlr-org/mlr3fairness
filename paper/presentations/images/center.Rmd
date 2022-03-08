@@ -1,0 +1,59 @@
+---
+title: "&nbsp;"
+output: pdf_document
+---
+
+```{r, echo = FALSE}
+library(ggplot2)
+library("lgr")
+library("mlr3learners")
+
+```
+
+```{r, eval = FALSE}
+library(mlr3fairness)
+
+# The dataset: 
+task = tsk("adult_train")
+# Set "sex" as the protected attribute
+task$col_roles$pta = "sex" 
+
+# Initialize model(s)
+lrnr = lrns(c("classif.rpart", "classif.ranger"), predict_type = "prob")
+
+# Perform train-test split and training
+bmr = benchmark(benchmark_grid(task, lrnr, rsmp("cv", folds = 3L)))
+
+# Construct fairness metrics
+ms = msr("fairness.fpr")
+
+#Visualize the predicted probability score based on protected attribute.
+fairness_accuracy_tradeoff(bmr, ms)
+```
+
+
+```{r, eval = TRUE, results="hide", echo = FALSE, fig.align="center"}
+library(mlr3fairness)
+lgr$set_threshold("error")
+
+# The dataset: 
+task = tsk("adult_train")
+# Set "sex" as the protected attribute
+task$col_roles$pta = "sex" 
+
+# Initialize model(s)
+lrnr = lrns(c("classif.rpart", "classif.ranger"), predict_type = "prob")
+
+# Perform train-test split and training
+bmr = benchmark(benchmark_grid(task, lrnr, rsmp("cv", folds = 3L)))
+
+# Construct fairness metrics
+ms = msr("fairness.fpr")
+
+#Visualize the predicted probability score based on protected attribute.
+```
+
+
+```{r, eval = TRUE, results="hide", echo = FALSE, fig.align="center"}
+fairness_accuracy_tradeoff(bmr, ms) + theme_minimal() + ggtitle("")
+```
