@@ -1,6 +1,7 @@
 ---
 title: "&nbsp;"
 output: pdf_document
+geometry: margin=1cm
 ---
 
 ```{r, echo = FALSE}
@@ -14,7 +15,7 @@ library("mlr3learners")
 library(mlr3fairness)
 
 # The dataset: 
-task = tsk("adult_train")
+task = TaskClassif$new("adult", adult_train, target = "target")
 # Set "sex" as the protected attribute
 task$col_roles$pta = "sex" 
 
@@ -32,7 +33,7 @@ fairness_accuracy_tradeoff(bmr, ms)
 ```
 
 
-```{r, eval = TRUE, results="hide", echo = FALSE, fig.align="center"}
+```{r, eval = TRUE, results="hide", output = 'hide', message = FALSE, echo = FALSE, fig.align="center"}
 library(mlr3fairness)
 lgr$set_threshold("error")
 
@@ -55,5 +56,10 @@ ms = msr("fairness.fpr")
 
 
 ```{r, eval = TRUE, results="hide", echo = FALSE, fig.align="center"}
-fairness_accuracy_tradeoff(bmr, ms) + theme_minimal() + ggtitle("")
+fairness_accuracy_tradeoff(bmr, ms) + theme_minimal() + ggtitle("") + 
+  theme(
+    panel.background = element_rect(fill = "white", colour = "white", linetype = "solid"),
+    legend.background = element_rect(colour = "white", fill = "white"), 
+    plot.background = element_rect(fill = "white", colour = "white", linetype = "solid")
+  )
 ```

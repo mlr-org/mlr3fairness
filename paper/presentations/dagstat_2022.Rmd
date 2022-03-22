@@ -26,10 +26,10 @@ author_textsize: "55px"
 authorextra_textsize: "45px"
 affiliation_textsize: "45px"
 affiliation_textcol: '#606060'
-main_width: 0.42
+main_width: 0.8
 main_findings:
   - "Fairness Audits and Bias Mitigation with **mlr3fairness**"
-  - '![](images/center.png){.main_pic}'
+  - '![](images/center.svg){.main_pic}'
 logoleft_name: '![](images/qr.png){.main-img-left}'
 logoright_name: '![](https://github.com/mlr-org/mlr3fairness/raw/main/man/figures/scale_mlr3.png){.main-img-right}'
 output: 
