@@ -1,5 +1,3 @@
-load_learner_tests()
-
 test_that("classif.fairfgrrm", {
     skip_if_not_installed("fairml")
     learner = lrn("classif.fairfgrrm")
