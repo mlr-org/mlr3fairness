@@ -31,12 +31,13 @@ lrn("classif.fairfgrrm")
 
 \section{Parameters}{
 \tabular{lllll}{
-   Id \tab Type \tab Default \tab Range \tab Levels \cr
-   lambda \tab numeric \tab 0 \tab \eqn{[0, \infty)}{[0, Inf)} \tab - \cr
-   definition \tab character \tab sp-komiyama \tab - \tab sp-komiyama, eo-komiyama \cr
-   save.auxiliary \tab logical \tab FALSE \tab - \tab TRUE, FALSE \cr
-   unfairness \tab numeric \tab - \tab \eqn{[0, 1]}{[0, 1]} \tab - \cr
-   family \tab character \tab binomial \tab - \tab gaussian, binomial \cr
+   Id \tab Type \tab Default \tab Levels \tab Range \cr
+   lambda \tab numeric \tab 0 \tab  \tab \eqn{[0, \infty)}{[0, Inf)} \cr
+   definition \tab character \tab sp-komiyama \tab sp-komiyama, eo-komiyama \tab - \cr
+   save.auxiliary \tab logical \tab FALSE \tab TRUE, FALSE \tab - \cr
+   unfairness \tab numeric \tab - \tab  \tab \eqn{[0, 1]}{[0, 1]} \cr
+   family \tab character \tab binomial \tab gaussian, binomial \tab - \cr
+   intersect \tab logical \tab TRUE \tab TRUE, FALSE \tab - \cr
 }
 }
 

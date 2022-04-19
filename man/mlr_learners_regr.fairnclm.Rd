@@ -32,11 +32,11 @@ lrn("regr.fairnclm")
 
 \section{Parameters}{
 \tabular{lllll}{
-   Id \tab Type \tab Default \tab Range \tab Levels \cr
-   lambda \tab numeric \tab 0 \tab \eqn{[0, \infty)}{[0, Inf)} \tab - \cr
-   save.auxiliary \tab logical \tab FALSE \tab - \tab TRUE, FALSE \cr
-   covfun \tab list \tab stats::cov \tab - \tab - \cr
-   unfairness \tab numeric \tab - \tab \eqn{[0, 1]}{[0, 1]} \tab - \cr
+   Id \tab Type \tab Default \tab Levels \tab Range \cr
+   lambda \tab numeric \tab 0 \tab  \tab \eqn{[0, \infty)}{[0, Inf)} \cr
+   save.auxiliary \tab logical \tab FALSE \tab TRUE, FALSE \tab - \cr
+   covfun \tab untyped \tab stats::cov \tab  \tab - \cr
+   unfairness \tab numeric \tab - \tab  \tab \eqn{[0, 1]}{[0, 1]} \cr
 }
 }
 

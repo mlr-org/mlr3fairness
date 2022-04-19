@@ -166,7 +166,7 @@ In this example, we create a `BenchmarkInstance`. Then by using `aggregate()` fu
 design = benchmark_grid(
   tasks = tsks("compas"),
   learners = lrns(c("classif.ranger", "classif.rpart"),
-    predict_type = "prob", predict_sets = c("train", "test")),
+    predict_type = "prob", predict_sets = c("train", "predict")),
   resamplings = rsmps("cv", folds = 3)
 )
 

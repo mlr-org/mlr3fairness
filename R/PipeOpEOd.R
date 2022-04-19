@@ -138,16 +138,16 @@ PipeOpEOd = R6Class("PipeOpEOd",
       task = assert_pta_task(input[[1L]])
       flips = self$state$flip_probs
       # Widely used vars
-      ..pta = task$col_roles$pta
-      ..tgt = task$col_roles$target
+      pta_ = task$col_roles$pta
+      tgt_ = task$col_roles$target
       prd = task$col_roles$feature
       prv = private$.privileged
 
       # Obtain data
-      dt = task$data(cols = c(task$backend$primary_key, ..pta, ..tgt, prd))
-      dt[, c(..tgt, prd) := map(.SD, as.factor), .SDcols = c(..tgt, prd)]
+      dt = task$data(cols = c(task$backend$primary_key, pta_, tgt_, prd))
+      dt[, c(tgt_, prd) := map(.SD, as.factor), .SDcols = c(tgt_, prd)]
       # Binary privileged group indicator
-      is_prv = dt[, get(..pta) == prv]
+      is_prv = dt[, get(pta_) == prv]
       if (sum(is_prv) < 1) {
         stop("'privileged' needs to be a valid value in the 'pta' column!") # nocov
       }
@@ -179,8 +179,8 @@ PipeOpEOd = R6Class("PipeOpEOd",
       # Convert to prediction
       set(dt, j = "row_ids", value = dt[[task$backend$primary_key]])
       set(dt, j = "response", value = dt[[prd]])
-      if (..tgt %in% colnames(dt)) {
-        set(dt, j = "truth", value = factor(dt[[..tgt]], levels = levels(dt$response)))
+      if (tgt_ %in% colnames(dt)) {
+        set(dt, j = "truth", value = factor(dt[[tgt_]], levels = levels(dt$response)))
       } else {
         set(dt, j = "truth", value = factor(NA, levels = levels(dt$response))) # nocov
       }
@@ -189,38 +189,38 @@ PipeOpEOd = R6Class("PipeOpEOd",
 
     .compute_flip_probs = function(task) {
       # Widely used vars
-      ..pta = task$col_roles$pta
-      ..tgt = task$col_roles$target
+      pta_ = task$col_roles$pta
+      tgt_ = task$col_roles$target
       prd = task$col_roles$feature
       pos = task$positive
       prv = private$.privileged
 
       # Obtain data
-      dt = task$data(cols = c(..pta, ..tgt, prd))
+      dt = task$data(cols = c(pta_, tgt_, prd))
       dt[, colnames(dt) := map(.SD, as.factor), .SDcols = colnames(dt)]
 
       # Compute base rates function
       base_rate = function(truth, prediction, positive) mean(truth == positive)
 
       # Compute per-group metrics
-      r = dt[, map(list(fpr, fnr, tpr, tnr, base_rate), function(fn) fn(get(..tgt), get(prd), pos)), by = ..pta]
-      names(r) = c(..pta, c("fpr", "fnr", "tpr", "tnr", "base_rate"))
+      r = dt[, map(list(fpr, fnr, tpr, tnr, base_rate), function(fn) fn(get(tgt_), get(prd), pos)), by = pta_]
+      names(r) = c(pta_, c("fpr", "fnr", "tpr", "tnr", "base_rate"))
       r[, "dpr" := fpr - tpr][, "dnr" := tnr - fnr]
 
       # Compute error differences in the different groups and base_rates
-      cvec = c(r[get(..pta) == prv]$dpr, r[get(..pta) == prv]$dnr, r[get(..pta) != prv]$dpr, r[get(..pta) != prv]$dnr)
-      sbr = r[get(..pta) == prv]$base_rate
-      obr = r[get(..pta) != prv]$base_rate
+      cvec = c(r[get(pta_) == prv]$dpr, r[get(pta_) == prv]$dnr, r[get(pta_) != prv]$dpr, r[get(pta_) != prv]$dnr)
+      sbr = r[get(pta_) == prv]$base_rate
+      obr = r[get(pta_) != prv]$base_rate
 
 
       # Binary privileged group indicator
-      is_prv = dt[, get(..pta) == prv]
+      is_prv = dt[, get(pta_) == prv]
       if (sum(is_prv) < 1) {
         stop("'privileged' needs to be a valid value in the 'pta' column!")
       }
 
       # True target
-      y_true = dt[[..tgt]]
+      y_true = dt[[tgt_]]
 
       # Compute privileged/unprivileged pos. and negative samples
       sconst = dt[is_prv, get(prd) == pos] # Yh[A0] == +

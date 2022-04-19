@@ -23,7 +23,7 @@ regr.fairfrrm     \tab fairml \tab Komiyama et al., 2018\cr
 classif.fairfgrrm \tab fairml \tab Komiyama et al., 2018\cr
 regr.fairzlm      \tab fairml \tab Zafar et al., 2019   \cr
 classif.fairzlrm  \tab fairml \tab Zafar et al., 2019   \cr
-classif.fairnclm  \tab fairml \tab Scutari et al., 2021
+regr.fairnclm     \tab fairml \tab Scutari et al., 2021
 }
 }
 

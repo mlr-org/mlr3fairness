@@ -55,3 +55,5 @@ test_that("regr.fairnclm", {
     # result = run_autotest(learner) # FIXME: mlr3 needs to change here I think
     # expect_true(result, info = result$error)
 })
+
+
