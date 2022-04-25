@@ -15,6 +15,7 @@
 #' @export
 #' @examples
 #' groupdiff_tau(1:3)
+#' groupdiff_diff(1:3)
 #' groupdiff_absdiff(1:3)
 groupdiff_tau = function(x) {
   assert_numeric(x, min.len = 2L)
@@ -44,4 +45,23 @@ groupdiff_absdiff = function(x) {
   }
 
   max(dist(x, method = "manhattan"), na.rm = TRUE)
+}
+
+#' @export
+#' @rdname groupdiff_tau
+groupdiff_diff = function(x) {
+  assert_numeric(x, min.len = 2L)
+  if (anyMissing(x)) {
+    return(NA)
+  }
+
+  if (all(x == 0)) {
+    return(0)
+  }
+
+  # All pairwise differences
+  xs = outer(x, x, "-")
+  xs = xs[upper.tri(xs)]
+  # Get the one with the maximum difference.
+  xs[which.max(abs(xs))]
 }

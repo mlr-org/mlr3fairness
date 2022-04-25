@@ -3,11 +3,14 @@
 \name{groupdiff_tau}
 \alias{groupdiff_tau}
 \alias{groupdiff_absdiff}
+\alias{groupdiff_diff}
 \title{Groupwise Operations}
 \usage{
 groupdiff_tau(x)
 
 groupdiff_absdiff(x)
+
+groupdiff_diff(x)
 }
 \arguments{
 \item{x}{(\code{numeric()})\cr
@@ -24,5 +27,6 @@ If \eqn{x} is a vector, the symmetric absolute difference between all elements i
 }
 \examples{
 groupdiff_tau(1:3)
+groupdiff_diff(1:3)
 groupdiff_absdiff(1:3)
 }
