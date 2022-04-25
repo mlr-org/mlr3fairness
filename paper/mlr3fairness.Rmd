@@ -11,11 +11,15 @@ author:
     affiliation2: University of Kaiserslautern
     affiliation3: Univeristy of Warwick
   - name: Michel Lang
-    url: https://journal.r-project.org
-    email: Michel.Lang@stat.uni-muenchen.de
+    email: michel.lang@stat.uni-muenchen.de
     orcid: 0000-0001-9754-0393
     affiliation: LMU Munich
     affiliation2: TU Dortmund University
+  - name: Bernd Bischl
+    email: bernd.bischl@stat.uni-muenchen.de
+    orcid: 0000-0001-6002-6980
+    affiliation: LMU Munich
+
 
 abstract: >
   Given an increase in data-driven automated decision-making based on machine learning models, it is
