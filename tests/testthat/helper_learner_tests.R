@@ -1,5 +1,4 @@
 simple_autotest = function(learner, task) {
-
     task = task$clone(deep = TRUE)
     ft_cols = task$feature_types[, map(.SD, 1L), by = type]$id
     task$filter(seq_len(min(task$nrow, 500)))$select(cols = ft_cols)
