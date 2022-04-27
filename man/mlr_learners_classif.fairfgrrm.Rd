@@ -5,7 +5,7 @@
 \alias{LearnerClassifFairfgrrm}
 \title{Classification Fair Generalized Ridge Regression Learner}
 \description{
-Calls \link[fairml:fgrrm]{fairml::fgrrm} from package \CRANpkg{fairml}.
+Calls \link[fairml:frrm]{fairml::fgrrm} from package \CRANpkg{fairml}.
 }
 \details{
 Fair generalized ridge regression model implemented via package \code{fairml}.

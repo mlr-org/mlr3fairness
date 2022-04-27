@@ -5,7 +5,7 @@
 \alias{LearnerClassifFairzlrm}
 \title{Classification Fair Logistic Regression With Covariance Constraints Learner}
 \description{
-Calls \link[fairml:zlrm]{fairml::zlrm} from package \CRANpkg{fairml}.
+Calls \link[fairml:zlm]{fairml::zlrm} from package \CRANpkg{fairml}.
 }
 \details{
 Geenralized fair regression model from Zafar et al., 2019 implemented via package \code{fairml}.
