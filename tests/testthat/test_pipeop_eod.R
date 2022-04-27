@@ -1,4 +1,5 @@
 test_that("PipeOpEOd works on a task", {
+  skip_if_not_installed("linprog")
   task = tsk("adult_train")$filter(1:700)
   poed = po("EOd")
   graph = po("learner_cv", lrn("classif.rpart")) %>>% poed
@@ -12,6 +13,7 @@ test_that("PipeOpEOd works on a task", {
 })
 
 test_that("PipeOpEOd technically works for trivial cases priv 0", {
+  skip_if_not_installed("linprog")
   # Test data set / task
   dt = data.table(
     truth = rep(c(0, 1), 100),
@@ -50,6 +52,7 @@ test_that("PipeOpEOd technically works for trivial cases priv 0", {
 })
 
 test_that("PipeOpEOd technically works for trivial cases priv 1", {
+  skip_if_not_installed("linprog")
   # Test data set
   dt = data.table(
     truth = rep(c(0, 1), 100),
