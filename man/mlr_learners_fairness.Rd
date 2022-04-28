@@ -19,11 +19,11 @@ Fair Learners in mlr3
 
 \tabular{lll}{
 \strong{key} \tab \strong{package} \tab \strong{reference} \cr
-regr.fairfrrm     \tab fairml \tab Komiyama et al., 2018\cr
-classif.fairfgrrm \tab fairml \tab Komiyama et al., 2018\cr
+regr.fairfrrm     \tab fairml \tab Scutari et al., 2021 \cr
+classif.fairfgrrm \tab fairml \tab Scutari et al., 2021 \cr
 regr.fairzlm      \tab fairml \tab Zafar et al., 2019   \cr
 classif.fairzlrm  \tab fairml \tab Zafar et al., 2019   \cr
-classif.fairnclm  \tab fairml \tab Scutari et al., 2021
+regr.fairnclm     \tab fairml \tab Komiyama et al., 2018
 }
 }
 

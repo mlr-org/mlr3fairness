@@ -4,7 +4,7 @@
 \alias{groupwise_metrics}
 \title{Evaluate a metric on each protected subgroup in a task.}
 \usage{
-groupwise_metrics(base_measure, task)
+groupwise_metrics(base_measure, task, intersect = TRUE)
 }
 \arguments{
 \item{base_measure}{(\code{Measure()})\cr
@@ -12,6 +12,10 @@ The base metric evaluated within each subgroup.}
 
 \item{task}{\code{\link{Task}} \cr
 \code{\link[mlr3:Task]{mlr3::Task()}} to instantiate measures for.}
+
+\item{intersect}{\code{\link{logical}} \cr
+Should multiple pta groups be intersected? Defaults to \code{TRUE}.
+Only relevant if more than one \code{pta} columns are provided.}
 }
 \value{
 \code{list} \cr

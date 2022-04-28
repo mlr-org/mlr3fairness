@@ -249,3 +249,36 @@ test_that("Args are passed on correctly", {
   prd$score(groupwise_metrics(mta, t), task = t, train_set = 1:10)
   prd$score(msr("fairness.constraint", fairness_measure = mta, performance_measure = mta), task = t, train_set = 1:10)
 })
+
+
+test_that("fairness measures work as expected - simulated data", {
+  tsks = list(
+    test_task_intersect("classif"),
+    test_task_multipta("classif"),
+    test_task_multicl("classif"),
+    test_task_contpta("classif")
+  )
+  lrn = lrn("classif.featureless")
+
+  metrics = mlr_measures_fairness$key
+  for (tsk in tsks) {
+    prd = lrn$train(tsk)$predict(tsk)
+    for (m in metrics) {
+      ms = msr(m)
+      if (ms$task_type == "classif" & is(ms, "MeasureFairness")) {
+        if (tsk$properties == "twoclass") {
+          out = prd$score(measures = ms, task = tsk)
+          expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
+        }
+        if (tsk$properties == "multiclass") {
+          if ("twoclass" %in% ms$base_measure$task_properties) {
+            expect_warning(prd$score(measures = ms, task = tsk))
+          } else {
+            out = prd$score(measures = ms, task = tsk)
+            expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
+          }
+        } 
+      }
+    }
+  }
+})

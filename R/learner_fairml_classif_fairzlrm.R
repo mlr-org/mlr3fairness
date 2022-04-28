@@ -25,9 +25,10 @@ LearnerClassifFairzlrm = R6Class("LearnerClassifFairzlrm",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       ps = ps(
-        unfairness = p_dbl(lower = 0, upper = 1, tags = "train")
+        unfairness = p_dbl(lower = 0, upper = 1, tags = "train"),
+        intersect = p_lgl(default = TRUE, tags = c("train", "predict"))
       )
-      ps$values = list(unfairness = 0.05)
+      ps$values = list(unfairness = 0.05, intersect = FALSE)
       super$initialize(
         id = "classif.fairzlrm",
         packages = "fairml",
@@ -51,7 +52,8 @@ LearnerClassifFairzlrm = R6Class("LearnerClassifFairzlrm",
       self$state$feature_names = task$feature_names
       pta = task$col_roles$pta
       r = task$truth()
-      s = task$data(cols = pta)[[1]]
+      s = get_pta(task, intersect = pars$intersect)
+      pars = remove_named(pars, "intersect")
       p = task$data(cols = setdiff(task$feature_names, pta))
       p = int_to_numeric(p)
       # use the mlr3misc::invoke function (it's similar to do.call())
@@ -61,7 +63,8 @@ LearnerClassifFairzlrm = R6Class("LearnerClassifFairzlrm",
 
     .predict = function(task) {
       pta = task$col_roles$pta
-      s = task$data(cols = pta)[[1]]
+      pars = self$param_set$get_values(tags = "predict")
+      s = get_pta(task, intersect = pars$intersect)
       p = task$data(cols = setdiff(self$state$feature_names, pta))
       p = int_to_numeric(p)
       if (self$predict_type == "response") {

@@ -29,7 +29,10 @@ The base measure to be used by the fairness measures,
 e.g. \link{mlr_measures_classif.fpr} for the false positive rate.}
 
 \item{\code{subgroup}}{(\code{character})|(\code{integer})\cr
-Subgroup identifier. Either value for the protected attribute or position in \code{task$levels}.}
+Subgroup identifier.}
+
+\item{\code{intersect}}{(\code{logical})\cr
+Should groups be intersected?}
 }
 \if{html}{\out{</div>}}
 }
@@ -57,7 +60,7 @@ Subgroup identifier. Either value for the protected attribute or position in \co
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MeasureSubgroup$new(id = NULL, base_measure, subgroup)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MeasureSubgroup$new(id = NULL, base_measure, subgroup, intersect = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -71,6 +74,10 @@ The measure used to measure fairness.}
 
 \item{\code{subgroup}}{(\code{character})|(\code{integer})\cr
 Subgroup identifier. Either value for the protected attribute or position in \code{task$levels}.}
+
+\item{\code{intersect}}{\code{\link{logical}} \cr
+Should multiple pta groups be intersected? Defaults to \code{TRUE}.
+Only relevant if more than one \code{pta} columns are provided.}
 }
 \if{html}{\out{</div>}}
 }

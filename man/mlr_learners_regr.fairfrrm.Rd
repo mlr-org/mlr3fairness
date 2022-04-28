@@ -5,6 +5,8 @@
 \alias{LearnerRegrFairfrrm}
 \title{Regression Fair Ridge Regression Learner}
 \description{
+If more than one \verb{pta`` columns are provided, the hyperparameter }intersectional\verb{controls whether  intersections of protected groups are formed (e.g. combinations of gender and race). Initialized to}TRUE\verb{. If }FALSE\verb{, only the group specified by the first element of }pta` is used.
+
 Calls \link[fairml:frrm]{fairml::frrm} from package \CRANpkg{fairml}.
 }
 \details{

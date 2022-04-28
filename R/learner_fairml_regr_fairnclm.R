@@ -40,8 +40,6 @@ LearnerRegrFairnclm = R6Class("LearnerRegrFairnclm",
         man = "mlr3fairness::mlr_learners_regr.fairnclm"
       )
     }
-
-
   ),
 
   private = list(
@@ -54,8 +52,10 @@ LearnerRegrFairnclm = R6Class("LearnerRegrFairnclm",
       # set column names to ensure consistency in fit and predict
       self$state$feature_names = task$feature_names
       pta = task$col_roles$pta
-      r = task$truth()
-      s = task$data(cols = pta)[[1]]
+      r = as.numeric(task$truth())
+      s = get_pta(task, intersect = FALSE)
+
+      pars = remove_named(pars, "intersect")
       p = task$data(cols = setdiff(task$feature_names, pta))
       p = int_to_numeric(p)
       mlr3misc::invoke(fairml::nclm, response = r, predictors = p, sensitive = s, .args = pars)
@@ -66,7 +66,7 @@ LearnerRegrFairnclm = R6Class("LearnerRegrFairnclm",
       pars = self$param_set$get_values(tags = "predict")
 
       pta = task$col_roles$pta
-      s = task$data(cols = pta)[[1]]
+      s = get_pta(task, intersect = FALSE)
       p = task$data(cols = setdiff(self$state$feature_names, pta))
       ints = colnames(keep(p, is.integer))
       p = int_to_numeric(p)

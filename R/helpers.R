@@ -112,17 +112,18 @@ int_to_numeric = function(p) {
 #'
 #' @param task [Task]
 #' @param rows (`integer`) rows to get
-#' @param intersectional (`logical`) should groups be intersected? If `FALSE` only first pta is used.
-#' @return character vector of group assignments
-#'
+#' @param intersect (`logical`) should groups be intersected? 
+#'   If `TRUE` all pta columns are combined into a single column factor.
+#'   If `FALSE`, returns all pta columns converted to factors.
+#' @return data.table vector of group assignments.
 #' @noRd
-get_pta = function(task, rows, intersectional = TRUE) {
-  assert_flag(intersectional)
+get_pta = function(task, rows = NULL, intersect = FALSE) {
+  assert_flag(intersect)
   groups = task$data(cols = task$col_roles$pta, rows = rows)
-  if (ncol(groups) >= 2L && intersectional) {
-    factor(pmap_chr(groups, paste, sep = "_"))
+  if (ncol(groups) >= 2L && intersect) {
+    groups = groups[, "newpta" := apply(.SD, 1, str_collapse)][, "newpta"]
   } else {
-    factor(groups[[1]])
+    groups = groups[, (task$col_roles$pta) := map(.SD, as.factor), .SDcols = task$col_roles$pta]
   }
 }
 

@@ -3,6 +3,7 @@
 #' @details 
 #' Fair ridge regression learner implemented via package `fairml`.
 #' The 'unfairness' parameter has been initialized to 0.05.
+#' @template intersect
 #'
 #' @author pfistfl
 #' @name mlr_learners_regr.fairfrrm
@@ -52,8 +53,8 @@ LearnerRegrFairfrrm = R6Class("LearnerRegrFairfrrm",
       # set column names to ensure consistency in fit and predict
       self$state$feature_names = task$feature_names
       pta = task$col_roles$pta
-      r = task$truth()
-      s = task$data(cols = pta)[[1]]
+      r = as.numeric(task$truth())
+      s = get_pta(task, intersect = FALSE)
       p = task$data(cols = setdiff(task$feature_names, pta))
       p = int_to_numeric(p)
       mlr3misc::invoke(fairml::frrm, response = r, predictors = p, sensitive = s, .args = pars)
@@ -62,9 +63,8 @@ LearnerRegrFairfrrm = R6Class("LearnerRegrFairfrrm",
     .predict = function(task) {
       # get parameters with tag "predict"
       pars = self$param_set$get_values(tags = "predict")
-
       pta = task$col_roles$pta
-      s = task$data(cols = pta)[[1]]
+      s = get_pta(task, intersect = FALSE)
       p = task$data(cols = setdiff(self$state$feature_names, pta))
       p = int_to_numeric(p)
       pred = mlr3misc::invoke(predict, self$model, new.predictors = p, new.sensitive = s, .args = pars)

@@ -25,9 +25,10 @@ LearnerRegrFairzlm = R6Class("LearnerRegrFairzlm",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       ps = ps(
-        unfairness = p_dbl(lower = 0, upper = 1, tags = "train")
+        unfairness = p_dbl(lower = 0, upper = 1, tags = "train"),
+        intersect = p_lgl(default = TRUE, tags = c("train", "predict"))
       )
-      ps$values = list(unfairness = 0.05)
+      ps$values = list(unfairness = 0.05, intersect = FALSE)
       super$initialize(
         id = "regr.fairzlm",
         packages = "fairml",
@@ -50,8 +51,9 @@ LearnerRegrFairzlm = R6Class("LearnerRegrFairzlm",
       self$state$feature_names = task$feature_names
 
       pta = task$col_roles$pta
-      r = task$truth()
-      s = task$data(cols = pta)[[1]]
+      r = as.numeric(task$truth())
+      s = get_pta(task, intersect = pars$intersect)
+      pars = remove_named(pars, "intersect")
       p = task$data(cols = setdiff(task$feature_names, pta))
       p = int_to_numeric(p)
       # use the mlr3misc::invoke function (it's similar to do.call())
@@ -62,7 +64,8 @@ LearnerRegrFairzlm = R6Class("LearnerRegrFairzlm",
       # get parameters with tag "predict"
       pars = self$param_set$get_values(tags = "predict")
       pta = task$col_roles$pta
-      s = task$data(cols = pta)[[1]]
+      s = get_pta(task, intersect = pars$intersect)
+      pars = remove_named(pars, "intersect")
       p = task$data(cols = setdiff(self$state$feature_names, pta))
       p = int_to_numeric(p)
       pred = mlr3misc::invoke(predict, self$model, new.predictors = p, .args = pars)

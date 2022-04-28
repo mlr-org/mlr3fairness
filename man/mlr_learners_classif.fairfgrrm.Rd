@@ -37,6 +37,7 @@ lrn("classif.fairfgrrm")
    save.auxiliary \tab logical \tab FALSE \tab TRUE, FALSE \tab - \cr
    unfairness \tab numeric \tab - \tab  \tab \eqn{[0, 1]}{[0, 1]} \cr
    family \tab character \tab binomial \tab gaussian, binomial \tab - \cr
+   intersect \tab logical \tab TRUE \tab TRUE, FALSE \tab - \cr
 }
 }
 

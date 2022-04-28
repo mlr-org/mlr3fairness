@@ -10,10 +10,11 @@
 #' @examples
 #' # Available learners:
 #' mlr_learners_fairness
-mlr_learners_fairness = rowwise_table(~key, ~package, ~reference,
-  "regr.fairfrrm", "fairml", "Komiyama et al., 2018",
-  "classif.fairfgrrm", "fairml","Komiyama et al., 2018",
+mlr_learners_fairness = rowwise_table(
+  ~key, ~package, ~reference,
+  "regr.fairfrrm", "fairml", "Scutari et al., 2021",
+  "classif.fairfgrrm", "fairml", "Scutari et al., 2021",
   "regr.fairzlm", "fairml", "Zafar et al., 2019",
   "classif.fairzlrm", "fairml", "Zafar et al., 2019",
-  "classif.fairnclm", "fairml", "Scutari et al., 2021"
+  "regr.fairnclm", "fairml", "Komiyama et al., 2018"
 )

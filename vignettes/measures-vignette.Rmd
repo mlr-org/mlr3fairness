@@ -166,7 +166,7 @@ In this example, we create a `BenchmarkInstance`. Then by using `aggregate()` fu
 design = benchmark_grid(
   tasks = tsks("compas"),
   learners = lrns(c("classif.ranger", "classif.rpart"),
-    predict_type = "prob", predict_sets = c("train", "test")),
+    predict_type = "prob", predict_sets = c("train", "predict")),
   resamplings = rsmps("cv", folds = 3)
 )
 
@@ -179,3 +179,24 @@ tab = bmr$aggregate(measures)
 tab
 ```
 
+## Metrics aggregation - groupdiff_* 
+
+For `MeasureFairness`, **mlr3** computes the `base_measure` in each group specified by the `pta` column. 
+If we now want to return those measures, we need to aggregate this to a single metric - e.g. using one of the 
+`groupdiff_*` functions available with mlr3. See `?groupdiff_tau` for a list. 
+Note, that the `operation` below also accepts custom aggregation function, see the example below.
+
+
+```{r}
+msr("fairness.acc", operation = groupdiff_diff)
+```
+
+We can also report other metrics, e.g. the error in a specific group: 
+
+```{r}
+t = tsk("adult_train")$filter(1:1000)
+mm = msr("fairness.acc", operation = function(x) {x["Female"]})
+l = lrn("classif.rpart")
+prds = l$train(t)$predict(t)
+prds$score(mm, t)
+```

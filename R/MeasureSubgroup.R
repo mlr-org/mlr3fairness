@@ -19,8 +19,12 @@ MeasureSubgroup = R6::R6Class("MeasureSubgroup", inherit = Measure,
     base_measure = NULL,
 
     #' @field subgroup (`character`)|(`integer`)\cr
-    #' Subgroup identifier. Either value for the protected attribute or position in `task$levels`.
+    #' Subgroup identifier.
     subgroup = NULL,
+
+    #' @field intersect (`logical`)\cr
+    #' Should groups be intersected?
+    intersect = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
@@ -31,10 +35,14 @@ MeasureSubgroup = R6::R6Class("MeasureSubgroup", inherit = Measure,
     #'   The measure used to measure fairness.
     #' @param subgroup (`character`)|(`integer`)\cr
     #' Subgroup identifier. Either value for the protected attribute or position in `task$levels`.
-    initialize = function(id = NULL, base_measure, subgroup) {
+    #' @param intersect [`logical`] \cr
+    #'  Should multiple pta groups be intersected? Defaults to `TRUE`.
+    #'  Only relevant if more than one `pta` columns are provided.
+    initialize = function(id = NULL, base_measure, subgroup, intersect = TRUE) {
       self$base_measure = assert_measure(as_measure(base_measure))
       assert(check_character(subgroup), check_integer(subgroup))
       self$subgroup = subgroup
+      self$intersect = assert_flag(intersect)
 
       if (is.null(id)) {
         id = replace_prefix(base_measure$id, mlr_reflections$task_types$type, "subgroup.")
@@ -56,12 +64,16 @@ MeasureSubgroup = R6::R6Class("MeasureSubgroup", inherit = Measure,
   private = list(
     .score = function(prediction, task, ...) {
       assert_pta_task(task)
-      groups = get_pta(task, prediction$row_ids)
-      if (is.integer(self$subgroup)) {
-        self$subgroup = levels(groups)[self$subgroup]
+
+      groups = get_pta(task, prediction$row_ids, intersect = self$intersect)
+      nms = copy(names(groups))
+      # Convert to a data.table
+      if (!is.data.table(self$subgroup)) {
+        self$subgroup = as.data.table(setNames(list(self$subgroup), nms))
       }
-      assert_choice(self$subgroup, levels(groups))
-      rws = prediction$row_ids[groups == self$subgroup]
+      assert_subset(unlist(self$subgroup), unlist(map(groups, function(x) {unique(as.character(x))})))
+      groups[, row_ids := prediction$row_ids]
+      rws = intersect(prediction$row_ids, groups[self$subgroup, on = nms]$row_ids)
       prediction$clone()$filter(rws)$score(self$base_measure, task = task, ...)
     }
   )
@@ -76,6 +88,9 @@ MeasureSubgroup = R6::R6Class("MeasureSubgroup", inherit = Measure,
 #' @template param_base_measure
 #' @param task [`Task`] \cr
 #'   [mlr3::Task()] to instantiate measures for.
+#' @param intersect [`logical`] \cr
+#'  Should multiple pta groups be intersected? Defaults to `TRUE`.
+#'  Only relevant if more than one `pta` columns are provided.
 #' @seealso [MeasureSubgroup]
 #' @export
 #' @examples
@@ -85,8 +100,10 @@ MeasureSubgroup = R6::R6Class("MeasureSubgroup", inherit = Measure,
 #'   l$train(t)$predict(t)$score(m, t)
 #' @return `list` \cr
 #' List of [mlr3::Measure]s.
-groupwise_metrics = function(base_measure, task) {
+groupwise_metrics = function(base_measure, task, intersect = TRUE) {
   assert_pta_task(task)
   base_measure = assert_measure(as_measure(base_measure))
-  map(levels(get_pta(task, rows = NULL)), MeasureSubgroup$new, base_measure = base_measure, id = NULL)
+  pta = get_pta(task, rows = NULL, intersect = intersect)
+  unique_groups = unlist(map(pta, function(x) as.character(unique(x))))
+  map(unique_groups, MeasureSubgroup$new, base_measure = base_measure, id = NULL, intersect = intersect)
 }

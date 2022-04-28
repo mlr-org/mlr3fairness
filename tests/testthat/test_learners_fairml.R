@@ -1,48 +1,46 @@
-load_learner_tests()
-
 test_that("classif.fairfgrrm", {
     skip_if_not_installed("fairml")
     learner = lrn("classif.fairfgrrm")
     out = expect_learner(learner)
     simple_autotest(learner, tsk("compas")$select(cols = c("age_cat", "priors_count")))
-    # result = run_autotest(learner) # FIXME: mlr3 needs to change here I think
-    # expect_true(result, info = result$error)
+    result = run_autotest(learner, exclude = "sanity")
+    expect_true(result, info = result$error)
 })
 
 test_that("regr.fairfrrm", {
     skip_if_not_installed("fairml")
-    learner = lrn("regr.fairfrrm")
+    learner = lrn("regr.fairfrrm", unfairness = 0.5)
     out = expect_learner(learner)
 
     task = TaskRegr$new("long", fairml::national.longitudinal.survey, target = "income06")
     task$col_roles$pta = "gender"
     simple_autotest(learner, task)
-    # result = run_autotest(learner) # FIXME: mlr3 needs to change here I think
-    # expect_true(result, info = result$error)
+    result = run_autotest(learner)
+    expect_true(result, info = result$error)
 })
 
 test_that("regr.fairzlm", {
     skip_if_not_installed("fairml")
-    learner = lrn("regr.fairzlm")
+    learner = lrn("regr.fairzlm", unfairness = 0.5)
     out = expect_learner(learner)
     
     task = TaskRegr$new("long", fairml::national.longitudinal.survey, target = "income06")
     task$col_roles$pta = "gender"
     simple_autotest(learner, task)
 
-    # result = run_autotest(learner) # FIXME: mlr3 needs to change here I think
-    # expect_true(result, info = result$error)
+    result = run_autotest(learner)
+    expect_true(result, info = result$error)
 })
 
 test_that("classif.fairzlrm", {
     skip_if_not_installed("fairml")
-    learner = lrn("classif.fairzlrm")
+    learner = lrn("classif.fairzlrm", unfairness = 0.2)
     out = expect_learner(learner)
 
     simple_autotest(learner, tsk("compas")$select(cols = c("age_cat", "priors_count")))
 
-    # result = run_autotest(learner) # FIXME: mlr3 needs to change here I think
-    # expect_true(result, info = result$error)
+    result = run_autotest(learner, exclude = "sanity")
+    expect_true(result, info = result$error)
 })
 
 test_that("regr.fairnclm", {
@@ -54,6 +52,8 @@ test_that("regr.fairnclm", {
     task$col_roles$pta = "gender"
     simple_autotest(learner, task)
 
-    # result = run_autotest(learner) # FIXME: mlr3 needs to change here I think
-    # expect_true(result, info = result$error)
+    result = run_autotest(learner)
+    expect_true(result, info = result$error)
 })
+
+

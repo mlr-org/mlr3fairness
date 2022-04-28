@@ -28,9 +28,10 @@ LearnerClassifFairfgrrm = R6Class("LearnerClassifFairfgrrm",
         definition = p_fct(levels = c("sp-komiyama", "eo-komiyama"), default = "sp-komiyama", tags = "train"),
         save.auxiliary = p_lgl(default = FALSE, tags = "train"),
         unfairness = p_dbl(lower = 0, upper = 1, tags = "train"),
-        family = p_fct(levels = c("gaussian", "binomial"), tags = "train", default = "binomial")
+        family = p_fct(levels = c("gaussian", "binomial"), tags = "train", default = "binomial"),
+        intersect = p_lgl(default = TRUE, tags = c("train", "predict"))
       )
-      ps$values = list(unfairness = 0.05)
+      ps$values = list(unfairness = 0.05, intersect = FALSE)
 
       super$initialize(
         id = "classif.fairfgrrm",
@@ -55,7 +56,9 @@ LearnerClassifFairfgrrm = R6Class("LearnerClassifFairfgrrm",
       self$state$feature_names = task$feature_names
       pta = task$col_roles$pta
       r = task$truth()
-      s = task$data(cols = pta)[[1]]
+
+      s = get_pta(task, intersect = pars$intersect)
+      pars = remove_named(pars, "intersect")
       p = task$data(cols = setdiff(task$feature_names, pta))
       p = int_to_numeric(p)
       mlr3misc::invoke(fairml::fgrrm, response = r, predictors = p, sensitive = s, .args = pars)
@@ -65,7 +68,7 @@ LearnerClassifFairfgrrm = R6Class("LearnerClassifFairfgrrm",
       # get parameters with tag "predict"
       pars = self$param_set$get_values(tags = "predict")
       pta = task$col_roles$pta
-      s = task$data(cols = pta)[[1]]
+      s = get_pta(task, intersect = pars$intersect)
       p = task$data(cols = setdiff(self$state$feature_names, pta))
       p = int_to_numeric(p)
 
