@@ -185,11 +185,11 @@ learning. `mlr3fairness` comes with reporting aides for `models` and
 `datasets`. This provides empty templates that can be used to create
 interactive reports through `RMarkdown`.
 
-| Report             | Description             | Reference             | Example                                                                       |
-| ------------------ | ----------------------- | --------------------- | ----------------------------------------------------------------------------- |
-| `report_modelcard` | Modelcard for ML models | Mitchell et al., 2018 | {link\](<https://mlr3fairness.mlr-org.com/articles/modelcard/modelcard.html>) |
-| `report_datasheet` | Datasheet for data sets | Gebru et al., 2018    | [link](https://mlr3fairness.mlr-org.com/articles/datasheet/datasheet.html)    |
-| `report_fairness`  | Fairness Report         | \- \[1\]              | [link](https://mlr3fairness.mlr-org.com/articles/fairness/fairness.html)      |
+| Report             | Description             | Reference             | Example                                                                    |
+| ------------------ | ----------------------- | --------------------- | -------------------------------------------------------------------------- |
+| `report_modelcard` | Modelcard for ML models | Mitchell et al., 2018 | [link](https://mlr3fairness.mlr-org.com/articles/modelcard/modelcard.html) |
+| `report_datasheet` | Datasheet for data sets | Gebru et al., 2018    | [link](https://mlr3fairness.mlr-org.com/articles/datasheet/datasheet.html) |
+| `report_fairness`  | Fairness Report         | \-\[1\]               | [link](https://mlr3fairness.mlr-org.com/articles/fairness/fairness.html)   |
 
 **Usage:**
 
