@@ -185,11 +185,11 @@ learning. `mlr3fairness` comes with reporting aides for `models` and
 `datasets`. This provides empty templates that can be used to create
 interactive reports through `RMarkdown`.
 
-| Report             | Description             | Reference             |
-| ------------------ | ----------------------- | --------------------- |
-| `report_modelcard` | Modelcard for ML models | Mitchell et al., 2018 |
-| `report_datasheet` | Datasheet for data sets | Gebru et al., 2018    |
-| `report_fairness`  | Fairness Report         | –                     |
+| Report             | Description             | Reference             | Example                                                                |
+| ------------------ | ----------------------- | --------------------- | ---------------------------------------------------------------------- |
+| `report_modelcard` | Modelcard for ML models | Mitchell et al., 2018 | (<https://mlr3fairness.mlr-org.com/articles/modelcard/modelcard.html>) |
+| `report_datasheet` | Datasheet for data sets | Gebru et al., 2018    | (<https://mlr3fairness.mlr-org.com/articles/datasheet/datasheet.html>) |
+| `report_fairness`  | Fairness Report         | \- \[1\]              | (<https://mlr3fairness.mlr-org.com/articles/fairness/fairness.html>)   |
 
 **Usage:**
 
@@ -254,6 +254,17 @@ fairness_prediction_density(predictions, task_test)
     classification models. Learners from `fairml` are included as
     learners in `mlr3fairness`.
 
+### Other Fairness Toolkits
+
+  - [Aequitas](http://aequitas.dssg.io/) Allows for constructing a
+    fairness report for different fairness metrics along with
+    visualization in Python.
+  - [fairlearn](https://fairlearn.org/) Allows for model auditing and
+    debiasing as well as visualization in Python.
+  - [AI Fairness 360](https://github.com/Trusted-AI/AIF360) Allows for
+    model auditing and debiasing as well as visualization in R and
+    Python.
+
 ### Future Development
 
 Several future developments are currently planned. Contributions are
@@ -261,10 +272,8 @@ highly welcome\!
 
   - Visualizations: Improvement on visualizations, like anchor points
     and others. See issues.
-  - Debiasing Methods: More Debiasing Methods, post-processing and
+  - Debiasing Methods: More debiasing methods, post-processing and
     in-processing.
-  - Fairness Report: Add a `report_fairness` that automatically creates
-    a **fairness report**
 
 ## Bugs, Feedbacks and Questions
 
@@ -274,3 +283,6 @@ questions, suggestions or feedback, please do not hesitate to open an
 “issue” about it on the GitHub page\! In case of problems / bugs, it
 is often helpful if you provide a “minimum working example” that
 showcases the behaviour.
+
+1.  The fairness report is inspired by the [Aequitas Bias
+    report](http://aequitas.dssg.io/example.html).
