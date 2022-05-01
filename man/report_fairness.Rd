@@ -8,7 +8,8 @@ report_fairness(
   filename = "fairness_report.Rmd",
   objects,
   edit = FALSE,
-  check_objects = FALSE
+  check_objects = FALSE,
+  build = FALSE
 )
 }
 \arguments{
@@ -29,6 +30,9 @@ Objects are saved as \verb{<name>.rds} in the new folder created for the report.
 
 \item{check_objects}{(\code{logical(1)})\cr
 Should items in \code{objects} be checked? If \code{FALSE}, no checks on \code{object} are performed.}
+
+\item{build}{(\code{logical(1)})\cr
+Should the report be built after creation? Initialized to \code{FALSE}.}
 }
 \description{
 Creates a new \CRANpkg{rmarkdown} template with a skeleton of  reported metrics and visualizations.
@@ -40,7 +44,7 @@ Uses the awesome markdown template created by Chris Garbin
   task = tsk("compas")
   learner = lrn("classif.rpart", predict_type = "prob")
   rr = resample(task, learner, rsmp("cv", folds = 5))
-  report_fairness("documentation/fairness.Rmd", list(task = task, resample_result = rr))
+  report_fairness("documentation/fairness.Rmd", list(task = task, resample_result = rr)
 }
 }
 \seealso{

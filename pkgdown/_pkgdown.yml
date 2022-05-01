@@ -14,7 +14,7 @@ toc:
 
 navbar:
   structure:
-    left:  [reference, news, book]
+    left:  [reference, articles, news, book]
     right: [github, mattermost, stackoverflow, rss]
   components:
     home: ~
@@ -72,3 +72,7 @@ reference:
     contents:
       - adult
       - compas
+      - task_summary
+
+articles:
+  - title: 

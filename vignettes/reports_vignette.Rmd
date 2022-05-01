@@ -64,8 +64,6 @@ rmarkdown::render(rmdfile)
 #### [Example: Data Sheet](https://mlr3fairness.mlr-org.com/articles/datasheet/datasheet.html)
 
 
-
-
 ```{r build_fairness_example_for_vignette, echo = FALSE, results = 'hide', message = FALSE, warning = FALSE, error = FALSE}
 task = tsk("compas")
 learner = lrn("classif.rpart", predict_type = "prob")
@@ -75,3 +73,4 @@ rmarkdown::render(rmdfile)
 ```
 
 #### [Example: Fairness Report](https://mlr3fairness.mlr-org.com/articles/fairness/fairness.html)
+

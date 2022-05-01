@@ -26,7 +26,7 @@ Machine Learning Fairness Extension for [mlr3](https://github.com/mlr-org/mlr3).
 
 ##  Installation
 
-Install the development version from mlr3 repo
+Install the development version from github:
 
 ```r
 remotes::install_github("mlr-org/mlr3fairness")
@@ -183,8 +183,10 @@ and `datasets`. This provides empty templates that can be used to create interac
 
 **Usage:**
 
-The `report_*` functions instantiate a new `.Rmd` template that contains a set of pre-definedquestions which can be used for reporting as well as initial graphics.
-The created `.Rmd` file can then be extended by the user.
+The `report_*` functions instantiate a new `.Rmd` template that contains a set of pre-defined 
+questions which can be used for reporting as well as initial graphics.
+The goal is that a user extends this `.Rmd` file to create comprehensive documentation for 
+datasets, ML models or to document a model's fairness.
 It can later be converted into a `html` report using`rmarkdown`'s `render`.
 
 ```{r, eval= FALSE}
@@ -227,7 +229,7 @@ fairness_prediction_density(predictions, task_test)
 - The [AI Fairness 360](https://aif360.mybluemix.net/) toolkit offers an R extension that allows for bias auditing, visualization and mitigation.
 - [fairmodels](https://github.com/ModelOriented/fairmodels/) integrates with the [DALEX](https://github.com/ModelOriented/DALEX) R-packages and similarly allows for bias auditing, visualization and mitigation.
 - The [fairness](https://github.com/kozodoi/fairness) package allows for bias auditing in R.
-- The [fairml](https://cran.r-project.org/web/packages/fairml/index.html) package contains methods for learning de-biased regression and classification models.
+- The [fairml](https://cran.r-project.org/web/packages/fairml/index.html) package contains methods for learning de-biased regression and classification models. Learners from `fairml` are included as learners in `mlr3fairness`.
 
 ### Other Fairness Toolkits
 

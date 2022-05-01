@@ -8,6 +8,8 @@
 #'   File path or name for new file that should be created.
 #' @param edit (`logical(1)`)\cr
 #'   `TRUE` to edit the template immediately.
+#' @param build (`logical(1)`)\cr
+#'   Should the report be built after creation? Initialized to `FALSE`.
 #' @references
 #' `r format_bib("datasheets")`
 #' @family fairness_reports
@@ -16,10 +18,13 @@
 #' \dontrun{
 #'   report_datasheet("documentation/datasheet.Rmd")
 #' }
-report_datasheet = function(filename = "datasheet.Rmd", edit = FALSE) {
-  assert_flag(edit)
+report_datasheet = function(filename = "datasheet.Rmd", edit = FALSE, build = FALSE) {
   assert_path_for_output(filename)
-  rmarkdown::draft(filename, template = "datasheets", package = "mlr3fairness", create_dir = TRUE, edit = edit)
+  assert_flag(edit)
+  assert_flag(build)
+  fp = rmarkdown::draft(filename, template = "datasheets", package = "mlr3fairness", create_dir = TRUE, edit = edit)
+  if (build) rmarkdown::render(fp)
+  invisible(fp)
 }
 
 #' Create a Modelcard
@@ -37,10 +42,13 @@ report_datasheet = function(filename = "datasheet.Rmd", edit = FALSE) {
 #' \dontrun{
 #'   report_modelcard("documentation/modelcard.Rmd")
 #' }
-report_modelcard = function(filename = "modelcard.Rmd", edit = FALSE) {
+report_modelcard = function(filename = "modelcard.Rmd", edit = FALSE, build = FALSE) {
   assert_path_for_output(filename)
   assert_flag(edit)
-  rmarkdown::draft(filename, template = "modelcards", package = "mlr3fairness", create_dir = TRUE, edit = edit)
+  assert_flag(build)
+  fp = rmarkdown::draft(filename, template = "modelcards", package = "mlr3fairness", create_dir = TRUE, edit = edit)
+  if (build) rmarkdown::render(fp)
+  invisible(fp)
 }
 
 #' Create a Fairness Report
@@ -65,13 +73,14 @@ report_modelcard = function(filename = "modelcard.Rmd", edit = FALSE) {
 #'   task = tsk("compas")
 #'   learner = lrn("classif.rpart", predict_type = "prob")
 #'   rr = resample(task, learner, rsmp("cv", folds = 5))
-#'   report_fairness("documentation/fairness.Rmd", list(task = task, resample_result = rr))
+#'   report_fairness("documentation/fairness.Rmd", list(task = task, resample_result = rr)
 #' }
-report_fairness = function(filename = "fairness_report.Rmd", objects, edit = FALSE, check_objects = FALSE) {
+report_fairness = function(filename = "fairness_report.Rmd", objects, edit = FALSE, check_objects = FALSE, build = FALSE) {
   assert_path_for_output(filename)
   assert_list(objects, names = "unique")
   assert_flag(edit)
   assert_flag(check_objects)
+  assert_flag(build)
   if (check_objects) {
     assert_subset(c("resample_result", "task"), names(objects))
     assert_resample_result(objects$resample_result)
@@ -80,5 +89,6 @@ report_fairness = function(filename = "fairness_report.Rmd", objects, edit = FAL
 
   filepath = rmarkdown::draft(filename, template = "fairness_report", package = "mlr3fairness", create_dir = TRUE, edit = edit)
   write_files(objects, dirname(filepath))
+  if (build) rmarkdown::render(filepath)
   invisible(filepath)
 }

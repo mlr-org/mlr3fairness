@@ -4,7 +4,7 @@
 \alias{report_datasheet}
 \title{Create a Datasheet for Documenting a Dataset}
 \usage{
-report_datasheet(filename = "datasheet.Rmd", edit = FALSE)
+report_datasheet(filename = "datasheet.Rmd", edit = FALSE, build = FALSE)
 }
 \arguments{
 \item{filename}{(\code{character(1)})\cr
@@ -12,6 +12,9 @@ File path or name for new file that should be created.}
 
 \item{edit}{(\code{logical(1)})\cr
 \code{TRUE} to edit the template immediately.}
+
+\item{build}{(\code{logical(1)})\cr
+Should the report be built after creation? Initialized to \code{FALSE}.}
 }
 \description{
 Creates a new \CRANpkg{rmarkdown} template with a skeleton questionnaire for dataset documentation.
