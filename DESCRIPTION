@@ -43,6 +43,7 @@ Imports:
     ggplot2
 Suggests:
     mlr3viz,
+    gower,
     rmarkdown,
     knitr,
     rpart,
