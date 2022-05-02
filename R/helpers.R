@@ -140,7 +140,7 @@ get_pta = function(task, rows = NULL, intersect = FALSE) {
 #' * Feature Names
 #' * The Protected Attribute
 #'
-#' @param task [`Task``]
+#' @param task [Task]
 #' @return 
 #' `data.frame` containing the reported information
 #' 
