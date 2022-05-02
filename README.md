@@ -248,9 +248,8 @@ fairness_prediction_density(predictions, task_test)
     mitigation.
   - The [fairness](https://github.com/kozodoi/fairness) package allows
     for bias auditing in R.
-  - The
-    [fairml](https://cran.r-project.org/web/packages/fairml/index.html)
-    package contains methods for learning de-biased regression and
+  - The [fairml](https://cran.r-project.org/package=fairml) package
+    contains methods for learning de-biased regression and
     classification models. Learners from `fairml` are included as
     learners in `mlr3fairness`.
 

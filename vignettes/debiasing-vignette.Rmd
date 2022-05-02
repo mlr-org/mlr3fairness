@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 Given we detected some form of bias during bias auditing, we are often interested in obtaining fair(er) models.
 There are several ways to achieve this, such as collecting additional data or finding and fixing errors in the data, but given there are no biases in the labelling process one other option is to debias models using either **preprocessing**, **postprocessing** and **inprocessing** methods.
 `mlr3fairness` provides some operators as `PipeOp`s for `mlr3pipelines`.
-If you are not familiar with [mlr3pipelines](), the [mlr3 book](https://mlr3book.mlr-org.com/pipelines.html)
+If you are not familiar with [mlr3pipelines](https://github.com/mlr-org/mlr3pipelines), the [mlr3 book](https://mlr3book.mlr-org.com/pipelines.html)
 
 We again showcase debiasing using the `adult_train` task:
 ```{r}

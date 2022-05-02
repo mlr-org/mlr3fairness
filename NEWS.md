@@ -1,7 +1,7 @@
 # mlr3fairness 0.3.0
 
 * CRAN release version
-* Minor improvements for `groupwise_metrics`.
+* Minor improvements for `groupwise_metrics`, can now `intersect`.
 
 # mlr3fairness 0.2.0
 
