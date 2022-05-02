@@ -1,3 +1,8 @@
+# mlr3fairness 0.3.0
+
+* CRAN release version
+* Minor improvements for `groupwise_metrics`.
+
 # mlr3fairness 0.2.0
 
 * Added 3 types of reports: `report_modelcard`, `report_datasheet`, `report_fairness`
