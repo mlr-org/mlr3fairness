@@ -4,7 +4,7 @@
 \name{mlr3fairness-package}
 \alias{mlr3fairness}
 \alias{mlr3fairness-package}
-\title{mlr3fairness: Fairness Auditing and Debiasing for mlr3}
+\title{mlr3fairness: Fairness Auditing and Debiasing for 'mlr3'}
 \description{
 Integrates fairness auditing and debiasing methods into the 'mlr3' ecosystem. This includes fairness metrics, visualizations and debiasing methods such as 'Reweighing' and 'Equalized Odds'. Integration with mlr3 allows for auditing of mlr3 models as well as convenient joint tuning of machine learning algorithms and debiasing methods.
 }
@@ -18,11 +18,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Wei Siyi \email{weisiyi2@gmail.com}
+\strong{Maintainer}: Florian Pfisterer \email{pfistererf@googlemail.com} (\href{https://orcid.org/0000-0001-8867-762X}{ORCID})
 
 Authors:
 \itemize{
-  \item Florian Pfisterer \email{pfistererf@googlemail.com} (\href{https://orcid.org/0000-0001-8867-762X}{ORCID})
+  \item Wei Siyi \email{weisiyi2@gmail.com}
   \item Michel Lang \email{michellang@gmail.com} (\href{https://orcid.org/0000-0001-9754-0393}{ORCID})
 }
 

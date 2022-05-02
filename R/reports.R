@@ -73,7 +73,7 @@ report_modelcard = function(filename = "modelcard.Rmd", edit = FALSE, build = FA
 #'   task = tsk("compas")
 #'   learner = lrn("classif.rpart", predict_type = "prob")
 #'   rr = resample(task, learner, rsmp("cv", folds = 5))
-#'   report_fairness("documentation/fairness.Rmd", list(task = task, resample_result = rr)
+#'   report_fairness("documentation/fairness.Rmd", list(task = task, resample_result = rr))
 #' }
 report_fairness = function(filename = "fairness_report.Rmd", objects, edit = FALSE, check_objects = FALSE, build = FALSE) {
   assert_path_for_output(filename)
