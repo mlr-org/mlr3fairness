@@ -1,4 +1,5 @@
 test_that("reweighing PipeOp can be loaded and works with disparate impact score fairness measures", {
+  skip_on_cran()
   task = tsk("adult_train")$filter(1:300)
   reweighing = po("reweighing_wts")
   graph = reweighing %>>% lrn("classif.rpart")
@@ -40,6 +41,7 @@ test_that("reweighing_wts with initial weights", {
 })
 
 test_that("reweighing errors on multiclass", {
+  skip_on_cran()
   t = tsk("iris")
   t$set_col_roles("Petal.Length", "pta")
   expect_error(po("reweighing_wts")$train(list(t))[[1]], "Only binary")

@@ -1,4 +1,5 @@
 test_that("all learners, multi-class pta", {
+    skip_on_cran()
     skip_if_not_installed("fairml")
 
     for (k in mlr_learners_fairness$key) {
@@ -13,6 +14,7 @@ test_that("all learners, multi-class pta", {
 })
 
 test_that("all learners, two pta columns", {
+    skip_on_cran()
     skip_if_not_installed("fairml")
     for (k in mlr_learners_fairness$key) {
         learner = lrn(k)

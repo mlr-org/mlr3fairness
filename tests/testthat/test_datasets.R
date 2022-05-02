@@ -13,6 +13,7 @@ test_that("tasks can be loaded", {
 })
 
 test_that("compas dataset can be loaded with correct format", {
+  skip_on_cran()
   compas = tsk("compas")
   expect_r6(compas, "TaskClassif")
   compas_data = compas$data()
@@ -28,6 +29,7 @@ test_that("compas dataset can be loaded with correct format", {
 })
 
 test_that("adult_train dataset can be loaded with correct format", {
+  skip_on_cran()
   adult_train = tsk("adult_train")
   expect_r6(adult_train, "TaskClassif")
   adult_train_data = adult_train$data()
