@@ -44,7 +44,7 @@ Uses the awesome markdown template created by Chris Garbin
   task = tsk("compas")
   learner = lrn("classif.rpart", predict_type = "prob")
   rr = resample(task, learner, rsmp("cv", folds = 5))
-  report_fairness("documentation/fairness.Rmd", list(task = task, resample_result = rr)
+  report_fairness("documentation/fairness.Rmd", list(task = task, resample_result = rr))
 }
 }
 \seealso{

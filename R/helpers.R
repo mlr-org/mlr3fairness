@@ -127,10 +127,11 @@ get_pta = function(task, rows = NULL, intersect = FALSE) {
   }
 }
 
-#' Task summary for fairness report
+#' @title Task summary for fairness report
 #'
+#' @description 
 #' Create the general task documentation in a dataframe for fairness report.
-#' The information include
+#' The information includes
 #' * Audit Date
 #' * Task Name
 #' * Number of observations
@@ -139,10 +140,10 @@ get_pta = function(task, rows = NULL, intersect = FALSE) {
 #' * Feature Names
 #' * The Protected Attribute
 #'
-#' @param task [Task]
-#' @return dataframe the contains the reported information
+#' @param task [`Task``]
+#' @return 
+#' `data.frame` containing the reported information
 #' 
-#' @noRd
 #' @export
 task_summary = function(task) {
   # Create the report attributes
