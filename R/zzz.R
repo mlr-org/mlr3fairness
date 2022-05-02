@@ -8,7 +8,7 @@
 #' @import paradox
 #' @import data.table
 #' @importFrom utils getFromNamespace data
-#' @importFrom stats runif dist predict
+#' @importFrom stats runif dist predict setNames
 #' @keywords internal
 "_PACKAGE"
 
@@ -73,7 +73,7 @@
 
   # static code checks should not complain about commonly used data.table columns
   utils::globalVariables(c("variable", "value", "learner_id", "n_tgt", "n_pta", "pta", "task_id",
-    "pta_cols", "wt", "N", "agg")) # nocov end
+    "pta_cols", "wt", "N", "agg", "row_ids")) # nocov end
 }
 
 mlr3misc::leanify_package()
