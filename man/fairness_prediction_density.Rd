@@ -2,9 +2,18 @@
 % Please edit documentation in R/fairness_prediction_density.R, R/visualize.R
 \name{fairness_prediction_density}
 \alias{fairness_prediction_density}
+\alias{fairness_prediction_density.PredictionClassif}
+\alias{fairness_prediction_density.BenchmarkResult}
+\alias{fairness_prediction_density.ResampleResult}
 \title{Probability Density Plot}
 \usage{
 fairness_prediction_density(object, ...)
+
+\method{fairness_prediction_density}{PredictionClassif}(object, task, ...)
+
+\method{fairness_prediction_density}{BenchmarkResult}(object, ...)
+
+\method{fairness_prediction_density}{ResampleResult}(object, task, ...)
 
 fairness_prediction_density(object, ...)
 }

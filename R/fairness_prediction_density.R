@@ -13,6 +13,8 @@
 #'   The arguments to be passed to methods, such as:
 #'   * `task` ([TaskClassif])\cr
 #'     The data task that contains the protected column.
+#'  * `type` [`character`]\cr
+#'     The plot type. Either `violin` or `density`.
 #'
 #' @export
 #' @examples
@@ -33,8 +35,10 @@ fairness_prediction_density = function(object, ...) {
   UseMethod("fairness_prediction_density")
 }
 
+#' @rdname fairness_prediction_density
 #' @export
-fairness_prediction_density.PredictionClassif = function(object, task, ...) { # nolint
+fairness_prediction_density.PredictionClassif = function(object, task,  type = "density", ...) { # nolint
+  assert_choice(type, c("violin", "density"))
   if (is.null(object$prob)) {
     stop("Object needs to have predict.type = 'prob'!") # nocov
   }
@@ -51,6 +55,7 @@ fairness_prediction_density.PredictionClassif = function(object, task, ...) { # 
     dt = dt[variable == classes[1], ]
   }
 
+  if (type == "violin") {
   ggplot(dt, aes(x = pta_cols, y = value)) +
     geom_boxplot(aes(fill = pta_cols), width = 0.4 / length(unique(dt$pta_cols))) +
     geom_violin(alpha = 0.3, width = 1.5 / length(unique(dt$pta_cols)), fill = "grey") +
@@ -61,10 +66,18 @@ fairness_prediction_density.PredictionClassif = function(object, task, ...) { # 
     ylim(c(0, 1)) +
     coord_flip() +
     facet_wrap(variable ~ .)
+  } else if (type == "density") {
+    ggplot(dt, aes(x = value)) +
+      geom_density(aes(fill = pta_cols), alpha = 0.7) +
+      xlab("Predicted probability") +
+      labs(fill = "Protected Class") + 
+      facet_wrap(variable ~ .)
+  }
 }
 
+#' @rdname fairness_prediction_density
 #' @export
-fairness_prediction_density.BenchmarkResult = function(object, ...) { # nolint
+fairness_prediction_density.BenchmarkResult = function(object, type = "density", ...) { # nolint
   if (object$task_type != "classif") {
     stopf("fairness_prediction_density() only works on classification problems")
   }
@@ -84,22 +97,33 @@ fairness_prediction_density.BenchmarkResult = function(object, ...) { # nolint
   classes = colnames(dt)[grep(colnames(dt), pattern = "prob.")]
   dt = melt(dt, measure.vars = classes)
   dt = melt(dt, measure.vars = unique(dt$pta), value.name = "pta_cols", variable.name = "pta_name")
+  dt = dt[!is.na(value), ]
 
-  # For binary get rid of 2nd class probs
-  if (length(unique(classes)) == 2L) {
-    dt = dt[variable == classes[1], ]
+  # For binary get rid of class probs
+  drop_cols = na.omit(dt[, .(binary = ifelse(length(unique(variable)) == 2L, unique(as.character(variable))[2], NA)), by = "task_id"][["binary"]])
+  dt = dt[!(variable %in% drop_cols), ]
+  # Combine names for better facetting  
+  dt[, variable := paste0(task_id, ": ", variable)]
+  
+  if (type == "violin") {
+    ggplot(dt, aes(x = pta_cols, y = value)) +
+      geom_boxplot(aes(fill = pta_cols), width = 0.4 / length(unique(dt$pta_cols))) +
+      geom_violin(alpha = 0.3, fill = "grey", width = 1.5 / length(unique(dt$pta_cols))) +
+      xlab("Protected attributes") +
+      scale_fill_hue(c = 100, l = 100) +
+      ylim(c(0, 1)) +
+      coord_flip() +
+      facet_wrap(variable ~ learner_id)
+  } else if (type == "density") {
+    ggplot(dt, aes(x = value)) +
+      geom_density(aes(fill = pta_cols), alpha = 0.7) +
+      xlab("Predicted probability") +
+      labs(fill = "Protected Class") + 
+      facet_grid(variable ~ learner_id)
   }
-
-  ggplot(dt, aes(x = pta_cols, y = value)) +
-    geom_boxplot(aes(fill = pta_cols), width = 0.4 / length(unique(dt$pta_cols))) +
-    geom_violin(alpha = 0.3, fill = "grey", width = 1.5 / length(unique(dt$pta_cols))) +
-    xlab("Protected attributes") +
-    scale_fill_hue(c = 100, l = 100) +
-    ylim(c(0, 1)) +
-    coord_flip() +
-    facet_wrap(variable ~ learner_id + task_id)
 }
 
+#' @rdname fairness_prediction_density
 #' @export
 fairness_prediction_density.ResampleResult = function(object, task, ...) { # nolint
   object = as_benchmark_result(object)

@@ -41,9 +41,10 @@ test_that("compare_metrics", {
   })
 })
 
-test_that("fairness_accuracy_tradeoff", {
+test_that("prediction_density", {
   # BMR
   check_plots(fairness_prediction_density(bmr))
+  check_plots(fairness_prediction_density(bmr, type = "violin"))
 
   # RR
   map(bmr$resample_results$resample_result, function(rr) {
