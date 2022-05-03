@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<!--
+Font-awesome icons ie github or twitter
+-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/brands.css" integrity="sha384-n9+6/aSqa9lBidZMRCQHTHKJscPq6NW4pCQBiMmHdUCvPN8ZOg2zJJTkC7WIezWv" crossorigin="anonymous">
+
+<!--
+Google fonts api stuff
+-->
+
+
+
+<title>Model card for “add model name here”</title>
+
+
+
+
+
+
+<style>
+@page {
+size: 45in 38in;
+margin: 0;
+padding: 0;
+}
+body {
+margin: 0;
+font-size: 45px;
+width: 45in;
+height: 38in;
+padding: 0;
+text-align: justify;
+font-family: Palatino;
+}
+.poster_wrap {
+width: 45in;
+height: 38in;
+padding: 0cm;
+}
+.title_container {
+width: 45in;
+height: calc(38in * 0.15);
+overflow: hidden;
+background-color: #0b4545;
+border: 0 solid #0b4545;
+}
+.logo_left {
+float: left;
+width: 10%;
+height: 100%;
+background-color: #0b4545;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.logo_right {
+float: right;
+width: 10%;
+height: 100%;
+background-color: #0b4545;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.poster_title {
+text-align: center;
+position: relative;
+float: left;
+width: 80%;
+height: 100%;
+color: #FFFFFF;
+top: 50%;
+transform: translateY(-50%);
+-webkit-transform: translateY(-50%);
+}
+#title {
+font-family: Palatino;
+}
+/* unvisited link */
+a:link {
+color: #cc0000;
+}
+.mybreak {
+  break-before: column;
+}
+/* visited link */
+a:visited {
+color: #cc0000;
+}
+
+/* mouse over link */
+a:hover {
+color: #cc0000;
+}
+
+/* selected link */
+a:active {
+color: #cc0000;
+}
+.poster_body {
+-webkit-column-count: 4; /* Chrome, Safari, Opera */
+-moz-column-count: 4; /* Firefox */
+column-count: 4;
+-webkit-column-fill: auto;
+-moz-column-fill: auto;
+column-fill: auto;
+-webkit-column-rule-width: 1mm;
+-moz-column-rule-width: 1mm;
+column-rule-width: 1mm;
+-webkit-column-rule-style: dashed;
+-moz-column-rule-style: dashed;
+column-rule-style: dashed;
+-webkit-column-rule-color: #0b4545;
+-moz-column-rule-color: #0b4545;
+column-rule-color: #0b4545;
+column-gap: 1em;
+padding-left: 0.5em;
+padding-right: 0.5em;
+height: 100%;
+color: #000000
+background-color: #ffffff;
+}
+.poster_title h1 {
+font-size: 75pt;
+margin: 0;
+border: 0;
+font-weight: normal;
+}
+.poster_body_wrap{
+width: calc(45in + 0 + 0);
+height: calc(38in * 0.83);
+padding-top: calc(38in * 0.005);
+padding-bottom: calc(38in * 0.01);
+background-color: #ffffff;
+}
+.poster_title h3 {
+color: #ffffff;
+font-size: 50pt;
+margin: 0;
+border: 0;
+font-weight: normal;
+}
+.poster_title h3 > sup {
+  font-size: 35pt;
+  margin-left: 0.02em;
+}
+.poster_title h5 {
+color: #FFFFFF;
+font-size: 35pt;
+margin: 0;
+border: 0;
+font-weight: normal;
+}
+img {
+margin-top: 2cm;
+margin-bottom: 0;
+}
+.section {
+  padding: 0.2em;
+}
+.poster_body h1 {
+text-align: center;
+color: #FFFFFF;
+font-size: 65pt;
+border: 2mm solid #0b4545;
+background-color: #0b4545;
+border-radius: 4mm 0mm;
+margin-top: 2mm;
+margin-bottom: 2mm;
+font-weight: normal;
+}
+.poster_body h2 {
+color: #000000;
+font-size: 40pt;
+padding-left: 4mm;
+font-weight: normal;
+}
+.span {
+width: 200%;
+}
+/* center align leaflet map,
+from https://stackoverflow.com/questions/52112119/center-leaflet-in-a-rmarkdown-document */
+.html-widget {
+margin: auto;
+position: sticky;
+margin-top: 2cm;
+margin-bottom: 2cm;
+}
+.leaflet.html-widget.html-widget-static-bound.leaflet-container.leaflet-touch.leaflet-fade-anim.leaflet-grab.leaflet-touch-drag.leaflet-touch-zoom {
+position: sticky;
+width: 100%;
+}
+pre.sourceCode.r {
+background-color: #dddddd40;
+border-radius: 4mm;
+padding: 4mm;
+width: 75%;
+/* align-items: center; */
+margin: auto;
+padding-left: 2cm;
+}
+code.sourceCode.r{
+background-color: transparent;
+font-size: 20pt;
+border-radius: 2mm;
+}
+.caption {
+font-size: 25pt;
+}
+.table caption {
+font-size: 25pt;
+padding-bottom: 3mm;
+
+}
+code {
+font-size: 1em;
+font-family: monospace;
+background-color: #00808024;
+color: #0b4545;
+padding: 1.2mm;
+border-radius: 2mm;
+}
+.poster_title code {
+font-size: 1em;
+}
+table {
+font-size: 40px;
+margin: auto;
+border-top: 3px solid #666;
+border-bottom: 3px solid #666;
+}
+table thead th {
+border-bottom: 3px solid #ddd;
+}
+td {
+padding: 8px;
+}
+th {
+padding: 15px;
+}
+caption {
+margin-bottom: 10px;
+}
+.poster_body p {
+margin-right: 4mm;
+margin-left: 4mm;
+margin-top: 6mm;
+margin-bottom: 10mm;
+}
+.poster_body ol {
+margin-right: 4mm;
+margin-left: 4mm;
+}
+#ul {
+margin-right: 4mm;
+margin-left: 4mm;
+}
+.references p {
+font-size: 20pt;
+}
+.orcid img {
+  width: 1em;
+}
+</style>
+</head>
+<body>
+
+
+<div class="poster_wrap">
+<div class="title_container">
+<!-- Left Logo  -->
+<div class="logo_left">
+</div>
+<!-- Poster Title -->
+<div class= "poster_title">
+<h1 id="title">Model card for “add model name here”</h1>
+<h3 id="author">First Author<sup>1</sup>, Second Author<sup>2</sup></h3><br>
+<h5 id="affiliation"><sup>1</sup> Planet Earth, Milky Way<br> <sup>2</sup> Planet Earth, Milky Way</h5>
+</div>
+<!-- Right Logo  -->
+<div class="logo_right">
+</div>
+</div>
+
+<div class='poster_body_wrap'>
+<div class='poster_body'>
+<p>Sections and prompts from the <a href="https://arxiv.org/abs/1810.03993">model cards paper</a>, v2. (<span class="citation">Mitchell et al. (2019)</span>).</p>
+<p>Jump to section:</p>
+<ul>
+<li><a href="#model-details">Model details</a></li>
+<li><a href="#intended-use">Intended use</a></li>
+<li><a href="#factors">Factors</a></li>
+<li><a href="#metrics">Metrics</a></li>
+<li><a href="#evaluation-data">Evaluation data</a></li>
+<li><a href="#training-data">Training data</a></li>
+<li><a href="#quantitative-analyses">Quantitative analyses</a></li>
+<li><a href="#ethical-considerations">Ethical considerations</a></li>
+<li><a href="#caveats-and-recommendations">Caveats and recommendations</a></li>
+</ul>
+<div id="model-details" class="section level2">
+<h2>Model details</h2>
+<p><em>Basic information about the model.</em></p>
+<p>Review section 4.1 of the <a href="https://arxiv.org/abs/1810.03993">model cards paper</a>.</p>
+<ul>
+<li>Person or organization developing model</li>
+<li>Model date</li>
+<li>Model version</li>
+<li>Model type</li>
+<li>Information about training algorithms, parameters, fairness constraints or other applied
+approaches, and features</li>
+<li>Paper or other resource for more information</li>
+<li>Citation details</li>
+<li>License</li>
+<li>Where to send questions or comments about the model</li>
+</ul>
+</div>
+<div id="intended-use" class="section level2">
+<h2>Intended use</h2>
+<p><em>Use cases that were envisioned during development.</em></p>
+<p>Review section 4.2 of the <a href="https://arxiv.org/abs/1810.03993">model cards paper</a>.</p>
+<div id="primary-intended-uses" class="section level3">
+<h3>Primary intended uses</h3>
+</div>
+<div id="primary-intended-users" class="section level3">
+<h3>Primary intended users</h3>
+</div>
+<div id="out-of-scope-use-cases" class="section level3">
+<h3>Out-of-scope use cases</h3>
+</div>
+</div>
+<div id="factors" class="section level2">
+<h2>Factors</h2>
+<p><em>Factors could include demographic or phenotypic groups, environmental conditions, technical
+attributes, or others listed in Section 4.3.</em></p>
+<p>Review section 4.3 of the <a href="https://arxiv.org/abs/1810.03993">model cards paper</a>.</p>
+<div id="relevant-factors" class="section level3">
+<h3>Relevant factors</h3>
+</div>
+<div id="evaluation-factors" class="section level3">
+<h3>Evaluation factors</h3>
+</div>
+</div>
+<div id="metrics" class="section level2">
+<h2>Metrics</h2>
+<p><em>The appropriate metrics to feature in a model card depend on the type of model that is being tested.
+For example, classification systems in which the primary output is a class label differ significantly
+from systems whose primary output is a score. In all cases, the reported metrics should be determined
+based on the model’s structure and intended use.</em></p>
+<p>Review section 4.4 of the <a href="https://arxiv.org/abs/1810.03993">model cards paper</a>.</p>
+<div id="model-performance-measures" class="section level3">
+<h3>Model performance measures</h3>
+</div>
+<div id="decision-thresholds" class="section level3">
+<h3>Decision thresholds</h3>
+</div>
+<div id="approaches-to-uncertainty-and-variability" class="section level3">
+<h3>Approaches to uncertainty and variability</h3>
+</div>
+</div>
+<div id="evaluation-data" class="section level2">
+<h2>Evaluation data</h2>
+<p><em>All referenced datasets would ideally point to any set of documents that provide visibility into the
+source and composition of the dataset. Evaluation datasets should include datasets that are publicly
+available for third-party use. These could be existing datasets or new ones provided alongside the model
+card analyses to enable further benchmarking.</em></p>
+<p>Review section 4.5 of the <a href="https://arxiv.org/abs/1810.03993">model cards paper</a>.</p>
+<div id="datasets" class="section level3">
+<h3>Datasets</h3>
+</div>
+<div id="motivation" class="section level3">
+<h3>Motivation</h3>
+</div>
+<div id="preprocessing" class="section level3">
+<h3>Preprocessing</h3>
+</div>
+</div>
+<div id="training-data" class="section level2">
+<h2>Training data</h2>
+<p>Review section 4.6 of the <a href="https://arxiv.org/abs/1810.03993">model cards paper</a>.</p>
+</div>
+<div id="quantitative-analyses" class="section level2">
+<h2>Quantitative analyses</h2>
+<p><em>Quantitative analyses should be disaggregated, that is, broken down by the chosen factors. Quantitative
+analyses should provide the results of evaluating the model according to the chosen metrics, providing
+confidence interval values when possible.</em></p>
+<p>Review section 4.7 of the <a href="https://arxiv.org/abs/1810.03993">model cards paper</a>.</p>
+<div id="unitary-results" class="section level3">
+<h3>Unitary results</h3>
+</div>
+<div id="intersectional-result" class="section level3">
+<h3>Intersectional result</h3>
+</div>
+</div>
+<div id="ethical-considerations" class="section level2">
+<h2>Ethical considerations</h2>
+<p><em>This section is intended to demonstrate the ethical considerations that went into model development,
+surfacing ethical challenges and solutions to stakeholders. Ethical analysis does not always lead to
+precise solutions, but the process of ethical contemplation is worthwhile to inform on responsible
+practices and next steps in future work.</em></p>
+<p>Review section 4.8 of the <a href="https://arxiv.org/abs/1810.03993">model cards paper</a>.</p>
+<div id="data" class="section level3">
+<h3>Data</h3>
+</div>
+<div id="human-life" class="section level3">
+<h3>Human life</h3>
+</div>
+<div id="mitigations" class="section level3">
+<h3>Mitigations</h3>
+</div>
+<div id="risks-and-harms" class="section level3">
+<h3>Risks and harms</h3>
+</div>
+<div id="use-cases" class="section level3">
+<h3>Use cases</h3>
+</div>
+</div>
+<div id="caveats-and-recommendations" class="section level2">
+<h2>Caveats and recommendations</h2>
+<p><em>This section should list additional concerns that were not covered in the previous sections.</em></p>
+<p>Review section 4.9 of the <a href="https://arxiv.org/abs/1810.03993">model cards paper</a>.</p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-modelcards" class="csl-entry">
+Mitchell, Margaret, Simone Wu, Andrew Zaldivar, Parker Barnes, Lucy Vasserman, Ben Hutchinson, Elena Spitzer, Inioluwa Deborah Raji, and Timnit Gebru. 2019. <span>“Model Cards for Model Reporting.”</span> In <em>Proceedings of the Conference on Fairness, Accountability, and Transparency</em>, 220–29. FAT* ’19. New York, NY, USA: Association for Computing Machinery. <a href="https://doi.org/10.1145/3287560.3287596">https://doi.org/10.1145/3287560.3287596</a>.
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+
+
+</body>
+</html>
