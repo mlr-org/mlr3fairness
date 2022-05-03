@@ -18,7 +18,8 @@ knitr::opts_chunk$set(
 library(mlr3fairness)
 td = "../docs/articles"
 if (!dir.exists(td)) dir.create(td, recursive = TRUE)
-unlink(list.files(td, full.names = TRUE), recursive = TRUE)
+report_dirs = c("datasheet", "modelcard", "fairness")
+unlink(paste0(td, "/", report_dirs), recursive = TRUE)
 ```
 
 `mlr3fairness` contains several templates that allow for creating reports based on `RMarkdown` files.
