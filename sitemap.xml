@@ -10,7 +10,16 @@
     <loc>https://mlr3fairness.mlr-org.com/articles/datasheet/datasheet.html</loc>
   </url>
   <url>
+    <loc>https://mlr3fairness.mlr-org.com/articles/debiasing-vignette.html</loc>
+  </url>
+  <url>
     <loc>https://mlr3fairness.mlr-org.com/articles/fairness/fairness.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3fairness.mlr-org.com/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3fairness.mlr-org.com/articles/measures-vignette.html</loc>
   </url>
   <url>
     <loc>https://mlr3fairness.mlr-org.com/articles/modelcard/modelcard.html</loc>
