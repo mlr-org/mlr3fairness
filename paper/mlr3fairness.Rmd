@@ -286,7 +286,7 @@ Table: Selection of implemented fairness metrics. The full list can be obtained 
 |fairness.tpr          | true positive rate equality /equality of opportunity \citet{hardt2016equality}             |
 |fairness.fnr          | false negative / false omission rate equality \citet{richardcompas}                        |
 |fairness.eod          | equalized odds: fairness.fpr + fairness.tpr \citet{hardt2016equality}                      |
-|fairness.ppv          | demographic parity, equalized positive rates \citet{Calders2010}                           |
+|fairness.cv           | demographic parity, equalized positive rates \citet{Calders2010}                           |
 |fairness.acc\_eod=.05 |Accuracy under equalized odds constraint \citet{perrone2021fair}                            |
 |fairness.acc\_ppv=.05 |Accuracy under equalized odds constraint \citet{perrone2021fair}                            |
 
