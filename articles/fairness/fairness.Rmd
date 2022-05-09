@@ -1,0 +1,141 @@
+---
+title: Fairness Report
+author:
+  - name: First Author
+output: html_document
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library("mlr3")
+library("mlr3viz")
+library("mlr3fairness")
+library("ggplot2")
+library("kableExtra")
+```
+<!-- This reads in `objects` provided to report_fairness: resample_result, task, ...-->
+
+```{r read, child = 'read_data.Rmd'}
+
+```
+
+## Audit Report: Summary
+
+This document introduces on how to use `mlr3fairness` to create audit reports with different tasks throughout the fairness exploration process.
+
+There are three main sections for this document. Which describe the details for the task, the model and the interpretability of the parameters.
+
+Jump to section:
+
+- [Task details](#task-details)
+- [Model details](#model-details)
+- [Interpretability](#Interpretability)
+
+## Task details
+
+In this fairness report, we investigate the fairness of the following task:
+
+```{r}
+task
+```
+
+### The General Task Documentation for the task:
+
+Here we could get the basic details for the task.
+
+```{r}
+task_summary(task) %>%
+  kbl() %>%
+  kable_paper("hover", full_width = F)
+```
+### Exploratory Data Analysis: 
+
+We could also report the number of missing values, types and the levels for each feature:
+
+```{r}
+df_summary = data.frame(task$col_info)[task$col_info$id != "..row_id",
+                                       !(names(task$col_info) %in% c("id", "label"))]
+data.frame("Count_of_Missing_Value" = task$missings()) %>%
+  cbind(df_summary) %>%
+  kbl() %>%
+  kable_paper("hover", full_width = F)
+```
+
+We first look at the label distribution:
+
+```{r}
+autoplot(task) + facet_wrap(task$col_roles$pta)
+```
+
+## Model details
+
+We could see the model that has been used in `resample_result`:
+
+```{r}
+resample_result$learner
+```
+
+### Fairness Metrics
+
+We could report more than one fairness metric, but keep in mind. Below the metrics are the mean of all the resample results.
+
+```{r}
+fair_metrics = msrs(c("fairness.acc","fairness.eod","fairness.fnr",
+  "fairness.fpr","fairness.npv","fairness.ppv","fairness.tnr",
+  "fairness.tpr"))
+```
+
+```{r}
+resample_result$aggregate(fair_metrics) %>%
+  kbl() %>%
+  kable_paper("hover", full_width = F)
+```
+
+We could also use visualization to report the fairness.
+For example, the fairness and accuracy trade off, compare metrics visualization and the fairness prediction density of the model `classif.rpart` .
+For more detailed usage and examples, you may want to check the visualization vignette.
+
+```{r}
+fairness_accuracy_tradeoff(resample_result, msr("fairness.fnr"))
+```
+
+```{r, eval = (resample_result$learner$predict_type == "prob")}
+fairness_prediction_density(resample_result)
+```
+
+```{r}
+compare_metrics(resample_result, fair_metrics)
+```
+
+## Interpretability
+
+Finally, we could use the external package to analyze the interpretability of the parameters. For the following example we choose `iml` as a demonstration. We need first extract the learner from `resample_result` and retrain it.
+
+You could generate the variable importance plot like this
+
+```{r}
+library("iml")
+
+target = task$target_names
+learner = resample_result$learner
+learner$train(task)
+
+model = Predictor$new(model = learner,
+                      data = task$data()[,.SD, .SDcols = !target],
+                      y = task$data()[, ..target])
+
+imp <- FeatureImp$new(model, loss = "ce")
+plot(imp)
+```
+
+Or generate the feature effectness plot use the following code:
+
+```{r, warning = FALSE}
+effect = FeatureEffects$new(model, method = "pdp")
+effect$plot(features = c("age", "c_charge_degree"))
+```
+
+For more details of interpretability, you might want to check the documentation of `iml`.
+
+# References

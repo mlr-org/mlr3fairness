@@ -1,0 +1,4 @@
+```{r read-data, include = FALSE}
+task = readRDS('task.rds')
+resample_result = readRDS('resample_result.rds')
+```
