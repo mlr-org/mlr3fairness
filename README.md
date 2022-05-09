@@ -108,7 +108,9 @@ library(mlr3fairness)
 | fairness.tp           | Absolute differences in true positives across groups                                                     |
 | fairness.tn           | Absolute differences in true negatives across groups                                                     |
 | fairness.fn           | Absolute differences in false negatives across groups                                                    |
+| fairness.cv           | Difference in positive class prediction, also known as Calders-Wevers gap or demographic parity          |
 | fairness.eod          | Equalized Odds: Sum of absolute differences between true positive and false positive rates across groups |
+| fairness.pp           | Predictive Parity: Sum of absolute differences between ppv and npv across groups                         |
 | fairness.acc\_eod=.05 | Accuracy under equalized odds \< 0.05 constraint                                                         |
 | fairness.acc\_ppv=.05 | Accuracy under ppv difference \< 0.05 constraint                                                         |
 

@@ -9,7 +9,7 @@
 \source{
 Dua, Dheeru, Graff, Casey (2017).
 \dQuote{UCI Machine Learning Repository.}
-\url{http://archive.ics.uci.edu/ml}.
+\url{http://archive.ics.uci.edu/ml/}.
 }
 \description{
 Dataset used to predict whether income exceeds $50K/yr based on census data.
