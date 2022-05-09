@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-eval_reports = FALSE
+eval_reports = TRUE
 ```
 
 ```{r setup-load, echo = FALSE, message = FALSE}
