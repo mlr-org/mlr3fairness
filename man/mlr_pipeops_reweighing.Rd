@@ -99,7 +99,8 @@ Kamiran, Faisal, Calders, Toon (2012).
 https://mlr3book.mlr-org.com/list-pipeops.html
 
 Other PipeOps: 
-\code{\link{mlr_pipeops_equalized_odds}}
+\code{\link{mlr_pipeops_equalized_odds}},
+\code{\link{mlr_pipeops_explicit_pta}}
 }
 \concept{PipeOps}
 \section{Super classes}{

@@ -50,6 +50,7 @@ test_that("reweighing errors on multiclass", {
 
 
 test_that("reweighing int to char conversion", {
+  skip_on_cran()
   task = tsk("adult_train")$filter(1:300)
   dt = task$data()
   

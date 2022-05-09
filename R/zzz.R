@@ -67,6 +67,7 @@
   x$add("reweighing_wts", PipeOpReweighingWeights)
   x$add("reweighing_os", PipeOpReweighingOversampling)
   x$add("EOd", PipeOpEOd)
+  x$add("explicit_pta", PipeOpExplicitPta)
   
   x = getFromNamespace("mlr_learners", ns = "mlr3")
   x$add("regr.fairzlm", LearnerRegrFairzlm)

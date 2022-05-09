@@ -90,6 +90,7 @@ In Guyon I, Luxburg UV, Bengio S, Wallach H, Fergus R, Vishwanathan S, Garnett R
 https://mlr3book.mlr-org.com/list-pipeops.html
 
 Other PipeOps: 
+\code{\link{mlr_pipeops_explicit_pta}},
 \code{\link{mlr_pipeops_reweighing}}
 }
 \concept{PipeOps}

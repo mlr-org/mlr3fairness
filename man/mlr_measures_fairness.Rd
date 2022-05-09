@@ -37,7 +37,7 @@ fairness.fp          \tab Absolute differences in false positives across groups 
 fairness.tp          \tab Absolute differences in true positives across groups                                                    \cr
 fairness.tn          \tab Absolute differences in true negatives across groups                                                    \cr
 fairness.fn          \tab Absolute differences in false negatives across groups                                                   \cr
-fairness.cv          \tab Difference in positive class prediction, also known as Calders-Wevers gap                               \cr
+fairness.cv          \tab Difference in positive class prediction, also known as Calders-Wevers gap or demographic parity         \cr
 fairness.eod         \tab Equalized Odds: Sum of absolute differences between true positive and false positive rates across groups\cr
 fairness.pp          \tab Predictive Parity: Sum of absolute differences between ppv and npv across groups                        \cr
 fairness.acc_eod=.05 \tab Accuracy under equalized odds < 0.05 constraint                                                         \cr
