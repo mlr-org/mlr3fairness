@@ -80,7 +80,7 @@ fairness_prediction_density.PredictionClassif = function(object, task,  type = "
 
 #' @rdname fairness_prediction_density
 #' @export
-fairness_prediction_density.BenchmarkResult = function(object, type = "density", ...) { # nolint
+fairness_prediction_density.BenchmarkResult = function(object, task, type = "density", ...) { # nolint
   if (object$task_type != "classif") {
     stopf("fairness_prediction_density() only works on classification problems")
   }

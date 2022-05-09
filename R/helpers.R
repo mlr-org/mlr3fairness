@@ -34,9 +34,9 @@ compute_reweighing_weights = function(task, alpha = 1) {
   tab[, wt := (1 - alpha) * wt + alpha * wt]
 
   # Ensure correct feature type
-  if (is(dt[[pta]], "integer")) {
+  if (inherits(dt[[pta]], "integer")) {
     set(tab, j = task$col_roles$pta, value = as.integer(tab[[pta]]))
-  } else if (is(dt[[pta]], "numeric")) {
+  } else if (inherits(dt[[pta]], "numeric")) {
     set(tab, j = task$col_roles$pta, value = as.numeric(tab[[pta]]))
   }
 

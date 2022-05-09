@@ -11,7 +11,7 @@ fairness_prediction_density(object, ...)
 
 \method{fairness_prediction_density}{PredictionClassif}(object, task, type = "density", ...)
 
-\method{fairness_prediction_density}{BenchmarkResult}(object, type = "density", ...)
+\method{fairness_prediction_density}{BenchmarkResult}(object, task, type = "density", ...)
 
 \method{fairness_prediction_density}{ResampleResult}(object, task, type = "density", ...)
 }

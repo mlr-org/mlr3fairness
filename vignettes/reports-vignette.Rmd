@@ -12,6 +12,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+eval_reports = FALSE
 ```
 
 ```{r setup-load, echo = FALSE, message = FALSE}
@@ -65,7 +66,7 @@ rmarkdown::render(rmdfile)
 #### [Example: Data Sheet](https://mlr3fairness.mlr-org.com/articles/datasheet/datasheet.html)
 
 
-```{r build_fairness_example_for_vignette, echo = FALSE, results = 'hide', message = FALSE, warning = FALSE, error = FALSE}
+```{r build_fairness_example_for_vignette, eval = eval_reports, echo = FALSE, results = 'hide', message = FALSE, warning = FALSE, error = FALSE}
 task = tsk("compas")
 learner = lrn("classif.rpart", predict_type = "prob")
 rr = resample(task, learner, rsmp("cv", folds = 5))

@@ -16,7 +16,8 @@ library("kableExtra")
 ```
 <!-- This reads in `objects` provided to report_fairness: resample_result, task, ...-->
 
-```{r, child = 'read_data.Rmd'}
+```{r read, child = 'read_data.Rmd'}
+
 ```
 
 ## Audit Report: Summary
@@ -130,7 +131,7 @@ plot(imp)
 
 Or generate the feature effectness plot use the following code:
 
-```{r, warning = F}
+```{r, warning = FALSE}
 effect = FeatureEffects$new(model, method = "pdp")
 effect$plot(features = c("age", "c_charge_degree"))
 ```
