@@ -2,9 +2,35 @@
 % Please edit documentation in R/fairness_accuracy_tradeoff.R
 \name{fairness_accuracy_tradeoff}
 \alias{fairness_accuracy_tradeoff}
+\alias{fairness_accuracy_tradeoff.PredictionClassif}
+\alias{fairness_accuracy_tradeoff.BenchmarkResult}
+\alias{fairness_accuracy_tradeoff.ResampleResult}
 \title{Plot Fairness Accuracy Trade-offs}
 \usage{
 fairness_accuracy_tradeoff(object, ...)
+
+\method{fairness_accuracy_tradeoff}{PredictionClassif}(
+  object,
+  fairness_measure = msr("fairness.fpr"),
+  acc_measure = msr("classif.acc"),
+  task,
+  ...
+)
+
+\method{fairness_accuracy_tradeoff}{BenchmarkResult}(
+  object,
+  fairness_measure = msr("fairness.fpr"),
+  acc_measure = msr("classif.acc"),
+  plot_scores = TRUE,
+  ...
+)
+
+\method{fairness_accuracy_tradeoff}{ResampleResult}(
+  object,
+  fairness_measure = msr("fairness.fpr"),
+  acc_measure = msr("classif.acc"),
+  ...
+)
 }
 \arguments{
 \item{object}{(\link{PredictionClassif} | \link{BenchmarkResult} | \link{ResampleResult})\cr
@@ -18,7 +44,7 @@ Then the plot will compare the accuracy and fairness metrics for the same model,
 but different resampling iterations  as well as the aggregate indicated by a cross.
 \item If provided a \link{BenchmarkResult}.
 Then the plot will compare the accuracy and fairness metrics for all models and all resampling iterations.
-Points are coloured according to the learner_id and faceted by task_id.
+Points are colored according to the learner_id and faceted by task_id.
 The aggregated score is indicated by a cross.
 }}
 
@@ -33,6 +59,9 @@ Default measure set to be \link[mlr3:MeasureClassif]{msr("classif.acc")}.
 \item \code{task} (\link{TaskClassif})\cr
 The data task that contains the protected column, only required when the class of object is (\link{PredictionClassif})
 }}
+}
+\value{
+A 'ggplot2' object.
 }
 \description{
 Provides visualization wrt. trade-offs between fairness and accuracy metrics across learners and

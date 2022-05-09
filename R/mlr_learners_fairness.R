@@ -7,6 +7,7 @@
 #' `r tabular(mlr_learners_fairness)`
 #'
 #' @export
+#' @return A data.table containing an overview of available fair learners.
 #' @examples
 #' # Available learners:
 #' mlr_learners_fairness

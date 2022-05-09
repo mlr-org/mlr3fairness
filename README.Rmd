@@ -247,7 +247,7 @@ Several future developments are currently planned. Contributions are highly welc
 - Debiasing Methods:
   More debiasing methods, post-processing and in-processing.
 
-## Bugs, Feedbacks and Questions
+## Bugs, Feedback and Questions
 
 `mlr3fairness` is a free and open source software project that encourages participation and feedback.
 If you have any issues, questions, suggestions or feedback, please do not hesitate to open an “issue” about it on the GitHub page!

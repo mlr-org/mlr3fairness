@@ -16,6 +16,9 @@ File path or name for new file that should be created.}
 \item{build}{(\code{logical(1)})\cr
 Should the report be built after creation? Initialized to \code{FALSE}.}
 }
+\value{
+Invisibly returns the path to the newly created file(s).
+}
 \description{
 Creates a new \CRANpkg{rmarkdown} template with a skeleton questionnaire for a model card.
 Uses the awesome markdown template created by Chris Garbin

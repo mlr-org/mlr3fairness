@@ -8,7 +8,7 @@
 Calls \link[fairml:zlm]{fairml::zlrm} from package \CRANpkg{fairml}.
 }
 \details{
-Geenralized fair regression model from Zafar et al., 2019 implemented via package \code{fairml}.
+Generalized fair regression model from Zafar et al., 2019 implemented via package \code{fairml}.
 The 'unfairness' parameter is set to 0.05 as a default.
 The optimized fairness metric is statistical parity.
 }

@@ -2,7 +2,7 @@
 #' @name mlr_measures_positive_probability
 #'
 #' @description
-#' Return the probabiliy of a positive prediction, often known as calders-wevers gap.
+#' Return the probabiliy of a positive prediction, often known as 'Calders-Wevers' gap.
 #' This is defined as count of positive predictions divided by the number of observations.
 #'
 #' @export

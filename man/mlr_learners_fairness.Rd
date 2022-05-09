@@ -10,6 +10,9 @@ An object of class \code{data.table} (inherits from \code{data.frame}) with 5 ro
 \usage{
 mlr_learners_fairness
 }
+\value{
+A data.table containing an overview of available fair learners.
+}
 \description{
 Fair Learners in mlr3
 }

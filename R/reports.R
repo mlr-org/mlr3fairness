@@ -14,6 +14,7 @@
 #' `r format_bib("datasheets")`
 #' @family fairness_reports
 #' @export
+#' @return Invisibly returns the path to the newly created file(s).
 #' @examples
 #' \dontrun{
 #'   report_datasheet("documentation/datasheet.Rmd")
@@ -38,6 +39,7 @@ report_datasheet = function(filename = "datasheet.Rmd", edit = FALSE, build = FA
 #' `r format_bib("modelcards")`
 #' @family fairness_reports
 #' @export
+#' @return Invisibly returns the path to the newly created file(s).
 #' @examples
 #' \dontrun{
 #'   report_modelcard("documentation/modelcard.Rmd")
@@ -68,6 +70,7 @@ report_modelcard = function(filename = "modelcard.Rmd", edit = FALSE, build = FA
 #'   Should items in `objects` be checked? If `FALSE`, no checks on `object` are performed.
 #' @family fairness_reports
 #' @export
+#' @return Invisibly returns the path to the newly created file(s).
 #' @examples
 #' \dontrun{
 #'   task = tsk("compas")

@@ -13,6 +13,7 @@
 #' @param x (`numeric()`)\cr
 #'   Measured performance in group 1, 2, ...
 #' @export
+#' @return A single `numeric`.
 #' @examples
 #' groupdiff_tau(1:3)
 #' groupdiff_diff(1:3)

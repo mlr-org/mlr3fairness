@@ -1,7 +1,7 @@
 #' @title Classification Fair Logistic Regression With Covariance Constraints Learner
 #' @author pfistfl
 #' @details 
-#' Geenralized fair regression model from Zafar et al., 2019 implemented via package `fairml`.
+#' Generalized fair regression model from Zafar et al., 2019 implemented via package `fairml`.
 #' The 'unfairness' parameter is set to 0.05 as a default.
 #' The optimized fairness metric is statistical parity.
 #' 

@@ -38,7 +38,7 @@ The column \code{"sex"} is set as protected attribute.
 \item (integer) education_num: the highest level of education achieved in numerical form.
 \item (factor) marital_status: marital status of an individual.
 \item (factor) occupation: the general type of occupation of an individual
-\item (factor) relationship: Which epresents what this individual is relative to others.
+\item (factor) relationship: twhether the individual is in a relationship-
 \item (factor) race: Descriptions of an individual’s race
 \item (factor) sex: the biological sex of the individual
 \item (integer) captain-gain: capital gains for an individual

@@ -25,7 +25,7 @@
 #' * (integer) education_num: the highest level of education achieved in numerical form.
 #' * (factor) marital_status: marital status of an individual.
 #' * (factor) occupation: the general type of occupation of an individual
-#' * (factor) relationship: Which epresents what this individual is relative to others.
+#' * (factor) relationship: twhether the individual is in a relationship-
 #' * (factor) race: Descriptions of an individual’s race
 #' * (factor) sex: the biological sex of the individual
 #' * (integer) captain-gain: capital gains for an individual

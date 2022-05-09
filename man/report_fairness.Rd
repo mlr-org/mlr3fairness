@@ -34,6 +34,9 @@ Should items in \code{objects} be checked? If \code{FALSE}, no checks on \code{o
 \item{build}{(\code{logical(1)})\cr
 Should the report be built after creation? Initialized to \code{FALSE}.}
 }
+\value{
+Invisibly returns the path to the newly created file(s).
+}
 \description{
 Creates a new \CRANpkg{rmarkdown} template with a skeleton of  reported metrics and visualizations.
 Uses the awesome markdown template created by Chris Garbin

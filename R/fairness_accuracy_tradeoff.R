@@ -1,4 +1,6 @@
 #' Plot Fairness Accuracy Trade-offs
+#' 
+#' @rdname fairness_accuracy_tradeoff
 #'
 #' @description
 #' Provides visualization wrt. trade-offs between fairness and accuracy metrics across learners and
@@ -17,7 +19,7 @@
 #'     but different resampling iterations  as well as the aggregate indicated by a cross.
 #'   * If provided a [BenchmarkResult].
 #'     Then the plot will compare the accuracy and fairness metrics for all models and all resampling iterations.
-#'     Points are coloured according to the learner_id and faceted by task_id.
+#'     Points are colored according to the learner_id and faceted by task_id.
 #'     The aggregated score is indicated by a cross.
 #'
 #' @param ...
@@ -32,6 +34,7 @@
 #'     The data task that contains the protected column, only required when the class of object is ([PredictionClassif])
 #'
 #' @export
+#' @return A 'ggplot2' object.
 #' @examples
 #' library(mlr3learners)
 #' library(ggplot2)
@@ -57,6 +60,7 @@ fairness_accuracy_tradeoff = function(object, ...) {
   UseMethod("fairness_accuracy_tradeoff")
 }
 
+#' @rdname fairness_accuracy_tradeoff
 #' @export
 fairness_accuracy_tradeoff.PredictionClassif = function(object, fairness_measure = msr("fairness.fpr"), acc_measure = msr("classif.acc"), task, ...) { # nolint
   assert_measure(fairness_measure)
@@ -66,6 +70,7 @@ fairness_accuracy_tradeoff.PredictionClassif = function(object, fairness_measure
     geom_point()
 }
 
+#' @rdname fairness_accuracy_tradeoff
 #' @export
 fairness_accuracy_tradeoff.BenchmarkResult = function(object, fairness_measure = msr("fairness.fpr"), acc_measure = msr("classif.acc"), plot_scores = TRUE, ...) { # nolint
   assert_measure(fairness_measure)
@@ -90,6 +95,7 @@ fairness_accuracy_tradeoff.BenchmarkResult = function(object, fairness_measure =
     facet_wrap(~task_id)
 }
 
+#' @rdname fairness_accuracy_tradeoff
 #' @export
 fairness_accuracy_tradeoff.ResampleResult = function(object, fairness_measure = msr("fairness.fpr"), acc_measure = msr("classif.acc"), ...) { # nolint
   object = as_benchmark_result(object)
