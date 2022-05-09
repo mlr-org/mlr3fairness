@@ -31,33 +31,11 @@ lrn("regr.fairzlm")
 }
 
 \section{Parameters}{
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;"> Id </th>
-   <th style="text-align:left;"> Type </th>
-   <th style="text-align:left;"> Default </th>
-   <th style="text-align:left;"> Levels </th>
-   <th style="text-align:left;"> Range </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> unfairness </td>
-   <td style="text-align:left;"> numeric </td>
-   <td style="text-align:left;"> - </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> \eqn{[0, 1]}{[0, 1]} </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> intersect </td>
-   <td style="text-align:left;"> logical </td>
-   <td style="text-align:left;"> TRUE </td>
-   <td style="text-align:left;"> TRUE, FALSE </td>
-   <td style="text-align:left;"> - </td>
-  </tr>
-</tbody>
-</table>
+\tabular{lllll}{
+   Id \tab Type \tab Default \tab Levels \tab Range \cr
+   unfairness \tab numeric \tab - \tab  \tab \eqn{[0, 1]}{[0, 1]} \cr
+   intersect \tab logical \tab TRUE \tab TRUE, FALSE \tab - \cr
+}
 }
 
 \examples{

@@ -30,61 +30,15 @@ lrn("classif.fairfgrrm")
 }
 
 \section{Parameters}{
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;"> Id </th>
-   <th style="text-align:left;"> Type </th>
-   <th style="text-align:left;"> Default </th>
-   <th style="text-align:left;"> Levels </th>
-   <th style="text-align:left;"> Range </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> lambda </td>
-   <td style="text-align:left;"> numeric </td>
-   <td style="text-align:left;"> 0 </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> \eqn{[0, \infty)}{[0, Inf)} </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> definition </td>
-   <td style="text-align:left;"> character </td>
-   <td style="text-align:left;"> sp-komiyama </td>
-   <td style="text-align:left;"> sp-komiyama, eo-komiyama </td>
-   <td style="text-align:left;"> - </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> save.auxiliary </td>
-   <td style="text-align:left;"> logical </td>
-   <td style="text-align:left;"> FALSE </td>
-   <td style="text-align:left;"> TRUE, FALSE </td>
-   <td style="text-align:left;"> - </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> unfairness </td>
-   <td style="text-align:left;"> numeric </td>
-   <td style="text-align:left;"> - </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> \eqn{[0, 1]}{[0, 1]} </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> family </td>
-   <td style="text-align:left;"> character </td>
-   <td style="text-align:left;"> binomial </td>
-   <td style="text-align:left;"> gaussian, binomial </td>
-   <td style="text-align:left;"> - </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> intersect </td>
-   <td style="text-align:left;"> logical </td>
-   <td style="text-align:left;"> TRUE </td>
-   <td style="text-align:left;"> TRUE, FALSE </td>
-   <td style="text-align:left;"> - </td>
-  </tr>
-</tbody>
-</table>
+\tabular{lllll}{
+   Id \tab Type \tab Default \tab Levels \tab Range \cr
+   lambda \tab numeric \tab 0 \tab  \tab \eqn{[0, \infty)}{[0, Inf)} \cr
+   definition \tab character \tab sp-komiyama \tab sp-komiyama, eo-komiyama \tab - \cr
+   save.auxiliary \tab logical \tab FALSE \tab TRUE, FALSE \tab - \cr
+   unfairness \tab numeric \tab - \tab  \tab \eqn{[0, 1]}{[0, 1]} \cr
+   family \tab character \tab binomial \tab gaussian, binomial \tab - \cr
+   intersect \tab logical \tab TRUE \tab TRUE, FALSE \tab - \cr
+}
 }
 
 \examples{

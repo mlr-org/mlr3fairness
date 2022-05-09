@@ -1,30 +1,50 @@
 #' @title PipeOpExplicitPta
+#' 
 #' @usage NULL
 #' @name mlr_pipeops_explicit_pta
 #' @format [R6Class] object inheriting from [`PipeOpTaskPreproc`]/[`PipeOp`].
 #'
 #' @description
-#'   Turns the column with col_role 'pta' into an explicit separate column prefixed with ".._internal_pta_".
+#'   Turns the column with column role 'pta' into an explicit separate column prefixed with ".._internal_pta_".
 #'   This keeps it from getting changed or adapted by subsequent pipelines that operate on the feature pta.
+#' 
+#' @section Construction:
+#' ```
+#' PipeOpExplicitPta$new(id = "reweighing", param_vals = list())
+#' ```
+#' * `id` (`character(1)`).
+#' * `param_vals` (`list()`)
+#' 
+#' @section Input and Output Channels:
+#' Input and output channels are inherited from [PipeOpTaskPreproc]. Instead of a [Task][mlr3::Task], a
+#' [TaskClassif][mlr3::TaskClassif] is used as input and output during training and prediction.
+#'
+#' The output during training is the input [Task][mlr3::Task] with added weights column according
+#' to target class. The output during prediction is the unchanged input.
+#'
 #
 #' @section State:
-#' The `$state` is a named `list` with the `$state` elements inherited from [PipeOpTaskPreproc].
+#' The `$state` is a named `list` with the `$state` elements inherited from [PipeOpTaskPreproc][mlr3pipelines::PipeOpTaskPreproc].
 #'
+#' @section Parameters:
+#' The PipeOp does not have any hyperparameters.
+#' 
+#' @section Internals:
+#' Copies the existing pta column to a new column.
+#' 
 #' @section Fields:
 #' Only fields inherited from [PipeOpTaskPreproc]/[`PipeOp`].
 #'
 #' @section Methods:
-#' Methods inherited from [PipeOpTaskPreproc]/[PipeOp].
-#'
+#' Methods inherited from [PipeOpTaskPreproc][mlr3pipelines::PipeOpTaskPreproc]/[PipeOp][mlr3pipelines::PipeOp].
+#' 
 #' @family PipeOps
 #' @seealso https://mlr3book.mlr-org.com/list-pipeops.html
 #' @export
 #' @examples
 #' library(mlr3pipelines)
-#'
 #' epta = po("explicit_pta")
-#' epta$train(list(tsk("adult_train")))
-#'
+#' new = epta$train(list(tsk("adult_train")))
 PipeOpExplicitPta = R6Class("PipeOpExplicitPta",
   inherit = PipeOpTaskPreproc,
   public = list(

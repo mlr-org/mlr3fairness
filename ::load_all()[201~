@@ -1,0 +1,89 @@
+mlr_pipeops_explicit_pta     package:mlr3fairness      R Documentation
+
+_P_i_p_e_O_p_E_x_p_l_i_c_i_t_P_t_a
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     Turns the column with col_role 'pta' into an explicit separate
+     column prefixed with ".._internal_pta_". This keeps it from
+     getting changed or adapted by subsequent pipelines that operate on
+     the feature pta.
+
+_F_o_r_m_a_t:
+
+     R6Class object inheriting from ‘PipeOpTaskPreproc’/‘PipeOp’.
+
+_S_t_a_t_e:
+
+     The $state is a named ‘list’ with the $state elements inherited
+     from PipeOpTaskPreproc.
+
+_F_i_e_l_d_s:
+
+     Only fields inherited from PipeOpTaskPreproc/‘PipeOp’.
+
+_M_e_t_h_o_d_s:
+
+     Methods inherited from PipeOpTaskPreproc/PipeOp.
+
+_S_u_p_e_r _c_l_a_s_s_e_s:
+
+     ‘mlr3pipelines::PipeOp’ -> ‘mlr3pipelines::PipeOpTaskPreproc’ ->
+     ‘PipeOpExplicitPta’
+
+_M_e_t_h_o_d_s:
+
+  _P_u_b_l_i_c _m_e_t_h_o_d_s:
+
+         • ‘PipeOpExplicitPta$new()’
+
+         • ‘PipeOpExplicitPta$clone()’
+
+  _M_e_t_h_o_d '_n_e_w()':
+
+       Creates a new instance of this [R6][R6::R6Class][PipeOp] R6
+       class.
+
+    _U_s_a_g_e:
+
+         PipeOpExplicitPta$new(id = "explicit_pta", param_vals = list())
+         
+
+    _A_r_g_u_m_e_n_t_s:
+
+         ‘id’ ‘character’
+             The PipeOps identifier in the PipeOps library.
+
+         ‘param_vals’ ‘list’
+             The parameter values to be set. See ‘Parameters’.
+
+
+  _M_e_t_h_o_d '_c_l_o_n_e()':
+
+       The objects of this class are cloneable with this method.
+
+    _U_s_a_g_e:
+
+         PipeOpExplicitPta$clone(deep = FALSE)
+         
+
+    _A_r_g_u_m_e_n_t_s:
+
+         ‘deep’ Whether to make a deep clone.
+
+
+_S_e_e _A_l_s_o:
+
+     https://mlr3book.mlr-org.com/list-pipeops.html
+
+     Other PipeOps: ‘mlr_pipeops_equalized_odds’,
+     ‘mlr_pipeops_reweighing’
+
+_E_x_a_m_p_l_e_s:
+
+     library(mlr3pipelines)
+     
+     epta = po("explicit_pta")
+     epta$train(list(tsk("adult_train")))
+     
+
