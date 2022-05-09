@@ -13,9 +13,6 @@
     <loc>https://mlr3fairness.mlr-org.com/articles/debiasing-vignette.html</loc>
   </url>
   <url>
-    <loc>https://mlr3fairness.mlr-org.com/articles/fairness/fairness.html</loc>
-  </url>
-  <url>
     <loc>https://mlr3fairness.mlr-org.com/articles/index.html</loc>
   </url>
   <url>
@@ -55,13 +52,13 @@
     <loc>https://mlr3fairness.mlr-org.com/reference/adult.html</loc>
   </url>
   <url>
-    <loc>https://mlr3fairness.mlr-org.com/reference/compare_metrics.html</loc>
-  </url>
-  <url>
     <loc>https://mlr3fairness.mlr-org.com/reference/compas.html</loc>
   </url>
   <url>
     <loc>https://mlr3fairness.mlr-org.com/reference/fairness_accuracy_tradeoff.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3fairness.mlr-org.com/reference/fairness_compare_metrics.html</loc>
   </url>
   <url>
     <loc>https://mlr3fairness.mlr-org.com/reference/fairness_prediction_density.html</loc>
