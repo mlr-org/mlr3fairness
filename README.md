@@ -5,6 +5,8 @@ Machine Learning Fairness Extension for
 [mlr3](https://github.com/mlr-org/mlr3).
 
 [![tic](https://github.com/mlr-org/mlr3fairness/workflows/tic/badge.svg?branch=main)](https://github.com/mlr-org/mlr3fairness/actions)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/mlr3fairness)](https://CRAN.R-project.org/package=mlr3fairness)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
 [![Mattermost](https://img.shields.io/badge/chat-mattermost-orange.svg)](https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/)
 
@@ -276,7 +278,7 @@ highly welcome\!
   - Debiasing Methods: More debiasing methods, post-processing and
     in-processing.
 
-## Bugs, Feedbacks and Questions
+## Bugs, Feedback and Questions
 
 `mlr3fairness` is a free and open source software project that
 encourages participation and feedback. If you have any issues,
