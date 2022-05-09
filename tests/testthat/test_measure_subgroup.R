@@ -56,3 +56,19 @@ test_that("multi pta", {
   out2 = prd$score(m, t)
   expect_true(out2 == max(out) - min(out))
 })
+
+
+test_that("pp differences", {
+  skip_on_cran()
+  t = tsk("adult_train")
+  l = as_learner(po("reweighing_os") %>>% lrn("classif.rpart"))
+  l$train(t)
+  prd = l$predict_newdata(t$data())
+
+  out = prd$score(msr("fairness.pp"), t)
+  expect_number(out, lower = 0, upper = 1)
+  
+  out = prd$score(msr("fairness.cv"), t)
+  expect_number(out, lower = -1, upper = 1)
+
+})
