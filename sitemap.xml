@@ -109,6 +109,9 @@
     <loc>https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_equalized_odds.html</loc>
   </url>
   <url>
+    <loc>https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_explicit_pta.html</loc>
+  </url>
+  <url>
     <loc>https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_reweighing.html</loc>
   </url>
   <url>
