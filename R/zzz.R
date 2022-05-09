@@ -9,6 +9,7 @@
 #' @import data.table
 #' @importFrom utils getFromNamespace data
 #' @importFrom stats runif dist predict setNames
+#' @importFrom methods is
 #' @keywords internal
 "_PACKAGE"
 
