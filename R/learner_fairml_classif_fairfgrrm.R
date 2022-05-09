@@ -58,9 +58,11 @@ LearnerClassifFairfgrrm = R6Class("LearnerClassifFairfgrrm",
       r = task$truth()
 
       s = get_pta(task, intersect = pars$intersect)
+      s = map_dtc(s, as.numeric)
       pars = remove_named(pars, "intersect")
       p = task$data(cols = setdiff(task$feature_names, pta))
       p = int_to_numeric(p)
+
       mlr3misc::invoke(fairml::fgrrm, response = r, predictors = p, sensitive = s, .args = pars)
     },
 
@@ -69,6 +71,7 @@ LearnerClassifFairfgrrm = R6Class("LearnerClassifFairfgrrm",
       pars = self$param_set$get_values(tags = "predict")
       pta = task$col_roles$pta
       s = get_pta(task, intersect = pars$intersect)
+      s = map_dtc(s, as.numeric)
       p = task$data(cols = setdiff(self$state$feature_names, pta))
       p = int_to_numeric(p)
 

@@ -25,18 +25,19 @@ score_groupwise = function(prediction, base_measure, task, ...) {
 #' @return [data.table] A data.table with counts and weights for each feature.
 #' @noRd
 compute_reweighing_weights = function(task, alpha = 1) {
-
-  dt = task$data(cols = c(task$target_names, task$col_roles$pta))
+  pta = task$col_roles$pta
+  dt = task$data(cols = c(task$target_names, pta))
   tab = as.data.table(table(dt))
   tab[, n_tgt := sum(N), by = eval(task$target_names)]
-  tab[, n_pta := sum(N), by = eval(task$col_roles$pta)]
+  tab[, n_pta := sum(N), by = eval(pta)]
   tab[, wt := (n_tgt * n_pta) / (sum(N) * N)]
   tab[, wt := (1 - alpha) * wt + alpha * wt]
+
   # Ensure correct feature type
-  if (task$feature_types[id == task$col_roles$pta]$type == "integer") {
-    set(tab, j = task$col_roles$pta, value = as.integer(tab[[task$col_roles$pta]]))
-  } else if (task$feature_types[id == task$col_roles$pta]$type == "numeric") {
-    set(tab, j = task$col_roles$pta, value = as.numeric(tab[[task$col_roles$pta]]))
+  if (class(dt[[pta]]) == "integer") {
+    set(tab, j = task$col_roles$pta, value = as.integer(tab[[pta]]))
+  } else if (class(dt[[pta]])  == "numeric") {
+    set(tab, j = task$col_roles$pta, value = as.numeric(tab[[pta]]))
   }
 
   return(tab)
