@@ -122,7 +122,7 @@ fairness_prediction_density.BenchmarkResult = function(object, type = "density",
 }
 
 #' @export
-fairness_prediction_density.ResampleResult = function(object, task, ...) { # nolint
+fairness_prediction_density.ResampleResult = function(object, task, type = "density", ...) { # nolint
   object = as_benchmark_result(object)
   fairness_prediction_density(object, task)
 }
