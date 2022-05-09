@@ -3,6 +3,8 @@
 * CRAN release version
 * Minor improvements for `groupwise_metrics`, can now `intersect`.
 * New metric, `fairness.pp` that allows for computing predictive parity.
+* New metric, `fairness.cv` that allows for computing the Calders-Wevers gap.
+* Add `PipeOpExplicitPta` thtat copies the `pta` column into a separate column.
 
 # mlr3fairness 0.2.0
 
