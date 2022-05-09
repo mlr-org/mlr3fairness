@@ -37,7 +37,6 @@ fairness_prediction_density = function(object, ...) {
   UseMethod("fairness_prediction_density")
 }
 
-#' @rdname fairness_prediction_density
 #' @export
 fairness_prediction_density.PredictionClassif = function(object, task,  type = "density", ...) { # nolint
   assert_choice(type, c("violin", "density"))
@@ -77,8 +76,6 @@ fairness_prediction_density.PredictionClassif = function(object, task,  type = "
   }
 }
 
-
-#' @rdname fairness_prediction_density
 #' @export
 fairness_prediction_density.BenchmarkResult = function(object, task, type = "density", ...) { # nolint
   if (object$task_type != "classif") {
@@ -126,7 +123,6 @@ fairness_prediction_density.BenchmarkResult = function(object, task, type = "den
   }
 }
 
-#' @rdname fairness_prediction_density
 #' @export
 fairness_prediction_density.ResampleResult = function(object, task, type = "density", ...) { # nolint
   object = as_benchmark_result(object)

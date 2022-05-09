@@ -1,6 +1,4 @@
 #' Plot Fairness Accuracy Trade-offs
-#' 
-#' @rdname fairness_accuracy_tradeoff
 #'
 #' @description
 #' Provides visualization wrt. trade-offs between fairness and accuracy metrics across learners and
@@ -60,7 +58,6 @@ fairness_accuracy_tradeoff = function(object, ...) {
   UseMethod("fairness_accuracy_tradeoff")
 }
 
-#' @rdname fairness_accuracy_tradeoff
 #' @export
 fairness_accuracy_tradeoff.PredictionClassif = function(object, fairness_measure = msr("fairness.fpr"), acc_measure = msr("classif.acc"), task, ...) { # nolint
   assert_measure(fairness_measure)
@@ -70,7 +67,6 @@ fairness_accuracy_tradeoff.PredictionClassif = function(object, fairness_measure
     geom_point()
 }
 
-#' @rdname fairness_accuracy_tradeoff
 #' @export
 fairness_accuracy_tradeoff.BenchmarkResult = function(object, fairness_measure = msr("fairness.fpr"), acc_measure = msr("classif.acc"), plot_scores = TRUE, ...) { # nolint
   assert_measure(fairness_measure)
@@ -95,7 +91,6 @@ fairness_accuracy_tradeoff.BenchmarkResult = function(object, fairness_measure =
     facet_wrap(~task_id)
 }
 
-#' @rdname fairness_accuracy_tradeoff
 #' @export
 fairness_accuracy_tradeoff.ResampleResult = function(object, fairness_measure = msr("fairness.fpr"), acc_measure = msr("classif.acc"), ...) { # nolint
   object = as_benchmark_result(object)

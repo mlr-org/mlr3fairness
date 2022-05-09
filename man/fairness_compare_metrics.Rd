@@ -2,18 +2,9 @@
 % Please edit documentation in R/compare_metrics.R
 \name{compare_metrics}
 \alias{compare_metrics}
-\alias{compare_metrics.PredictionClassif}
-\alias{compare_metrics.BenchmarkResult}
-\alias{compare_metrics.ResampleResult}
 \title{Compare different metrics}
 \usage{
 compare_metrics(object, ...)
-
-\method{compare_metrics}{PredictionClassif}(object, measures = msr("fairness.acc"), task, ...)
-
-\method{compare_metrics}{BenchmarkResult}(object, measures = msr("fairness.acc"), ...)
-
-\method{compare_metrics}{ResampleResult}(object, measures = msr("fairness.acc"), ...)
 }
 \arguments{
 \item{object}{(\link{PredictionClassif} | \link{BenchmarkResult} | \link{ResampleResult})\cr

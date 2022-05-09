@@ -57,7 +57,6 @@ compare_metrics = function(object, ...) {
   UseMethod("compare_metrics")
 }
 
-#' @rdname fairness_compare_metrics
 #' @export
 compare_metrics.PredictionClassif = function(object, measures = msr("fairness.acc"), task, ...) { # nolint
   measures = as_measures(measures)
@@ -71,7 +70,6 @@ compare_metrics.PredictionClassif = function(object, measures = msr("fairness.ac
     scale_fill_hue(c = 100, l = 60)
 }
 
-#' @rdname fairness_compare_metrics
 #' @export
 compare_metrics.BenchmarkResult = function(object, measures = msr("fairness.acc"), ...) { # nolint
   measures = as_measures(measures)
@@ -85,7 +83,6 @@ compare_metrics.BenchmarkResult = function(object, measures = msr("fairness.acc"
     facet_wrap(~task_id)
 }
 
-#' @rdname fairness_compare_metrics
 #' @export
 compare_metrics.ResampleResult = function(object, measures = msr("fairness.acc"), ...) { # nolint
   object = as_benchmark_result(object)

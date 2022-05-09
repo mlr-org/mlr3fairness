@@ -2,35 +2,9 @@
 % Please edit documentation in R/fairness_accuracy_tradeoff.R
 \name{fairness_accuracy_tradeoff}
 \alias{fairness_accuracy_tradeoff}
-\alias{fairness_accuracy_tradeoff.PredictionClassif}
-\alias{fairness_accuracy_tradeoff.BenchmarkResult}
-\alias{fairness_accuracy_tradeoff.ResampleResult}
 \title{Plot Fairness Accuracy Trade-offs}
 \usage{
 fairness_accuracy_tradeoff(object, ...)
-
-\method{fairness_accuracy_tradeoff}{PredictionClassif}(
-  object,
-  fairness_measure = msr("fairness.fpr"),
-  acc_measure = msr("classif.acc"),
-  task,
-  ...
-)
-
-\method{fairness_accuracy_tradeoff}{BenchmarkResult}(
-  object,
-  fairness_measure = msr("fairness.fpr"),
-  acc_measure = msr("classif.acc"),
-  plot_scores = TRUE,
-  ...
-)
-
-\method{fairness_accuracy_tradeoff}{ResampleResult}(
-  object,
-  fairness_measure = msr("fairness.fpr"),
-  acc_measure = msr("classif.acc"),
-  ...
-)
 }
 \arguments{
 \item{object}{(\link{PredictionClassif} | \link{BenchmarkResult} | \link{ResampleResult})\cr
