@@ -47,3 +47,44 @@ test_that("reweighing errors on multiclass", {
   expect_error(po("reweighing_wts")$train(list(t))[[1]], "Only binary")
   expect_error(po("reweighing_os")$train(list(t))[[1]], "Only binary")
 })
+
+
+test_that("reweighing int to char conversion", {
+  task = tsk("adult_train")$filter(1:300)
+  dt = task$data()
+  
+  # integer
+  dt[, sex := as.integer(sex)]
+  t = TaskClassif$new("adult_int", backend = dt, target = "target")
+  t$col_roles$pta = "sex"
+  tsk = po("reweighing_wts")$train(list(t))[[1]]
+  expect_true(tsk$col_roles$weight == "reweighing.WEIGHTS")
+  dt = cbind(tsk$data(cols = c("..row_id", "sex", "target")), tsk$weights)
+  dt = dt[, mean(weight) * .N, by = .(sex, target)][, sum(V1 / sum(V1)), by = "target"]
+  expect_true(all(abs(dt$V1 - 1) < 1e-3))  
+
+  # numeric
+  dt = task$data()
+  dt[, sex := as.numeric(sex)]
+  t = TaskClassif$new("adult_int", backend = dt, target = "target")
+  t$col_roles$pta = "sex"
+  tsk = po("reweighing_wts")$train(list(t))[[1]]
+  expect_true(tsk$col_roles$weight == "reweighing.WEIGHTS")
+  dt = cbind(tsk$data(cols = c("..row_id", "sex", "target")), tsk$weights)
+  dt = dt[, mean(weight) * .N, by = .(sex, target)][, sum(V1 / sum(V1)), by = "target"]
+  expect_true(all(abs(dt$V1 - 1) < 1e-3))  
+
+  # ordered
+  dt = task$data()
+  dt[, sex := as.ordered(sex)]
+  t = TaskClassif$new("adult_int", backend = dt, target = "target")
+  t$col_roles$pta = "sex"
+  tsk = po("reweighing_wts")$train(list(t))[[1]]
+  expect_true(tsk$col_roles$weight == "reweighing.WEIGHTS")
+  dt = cbind(tsk$data(cols = c("..row_id", "sex", "target")), tsk$weights)
+  dt = dt[, mean(weight) * .N, by = .(sex, target)][, sum(V1 / sum(V1)), by = "target"]
+  expect_true(all(abs(dt$V1 - 1) < 1e-3))  
+})
+
+
+

@@ -5,7 +5,7 @@
 \alias{MeasurePositiveProbability}
 \title{Positive Probability Measure}
 \description{
-Return the positive probability of the predictions.
+Return the probabiliy of a positive prediction, often known as calders-wevers gap.
 This is defined as count of positive predictions divided by the number of observations.
 }
 \examples{

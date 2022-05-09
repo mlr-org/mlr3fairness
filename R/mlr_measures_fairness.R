@@ -34,8 +34,7 @@ mlr_measures_fairness = rowwise_table(
   "fairness.tn", "Absolute differences in true negatives across groups",
   "fairness.fn", "Absolute differences in false negatives across groups",
 
-  "fairness.cv", "Difference in positive class prediction, also known as Calders-Wevers gap",
-
+  "fairness.cv", "Difference in positive class prediction, also known as Calders-Wevers gap or demographic parity",
   "fairness.eod", "Equalized Odds: Sum of absolute differences between true positive and false positive rates across groups",
   "fairness.pp", "Predictive Parity: Sum of absolute differences between ppv and npv across groups",
 
