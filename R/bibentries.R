@@ -83,5 +83,24 @@ bibentries = c(
     author="Saleiro, Pedro and Kuester, Benedict and Hinkson, Loren and London, Jesse and Stevens, Abby and Anisfeld, Ari and Rodolfa, Kit T and Ghani, Rayid",
     journal="arXiv preprint arXiv:1811.05577",
     year="2018"
+  ),
+
+  mukherjee = bibentry("inproceedings",
+    title = "Two Simple Ways to Learn Individual Fairness Metrics from Data",
+    author = "Mukherjee, Debarghya and Yurochkin, Mikhail and Banerjee, Moulinath and Sun, Yuekai",
+    booktitle = "International Conference on Machine Learning",
+    pages = "7097--7107",
+    year = "2020",
+    organization = "PMLR"
+  ),
+
+  dwork = bibentry("inproceedings",
+    title = "Fairness through awareness",
+    author = "Dwork, Cynthia and Hardt, Moritz and Pitassi, Toniann and Reingold, Omer and Zemel, Richard",
+    booktitle = "Proceedings of the 3rd innovations in theoretical computer science conference",
+    pages = "214--226",
+    year = "2012"
   )
+
 )
+

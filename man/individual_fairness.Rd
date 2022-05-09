@@ -2,14 +2,18 @@
 % Please edit documentation in R/individual_fairness.R
 \name{individual_fairness}
 \alias{individual_fairness}
-\title{Compute observation wise individual fairness.}
+\title{ompute observation-wise individual fairness.}
 \usage{
-individual_fairness(data, prediction, frac = 1)
+individual_fairness(data, prediction, dX = NULL, dY = NULL, frac = 1)
 }
 \arguments{
 \item{data}{\code{\link{data.table}} Variables to compare.}
 
 \item{prediction}{\code{\link{Prediction}} Predictions to compare.}
+
+\item{dX}{[\verb{function] distance metric for features. Defaults to }gower::gower_dist\verb{. See }details` for additional info.}
+
+\item{dY}{[\verb{function] distance metric for predictions. Defaults to }gower::gower_dist\verb{.  See }details` for additional info.}
 
 \item{fraction}{\link{`numeric} For large datasets: Should computation be approximated by computing on only a fraction?}
 }
@@ -17,7 +21,29 @@ individual_fairness(data, prediction, frac = 1)
 A \code{\link{data.table}} with row_ids and the average individual fairness per observation.
 }
 \description{
-The corresponding notion is "similar individuals should be treated similarly".
-This is computed by comparing differences between predictions  and differences between features, using the
-Gower distance.
+Implements a fairness notion roughly requiring that "similar individuals should be treated similarly".
+Mathematically, computing individual fairness requires defining two distance metrics \eqn{d_x}{dX} and \eqn{d_y}{dY}
+defined on feature and prediction spaces respectively.
+\deqn{
+   d_y(f(x1), f(x2)) \leq d_x(x1, x2)
+}{
+   dY(f(x1), f(x2) <= dX(f1, x2))
+}
+
+This is computed by comparing differences between predictions and differences between features, be default using the
+Gower distance. The user is encouraged to adapt the distance metric and features used for computation to form a
+relevant distance metric that encodes ethical or regulatory considerations.
+}
+\details{
+Both dX and dY need to be functions that take as input arguments \code{x}, \code{y} (two data.tables) and
+an argument \code{cols} which specifies the colnames to be used for computing distances.
+}
+\references{
+Dwork, Cynthia, Hardt, Moritz, Pitassi, Toniann, Reingold, Omer, Zemel, Richard (2012).
+\dQuote{Fairness through awareness.}
+In \emph{Proceedings of the 3rd innovations in theoretical computer science conference}, 214--226.
+Mukherjee, Debarghya, Yurochkin, Mikhail, Banerjee, Moulinath, Sun, Yuekai (2020).
+\dQuote{Two Simple Ways to Learn Individual Fairness Metrics from Data.}
+In \emph{International Conference on Machine Learning}, 7097--7107.
+PMLR.
 }

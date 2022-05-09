@@ -109,3 +109,4 @@ $RECYCLE.BIN/
 rmarkdown
 !inst/rmarkdown
 inst/doc
+/documentation/

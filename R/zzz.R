@@ -59,6 +59,11 @@
   x$add("fairness.acc_ppv=.05", MeasureFairnessConstraint, performance_measure = msr("classif.acc"),
     fairness_measure = msr("fairness.ppv"), epsilon = 0.05, id = "fairness.acc_eod=.05", range = c(-1, 1))
 
+  x$add("fairness.regr_individual", MeasureAvgIndividualFairness, task_type = "regr", predict_type = "response")
+  x$add("fairness.classif_individual", MeasureAvgIndividualFairness, task_type = "classif", predict_type = "prob")
+  x$add("fairness.surv_individual", MeasureAvgIndividualFairness, task_type = "surv", predict_type = "response")
+
+
   x = getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
   x$add("reweighing_wts", PipeOpReweighingWeights)
   x$add("reweighing_os", PipeOpReweighingOversampling)
