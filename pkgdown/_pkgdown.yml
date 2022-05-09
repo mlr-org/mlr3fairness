@@ -59,6 +59,7 @@ reference:
     contents:
       - mlr_pipeops_equalized_odds
       - mlr_pipeops_reweighing
+      - mlr_pipeops_explicit_pta
   - title: Fair Learners
     contents:
       - mlr_learners_fairness
