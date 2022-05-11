@@ -30,3 +30,4 @@
 ^rmarkdown$
 ^documentation$
 ^cran-comments\.md$
+^CRAN-SUBMISSION$

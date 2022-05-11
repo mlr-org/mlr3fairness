@@ -25,3 +25,6 @@ The information includes
 \item The Protected Attribute
 }
 }
+\examples{
+  task_summary(tsk("adult_train"))
+}

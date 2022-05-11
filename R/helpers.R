@@ -151,7 +151,8 @@ get_pta = function(task, rows = NULL, intersect = FALSE) {
 #' @param task [Task]
 #' @return 
 #' `data.frame` containing the reported information
-#' 
+#' @examples
+#'   task_summary(tsk("adult_train"))
 #' @export
 task_summary = function(task) {
   # Create the report attributes

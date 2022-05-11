@@ -1,3 +1,9 @@
+## Resubmission
+
+I have updated DESCRIPTION, quoting 'mlr3' where required and included references according to the guide.
+All exported functions have running examples, except for report_* functions. 
+The latter create files on the filesystem and internally rely on rmarkdown::draft which uses the same \dontrun directive.
+
 ## R CMD check results
 
 ❯ checking CRAN incoming feasibility ... NOTE
@@ -9,3 +15,5 @@
 
 - RHub shows a PREPERROR but all builds succeed.
 - There are 3 false positives for misspelled words.
+
+
