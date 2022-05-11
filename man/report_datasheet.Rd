@@ -25,9 +25,8 @@ Uses the awesome markdown template created by Chris Garbin
 \href{https://github.com/fau-masters-collected-works-cgarbin/model-card-template}{from Github}.
 }
 \examples{
-\dontrun{
-  report_datasheet("documentation/datasheet.Rmd")
-}
+  report_file = tempfile()
+  report_datasheet(report_file)
 }
 \references{
 Gebru, Timnit, Morgenstern, Jamie, Vecchione, Briana, Vaughan, Wortman J, Wallach, Hanna, III D, Hal, Crawford, Kate (2018).

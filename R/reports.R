@@ -16,9 +16,8 @@
 #' @export
 #' @return Invisibly returns the path to the newly created file(s).
 #' @examples
-#' \dontrun{
-#'   report_datasheet("documentation/datasheet.Rmd")
-#' }
+#'   report_file = tempfile()
+#'   report_datasheet(report_file)
 report_datasheet = function(filename = "datasheet.Rmd", edit = FALSE, build = FALSE) {
   assert_path_for_output(filename)
   assert_flag(edit)
@@ -41,9 +40,8 @@ report_datasheet = function(filename = "datasheet.Rmd", edit = FALSE, build = FA
 #' @export
 #' @return Invisibly returns the path to the newly created file(s).
 #' @examples
-#' \dontrun{
-#'   report_modelcard("documentation/modelcard.Rmd")
-#' }
+#'   report_file = tempfile()
+#'   report_modelcard(report_file)
 report_modelcard = function(filename = "modelcard.Rmd", edit = FALSE, build = FALSE) {
   assert_path_for_output(filename)
   assert_flag(edit)
@@ -72,12 +70,11 @@ report_modelcard = function(filename = "modelcard.Rmd", edit = FALSE, build = FA
 #' @export
 #' @return Invisibly returns the path to the newly created file(s).
 #' @examples
-#' \dontrun{
+#'   report_file = tempfile()
 #'   task = tsk("compas")
 #'   learner = lrn("classif.rpart", predict_type = "prob")
-#'   rr = resample(task, learner, rsmp("cv", folds = 5))
-#'   report_fairness("documentation/fairness.Rmd", list(task = task, resample_result = rr))
-#' }
+#'   rr = resample(task, learner, rsmp("cv", folds = 3L))
+#'   report_fairness(report_file, list(task = task, resample_result = rr))
 report_fairness = function(filename = "fairness_report.Rmd", objects, edit = FALSE, check_objects = FALSE, build = FALSE) {
   assert_path_for_output(filename)
   assert_list(objects, names = "unique")

@@ -11,6 +11,7 @@ test_that("reweighing PipeOp can be loaded and works with disparate impact score
 })
 
 test_that("reweighing_wts", {
+  skip_on_cran()
   tsk = po("reweighing_wts")$train(list(tsk("adult_train")$filter(1:300)))[[1]]
   expect_true(tsk$col_roles$weight == "reweighing.WEIGHTS")
   dt = cbind(tsk$data(cols = c("..row_id", "sex", "target")), tsk$weights)
@@ -19,6 +20,7 @@ test_that("reweighing_wts", {
 })
 
 test_that("reweighing_wts", {
+  skip_on_cran()
   tsk = po("reweighing_os")$train(list(tsk("adult_train")$filter(1:1000)))[[1]]
   dt = cbind(tsk$data(cols = c("..row_id", "sex", "target")))
   tab = table(dt$sex, dt$target)
@@ -26,6 +28,7 @@ test_that("reweighing_wts", {
 })
 
 test_that("reweighing_wts with initial weights", {
+  skip_on_cran()
   t1 = tsk("compas")
   t2 = t1$clone()
   t2$set_col_roles("age", "weight")

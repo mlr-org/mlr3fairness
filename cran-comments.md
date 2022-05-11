@@ -1,8 +1,7 @@
 ## Resubmission
 
-I have updated DESCRIPTION, quoting 'mlr3' where required and included references according to the guide.
-All exported functions have running examples, except for report_* functions. 
-The latter create files on the filesystem and internally rely on rmarkdown::draft which uses the same \dontrun directive.
+* I have updated DESCRIPTION, quoting 'mlr3' where required and included references according to the guide.
+* All exported functions have running examples now.
 
 ## R CMD check results
 

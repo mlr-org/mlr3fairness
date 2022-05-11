@@ -79,7 +79,7 @@ glrn$predict_newdata(task$data(cols = task$feature_names))
 Hardt M, Price E, Srebro N (2016).
 \dQuote{Equality of Opportunity in Supervised Learning.}
 In \emph{Advances in Neural Information Processing Systems}, volume 29, 3315--3323.
-\url{https://papers.nips.cc/paper/6374-interaction-screening-efficient-and-sample-optimal-learning-of-ising-models.pdf}.
+\url{https://papers.nips.cc/paper/2016/file/9d2682367c3935defcb1f9e247a97c0d-Paper.pdf}.
 
 Pleiss, Geoff, Raghavan, Manish, Wu, Felix, Kleinberg, Jon, Weinberger, Q K (2017).
 \dQuote{On Fairness and Calibration.}

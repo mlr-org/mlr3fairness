@@ -43,12 +43,11 @@ Uses the awesome markdown template created by Chris Garbin
 \href{https://github.com/fau-masters-collected-works-cgarbin/model-card-template}{from Github}.
 }
 \examples{
-\dontrun{
+  report_file = tempfile()
   task = tsk("compas")
   learner = lrn("classif.rpart", predict_type = "prob")
-  rr = resample(task, learner, rsmp("cv", folds = 5))
-  report_fairness("documentation/fairness.Rmd", list(task = task, resample_result = rr))
-}
+  rr = resample(task, learner, rsmp("cv", folds = 3L))
+  report_fairness(report_file, list(task = task, resample_result = rr))
 }
 \seealso{
 Other fairness_reports: 
