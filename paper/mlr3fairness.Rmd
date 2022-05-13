@@ -246,7 +246,7 @@ rr$aggregate(measure)
 
 To properly compare competing modeling approaches, candidates can be benchmarked against each other using the `benchmark()` function (yielding a `BenchmarkResult`). In the following, we compare the decision tree from above to logistic regression.
 
-```{r, warning = FALSE}
+```{r, warning = FALSE, fig.height = 3.5, fig.width = 3.5}
 # try a logistic regression as alternative
 learner2 = lrn("classif.log_reg", predict_type = "prob")
 
@@ -287,8 +287,8 @@ Table: Selection of implemented fairness metrics. The full list can be obtained 
 |fairness.fnr          | false negative / false omission rate equality \citet{richardcompas}                        |
 |fairness.eod          | equalized odds: fairness.fpr + fairness.tpr \citet{hardt2016equality}                      |
 |fairness.cv           | demographic parity, equalized positive rates \citet{Calders2010}                           |
-|fairness.acc\_eod=.05 |Accuracy under equalized odds constraint \citet{perrone2021fair}                            |
-|fairness.acc\_ppv=.05 |Accuracy under equalized odds constraint \citet{perrone2021fair}                            |
+|fairness.acc\_eod=.05 | Accuracy under equalized odds constraint \citet{perrone2021fair}                           |
+|fairness.acc\_ppv=.05 | Accuracy under equalized odds constraint \citet{perrone2021fair}                           |
 
 
 
@@ -320,7 +320,7 @@ Plotting the prediction density or comparing the measures graphically often give
 fairness_prediction_density(prediction, task)
 compare_metrics(prediction, msrs(c("fairness.fpr", "fairness.tpr", "fairness.eod")), task)
 ```
-```{r, echo = FALSE, fig.height =3, fig.align='center'}
+```{r, echo = FALSE, fig.height=3, fig.width=6, fig.align='center'}
 library(patchwork)
 p1 = fairness_prediction_density(prediction, task)
 p2 = compare_metrics(prediction, msrs(c("fairness.fpr", "fairness.tpr", "fairness.eod")), task)
@@ -361,11 +361,11 @@ Table: Overview over fair ML algorihtms.\label{tab:fairlearns}
 
 | key               | package | reference             |
 | :---------------- | :------ | :-------------------- |
-| regr.fairfrrm     | fairml  | \citete{scutari}      |
-| classif.fairfgrrm | fairml  | \citete{scutari}      |
-| regr.fairzlm      | fairml  | \citete{Zafar2017}      |
-| classif.fairzlrm  | fairml  | \citete{Zafar2017}      |
-| regr.fairnclm     | fairml  | \citete{komiyama}      |
+| regr.fairfrrm     | fairml  | \citet{scutari}      |
+| classif.fairfgrrm | fairml  | \citet{scutari}      |
+| regr.fairzlm      | fairml  | \citet{Zafar2017}      |
+| classif.fairzlrm  | fairml  | \citet{Zafar2017}      |
+| regr.fairnclm     | fairml  | \citet{komiyama}      |
 
 ###  Reports
 
@@ -409,6 +409,7 @@ In order to get an initial perspective, we benchmark three models using 3-fold c
 The logistic regression in the latter two approaches do not support operating on factor features natively, therefore we pre-process the data with a feature encoder from \CRANpkg{mlr3pipelines}:
 
 ```{r, message = FALSE, warning=FALSE, error=FALSE}
+set.seed(4321)
 learners = list(
     lrn("classif.rpart"),
     po("encode") %>>% lrn("classif.glmnet"),
@@ -424,7 +425,7 @@ bmr1 = benchmark(grid)
 bmr1$aggregate(measures)[, c(4, 7, 8)]
 ```
 
-The preprocessing step of reweighing already improved the fairness while sacrificing only a tiny bit of performance. <!-- TODO CHECK with seed -->
+The preprocessing step of reweighing already improved the fairness while sacrificing only a tiny bit of performance.
 
 To see if we can further improve, we use \CRANpkg{mlr3tuning} to jointly tune all hyperparameters of the *glmnet* model as well as our reweighing hyperparameter.
 In order to do this, we use an `AutoTuner` from \CRANpkg{mlr3tuning}; a model that tunes its own hyperparameters during training.
@@ -436,7 +437,7 @@ Here, we define a fairness-thresholded accuracy metric. We set $\epsilon = 0.01$
   if \; \Delta_{EOd} \leq \epsilon: accuracy \;\; else: \; 1 + \Delta_{EOd}
 \]
 
-```{r}
+```{r, fig.width = 6, fig.height = 5, fig.align='center'}
 metric = msr("fairness.constraint",
     performance_measure = msr("classif.acc"),
     fairness_measure = msr("fairness.eod")
