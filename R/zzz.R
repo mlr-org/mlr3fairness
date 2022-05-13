@@ -62,6 +62,7 @@
   x$add("fairness.regr_individual", MeasureAvgIndividualFairness, task_type = "regr", predict_type = "response")
   x$add("fairness.classif_individual", MeasureAvgIndividualFairness, task_type = "classif", predict_type = "prob")
   x$add("fairness.surv_individual", MeasureAvgIndividualFairness, task_type = "surv", predict_type = "response")
+  x$add("fairness.surv_group", MeasureSurvGroupFairness)
 
 
   x = getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
