@@ -231,32 +231,32 @@
 <p>This vignette assumes that you are familiar with the basics of <code>mlr3</code> and it’s core objects. The <a href="https://mlr3book.mlr-org.com/index.html" class="external-link">mlr3 book</a> can be a great ressource in case you want to learn more about mlr3’s internals.</p>
 <p>We first start by training a model for which we want to conduct an audit. For this example, we use the <code>adult_train</code> dataset. Keep in mind all the datasets from mlr3fairness package already set protected attribute via the <code>col_role</code> “pta”, here the “sex” column. To speed things up, we only use the first 1000 rows.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3fairness.mlr-org.com">mlr3fairness</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3learners.mlr-org.com" class="external-link">mlr3learners</a></span><span class="op">)</span>
-
-<span class="va">t</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"adult_train"</span><span class="op">)</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1000</span><span class="op">)</span>
-<span class="va">t</span><span class="op">$</span><span class="va">col_roles</span><span class="op">$</span><span class="va">pta</span>
-<span class="co">#&gt; [1] "sex"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3fairness.mlr-org.com">mlr3fairness</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3learners.mlr-org.com" class="external-link">mlr3learners</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">t</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"adult_train"</span><span class="op">)</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1000</span><span class="op">)</span></span>
+<span><span class="va">t</span><span class="op">$</span><span class="va">col_roles</span><span class="op">$</span><span class="va">pta</span></span>
+<span><span class="co">#&gt; [1] "sex"</span></span></code></pre></div>
 <p>Our model is a random forest model fitted on the dataset:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">l</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrn</a></span><span class="op">(</span><span class="st">"classif.ranger"</span><span class="op">)</span>
-<span class="va">l</span><span class="op">$</span><span class="fu">train</span><span class="op">(</span><span class="va">t</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">l</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrn</a></span><span class="op">(</span><span class="st">"classif.ranger"</span><span class="op">)</span></span>
+<span><span class="va">l</span><span class="op">$</span><span class="fu">train</span><span class="op">(</span><span class="va">t</span><span class="op">)</span></span></code></pre></div>
 <p>We can now predict on a new dataset and use those predictions to assess for bias:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">test</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"adult_test"</span><span class="op">)</span>
-<span class="va">prd</span> <span class="op">=</span> <span class="va">l</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">test</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">test</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"adult_test"</span><span class="op">)</span></span>
+<span><span class="va">prd</span> <span class="op">=</span> <span class="va">l</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span></code></pre></div>
 <p>Using the <code>$score</code> method and a measure we can e.g. compute the absolute differences in true positive rates.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">prd</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.tpr"</span><span class="op">)</span>, task <span class="op">=</span> <span class="va">test</span><span class="op">)</span>
-<span class="co">#&gt; fairness.tpr </span>
-<span class="co">#&gt;   0.08575927</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">prd</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.tpr"</span><span class="op">)</span>, task <span class="op">=</span> <span class="va">test</span><span class="op">)</span></span>
+<span><span class="co">#&gt; fairness.tpr </span></span>
+<span><span class="co">#&gt;   0.08202966</span></span></code></pre></div>
 <p>The exact measure to choose is often data-set and situation dependent. The <a href="https://textbook.coleridgeinitiative.org/chap-bias.html" class="external-link">Aequitas Fairness Tree</a> can be a great ressource to get started.</p>
 <p>We can furthermore simply look at the per-group measures:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">meas</span> <span class="op">=</span> <span class="fu"><a href="../reference/groupwise_metrics.html">groupwise_metrics</a></span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"classif.tpr"</span><span class="op">)</span>, <span class="va">test</span><span class="op">)</span>
-<span class="va">prd</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="va">meas</span>, task <span class="op">=</span> <span class="va">test</span><span class="op">)</span>
-<span class="co">#&gt;   subgroup.tpr_Male subgroup.tpr_Female </span>
-<span class="co">#&gt;           0.8900435           0.9758028</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">meas</span> <span class="op">=</span> <span class="fu"><a href="../reference/groupwise_metrics.html">groupwise_metrics</a></span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"classif.tpr"</span><span class="op">)</span>, <span class="va">test</span><span class="op">)</span></span>
+<span><span class="va">prd</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="va">meas</span>, task <span class="op">=</span> <span class="va">test</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   subgroup.tpr_Male subgroup.tpr_Female </span></span>
+<span><span class="co">#&gt;           0.8946777           0.9767074</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="fairness-measures---an-in-depth-look">Fairness Measures - An in-depth look<a class="anchor" aria-label="anchor" href="#fairness-measures---an-in-depth-look"></a>
@@ -264,28 +264,28 @@
 <p>Before, we have used <code>msr("fairness.tpr")</code> to assess differences in false positive rates across groups. But what happens internally?</p>
 <p>The <code><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr()</a></code> function is used to obtain a <code>Measure</code> from a dictionary of pre-defined <code>Measure</code>s. We can use <code><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr()</a></code> without any arguments in order to print a list of available measures. In the following example, we will build a <code>Measure</code> that computes differences in False Positive Rates making use of the <code>"classif.fpr"</code> measure readily implemented in <code>mlr3</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Binary Class false positive rates</span>
-<span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"classif.fpr"</span><span class="op">)</span>
-<span class="co">#&gt; &lt;MeasureBinarySimple:classif.fpr&gt;: False Positive Rate</span>
-<span class="co">#&gt; * Packages: mlr3, mlr3measures</span>
-<span class="co">#&gt; * Range: [0, 1]</span>
-<span class="co">#&gt; * Minimize: TRUE</span>
-<span class="co">#&gt; * Average: macro</span>
-<span class="co">#&gt; * Parameters: list()</span>
-<span class="co">#&gt; * Properties: -</span>
-<span class="co">#&gt; * Predict type: response</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Binary Class false positive rates</span></span>
+<span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"classif.fpr"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;MeasureBinarySimple:classif.fpr&gt;: False Positive Rate</span></span>
+<span><span class="co">#&gt; * Packages: mlr3, mlr3measures</span></span>
+<span><span class="co">#&gt; * Range: [0, 1]</span></span>
+<span><span class="co">#&gt; * Minimize: TRUE</span></span>
+<span><span class="co">#&gt; * Average: macro</span></span>
+<span><span class="co">#&gt; * Parameters: list()</span></span>
+<span><span class="co">#&gt; * Properties: -</span></span>
+<span><span class="co">#&gt; * Predict type: response</span></span></code></pre></div>
 <p>The core <code>Measure</code> in <code>mlr3fairness</code> is a <code>MeasureFairness</code>. It can be used to construct arbitrary measures that compute a difference between a specific metric across groups. We can therefore build a new metric as follows:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">m1</span> <span class="op">=</span> <span class="va"><a href="../reference/MeasureFairness.html">MeasureFairness</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>base_measure <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"classif.fpr"</span><span class="op">)</span>, operation <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="va">x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">}</span><span class="op">)</span>
-<span class="va">m1</span>
-<span class="co">#&gt; &lt;MeasureFairness:fairness.fpr&gt;</span>
-<span class="co">#&gt; * Packages: mlr3, mlr3fairness</span>
-<span class="co">#&gt; * Range: [-Inf, Inf]</span>
-<span class="co">#&gt; * Minimize: TRUE</span>
-<span class="co">#&gt; * Average: macro</span>
-<span class="co">#&gt; * Parameters: list()</span>
-<span class="co">#&gt; * Properties: requires_task</span>
-<span class="co">#&gt; * Predict type: response</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">m1</span> <span class="op">=</span> <span class="va"><a href="../reference/MeasureFairness.html">MeasureFairness</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>base_measure <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"classif.fpr"</span><span class="op">)</span>, operation <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="va">x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="va">m1</span></span>
+<span><span class="co">#&gt; &lt;MeasureFairness:fairness.fpr&gt;</span></span>
+<span><span class="co">#&gt; * Packages: mlr3, mlr3fairness</span></span>
+<span><span class="co">#&gt; * Range: [-Inf, Inf]</span></span>
+<span><span class="co">#&gt; * Minimize: TRUE</span></span>
+<span><span class="co">#&gt; * Average: macro</span></span>
+<span><span class="co">#&gt; * Parameters: list()</span></span>
+<span><span class="co">#&gt; * Properties: requires_task</span></span>
+<span><span class="co">#&gt; * Predict type: response</span></span></code></pre></div>
 <p>This measure does the following steps: - Compute the metric supplied as <code>base_measure</code> in each group defined by the <code>"pta"</code> column. - Compute <code>operation</code> (here <code>abs(x[1] - x[2])</code>) and return the result.</p>
 <p>In some cases, we might also want to replace the operation with a different operation, e.g. <code>x[1] / x[2]</code> in order to compute a different perspective.</p>
 <p><code>mlr3fairness</code> comes with two built-in functions that can be used to compute fairness metrics also across protected attributes that have more than two classes.</p>
@@ -298,10 +298,10 @@
 <p><strong>Note</strong>: Depending on the <code>operation</code> we need to set a different <code>minimize</code> flag for the measure, so subsequent operations based on the measure automatically know if the measure is to be minimized or maximized e.g. during tuning.</p>
 <p>We can also use those operations to construct a measure using <code><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr()</a></code>, since <code>MeasureFairness</code> (key: <code>msr("fairness")</code>) can be constructed from the dictionary with additional arguments.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">m2</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness"</span>, operation <span class="op">=</span> <span class="va">groupdiff_absdiff</span>, base_measure <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"classif.tpr"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">m2</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness"</span>, operation <span class="op">=</span> <span class="va">groupdiff_absdiff</span>, base_measure <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"classif.tpr"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>This allows us to construct pretty flexible metrics e.g. for regression settings:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">m2</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness"</span>, operation <span class="op">=</span> <span class="va">groupdiff_absdiff</span>, base_measure <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"regr.mse"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">m2</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness"</span>, operation <span class="op">=</span> <span class="va">groupdiff_absdiff</span>, base_measure <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"regr.mse"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="non-binary-protected-groups">Non-binary protected groups<a class="anchor" aria-label="anchor" href="#non-binary-protected-groups"></a>
 </h4>
@@ -314,95 +314,95 @@
 </h3>
 <p>Some fairness measures also require a combination of multiple Fairness Metrics. In the following example we show how to compute the mean of two fairness metrics, here false negative and true negative rates and create a new <code>Measure</code> that computes the mean (see <code>aggfun</code>) of those metrics:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ms</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.fnr"</span><span class="op">)</span>, <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.tnr"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">ms</span>
-<span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; &lt;MeasureFairness:fairness.fnr&gt;</span>
-<span class="co">#&gt; * Packages: mlr3, mlr3fairness</span>
-<span class="co">#&gt; * Range: [0, 1]</span>
-<span class="co">#&gt; * Minimize: TRUE</span>
-<span class="co">#&gt; * Average: macro</span>
-<span class="co">#&gt; * Parameters: list()</span>
-<span class="co">#&gt; * Properties: requires_task</span>
-<span class="co">#&gt; * Predict type: response</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; &lt;MeasureFairness:fairness.tnr&gt;</span>
-<span class="co">#&gt; * Packages: mlr3, mlr3fairness</span>
-<span class="co">#&gt; * Range: [0, 1]</span>
-<span class="co">#&gt; * Minimize: TRUE</span>
-<span class="co">#&gt; * Average: macro</span>
-<span class="co">#&gt; * Parameters: list()</span>
-<span class="co">#&gt; * Properties: requires_task</span>
-<span class="co">#&gt; * Predict type: response</span>
-
-<span class="va">m</span> <span class="op">=</span> <span class="va"><a href="../reference/MeasureFairnessComposite.html">MeasureFairnessComposite</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>measures <span class="op">=</span> <span class="va">ms</span>, aggfun <span class="op">=</span> <span class="va">mean</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ms</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.fnr"</span><span class="op">)</span>, <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.tnr"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">ms</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; &lt;MeasureFairness:fairness.fnr&gt;</span></span>
+<span><span class="co">#&gt; * Packages: mlr3, mlr3fairness</span></span>
+<span><span class="co">#&gt; * Range: [0, 1]</span></span>
+<span><span class="co">#&gt; * Minimize: TRUE</span></span>
+<span><span class="co">#&gt; * Average: macro</span></span>
+<span><span class="co">#&gt; * Parameters: list()</span></span>
+<span><span class="co">#&gt; * Properties: requires_task</span></span>
+<span><span class="co">#&gt; * Predict type: response</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]</span></span>
+<span><span class="co">#&gt; &lt;MeasureFairness:fairness.tnr&gt;</span></span>
+<span><span class="co">#&gt; * Packages: mlr3, mlr3fairness</span></span>
+<span><span class="co">#&gt; * Range: [0, 1]</span></span>
+<span><span class="co">#&gt; * Minimize: TRUE</span></span>
+<span><span class="co">#&gt; * Average: macro</span></span>
+<span><span class="co">#&gt; * Parameters: list()</span></span>
+<span><span class="co">#&gt; * Properties: requires_task</span></span>
+<span><span class="co">#&gt; * Predict type: response</span></span>
+<span></span>
+<span><span class="va">m</span> <span class="op">=</span> <span class="va"><a href="../reference/MeasureFairnessComposite.html">MeasureFairnessComposite</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>measures <span class="op">=</span> <span class="va">ms</span>, aggfun <span class="op">=</span> <span class="va">mean</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="how-to-compare-the-fairness-performance-between-different-learners-using-benchmarks">How to compare the fairness performance between different learners using Benchmarks<a class="anchor" aria-label="anchor" href="#how-to-compare-the-fairness-performance-between-different-learners-using-benchmarks"></a>
 </h3>
 <p>In this example, we create a <code>BenchmarkInstance</code>. Then by using <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code> function they could access the fairness measures easily. The following example demonstrates the process to evaluate the fairness metrics on Benchmark Results:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">design</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/benchmark_grid.html" class="external-link">benchmark_grid</a></span><span class="op">(</span>
-  tasks <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsks</a></span><span class="op">(</span><span class="st">"compas"</span><span class="op">)</span>,
-  learners <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrns</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"classif.ranger"</span>, <span class="st">"classif.rpart"</span><span class="op">)</span>,
-    predict_type <span class="op">=</span> <span class="st">"prob"</span>, predict_sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"train"</span>, <span class="st">"predict"</span><span class="op">)</span><span class="op">)</span>,
-  resamplings <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">rsmps</a></span><span class="op">(</span><span class="st">"cv"</span>, folds <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="va">bmr</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/benchmark.html" class="external-link">benchmark</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span>
-
-<span class="co"># Operations have been set to `groupwise_quotient()`</span>
-<span class="va">measures</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.tpr"</span><span class="op">)</span>, <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.npv"</span><span class="op">)</span>, <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.acc"</span><span class="op">)</span>, <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"classif.acc"</span><span class="op">)</span> <span class="op">)</span>
-
-<span class="va">tab</span> <span class="op">=</span> <span class="va">bmr</span><span class="op">$</span><span class="fu">aggregate</span><span class="op">(</span><span class="va">measures</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Measure 'fairness.tpr' needs predict sets 'test', but learner</span>
-<span class="co">#&gt; 'classif.ranger' only predicted on sets 'train', 'predict'</span>
-<span class="co">#&gt; Warning: Measure 'fairness.npv' needs predict sets 'test', but learner</span>
-<span class="co">#&gt; 'classif.ranger' only predicted on sets 'train', 'predict'</span>
-<span class="co">#&gt; Warning: Measure 'fairness.acc' needs predict sets 'test', but learner</span>
-<span class="co">#&gt; 'classif.ranger' only predicted on sets 'train', 'predict'</span>
-<span class="co">#&gt; Warning: Measure 'classif.acc' needs predict sets 'test', but learner</span>
-<span class="co">#&gt; 'classif.ranger' only predicted on sets 'train', 'predict'</span>
-<span class="co">#&gt; Warning: Measure 'fairness.tpr' needs predict sets 'test', but learner</span>
-<span class="co">#&gt; 'classif.rpart' only predicted on sets 'train', 'predict'</span>
-<span class="co">#&gt; Warning: Measure 'fairness.npv' needs predict sets 'test', but learner</span>
-<span class="co">#&gt; 'classif.rpart' only predicted on sets 'train', 'predict'</span>
-<span class="co">#&gt; Warning: Measure 'fairness.acc' needs predict sets 'test', but learner</span>
-<span class="co">#&gt; 'classif.rpart' only predicted on sets 'train', 'predict'</span>
-<span class="co">#&gt; Warning: Measure 'classif.acc' needs predict sets 'test', but learner</span>
-<span class="co">#&gt; 'classif.rpart' only predicted on sets 'train', 'predict'</span>
-<span class="va">tab</span>
-<span class="co">#&gt;    nr      resample_result task_id     learner_id resampling_id iters</span>
-<span class="co">#&gt; 1:  1 &lt;ResampleResult[22]&gt;  compas classif.ranger            cv     3</span>
-<span class="co">#&gt; 2:  2 &lt;ResampleResult[22]&gt;  compas  classif.rpart            cv     3</span>
-<span class="co">#&gt;    fairness.tpr fairness.npv fairness.acc classif.acc</span>
-<span class="co">#&gt; 1:          NaN          NaN          NaN         NaN</span>
-<span class="co">#&gt; 2:          NaN          NaN          NaN         NaN</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">design</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/benchmark_grid.html" class="external-link">benchmark_grid</a></span><span class="op">(</span></span>
+<span>  tasks <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsks</a></span><span class="op">(</span><span class="st">"compas"</span><span class="op">)</span>,</span>
+<span>  learners <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrns</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"classif.ranger"</span>, <span class="st">"classif.rpart"</span><span class="op">)</span>,</span>
+<span>    predict_type <span class="op">=</span> <span class="st">"prob"</span>, predict_sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"train"</span>, <span class="st">"predict"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  resamplings <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">rsmps</a></span><span class="op">(</span><span class="st">"cv"</span>, folds <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">bmr</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/benchmark.html" class="external-link">benchmark</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Operations have been set to `groupwise_quotient()`</span></span>
+<span><span class="va">measures</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.tpr"</span><span class="op">)</span>, <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.npv"</span><span class="op">)</span>, <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.acc"</span><span class="op">)</span>, <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"classif.acc"</span><span class="op">)</span> <span class="op">)</span></span>
+<span></span>
+<span><span class="va">tab</span> <span class="op">=</span> <span class="va">bmr</span><span class="op">$</span><span class="fu">aggregate</span><span class="op">(</span><span class="va">measures</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Measure 'fairness.tpr' needs predict sets 'test', but learner</span></span>
+<span><span class="co">#&gt; 'classif.ranger' only predicted on sets 'train', 'predict'</span></span>
+<span><span class="co">#&gt; Warning: Measure 'fairness.npv' needs predict sets 'test', but learner</span></span>
+<span><span class="co">#&gt; 'classif.ranger' only predicted on sets 'train', 'predict'</span></span>
+<span><span class="co">#&gt; Warning: Measure 'fairness.acc' needs predict sets 'test', but learner</span></span>
+<span><span class="co">#&gt; 'classif.ranger' only predicted on sets 'train', 'predict'</span></span>
+<span><span class="co">#&gt; Warning: Measure 'classif.acc' needs predict sets 'test', but learner</span></span>
+<span><span class="co">#&gt; 'classif.ranger' only predicted on sets 'train', 'predict'</span></span>
+<span><span class="co">#&gt; Warning: Measure 'fairness.tpr' needs predict sets 'test', but learner</span></span>
+<span><span class="co">#&gt; 'classif.rpart' only predicted on sets 'train', 'predict'</span></span>
+<span><span class="co">#&gt; Warning: Measure 'fairness.npv' needs predict sets 'test', but learner</span></span>
+<span><span class="co">#&gt; 'classif.rpart' only predicted on sets 'train', 'predict'</span></span>
+<span><span class="co">#&gt; Warning: Measure 'fairness.acc' needs predict sets 'test', but learner</span></span>
+<span><span class="co">#&gt; 'classif.rpart' only predicted on sets 'train', 'predict'</span></span>
+<span><span class="co">#&gt; Warning: Measure 'classif.acc' needs predict sets 'test', but learner</span></span>
+<span><span class="co">#&gt; 'classif.rpart' only predicted on sets 'train', 'predict'</span></span>
+<span><span class="va">tab</span></span>
+<span><span class="co">#&gt;    nr      resample_result task_id     learner_id resampling_id iters</span></span>
+<span><span class="co">#&gt; 1:  1 &lt;ResampleResult[22]&gt;  compas classif.ranger            cv     3</span></span>
+<span><span class="co">#&gt; 2:  2 &lt;ResampleResult[22]&gt;  compas  classif.rpart            cv     3</span></span>
+<span><span class="co">#&gt;    fairness.tpr fairness.npv fairness.acc classif.acc</span></span>
+<span><span class="co">#&gt; 1:          NaN          NaN          NaN         NaN</span></span>
+<span><span class="co">#&gt; 2:          NaN          NaN          NaN         NaN</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="metrics-aggregation---groupdiff_">Metrics aggregation - groupdiff_*<a class="anchor" aria-label="anchor" href="#metrics-aggregation---groupdiff_"></a>
 </h3>
 <p>For <code>MeasureFairness</code>, <strong>mlr3</strong> computes the <code>base_measure</code> in each group specified by the <code>pta</code> column. If we now want to return those measures, we need to aggregate this to a single metric - e.g. using one of the <code>groupdiff_*</code> functions available with mlr3. See <code><a href="../reference/groupdiff_tau.html">?groupdiff_tau</a></code> for a list. Note, that the <code>operation</code> below also accepts custom aggregation function, see the example below.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.acc"</span>, operation <span class="op">=</span> <span class="va">groupdiff_diff</span><span class="op">)</span>
-<span class="co">#&gt; &lt;MeasureFairness:fairness.acc&gt;</span>
-<span class="co">#&gt; * Packages: mlr3, mlr3fairness</span>
-<span class="co">#&gt; * Range: [0, 1]</span>
-<span class="co">#&gt; * Minimize: TRUE</span>
-<span class="co">#&gt; * Average: macro</span>
-<span class="co">#&gt; * Parameters: list()</span>
-<span class="co">#&gt; * Properties: requires_task</span>
-<span class="co">#&gt; * Predict type: response</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.acc"</span>, operation <span class="op">=</span> <span class="va">groupdiff_diff</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;MeasureFairness:fairness.acc&gt;</span></span>
+<span><span class="co">#&gt; * Packages: mlr3, mlr3fairness</span></span>
+<span><span class="co">#&gt; * Range: [0, 1]</span></span>
+<span><span class="co">#&gt; * Minimize: TRUE</span></span>
+<span><span class="co">#&gt; * Average: macro</span></span>
+<span><span class="co">#&gt; * Parameters: list()</span></span>
+<span><span class="co">#&gt; * Properties: requires_task</span></span>
+<span><span class="co">#&gt; * Predict type: response</span></span></code></pre></div>
 <p>We can also report other metrics, e.g. the error in a specific group:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">t</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"adult_train"</span><span class="op">)</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1000</span><span class="op">)</span>
-<span class="va">mm</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.acc"</span>, operation <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span><span class="va">x</span><span class="op">[</span><span class="st">"Female"</span><span class="op">]</span><span class="op">}</span><span class="op">)</span>
-<span class="va">l</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrn</a></span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span>
-<span class="va">prds</span> <span class="op">=</span> <span class="va">l</span><span class="op">$</span><span class="fu">train</span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">t</span><span class="op">)</span>
-<span class="va">prds</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="va">mm</span>, <span class="va">t</span><span class="op">)</span>
-<span class="co">#&gt; fairness.acc </span>
-<span class="co">#&gt;    0.9404389</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">t</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"adult_train"</span><span class="op">)</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1000</span><span class="op">)</span></span>
+<span><span class="va">mm</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.acc"</span>, operation <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span><span class="va">x</span><span class="op">[</span><span class="st">"Female"</span><span class="op">]</span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="va">l</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrn</a></span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span></span>
+<span><span class="va">prds</span> <span class="op">=</span> <span class="va">l</span><span class="op">$</span><span class="fu">train</span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">t</span><span class="op">)</span></span>
+<span><span class="va">prds</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="va">mm</span>, <span class="va">t</span><span class="op">)</span></span>
+<span><span class="co">#&gt; fairness.acc </span></span>
+<span><span class="co">#&gt;    0.9404389</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

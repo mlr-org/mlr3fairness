@@ -131,7 +131,7 @@
 </h2>
 <p>Install the development version from github:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"mlr-org/mlr3fairness"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"mlr-org/mlr3fairness"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="why-should-i-care-about-fairness-in-machine-learning">Why should I care about fairness in machine learning?<a class="anchor" aria-label="anchor" href="#why-should-i-care-about-fairness-in-machine-learning"></a>
@@ -161,7 +161,7 @@
 </h3>
 <p><code>mlr3fairness</code> requires information about the protected attribute wrt. which we want to assess fairness. This can be set via the <code>col_role</code> “pta” (protected attribute).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">task</span><span class="op">$</span><span class="va">col_roles</span><span class="op">$</span><span class="va">pta</span> <span class="op">=</span> <span class="st">"variable_name"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">task</span><span class="op">$</span><span class="va">col_roles</span><span class="op">$</span><span class="va">pta</span> <span class="op">=</span> <span class="st">"variable_name"</span></span></code></pre></div>
 <p>In case a non-categorical or more complex protected attribute is required, it can be manually computed and added to the task. <code>mlr3fairness</code> does not require specific types for <code>pta</code>, but will compute one metric for every unique value in the <code>pta</code> column.</p>
 </div>
 <div class="section level3">
@@ -169,8 +169,8 @@
 </h3>
 <p><code>mlr3fairness</code> offers a variety of fairness metrics. Metrics are prefixed with <code>fairness.</code> and can be found in the <code><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr()</a></code> dictionary. Most fairness metrics are based on a difference between two protected groups (e.g. male and female) for a given metric (e.g. the false positive rate: <code>fpr</code>). See <a href="https://textbook.coleridgeinitiative.org/chap-bias.html" class="external-link">the vignette</a> for a more in-depth introduction to fairness metrics and how to choose them.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3.mlr-org.com" class="external-link">mlr3</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3fairness.mlr-org.com">mlr3fairness</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3.mlr-org.com" class="external-link">mlr3</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3fairness.mlr-org.com">mlr3fairness</a></span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="16%">
@@ -273,10 +273,10 @@
 </h3>
 <p>Debiasing methods can be used to improve the fairness of a given model. <code>mlr3fairness</code> includes several methods that can be used together with <code>mlr3pipelines</code> to obtain fair(er) models:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3pipelines.mlr-org.com" class="external-link">mlr3pipelines</a></span><span class="op">)</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_learner.html" class="external-link">as_learner</a></span><span class="op">(</span><span class="fu"><a href="https://mlr3pipelines.mlr-org.com/reference/po.html" class="external-link">po</a></span><span class="op">(</span><span class="st">"reweighing_wts"</span><span class="op">)</span> <span class="op"><a href="https://mlr3pipelines.mlr-org.com/reference/grapes-greater-than-greater-than-grapes.html" class="external-link">%&gt;&gt;%</a></span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrn</a></span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">rs</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/resample.html" class="external-link">resample</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"compas"</span><span class="op">)</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">500</span><span class="op">)</span>, <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">rsmp</a></span><span class="op">(</span><span class="st">"cv"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">rs</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.acc"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3pipelines.mlr-org.com" class="external-link">mlr3pipelines</a></span><span class="op">)</span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_learner.html" class="external-link">as_learner</a></span><span class="op">(</span><span class="fu"><a href="https://mlr3pipelines.mlr-org.com/reference/po.html" class="external-link">po</a></span><span class="op">(</span><span class="st">"reweighing_wts"</span><span class="op">)</span> <span class="op"><a href="https://mlr3pipelines.mlr-org.com/reference/grapes-greater-than-greater-than-grapes.html" class="external-link">%&gt;&gt;%</a></span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrn</a></span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">rs</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/resample.html" class="external-link">resample</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"compas"</span><span class="op">)</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">500</span><span class="op">)</span>, <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">rsmp</a></span><span class="op">(</span><span class="st">"cv"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">rs</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.acc"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Overview:</strong></p>
 <table style="width:100%;" class="table">
 <colgroup>
@@ -398,31 +398,31 @@
 <p><strong>Usage:</strong></p>
 <p>The <code>report_*</code> functions instantiate a new <code>.Rmd</code> template that contains a set of pre-defined questions which can be used for reporting as well as initial graphics. The goal is that a user extends this <code>.Rmd</code> file to create comprehensive documentation for datasets, ML models or to document a model’s fairness. It can later be converted into a <code>html</code> report using<code>rmarkdown</code>’s <code>render</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rmdfile</span> <span class="op">=</span> <span class="fu"><a href="reference/report_datasheet.html">report_datasheet</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span><span class="op">(</span><span class="va">rmdfile</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rmdfile</span> <span class="op">=</span> <span class="fu"><a href="reference/report_datasheet.html">report_datasheet</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span><span class="op">(</span><span class="va">rmdfile</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="demo-for-adult-dataset">Demo for Adult Dataset<a class="anchor" aria-label="anchor" href="#demo-for-adult-dataset"></a>
 </h3>
 <p>We provide a short example detailing how <code>mlr3fairness</code> integrates with the <code>mlr3</code> ecosystem.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3fairness.mlr-org.com">mlr3fairness</a></span><span class="op">)</span>
-
-<span class="co">#Initialize Fairness Measure</span>
-<span class="va">fairness_measure</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.fpr"</span><span class="op">)</span>
-<span class="co">#Initialize tasks</span>
-<span class="va">task_train</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"adult_train"</span><span class="op">)</span>
-<span class="va">task_test</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"adult_test"</span><span class="op">)</span>
-<span class="co">#Initialize model</span>
-<span class="va">learner</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrn</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, predict_type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
-
-<span class="co">#Verify fairness metrics</span>
-<span class="va">learner</span><span class="op">$</span><span class="fu">train</span><span class="op">(</span><span class="va">task_train</span><span class="op">)</span>
-<span class="va">predictions</span> <span class="op">=</span> <span class="va">learner</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">task_test</span><span class="op">)</span>
-<span class="va">predictions</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="va">fairness_measure</span>, task <span class="op">=</span> <span class="va">task_test</span><span class="op">)</span>
-
-<span class="co">#Visualize the predicted probability score based on protected attribute.</span>
-<span class="fu"><a href="reference/fairness_prediction_density.html">fairness_prediction_density</a></span><span class="op">(</span><span class="va">predictions</span>, <span class="va">task_test</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3fairness.mlr-org.com">mlr3fairness</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Initialize Fairness Measure</span></span>
+<span><span class="va">fairness_measure</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.fpr"</span><span class="op">)</span></span>
+<span><span class="co">#Initialize tasks</span></span>
+<span><span class="va">task_train</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"adult_train"</span><span class="op">)</span></span>
+<span><span class="va">task_test</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"adult_test"</span><span class="op">)</span></span>
+<span><span class="co">#Initialize model</span></span>
+<span><span class="va">learner</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrn</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, predict_type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Verify fairness metrics</span></span>
+<span><span class="va">learner</span><span class="op">$</span><span class="fu">train</span><span class="op">(</span><span class="va">task_train</span><span class="op">)</span></span>
+<span><span class="va">predictions</span> <span class="op">=</span> <span class="va">learner</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">task_test</span><span class="op">)</span></span>
+<span><span class="va">predictions</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="va">fairness_measure</span>, task <span class="op">=</span> <span class="va">task_test</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Visualize the predicted probability score based on protected attribute.</span></span>
+<span><span class="fu"><a href="reference/fairness_prediction_density.html">fairness_prediction_density</a></span><span class="op">(</span><span class="va">predictions</span>, <span class="va">task_test</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="extensions">Extensions<a class="anchor" aria-label="anchor" href="#extensions"></a>

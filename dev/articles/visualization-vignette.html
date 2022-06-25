@@ -123,10 +123,10 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3fairness.mlr-org.com">mlr3fairness</a></span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: mlr3</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3learners.mlr-org.com" class="external-link">mlr3learners</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3.mlr-org.com" class="external-link">mlr3</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3fairness.mlr-org.com">mlr3fairness</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: mlr3</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3learners.mlr-org.com" class="external-link">mlr3learners</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3.mlr-org.com" class="external-link">mlr3</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="why-we-need-fairness-visualizations">Why we need fairness visualizations:<a class="anchor" aria-label="anchor" href="#why-we-need-fairness-visualizations"></a>
 </h2>
@@ -137,32 +137,32 @@
 </h2>
 <p>For this example, we use the <code>adult_train</code> dataset. Keep in mind all the datasets from <code>mlr3fairness</code> package already set protected attribute via the <code>col_role</code> “pta”, here the “sex” column.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">t</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"adult_train"</span><span class="op">)</span>
-<span class="va">t</span><span class="op">$</span><span class="va">col_roles</span><span class="op">$</span><span class="va">pta</span>
-<span class="co">#&gt; [1] "sex"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">t</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"adult_train"</span><span class="op">)</span></span>
+<span><span class="va">t</span><span class="op">$</span><span class="va">col_roles</span><span class="op">$</span><span class="va">pta</span></span>
+<span><span class="co">#&gt; [1] "sex"</span></span></code></pre></div>
 <p>We choose a random forest as well as a decision tree model in order to showcase differences in performances.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"adult_train"</span><span class="op">)</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5000</span><span class="op">)</span>
-<span class="va">learner</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrn</a></span><span class="op">(</span><span class="st">"classif.ranger"</span>, predict_type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
-<span class="va">learner</span><span class="op">$</span><span class="fu">train</span><span class="op">(</span><span class="va">task</span><span class="op">)</span>
-<span class="va">predictions</span> <span class="op">=</span> <span class="va">learner</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"adult_test"</span><span class="op">)</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5000</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"adult_train"</span><span class="op">)</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5000</span><span class="op">)</span></span>
+<span><span class="va">learner</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrn</a></span><span class="op">(</span><span class="st">"classif.ranger"</span>, predict_type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span></span>
+<span><span class="va">learner</span><span class="op">$</span><span class="fu">train</span><span class="op">(</span><span class="va">task</span><span class="op">)</span></span>
+<span><span class="va">predictions</span> <span class="op">=</span> <span class="va">learner</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"adult_test"</span><span class="op">)</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5000</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Note, that it is important to evaluate predictions on held-out data in order to obtain unbiased estimates of fairness and performance metrics. By inspecting the confusion matrix, we can get some first insights.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">predictions</span><span class="op">$</span><span class="va">confusion</span>
-<span class="co">#&gt;         truth</span>
-<span class="co">#&gt; response &lt;=50K &gt;50K</span>
-<span class="co">#&gt;    &lt;=50K  3492  489</span>
-<span class="co">#&gt;    &gt;50K    268  751</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">predictions</span><span class="op">$</span><span class="va">confusion</span></span>
+<span><span class="co">#&gt;         truth</span></span>
+<span><span class="co">#&gt; response &lt;=50K &gt;50K</span></span>
+<span><span class="co">#&gt;    &lt;=50K  3493  492</span></span>
+<span><span class="co">#&gt;    &gt;50K    267  748</span></span></code></pre></div>
 <p>We furthermore design a small experiment allowing us to compare a random forest (<code>ranger</code>) and a decision tree (<code>rpart</code>). The result, <code>bmr</code> is a <code>BenchmarkResult</code> that contains the trained models on each cross-validation split.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">design</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/benchmark_grid.html" class="external-link">benchmark_grid</a></span><span class="op">(</span>
-  tasks <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"adult_train"</span><span class="op">)</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5000</span><span class="op">)</span>,
-  learners <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrns</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"classif.ranger"</span>, <span class="st">"classif.rpart"</span><span class="op">)</span>,
-                  predict_type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>,
-  resamplings <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">rsmps</a></span><span class="op">(</span><span class="st">"cv"</span>, folds <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="va">bmr</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/benchmark.html" class="external-link">benchmark</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">design</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/benchmark_grid.html" class="external-link">benchmark_grid</a></span><span class="op">(</span></span>
+<span>  tasks <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"adult_train"</span><span class="op">)</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  learners <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrns</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"classif.ranger"</span>, <span class="st">"classif.rpart"</span><span class="op">)</span>,</span>
+<span>                  predict_type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>,</span>
+<span>  resamplings <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">rsmps</a></span><span class="op">(</span><span class="st">"cv"</span>, folds <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">bmr</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/benchmark.html" class="external-link">benchmark</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="fairness-prediction-density-plot">Fairness Prediction Density Plot<a class="anchor" aria-label="anchor" href="#fairness-prediction-density-plot"></a>
@@ -170,11 +170,11 @@
 <p>By inspecting the prediction density plot we can see the predicted probability for a given class split by the protected attribute, in this case <code>"sex"</code>. Large differences in densities might hint at strong differences in the target between groups, either directly in the data or as a consequence of the modeling process. Note, that plotting densities for a <code>Prediction</code> requires a <code>Task</code> since information about protected attributes is not contained in the <code>Prediction</code>.</p>
 <p>We can either plot the density with a <code>Prediction</code></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fairness_prediction_density.html">fairness_prediction_density</a></span><span class="op">(</span><span class="va">predictions</span>, <span class="va">task</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fairness_prediction_density.html">fairness_prediction_density</a></span><span class="op">(</span><span class="va">predictions</span>, <span class="va">task</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visualization-vignette_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>or use it with a <code>BenchmarkResult</code> / <code>ResampleResult</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fairness_prediction_density.html">fairness_prediction_density</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fairness_prediction_density.html">fairness_prediction_density</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visualization-vignette_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
 <div class="section level2">
@@ -182,7 +182,7 @@
 </h2>
 <p>In practice, we are most often interested in a trade-off between fairness metrics and a measure of utility such as accuracy. We showcase individual scores obtained in each cross-validation fold as well as the aggregate (<code>mean</code>) in order to additionally provide an indication in the variance of the performance estimates.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fairness_accuracy_tradeoff.html">fairness_accuracy_tradeoff</a></span><span class="op">(</span><span class="va">bmr</span>, <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.fpr"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fairness_accuracy_tradeoff.html">fairness_accuracy_tradeoff</a></span><span class="op">(</span><span class="va">bmr</span>, <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.fpr"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visualization-vignette_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
 <div class="section level2">
@@ -190,11 +190,11 @@
 </h2>
 <p>An additional comparison can be obtained using <code>compare_metrics</code>. It allows comparing <code>Learner</code>s with respect to multiple metrics. Again, we can use it with a <code>Prediction</code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fairness_compare_metrics.html">compare_metrics</a></span><span class="op">(</span><span class="va">predictions</span>, <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msrs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fairness.fpr"</span>, <span class="st">"fairness.tpr"</span><span class="op">)</span><span class="op">)</span>, <span class="va">task</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fairness_compare_metrics.html">compare_metrics</a></span><span class="op">(</span><span class="va">predictions</span>, <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msrs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fairness.fpr"</span>, <span class="st">"fairness.tpr"</span><span class="op">)</span><span class="op">)</span>, <span class="va">task</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visualization-vignette_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p>or use it with a <code>BenchmarkResult</code> / <code>ResampleResult</code>:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fairness_compare_metrics.html">compare_metrics</a></span><span class="op">(</span><span class="va">bmr</span>, <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msrs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"classif.ce"</span>, <span class="st">"fairness.fpr"</span>, <span class="st">"fairness.tpr"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fairness_compare_metrics.html">compare_metrics</a></span><span class="op">(</span><span class="va">bmr</span>, <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msrs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"classif.ce"</span>, <span class="st">"fairness.fpr"</span>, <span class="st">"fairness.tpr"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visualization-vignette_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>
 <div class="section level2">
@@ -202,28 +202,28 @@
 </h2>
 <p>The required metrics to create custom visualizations can also be easily computed using the <code>$score()</code> method.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bmr</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.tpr"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;                                   uhash nr              task     task_id</span>
-<span class="co">#&gt; 1: 779d3c3c-ec99-47fc-81ec-e183667bacb4  1 &lt;TaskClassif[50]&gt; adult_train</span>
-<span class="co">#&gt; 2: 779d3c3c-ec99-47fc-81ec-e183667bacb4  1 &lt;TaskClassif[50]&gt; adult_train</span>
-<span class="co">#&gt; 3: 779d3c3c-ec99-47fc-81ec-e183667bacb4  1 &lt;TaskClassif[50]&gt; adult_train</span>
-<span class="co">#&gt; 4: 3e6e844c-5f95-4d1a-90d4-44c4176f6805  2 &lt;TaskClassif[50]&gt; adult_train</span>
-<span class="co">#&gt; 5: 3e6e844c-5f95-4d1a-90d4-44c4176f6805  2 &lt;TaskClassif[50]&gt; adult_train</span>
-<span class="co">#&gt; 6: 3e6e844c-5f95-4d1a-90d4-44c4176f6805  2 &lt;TaskClassif[50]&gt; adult_train</span>
-<span class="co">#&gt;                       learner     learner_id         resampling resampling_id</span>
-<span class="co">#&gt; 1: &lt;LearnerClassifRanger[38]&gt; classif.ranger &lt;ResamplingCV[20]&gt;            cv</span>
-<span class="co">#&gt; 2: &lt;LearnerClassifRanger[38]&gt; classif.ranger &lt;ResamplingCV[20]&gt;            cv</span>
-<span class="co">#&gt; 3: &lt;LearnerClassifRanger[38]&gt; classif.ranger &lt;ResamplingCV[20]&gt;            cv</span>
-<span class="co">#&gt; 4:  &lt;LearnerClassifRpart[38]&gt;  classif.rpart &lt;ResamplingCV[20]&gt;            cv</span>
-<span class="co">#&gt; 5:  &lt;LearnerClassifRpart[38]&gt;  classif.rpart &lt;ResamplingCV[20]&gt;            cv</span>
-<span class="co">#&gt; 6:  &lt;LearnerClassifRpart[38]&gt;  classif.rpart &lt;ResamplingCV[20]&gt;            cv</span>
-<span class="co">#&gt;    iteration              prediction fairness.tpr</span>
-<span class="co">#&gt; 1:         1 &lt;PredictionClassif[20]&gt;   0.05612130</span>
-<span class="co">#&gt; 2:         2 &lt;PredictionClassif[20]&gt;   0.09493689</span>
-<span class="co">#&gt; 3:         3 &lt;PredictionClassif[20]&gt;   0.06071429</span>
-<span class="co">#&gt; 4:         1 &lt;PredictionClassif[20]&gt;   0.06605405</span>
-<span class="co">#&gt; 5:         2 &lt;PredictionClassif[20]&gt;   0.06098177</span>
-<span class="co">#&gt; 6:         3 &lt;PredictionClassif[20]&gt;   0.07554113</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bmr</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.tpr"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                                   uhash nr              task     task_id</span></span>
+<span><span class="co">#&gt; 1: 20b705d7-8d3f-48ad-a0ac-9b2f2f49ab0f  1 &lt;TaskClassif[50]&gt; adult_train</span></span>
+<span><span class="co">#&gt; 2: 20b705d7-8d3f-48ad-a0ac-9b2f2f49ab0f  1 &lt;TaskClassif[50]&gt; adult_train</span></span>
+<span><span class="co">#&gt; 3: 20b705d7-8d3f-48ad-a0ac-9b2f2f49ab0f  1 &lt;TaskClassif[50]&gt; adult_train</span></span>
+<span><span class="co">#&gt; 4: ffb94b64-6877-47d7-bf3e-aab2959a2a12  2 &lt;TaskClassif[50]&gt; adult_train</span></span>
+<span><span class="co">#&gt; 5: ffb94b64-6877-47d7-bf3e-aab2959a2a12  2 &lt;TaskClassif[50]&gt; adult_train</span></span>
+<span><span class="co">#&gt; 6: ffb94b64-6877-47d7-bf3e-aab2959a2a12  2 &lt;TaskClassif[50]&gt; adult_train</span></span>
+<span><span class="co">#&gt;                       learner     learner_id         resampling resampling_id</span></span>
+<span><span class="co">#&gt; 1: &lt;LearnerClassifRanger[38]&gt; classif.ranger &lt;ResamplingCV[20]&gt;            cv</span></span>
+<span><span class="co">#&gt; 2: &lt;LearnerClassifRanger[38]&gt; classif.ranger &lt;ResamplingCV[20]&gt;            cv</span></span>
+<span><span class="co">#&gt; 3: &lt;LearnerClassifRanger[38]&gt; classif.ranger &lt;ResamplingCV[20]&gt;            cv</span></span>
+<span><span class="co">#&gt; 4:  &lt;LearnerClassifRpart[38]&gt;  classif.rpart &lt;ResamplingCV[20]&gt;            cv</span></span>
+<span><span class="co">#&gt; 5:  &lt;LearnerClassifRpart[38]&gt;  classif.rpart &lt;ResamplingCV[20]&gt;            cv</span></span>
+<span><span class="co">#&gt; 6:  &lt;LearnerClassifRpart[38]&gt;  classif.rpart &lt;ResamplingCV[20]&gt;            cv</span></span>
+<span><span class="co">#&gt;    iteration              prediction fairness.tpr</span></span>
+<span><span class="co">#&gt; 1:         1 &lt;PredictionClassif[20]&gt;   0.06404185</span></span>
+<span><span class="co">#&gt; 2:         2 &lt;PredictionClassif[20]&gt;   0.08269331</span></span>
+<span><span class="co">#&gt; 3:         3 &lt;PredictionClassif[20]&gt;   0.07883375</span></span>
+<span><span class="co">#&gt; 4:         1 &lt;PredictionClassif[20]&gt;   0.06791300</span></span>
+<span><span class="co">#&gt; 5:         2 &lt;PredictionClassif[20]&gt;   0.05400958</span></span>
+<span><span class="co">#&gt; 6:         3 &lt;PredictionClassif[20]&gt;   0.06113041</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
