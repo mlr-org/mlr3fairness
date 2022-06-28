@@ -125,7 +125,7 @@ I.e., with $\mathbb{P}\left(\hat{Y} = 1 \mid A = \star, Y = 1\right)$ denoted as
 \Delta_{\mathrm{TPR}} = \mathrm{TPR}_{A=0} - \mathrm{TPR}_{A=1}.
 \]
 
-To provide a binary conclusion, a model could be considered fair, if $|\Delta_{\mathrm{TPR}}| < \epsilon$ for a given threshold $\epsilon > 0$, e.g., $\epsilon = 0.05$ to allow for small deviations from perfect fairness due to variance in the estimation of $\mathrm{TPR}_{A=\star}$ or additional sources of bias.
+To provide a binary conclusion, a model could be considered fair, if $|\Delta_{\mathrm{TPR}}| < \epsilon$ for a given threshold $\epsilon > 0$, e.g., $\epsilon = 0.05$ to allow for small deviations from perfect fairness due to variance in the estimation of $\mathrm{TPR}_{A=\star}$ or additional sources of bias. It is important to note, that such thresholds are arbitrary and do not translate to legal doctrines, such as e.g. disparate impact [@chen22].
 A collection of this and similarly constructed metrics can be found in (@saleiro2018aequitas, @kim2020fact, @mehrabi).
 
 We want to briefly restate a remark similarly stated in @pfisterer2019multiobjective:
