@@ -3,7 +3,7 @@ test_that("fairness_accuracy_tradeoff", {
   tasks = test_tasks()
   fairness_measures = test_measures()
   bmr = test_bmr()
-  
+
   # BMR
   map(fairness_measures, function(fmsr) {
     check_plots(fairness_accuracy_tradeoff(bmr, fmsr))
@@ -26,7 +26,7 @@ test_that("compare_metrics", {
   tasks = test_tasks()
   fairness_measures = test_measures()
   bmr = test_bmr()
-  
+
   # BMR
   check_plots(compare_metrics(bmr, fairness_measures))
 
@@ -47,7 +47,7 @@ test_that("prediction_density", {
   tasks = test_tasks()
   fairness_measures = test_measures()
   bmr = test_bmr()
-  
+
   # BMR
   check_plots(fairness_prediction_density(bmr))
   check_plots(fairness_prediction_density(bmr, type = "violin"))

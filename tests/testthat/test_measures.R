@@ -5,7 +5,7 @@ test_that("measure constructors work", {
   expect_equal(m$range, c(-Inf, Inf))
   expect_equal(m$task_type, "classif")
 
-  m = MeasureFairness$new(base_measure = msr("classif.fpr"), range = c(0, 100), id="test.it")
+  m = MeasureFairness$new(base_measure = msr("classif.fpr"), range = c(0, 100), id = "test.it")
   expect_equal(m$id, "test.it")
   expect_equal(m$base_measure, msr("classif.fpr"))
   expect_equal(m$range, c(0, 100))
@@ -277,7 +277,7 @@ test_that("fairness measures work as expected - simulated data", {
             out = prd$score(measures = ms, task = tsk)
             expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
           }
-        } 
+        }
       }
     }
   }

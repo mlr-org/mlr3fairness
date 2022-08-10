@@ -41,7 +41,7 @@ make_classif_regr_task = function(data, task_type) {
     task = mlr3::TaskClassif$new("example", b, target = "value")
   } else if (task_type == "regr") {
     b = as_data_backend(data)
-    task = mlr3::TaskRegr$new("example", b, target = "value")  
+    task = mlr3::TaskRegr$new("example", b, target = "value")
   } else {
     stop("Task type must be classif or regr!")
   }
@@ -52,7 +52,7 @@ make_classif_regr_task = function(data, task_type) {
 test_task_multipta = function(task_type, need_pta = TRUE) {
   example_data = data.frame(
     value = rep(1:2, 10),
-    variable = rep(rep(c(1,4,3,6), each = 5)),
+    variable = rep(rep(c(1, 4, 3, 6), each = 5)),
     var2 = rnorm(20),
     pta = as.factor(rep(1:4, 5))
   )
@@ -65,7 +65,7 @@ test_task_multipta = function(task_type, need_pta = TRUE) {
 test_task_intersect = function(task_type, need_pta = TRUE) {
   example_data = data.frame(
     value = rep(1:2, 10),
-    variable = rep(rep(c(1,4,3,6), each = 5)),
+    variable = rep(rep(c(1, 4, 3, 6), each = 5)),
     var2 = rnorm(20),
     pta1 = as.factor(rep(1:2, 5)),
     pta2 = as.factor(rep(1:2, each = 5))
@@ -79,7 +79,7 @@ test_task_intersect = function(task_type, need_pta = TRUE) {
 test_task_multicl = function(task_type, need_pta = TRUE) {
   example_data = data.frame(
     value = rep(1:4, 5),
-    variable = rep(rep(c(1,4,3,6), each = 5)),
+    variable = rep(rep(c(1, 4, 3, 6), each = 5)),
     var2 = rnorm(20),
     pta1 = as.factor(rep(1:2, 5)),
     pta2 = as.factor(rep(1:2, each = 5))
@@ -93,7 +93,7 @@ test_task_multicl = function(task_type, need_pta = TRUE) {
 test_task_contpta = function(task_type, need_pta = TRUE) {
   example_data = data.frame(
     value = rep(1:4, 5),
-    variable = rep(rep(c(1,4,3,6), each = 5)),
+    variable = rep(rep(c(1, 4, 3, 6), each = 5)),
     var2 = rnorm(20),
     pta = rnorm(20)
   )

@@ -56,7 +56,7 @@ test_that("reweighing int to char conversion", {
   skip_on_cran()
   task = tsk("adult_train")$filter(1:300)
   dt = task$data()
-  
+
   # integer
   dt[, sex := as.integer(sex)]
   t = TaskClassif$new("adult_int", backend = dt, target = "target")
@@ -65,7 +65,7 @@ test_that("reweighing int to char conversion", {
   expect_true(tsk$col_roles$weight == "reweighing.WEIGHTS")
   dt = cbind(tsk$data(cols = c("..row_id", "sex", "target")), tsk$weights)
   dt = dt[, mean(weight) * .N, by = .(sex, target)][, sum(V1 / sum(V1)), by = "target"]
-  expect_true(all(abs(dt$V1 - 1) < 1e-3))  
+  expect_true(all(abs(dt$V1 - 1) < 1e-3))
 
   # numeric
   dt = task$data()
@@ -76,7 +76,7 @@ test_that("reweighing int to char conversion", {
   expect_true(tsk$col_roles$weight == "reweighing.WEIGHTS")
   dt = cbind(tsk$data(cols = c("..row_id", "sex", "target")), tsk$weights)
   dt = dt[, mean(weight) * .N, by = .(sex, target)][, sum(V1 / sum(V1)), by = "target"]
-  expect_true(all(abs(dt$V1 - 1) < 1e-3))  
+  expect_true(all(abs(dt$V1 - 1) < 1e-3))
 
   # ordered
   dt = task$data()
@@ -87,5 +87,5 @@ test_that("reweighing int to char conversion", {
   expect_true(tsk$col_roles$weight == "reweighing.WEIGHTS")
   dt = cbind(tsk$data(cols = c("..row_id", "sex", "target")), tsk$weights)
   dt = dt[, mean(weight) * .N, by = .(sex, target)][, sum(V1 / sum(V1)), by = "target"]
-  expect_true(all(abs(dt$V1 - 1) < 1e-3))  
+  expect_true(all(abs(dt$V1 - 1) < 1e-3))
 })
