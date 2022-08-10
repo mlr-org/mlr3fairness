@@ -1,12 +1,12 @@
 pandoc: 2.14.2
-pkgdown: 2.0.3
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   debiasing-vignette: debiasing-vignette.html
   measures-vignette: measures-vignette.html
   reports-vignette: reports-vignette.html
   visualization-vignette: visualization-vignette.html
-last_built: 2022-05-13T04:51Z
+last_built: 2022-08-10T16:26Z
 urls:
   reference: https://mlr3fairness.mlr-org.com/reference
   article: https://mlr3fairness.mlr-org.com/articles
