@@ -4,7 +4,7 @@ test_that("classif.fairfgrrm", {
     learner = lrn("classif.fairfgrrm")
     out = expect_learner(learner)
     simple_autotest(learner, tsk("compas")$select(cols = c("age_cat", "priors_count")))
-    result = run_autotest_pta(learner, exclude = "sanity")
+    result = run_autotest(learner, exclude = "sanity")
     expect_true(result, info = result$error)
 })
 
@@ -17,7 +17,7 @@ test_that("regr.fairfrrm", {
     task = TaskRegr$new("long", fairml::national.longitudinal.survey, target = "income06")
     task$col_roles$pta = "gender"
     simple_autotest(learner, task)
-    result = run_autotest_pta(learner)
+    result = run_autotest(learner)
     expect_true(result, info = result$error)
 })
 
@@ -31,7 +31,7 @@ test_that("regr.fairzlm", {
     task$col_roles$pta = "gender"
     simple_autotest(learner, task)
 
-    result = run_autotest_pta(learner)
+    result = run_autotest(learner)
     expect_true(result, info = result$error)
 })
 
@@ -43,7 +43,7 @@ test_that("classif.fairzlrm", {
 
     simple_autotest(learner, tsk("compas")$select(cols = c("age_cat", "priors_count")))
 
-    result = run_autotest_pta(learner, exclude = "sanity")
+    result = run_autotest(learner, exclude = "sanity")
     expect_true(result, info = result$error)
 })
 
@@ -57,7 +57,7 @@ test_that("regr.fairnclm", {
     task$col_roles$pta = "gender"
     simple_autotest(learner, task)
 
-    result = run_autotest_pta(learner)
+    result = run_autotest(learner)
     expect_true(result, info = result$error)
 })
 

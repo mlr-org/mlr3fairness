@@ -9,7 +9,7 @@ check_plots = function(ggplot_obj) {
 library(mlr3)
 lapply(list.files(system.file("testthat", package = "mlr3"), pattern = "helper", full.names = TRUE), source)
 
-run_autotest_pta = function(learner, N = 30L, exclude = NULL, predict_types = learner$predict_types, check_replicable = TRUE) {
+run_autotest = function(learner, N = 30L, exclude = NULL, predict_types = learner$predict_types, check_replicable = TRUE) {
   learner = learner$clone(deep = TRUE)
   id = learner$id
   tasks = generate_tasks(learner, N = N)
