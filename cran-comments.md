@@ -1,18 +1,12 @@
-## Resubmission
+## Submission
 
-* I have updated DESCRIPTION, quoting 'mlr3' where required and included references according to the guide.
-* All exported functions have running examples now.
+Minor update to improve stability for https://cran.r-project.org/web/checks/check_results_mlr3fairness.html
+
 
 ## R CMD check results
 
-❯ checking CRAN incoming feasibility ... NOTE
-  Maintainer: ‘Florian Pfisterer <pfistererf@googlemail.com>’
-  
-  New submission
+R CMD check reports
 
-0 errors ✔ | 0 warnings ✔ | 1 note ✖
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
 - RHub shows a PREPERROR but all builds succeed.
-- There are 3 false positives for misspelled words.
-
-

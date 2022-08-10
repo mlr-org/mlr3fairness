@@ -70,3 +70,9 @@ run_autotest = function(learner, N = 30L, exclude = NULL, predict_types = learne
   }
   return(TRUE)
 }
+
+# Do not load this on CRAN
+if (!identical(Sys.getenv("NOT_CRAN"), "true")) {
+  environment(run_autotest) = .GlobalEnv
+  assign("run_autotest", run_autotest, .GlobalEnv)
+}
