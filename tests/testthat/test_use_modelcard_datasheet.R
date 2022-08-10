@@ -1,4 +1,5 @@
 test_that("model cards", {
+  skip_on_cran()
   skip("Only tested locally")
   tmp = tempdir()
   tmp = paste0(tmp, "/report")
@@ -13,6 +14,7 @@ test_that("model cards", {
 })
 
 test_that("datasheets", {
+  skip_on_cran()
   skip("Only tested locally")
   tmp = tempdir()
   tmp = paste0(tmp, "/report")
@@ -26,6 +28,7 @@ test_that("datasheets", {
 })
 
 test_that("fairness_report", {
+  skip_on_cran()
   skip("Only tested locally")
   tmp = tempdir()
   tmp = paste0(tmp, "/report")

@@ -42,6 +42,7 @@ test_that("measure", {
 })
 
 test_that("multi pta", {
+  skip_on_cran()
   t = tsk("compas")
   t$col_roles$pta = c("sex", "race")
   l = lrn("classif.rpart")

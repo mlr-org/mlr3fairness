@@ -9,8 +9,7 @@ check_plots = function(ggplot_obj) {
 library(mlr3)
 lapply(list.files(system.file("testthat", package = "mlr3"), pattern = "helper", full.names = TRUE), source)
 
-
-run_autotest = function(learner, N = 30L, exclude = NULL, predict_types = learner$predict_types, check_replicable = TRUE) {
+run_autotest_pta = function(learner, N = 30L, exclude = NULL, predict_types = learner$predict_types, check_replicable = TRUE) {
   learner = learner$clone(deep = TRUE)
   id = learner$id
   tasks = generate_tasks(learner, N = N)
@@ -34,12 +33,6 @@ run_autotest = function(learner, N = 30L, exclude = NULL, predict_types = learne
     run$error = sprintf(msg, ...)
     run
   }
-
-  # FIXME: Requires CRAN update for mlr3
-  # param_tags = unique(unlist(learner$param_set$tags))
-  # if (!test_subset(param_tags, mlr_reflections$learner_param_tags)) {
-  #   return(make_err("Invalid parameter tag(s), check `mlr_reflections$learner_param_tags`."))
-  # }
 
   for (task in tasks) {
     for (predict_type in predict_types) {

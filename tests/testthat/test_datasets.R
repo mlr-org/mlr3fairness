@@ -44,6 +44,7 @@ test_that("adult_train dataset can be loaded with correct format", {
 })
 
 test_that("adult_test dataset can be loaded with correct format", {
+  skip_on_cran()
   adult_test = tsk("adult_test")
   expect_r6(adult_test, "TaskClassif")
   adult_test_data = adult_test$data()
