@@ -6,7 +6,7 @@
 \alias{mlr3fairness-package}
 \title{mlr3fairness: Fairness Auditing and Debiasing for 'mlr3'}
 \description{
-Integrates fairness auditing and bias mitigation methods for the 'mlr3' ecosystem. This includes fairness metrics, reporting tools, visualizations and bias mitigation techniques such as "Reweighing" described in 'Kamiran, Calders' (2012) <doi:10.1007/s10115-011-0463-8> and "Equalized Odds" described in 'Hardt et al.' (2016) <https://papers.nips.cc/paper/2016/file/9d2682367c3935defcb1f9e247a97c0d-Paper.pdf>. Integration with 'mlr3' allows for auditing of ML models as well as convenient joint tuning of machine learning algorithms and debiasing methods.
+Integrates fairness auditing and bias mitigation methods for the 'mlr3' ecosystem. This includes fairness metrics, reporting tools, visualizations and bias mitigation techniques such as "Reweighing" described in 'Kamiran, Calders' (2012) \doi{10.1007/s10115-011-0463-8} and "Equalized Odds" described in 'Hardt et al.' (2016) \url{https://papers.nips.cc/paper/2016/file/9d2682367c3935defcb1f9e247a97c0d-Paper.pdf}. Integration with 'mlr3' allows for auditing of ML models as well as convenient joint tuning of machine learning algorithms and debiasing methods.
 }
 \seealso{
 Useful links:
