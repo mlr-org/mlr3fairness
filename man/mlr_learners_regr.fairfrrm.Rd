@@ -36,6 +36,16 @@ lrn("regr.fairfrrm")
 }
 }
 
+\section{Parameters}{
+\tabular{lllll}{
+   Id \tab Type \tab Default \tab Levels \tab Range \cr
+   lambda \tab numeric \tab 0 \tab  \tab \eqn{[0, \infty)}{[0, Inf)} \cr
+   definition \tab character \tab sp-komiyama \tab sp-komiyama, eo-komiyama \tab - \cr
+   save.auxiliary \tab logical \tab FALSE \tab TRUE, FALSE \tab - \cr
+   unfairness \tab numeric \tab - \tab  \tab \eqn{[0, 1]}{[0, 1]} \cr
+}
+}
+
 \examples{
 # stop example failing with warning if package not installed
 learner = suppressWarnings(mlr3::lrn("regr.fairfrrm"))
