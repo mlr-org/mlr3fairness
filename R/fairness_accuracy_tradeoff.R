@@ -44,7 +44,7 @@
 #' predictions = learner$predict(task)
 #' design = benchmark_grid(
 #'   tasks = task,
-#'   learners = lrns(c("classif.ranger", "classif.rpart"),
+#'   learners = lrns(c("classif.featureless", "classif.rpart"),
 #'     predict_type = "prob", predict_sets = c("train", "predict")),
 #'   resamplings = rsmps("cv", folds = 3)
 #' )
