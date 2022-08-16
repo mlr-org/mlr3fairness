@@ -32,14 +32,6 @@ lrn("regr.fairzlm")
 }
 }
 
-\section{Parameters}{
-\tabular{lllll}{
-   Id \tab Type \tab Default \tab Levels \tab Range \cr
-   unfairness \tab numeric \tab - \tab  \tab \eqn{[0, 1]}{[0, 1]} \cr
-   intersect \tab logical \tab TRUE \tab TRUE, FALSE \tab - \cr
-}
-}
-
 \examples{
 # stop example failing with warning if package not installed
 learner = suppressWarnings(mlr3::lrn("regr.fairzlm"))

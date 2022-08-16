@@ -47,21 +47,23 @@ This can assist in gauging the optimal model from a set of options along with es
 library(mlr3learners)
 library(ggplot2)
 
-# Setup the Fairness Measures and tasks
+# Setup the Fairness measure and tasks
 task = tsk("adult_train")$filter(1:500)
 learner = lrn("classif.ranger", predict_type = "prob")
-learner$train(task)
-predictions = learner$predict(task)
-design = benchmark_grid(
-  tasks = task,
-  learners = lrns(c("classif.ranger", "classif.rpart"),
-    predict_type = "prob", predict_sets = c("train", "predict")),
-  resamplings = rsmps("cv", folds = 3)
-)
-
-bmr = benchmark(design)
 fairness_measure = msr("fairness.tpr")
 
+# Example 1 - A single prediction
+learner$train(task)
+predictions = learner$predict(task)
 fairness_accuracy_tradeoff(predictions, fairness_measure, task = task)
+
+# Example2 - A benchmark
+design = benchmark_grid(
+  tasks = task,
+  learners = lrns(c("classif.featureless", "classif.rpart"),
+    predict_type = "prob", predict_sets = c("train", "test")),
+  resamplings = rsmps("cv", folds = 2)
+)
+bmr = benchmark(design)
 fairness_accuracy_tradeoff(bmr, fairness_measure)
 }

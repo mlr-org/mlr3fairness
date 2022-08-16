@@ -5,7 +5,10 @@
 \alias{LearnerRegrFairfrrm}
 \title{Regression Fair Ridge Regression Learner}
 \description{
-If more than one \verb{pta`` columns are provided, the hyperparameter }intersectional\verb{controls whether  intersections of protected groups are formed (e.g. combinations of gender and race). Initialized to}TRUE\verb{. If }FALSE\verb{, only the group specified by the first element of }pta` is used.
+If more than one \code{pta} columns are provided, the hyperparameter \code{intersectional} controls whether
+intersections of protected groups are formed (e.g. combinations of gender and race).
+Initialized to \code{TRUE}.
+If \code{FALSE}, only the group specified by the first element of \code{pta} is used.
 
 Calls \link[fairml:frrm]{fairml::frrm} from package \CRANpkg{fairml}.
 }
@@ -30,16 +33,6 @@ lrn("regr.fairfrrm")
 \item Predict Types: \dQuote{response}
 \item Feature Types: \dQuote{integer}, \dQuote{numeric}, \dQuote{factor}, \dQuote{ordered}
 \item Required Packages: \CRANpkg{mlr3}, \CRANpkg{fairml}
-}
-}
-
-\section{Parameters}{
-\tabular{lllll}{
-   Id \tab Type \tab Default \tab Levels \tab Range \cr
-   lambda \tab numeric \tab 0 \tab  \tab \eqn{[0, \infty)}{[0, Inf)} \cr
-   definition \tab character \tab sp-komiyama \tab sp-komiyama, eo-komiyama \tab - \cr
-   save.auxiliary \tab logical \tab FALSE \tab TRUE, FALSE \tab - \cr
-   unfairness \tab numeric \tab - \tab  \tab \eqn{[0, 1]}{[0, 1]} \cr
 }
 }
 
