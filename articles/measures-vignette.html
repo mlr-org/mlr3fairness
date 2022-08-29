@@ -248,14 +248,14 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">prd</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.tpr"</span><span class="op">)</span>, task <span class="op">=</span> <span class="va">test</span><span class="op">)</span></span>
 <span><span class="co">#&gt; fairness.tpr </span></span>
-<span><span class="co">#&gt;    0.0870924</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.07958764</span></span></code></pre></div>
 <p>The exact measure to choose is often data-set and situation dependent. The <a href="https://textbook.coleridgeinitiative.org/chap-bias.html" class="external-link">Aequitas Fairness Tree</a> can be a great ressource to get started.</p>
 <p>We can furthermore simply look at the per-group measures:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">meas</span> <span class="op">=</span> <span class="fu"><a href="../reference/groupwise_metrics.html">groupwise_metrics</a></span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"classif.tpr"</span><span class="op">)</span>, <span class="va">test</span><span class="op">)</span></span>
 <span><span class="va">prd</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="va">meas</span>, task <span class="op">=</span> <span class="va">test</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   subgroup.tpr_Male subgroup.tpr_Female </span></span>
-<span><span class="co">#&gt;           0.8907457           0.9778381</span></span></code></pre></div>
+<span><span class="co">#&gt;           0.8973459           0.9769335</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="fairness-measures---an-in-depth-look">Fairness Measures - An in-depth look<a class="anchor" aria-label="anchor" href="#fairness-measures---an-in-depth-look"></a>
