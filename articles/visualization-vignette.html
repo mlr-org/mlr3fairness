@@ -150,8 +150,8 @@
 <code class="sourceCode R"><span><span class="va">predictions</span><span class="op">$</span><span class="va">confusion</span></span>
 <span><span class="co">#&gt;         truth</span></span>
 <span><span class="co">#&gt; response &lt;=50K &gt;50K</span></span>
-<span><span class="co">#&gt;    &lt;=50K  3487  484</span></span>
-<span><span class="co">#&gt;    &gt;50K    273  756</span></span></code></pre></div>
+<span><span class="co">#&gt;    &lt;=50K  3496  494</span></span>
+<span><span class="co">#&gt;    &gt;50K    264  746</span></span></code></pre></div>
 <p>We furthermore design a small experiment allowing us to compare a random forest (<code>ranger</code>) and a decision tree (<code>rpart</code>). The result, <code>bmr</code> is a <code>BenchmarkResult</code> that contains the trained models on each cross-validation split.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">design</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/benchmark_grid.html" class="external-link">benchmark_grid</a></span><span class="op">(</span></span>
@@ -203,12 +203,12 @@
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bmr</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.tpr"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                   uhash nr              task     task_id</span></span>
-<span><span class="co">#&gt; 1: 655f194d-cf2a-4772-af3a-06234b9c3e16  1 &lt;TaskClassif[50]&gt; adult_train</span></span>
-<span><span class="co">#&gt; 2: 655f194d-cf2a-4772-af3a-06234b9c3e16  1 &lt;TaskClassif[50]&gt; adult_train</span></span>
-<span><span class="co">#&gt; 3: 655f194d-cf2a-4772-af3a-06234b9c3e16  1 &lt;TaskClassif[50]&gt; adult_train</span></span>
-<span><span class="co">#&gt; 4: 83298a8c-3476-44e9-90d0-5fcd64a87104  2 &lt;TaskClassif[50]&gt; adult_train</span></span>
-<span><span class="co">#&gt; 5: 83298a8c-3476-44e9-90d0-5fcd64a87104  2 &lt;TaskClassif[50]&gt; adult_train</span></span>
-<span><span class="co">#&gt; 6: 83298a8c-3476-44e9-90d0-5fcd64a87104  2 &lt;TaskClassif[50]&gt; adult_train</span></span>
+<span><span class="co">#&gt; 1: 8b7e17b1-4925-403c-9151-266dc5c6a86b  1 &lt;TaskClassif[50]&gt; adult_train</span></span>
+<span><span class="co">#&gt; 2: 8b7e17b1-4925-403c-9151-266dc5c6a86b  1 &lt;TaskClassif[50]&gt; adult_train</span></span>
+<span><span class="co">#&gt; 3: 8b7e17b1-4925-403c-9151-266dc5c6a86b  1 &lt;TaskClassif[50]&gt; adult_train</span></span>
+<span><span class="co">#&gt; 4: d97d3b11-1e87-4c45-bf83-53a06e30d07f  2 &lt;TaskClassif[50]&gt; adult_train</span></span>
+<span><span class="co">#&gt; 5: d97d3b11-1e87-4c45-bf83-53a06e30d07f  2 &lt;TaskClassif[50]&gt; adult_train</span></span>
+<span><span class="co">#&gt; 6: d97d3b11-1e87-4c45-bf83-53a06e30d07f  2 &lt;TaskClassif[50]&gt; adult_train</span></span>
 <span><span class="co">#&gt;                       learner     learner_id         resampling resampling_id</span></span>
 <span><span class="co">#&gt; 1: &lt;LearnerClassifRanger[38]&gt; classif.ranger &lt;ResamplingCV[20]&gt;            cv</span></span>
 <span><span class="co">#&gt; 2: &lt;LearnerClassifRanger[38]&gt; classif.ranger &lt;ResamplingCV[20]&gt;            cv</span></span>
@@ -217,12 +217,12 @@
 <span><span class="co">#&gt; 5:  &lt;LearnerClassifRpart[38]&gt;  classif.rpart &lt;ResamplingCV[20]&gt;            cv</span></span>
 <span><span class="co">#&gt; 6:  &lt;LearnerClassifRpart[38]&gt;  classif.rpart &lt;ResamplingCV[20]&gt;            cv</span></span>
 <span><span class="co">#&gt;    iteration              prediction fairness.tpr</span></span>
-<span><span class="co">#&gt; 1:         1 &lt;PredictionClassif[20]&gt;   0.08960504</span></span>
-<span><span class="co">#&gt; 2:         2 &lt;PredictionClassif[20]&gt;   0.08198434</span></span>
-<span><span class="co">#&gt; 3:         3 &lt;PredictionClassif[20]&gt;   0.05268650</span></span>
-<span><span class="co">#&gt; 4:         1 &lt;PredictionClassif[20]&gt;   0.08366284</span></span>
-<span><span class="co">#&gt; 5:         2 &lt;PredictionClassif[20]&gt;   0.12287653</span></span>
-<span><span class="co">#&gt; 6:         3 &lt;PredictionClassif[20]&gt;   0.09478326</span></span></code></pre></div>
+<span><span class="co">#&gt; 1:         1 &lt;PredictionClassif[20]&gt;   0.09054796</span></span>
+<span><span class="co">#&gt; 2:         2 &lt;PredictionClassif[20]&gt;   0.06784468</span></span>
+<span><span class="co">#&gt; 3:         3 &lt;PredictionClassif[20]&gt;   0.06401559</span></span>
+<span><span class="co">#&gt; 4:         1 &lt;PredictionClassif[20]&gt;   0.11231538</span></span>
+<span><span class="co">#&gt; 5:         2 &lt;PredictionClassif[20]&gt;   0.07078491</span></span>
+<span><span class="co">#&gt; 6:         3 &lt;PredictionClassif[20]&gt;   0.08446842</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
