@@ -84,7 +84,7 @@ With this proliferation, such decisions have become subject to scrutiny as a res
 
 Without proper auditing, those models can unintentionally result in negative consequences for individuals, often from underprivileged groups [@fairmlbook].
 Several sources of such biases are worth mentioning in this context: Data often contains **historical biases** such as gender or racial stereotypes, that -- if picked up by the model -- will be replicated into the future.
-Similarly, unprivileged populations are often not represented in data due to **sampling biases** leading to models that perform well in groups sufficiently represented in the data but worse on others [@buolamwini2018gender] - this includes a higher rate of missing data.
+Similarly, unprivileged populations are often not represented in data due to **sampling biases** leading to models that perform well in groups sufficiently represented in the data but worse on others [@gendershades] - this includes a higher rate of missing data.
 Other biases include biases in the *label generating process* and **feedback** loops where repeated decisions affect the population subject to such decisions.
 For an in-depth discussion and further sources of biases, the interested reader is referred to [@mehrabi, @mitchell2021algorithmic].
 We will briefly introduce the main concepts for quantifying fairness and correcting for bias in models.
@@ -159,7 +159,7 @@ Finally, the implemented extensions for fairness are presented.
 
 Several R packages provide similar capabilities to our software, but mostly focus on fairness metrics and visualization.
 The \CRANpkg{fairness} package [@fairness] allows for the calculation of a variety of fairness metrics, while \CRANpkg{aif360} [@aif360] wraps the Python \pkg{aif360} module allowing for the computation of fairness metrics and several debiasing techniques but has only limited interoperability with R objects such as \code{data.frame}s.
-The \CRANpkg{fairmodels} package again allows for the computation of fairness metrics for classification and regression settings as well as several debiasing techniques.
+The \CRANpkg{fairmodels}[@fairmodels] package again allows for the computation of fairness metrics for classification and regression settings as well as several debiasing techniques.
 It tightly integrates with \CRANpkg{DALEX} [@dalex] to gain further insight using interpretability techniques.
 
 Outside R, in Python, the \pkg{Fairlearn} module [@fairlearn] provides ample functionality to study a wide variety of metrics, debias with respect to a variety of pre-, in- and postprocessing methods as well as to visualize differences.
@@ -189,7 +189,7 @@ In the context of fairness, the following extension packages deserve special men
 * \CRANpkg{mlr3oml} as a connector to OpenML [@Vanschoren2014], an online scientific platform for collaborative ML.
 
 In order to provide the required understanding for \CRANpkg{mlr3}, we briefly introduce some terminology and syntax.
-A full introduction can be found in the mlr3 book\footnote{https://mlr3book.mlr-org.com}.
+A full introduction can be found in the mlr3 book [@mlr3book].
 
 A `Task` in \CRANpkg{mlr3} is a basic building block holding the data, storing covariates and the target variable along with some meta-information.
 The shorthand constructor function `tsk()` can be used to quickly access example tasks shipped with \CRANpkg{mlr3} or \CRANpkg{mlr3fairness}.
@@ -275,8 +275,8 @@ For a more in-depth example, see the case study in the next Section.
 With the \CRANpkg{mlr3fairness} package loaded, fairness measures can be constructed via `msr()` like any other measure in \CRANpkg{mlr3}.
 They are listed with prefix *fairness*, and simply calling `msr()` without any arguments will return a list of all available measures.
 Table \ref{tab:metrics} gives a brief overview over some popular fairness measures which are readily available.
-Other fairness measures can be composed from both regular performance metrics and by combining performance metrics with fairness measures.
-This process is extensively documented in an acompanying vignette.
+Furthermore, custom fairness measures can be easily implemented by composing them from both regular performance metrics and by combining performance metrics with fairness measures.
+This process is extensively documented in an accompanying vignette.
 
 Table: Selection of implemented fairness metrics. The full list can be obtained from `mlr_measures_fairness`.\label{tab:metrics}
 

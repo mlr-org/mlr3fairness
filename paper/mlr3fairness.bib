@@ -315,15 +315,6 @@ series = {AAMAS '20}
   publisher={Elsevier}
 }
 
-@inproceedings{buolamwini2018gender,
-  title={Gender shades: Intersectional accuracy disparities in commercial gender classification},
-  author={Buolamwini, Joy and Gebru, Timnit},
-  booktitle={Conference on fairness, accountability and transparency},
-  pages={77--91},
-  year={2018},
-  organization={PMLR}
-}
-
 @article{mehrabi,
   title={A survey on bias and fairness in machine learning},
   author={Mehrabi, Ninareh and Morstatter, Fred and Saxena, Nripsuta and Lerman, Kristina and Galstyan, Aram},
@@ -435,7 +426,7 @@ subtitle = {A Guide for Making Black Box Models Explainable} }
 @article{sklearn,
   title={Scikit-learn: Machine learning in Python},
   author={Pedregosa, Fabian and Varoquaux, Ga{\"e}l and Gramfort, Alexandre and Michel, Vincent and Thirion, Bertrand and Grisel, Olivier and Blondel, Mathieu and Prettenhofer, Peter and Weiss, Ron and Dubourg, Vincent and others},
-  journal={the Journal of machine Learning research},
+  journal={the Journal of Machine Learning Research},
   volume={12},
   pages={2825--2830},
   year={2011},
@@ -451,14 +442,11 @@ subtitle = {A Guide for Making Black Box Models Explainable} }
   doi          = {10.5281/zenodo.3977197}
 }
 
-
-@misc{pfisterer2019multiobjective,
-    title={Multi-Objective Automatic Machine Learning with AutoxgboostMC},
-    author={Florian Pfisterer and Stefan Coors and Janek Thomas and Bernd Bischl},
-    year={2019},
-    eprint={1908.10796},
-    archivePrefix={arXiv},
-    primaryClass={stat.ML}
+@article{pfisterer2019multiobjective,
+  title={Multi-Objective Automatic Machine Learning with AutoxgboostMC},
+  author={Florian Pfisterer and Stefan Coors and Janek Thomas and Bernd Bischl},
+  year={2019},
+  journal={arXiv preprint arXiv:1908.10796},
 }
 
 @inproceedings{feldman2015certifying,
@@ -537,9 +525,13 @@ series = {FAT* '19}
 
 @article{datasheets,
   title={Datasheets for datasets},
-  author={Gebru, Timnit and Morgenstern, Jamie and Vecchione, Briana and Vaughan, Jennifer Wortman and Wallach, Hanna and Daum{\'e} III, Hal and Crawford, Kate},
-  journal={arXiv preprint arXiv:1803.09010},
-  year={2018}
+  author={Gebru, Timnit and Morgenstern, Jamie and Vecchione, Briana and Vaughan, Jennifer Wortman and Wallach, Hanna and Iii, Hal Daum{\'e} and Crawford, Kate},
+  journal={Communications of the ACM},
+  volume={64},
+  number={12},
+  pages={86--92},
+  year={2021},
+  publisher={ACM New York, NY, USA}
 }
 
 @inproceedings{gendershades,
@@ -552,7 +544,6 @@ series = {FAT* '19}
 }
 
 @article{Calders2010,
-abstract = {In this paper, we investigate how to modify the naive Bayes classifier in order to perform classification that is restricted to be independent with respect to a given sensitive attribute. Such independency restrictions occur naturally when the decision process leading to the labels in the data-set was biased; e.g., due to gender or racial discrimination. This setting is motivated by many cases in which there exist laws that disallow a decision that is partly based on discrimination. Naive application of machine learning techniques would result in huge fines for companies. We present three approaches for making the naive Bayes classifier discrimination-free: (i) modifying the probability of the decision being positive, (ii) training one model for every sensitive attribute value and balancing them, and (iii) adding a latent variable to the Bayesian model that represents the unbiased label and optimizing the model parameters for likelihood using expectation maximization. We present experiments for the three approaches on both artificial and real-life data. {\textcopyright} The Author(s) 2010.},
 author = {Calders, Toon and Verwer, Sicco},
 doi = {10.1007/s10618-010-0190-x},
 journal = {Data Mining and Knowledge Discovery},
@@ -564,7 +555,7 @@ year = {2010}
 }
 
 @inproceedings{perrone2021fair,
-  title={Fair bayesian optimization},
+  title={Fair Bayesian Optimization},
   author={Perrone, Valerio and Donini, Michele and Zafar, Muhammad Bilal and Schmucker, Robin and Kenthapadi, Krishnaram and Archambeau, C{\'e}dric},
   booktitle={Proceedings of the 2021 AAAI/ACM Conference on AI, Ethics, and Society},
   pages={854--863},
@@ -610,6 +601,7 @@ year = {2017}
   year={2018},
   organization={PMLR}
 }
+
 @misc{chen22,
   doi = {10.48550/ARXIV.2202.09519},
   url = {https://arxiv.org/abs/2202.09519},
@@ -618,4 +610,26 @@ year = {2017}
   title = {The four-fifths rule is not disparate impact: a woeful tale of epistemic trespassing in algorithmic fairness},
   publisher = {arXiv},
   year = {2022}
+}
+
+@Article{fairmodels,
+  title = {fairmodels: a Flexible Tool for Bias Detection,
+    Visualization, and Mitigation in Binary Classification Models},
+  author = {Jakub Wiśniewski and Przemysław Biecek},
+  year = {2022},
+  journal = {The R Journal},
+  volume = {14},
+  issue = {1},
+  pages = {227-243},
+  doi = {10.32614/RJ-2022-019},
+  url = {https://rj.urbanek.nz/articles/RJ-2022-019/},
+}
+
+@misc{mlr3book,
+  title = {mlr3book},
+  author = {Marc Becker, Martin Binder, Bernd Bischl, Natalie Foss, Lars Kotthoff, Michel Lan, Florian Pfisterer, Nicholas G. Reich, Jakob Richter, Patrick Schratz, Raphael Sonabend, Damir Pulatov}
+  url = {https://mlr3book.mlr-org.com},
+  year = {2022},
+  month = {09},
+  day = {25},
 }
