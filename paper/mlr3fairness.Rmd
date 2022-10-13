@@ -131,16 +131,8 @@ A predictor $\hat{Y}$ satisfies *demographic parity* with respect to a protected
 \end{equation}
 In contrast to the previous definitions, this now requires that the chance of acceptance is equal across groups. 
 
-### Choosing a fairness metric
+#### Fairness metrics
 
-While the three metrics are conceptually similar, they encode a different belief of what constitutes *fair* in a given scenario.
-@wachter-vlr2020 differentiate between *bias-preserving* and *bias transforming* metrics: Bias-preserving metrics such as equalized odds and equality of opportunity require that errors made by a model are equal across groups.
-This can help to detect biases, stemming e.g from bias during data acquisition, but might be problematic in cases where e.g. labels are biased.
-To provide an example, police enforcement and subsequent arrests of violent re-offenders might be different across ZIP code areas, a proxy for race. This might lead to situations where labels $Y$ suffer from differential bias depending on the protected attribute [@bao2021s].
-Bias-transforming methods, in contrast do not depend on the labels and might therefore not suffer from this problem.
-They can help detecting biases arising from different base-rates across populations, arising e.g. from aforementioned biases in the labeling or as a consequence of structural discrimination.
-Deciding which metrics to use constitutes a value judgement and requires careful assessment of the societal context a decision making system is deployed in. 
-A discussion of different metrics and their applicability can be found in the Aequitas Fairness Toolkit [@saleiro2018aequitas].
 In order to encode the requirements in equations \ref{eq:eod}) - \ref{eq:dp} into a fairness metric, we often encode differences between measured quantities in two groups.
 I.e., with $\mathbb{P}\left(\hat{Y} = 1 \mid A = \star, Y = 1\right)$ denoted as $\mathrm{TPR}_{A=\star}$, we calculate the difference in TPR between the two groups as
 \[
@@ -150,24 +142,40 @@ I.e., with $\mathbb{P}\left(\hat{Y} = 1 \mid A = \star, Y = 1\right)$ denoted as
 To provide a binary conclusion, a model could be considered fair, if $|\Delta_{\mathrm{TPR}}| < \epsilon$ for a given threshold $\epsilon > 0$, e.g., $\epsilon = 0.05$ to allow for small deviations from perfect fairness due to variance in the estimation of $\mathrm{TPR}_{A=\star}$ or additional sources of bias. It is important to note, that such thresholds are arbitrary and do not translate to legal doctrines, such as e.g. disparate impact [@chen22].
 A collection of this and similarly constructed metrics can be found in (@saleiro2018aequitas, @kim2020fact, @mehrabi).
 
-We want to briefly restate a remark similarly stated in @pfisterer2019multiobjective:
-It is important to note that fairness can not be achieved solely through a reduction into mathematical criteria, e.g. statistical and individual notions of fairness such as disparate treatment or disparate impact [@feldman2015certifying].
-Many problems with such metrics still persist and require additional research.
-Furthermore, practitioners need not only take into account the model itself, but also the data used to train the algorithm and the process behind collecting and labelling this data, including possible feedback loops emerging from potentially biased models.
-While metrics and visualizations proposed in this article can help investigate biases in ML models, they do by no means guarantee that a model does not contain any undetected bias.
-Consider, for example, fairness metrics based on the TPR from above. If the labels $Y$ arise from a biased *label generating process*, such as past loan decisions, there is little hope of obtaining fair outcomes even if fairness metrics indicate this.
 
+#### Choosing a fairness metric
 
+While the three metrics are conceptually similar, they encode a different belief of what constitutes *fair* in a given scenario.
+@wachter-vlr2020 differentiate between *bias-preserving* and *bias transforming* metrics: Bias-preserving metrics such as equalized odds and equality of opportunity require that errors made by a model are equal across groups.
+This can help to detect biases, stemming e.g from bias during data acquisition, but might be problematic in cases where e.g. labels are biased.
+To provide an example, police enforcement and subsequent arrests of violent re-offenders might be different across ZIP code areas, a proxy for race. This might lead to situations where labels $Y$ suffer from differential bias depending on the protected attribute [@bao2021s].
+Bias-transforming methods, in contrast do not depend on the labels and might therefore not suffer from this problem.
+They can help detecting biases arising from different base-rates across populations, arising e.g. from aforementioned biases in the labeling or as a consequence of structural discrimination.
+Deciding which metrics to use constitutes a value judgement and requires careful assessment of the societal context a decision making system is deployed in. 
+A discussion of different metrics and their applicability can be found in the Aequitas Fairness Toolkit [@saleiro2018aequitas] which also provides guidance towards selecting a metric via the Aequitas Fairness Tree.
+
+#### The dangers of fairness metrics
+
+We want to stress, that overly trusting in metrics can be dangerous and that fairness metrics can and should not be used to *prove* or *guarantee* fairness.
+Fairness metrics merely provide a reduction of the aforementioned fairness notions into mathematical objectives.
+As such, they require a variety of abstraction steps that might invalidate the metric [@chen22], as they e.g. require that the data is a large enough and representative sample of the entire population that we aim to investigate.
+Similarly, whether a selected fairness notion is actually fair depends on the societal context in which a decision is made and which action should be derived from a given prediction.
+Furthermore, practitioners need to look beyond the model, but also the data used to train it and the process of acquiring data and labels.
+If the data e.g. exhibits disparate measurement errors in the features or labels, valid fairness assessments can become impossible.
+Similarly, feedback loops might arise from a prediction leading to changes in the data collected in the future.
+Even an *initially fair* model might then lead to adverse effects in the future [@schwobel-facct22a].
 
 ## Debiasing Models
 
-The goal of **debiasing techniques** is now to reduce measured gaps in fairness, either by using data pre-processing, model inprocessing or post-processing techniques on the predictions.
-This can be achieved by changing instance weights before training [@kamiran2012data], directly learning fair models [@Zafar2017] or subsequent adaption of model predictions [@hardt2016equality].
-While perfect fairness is often an elusive goal, a more practical goal is often to optimize utility under a maximum unfairness constraint.
-Since debiasing techniques are often tailored towards a particular fairness metric, the optimal choice of debiasing technique is often not trivial and a combination of algorithms and debiasing techniques
-determined through tuning might result in an optimal model.
-
-
+If biases are detected in a model, we might now be interested in improving models in order to potentially mitigate such biases.
+Bias in models might arise from a variety of sources, so a careful understanding of the data, data quality and distribution might lead to approaches that can help in decreasing biases, e.g. through the collection of better or additional data or a better balancing of protected groups. Similarly, biases might arise from the model, e.g. through under- or overfitting and more careful tuning of model hyperparameters might help with improving fairness. 
+Especially in the case of *bias-transforming* metrics, a better solution might often be to address fairness problems in the real world instead of relying on algorithmic interventions to solve fairness not only momentarily.
+In addition, a variety of algorithmic **debiasing techniques**, that might help with obtaining fairer models have been proposed. 
+Their goal is to reduce measured gaps in fairness, either via data pre-processing, employing models that incorporate fairness or by applying post-processing techniques on a model's predictions.
+Popular examples for such techniques include computing instance weights before training [@kamiran2012data], directly learning fair models that incorporate fairness constraints [@Zafar2017] or subsequent adaption of model predictions [@hardt2016equality].
+Many of those strategies might lead to reduced predictive performance [@corbettcompas].
+While perfect fairness is often an elusive goal, a more practical goal is often to optimize performance under a constraint for unfairness or studying a variety of models that offer different trade-offs between fairness and performance.
+Since debiasing techniques are often tailored towards a particular fairness metric, the optimal choice of debiasing technique is often not trivial and a combination of algorithms and debiasing techniques, e.g. determined via tuning might result in an optimal model.
 
 
 # mlr3fairness {#main}
@@ -380,7 +388,7 @@ Table: Overview over available debiasing techniques.\label{tab:debiasing}
 | reweighing_wts    |Reweighing (Instance Weights)     |Preprocessing      | \citet{kamiran2012data}   |
 
 It is simple for users or package developers to extend \CRANpkg{mlr3fairness} with additional
-debiasing methods -- as an example, \CRANpkg{mcboost} package adds further postprocessing methods
+debiasing methods -- as an example, the \CRANpkg{mcboost} package adds further postprocessing methods
 that can further improve fairness and \CRANpkg{mlr3pipelines} similarly comes with several operators,
 e.g. threshold tuning that can reduce biases.<br>
 Along with pipeline operators, \CRANpkg{mlr3fairness} contains several algorithms that can directly incorporate
