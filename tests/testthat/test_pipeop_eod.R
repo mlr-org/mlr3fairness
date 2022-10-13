@@ -29,7 +29,7 @@ test_that("PipeOpEOd technically works for trivial cases priv 0", {
   t$set_col_roles("pta", "pta")
 
   # Fairness Tensor based
-  dft = fairness_tensor(dt, t)[[1]] == fairness_tensor(dt, t)[[2]]
+  dft = fairness_tensor(dt, task = t)[[1]] == fairness_tensor(dt, task = t)[[2]]
   expect_true(all(dft[, 1]))
   expect_true(all(!dft[, 2]))
 
@@ -43,14 +43,14 @@ test_that("PipeOpEOd technically works for trivial cases priv 0", {
   prd = poed$predict(list(t))[[1]]
   expect_true(prd$score(msr("fairness.eod"), task = t) < 1 / 50)
   # Matching fairness tensors afterwards
-  expect_true(all(fairness_tensor(prd, t)[[1]] == fairness_tensor(prd, t)[[2]]))
+  expect_true(all(fairness_tensor(prd, task = t)[[1]] == fairness_tensor(prd, task = t)[[2]]))
 
   # No changes as expected
   poed = po("EOd", privileged = "1")
   poed$train(list(t))
   expect_true(all(unlist(poed$state) == c(1, 0, 1, 0.5)))
   prd = poed$predict(list(t))[[1]]
-  expect_true(all(pmap_lgl(list(fairness_tensor(dt, t), fairness_tensor(prd, t)), function(x, y) all(x == y))))
+  expect_true(all(pmap_lgl(list(fairness_tensor(dt, task = t), fairness_tensor(prd, task = t)), function(x, y) all(x == y))))
 })
 
 test_that("PipeOpEOd technically works for trivial cases priv 1", {
@@ -72,5 +72,5 @@ test_that("PipeOpEOd technically works for trivial cases priv 1", {
   poed$train(list(t))
   expect_true(all(unlist(poed$state) == c(0.5, 0, 1, 0)))
   prd = poed$predict(list(t))[[1]]
-  expect_true(all(fairness_tensor(prd, t)[[1]] == fairness_tensor(prd, t)[[2]]))
+  expect_true(all(fairness_tensor(prd, task = t)[[1]] == fairness_tensor(prd, task = t)[[2]]))
 })
