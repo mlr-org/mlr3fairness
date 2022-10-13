@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">mlr3fairness</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.0-9000</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.1-9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,16 +89,16 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fairness_tensor</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fairness_tensor</span><span class="op">(</span><span class="va">object</span>, normalize <span class="op">=</span> <span class="st">"all"</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for data.table</span></span>
-<span><span class="fu">fairness_tensor</span><span class="op">(</span><span class="va">object</span>, <span class="va">task</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">fairness_tensor</span><span class="op">(</span><span class="va">object</span>, normalize <span class="op">=</span> <span class="st">"all"</span>, <span class="va">task</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for PredictionClassif</span></span>
-<span><span class="fu">fairness_tensor</span><span class="op">(</span><span class="va">object</span>, <span class="va">task</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">fairness_tensor</span><span class="op">(</span><span class="va">object</span>, normalize <span class="op">=</span> <span class="st">"all"</span>, <span class="va">task</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for ResampleResult</span></span>
-<span><span class="fu">fairness_tensor</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">fairness_tensor</span><span class="op">(</span><span class="va">object</span>, normalize <span class="op">=</span> <span class="st">"all"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -107,6 +107,14 @@
 <dd><p>(<code>data.table()</code> | <a href="https://mlr3.mlr-org.com/reference/PredictionClassif.html" class="external-link">PredictionClassif</a> | <a href="https://mlr3.mlr-org.com/reference/ResampleResult.html" class="external-link">ResampleResult</a>)<br>
 A data.table with columns <code>truth</code> and <code>prediction</code>,
 a <a href="https://mlr3.mlr-org.com/reference/PredictionClassif.html" class="external-link">PredictionClassif</a> or a <a href="https://mlr3.mlr-org.com/reference/ResampleResult.html" class="external-link">ResampleResult</a>.</p></dd>
+
+
+<dt>normalize</dt>
+<dd><p>(<code>character</code>)<br>
+How should the fairness tensor be normalized?
+"all" normalizes entries by dividing by dataset size,
+"group" normalizes entries by dividing by group size and
+"none" does not conduct any normalization at all.</p></dd>
 
 
 <dt>...</dt>
@@ -130,18 +138,18 @@ A <a href="https://mlr3.mlr-org.com/reference/TaskClassif.html" class="external-
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"compas"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">prediction</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrn</a></span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span><span class="op">$</span><span class="fu">train</span><span class="op">(</span><span class="va">task</span><span class="op">)</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">task</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">fairness_tensor</span><span class="op">(</span><span class="va">prediction</span>, <span class="va">task</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">fairness_tensor</span><span class="op">(</span><span class="va">prediction</span>, task <span class="op">=</span> <span class="va">task</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Male</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         truth</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> response    0    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        0 2442    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        1  159 2396</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> response         0         1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        0 0.3956578 0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        1 0.0257615 0.3882048</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Female</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         truth</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> response   0   1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        0 740   0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        1  22 413</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> response           0           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        0 0.119896306 0.000000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        1 0.003564485 0.066915100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

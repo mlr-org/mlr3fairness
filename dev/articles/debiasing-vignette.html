@@ -36,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">mlr3fairness</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.0-9000</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.1-9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -139,39 +139,32 @@
 <h2 id="reweighing-algorithms">Reweighing algorithms<a class="anchor" aria-label="anchor" href="#reweighing-algorithms"></a>
 </h2>
 <p><code>mlr3fairness</code> implements 2 reweighing-based algorithms: <code>reweighing_wts</code> and <code>reweighing_os</code>. <code>reweighing_wts</code> adds observation weights to a <code>Task</code> that can counteract imbalances between the conditional probabilities <span class="math inline">\(P(Y | pta)\)</span>.</p>
-<table style="width:100%;" class="table">
-<colgroup>
-<col width="16%">
-<col width="19%">
-<col width="21%">
-<col width="20%">
-<col width="22%">
-</colgroup>
+<table class="table">
 <thead><tr class="header">
 <th align="left">key</th>
+<th align="right">output.num</th>
 <th align="left">input.type.train</th>
 <th align="left">input.type.predict</th>
 <th align="left">output.type.train</th>
-<th align="left">output.type.predict</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">EOd</td>
+<td align="right">1</td>
 <td align="left">TaskClassif</td>
 <td align="left">TaskClassif</td>
 <td align="left">NULL</td>
-<td align="left">PredictionClassif</td>
 </tr>
 <tr class="even">
 <td align="left">reweighing_os</td>
-<td align="left">TaskClassif</td>
+<td align="right">1</td>
 <td align="left">TaskClassif</td>
 <td align="left">TaskClassif</td>
 <td align="left">TaskClassif</td>
 </tr>
 <tr class="odd">
 <td align="left">reweighing_wts</td>
-<td align="left">TaskClassif</td>
+<td align="right">1</td>
 <td align="left">TaskClassif</td>
 <td align="left">TaskClassif</td>
 <td align="left">TaskClassif</td>
