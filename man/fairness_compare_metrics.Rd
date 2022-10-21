@@ -37,6 +37,15 @@ A 'ggplo2' object.
 Compare learners with respect to to one or multiple metrics.
 Metrics can but be but are not limited to fairness metrics.
 }
+\section{Protected Attributes}{
+
+The protected attribute is specified as a \code{col_role} in the corresponding \code{\link[=Task]{Task()}}:\cr
+\verb{<Task>$col_roles$pta = "name_of_attribute"} \cr
+This also allows specifying more than one protected attribute,
+in which case fairness will be considered on the level of intersecting groups defined by all columns
+selected as a predicted attribute.
+}
+
 \examples{
 library(mlr3learners)
 

@@ -4,6 +4,8 @@
 #' Computes a composite measure from multiple fairness metrics and aggregates them
 #' using `aggfun` (defaulting to [mean()]).
 #'
+#' @template pta
+#' 
 #' @export
 #' @examples
 #' # Equalized Odds Metric

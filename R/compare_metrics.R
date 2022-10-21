@@ -5,6 +5,8 @@
 #' @description
 #' Compare learners with respect to to one or multiple metrics.
 #' Metrics can but be but are not limited to fairness metrics.
+#' 
+#' @template pta
 #'
 #' @param object ([PredictionClassif] | [BenchmarkResult] | [ResampleResult])\cr
 #'   The object to create a plot for.

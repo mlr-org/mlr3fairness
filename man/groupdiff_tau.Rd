@@ -28,6 +28,15 @@ elements in \eqn{x} is computed.
 between \eqn{x} and \eqn{y}.
 If \eqn{x} is a vector, the symmetric absolute difference between all elements in \eqn{x} is computed.
 }
+\section{Protected Attributes}{
+
+The protected attribute is specified as a \code{col_role} in the corresponding \code{\link[=Task]{Task()}}:\cr
+\verb{<Task>$col_roles$pta = "name_of_attribute"} \cr
+This also allows specifying more than one protected attribute,
+in which case fairness will be considered on the level of intersecting groups defined by all columns
+selected as a predicted attribute.
+}
+
 \examples{
 groupdiff_tau(1:3)
 groupdiff_diff(1:3)

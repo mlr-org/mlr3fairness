@@ -2,6 +2,8 @@
 #'
 #' @description
 #' A fairness tensor is a list of groupwise confusion matrices.
+#' 
+#' @template pta
 #'
 #' @param object ([data.table()] | [PredictionClassif] | [ResampleResult])\cr
 #'   A data.table with columns `truth` and `prediction`,

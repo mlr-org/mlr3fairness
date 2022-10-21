@@ -9,6 +9,7 @@
 #' between \eqn{x} and \eqn{y}.
 #' If \eqn{x} is a vector, the symmetric absolute difference between all elements in \eqn{x} is computed.
 #'
+#' @template pta
 #'
 #' @param x (`numeric()`)\cr
 #'   Measured performance in group 1, 2, ...

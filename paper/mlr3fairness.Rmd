@@ -157,13 +157,14 @@ A discussion of different metrics and their applicability can be found in the Ae
 #### The dangers of fairness metrics
 
 We want to stress, that overly trusting in metrics can be dangerous and that fairness metrics can and should not be used to *prove* or *guarantee* fairness.
+Whether a selected fairness notion is actually fair depends on the societal context in which a decision is made and which action should be derived from a given prediction.
+Therefore, selecting the correct fairness metric requires a through understanding of the societal context decisions are made in as well as possible implications of such decisions.
 Fairness metrics merely provide a reduction of the aforementioned fairness notions into mathematical objectives.
 As such, they require a variety of abstraction steps that might invalidate the metric [@chen22], as they e.g. require that the data is a large enough and representative sample of the entire population that we aim to investigate.
-Similarly, whether a selected fairness notion is actually fair depends on the societal context in which a decision is made and which action should be derived from a given prediction.
 Furthermore, practitioners need to look beyond the model, but also the data used to train it and the process of acquiring data and labels.
 If the data e.g. exhibits disparate measurement errors in the features or labels, valid fairness assessments can become impossible.
 Similarly, feedback loops might arise from a prediction leading to changes in the data collected in the future.
-Even an *initially fair* model might then lead to adverse effects in the future [@schwobel-facct22a].
+Even an *initially fair* model might then lead to adverse effects in the long term [@schwobel-facct22a].
 
 ## Debiasing Models
 
@@ -237,6 +238,10 @@ task = tsk("compas_race_binary")
 print(task)
 ```
 
+The protected attribute(s) are identified by a `col_role` named `pta` and can be set accordingly, e.g. via
+`task$col_roles$pta = c("gender, "race")`. 
+If more than one protected attribute is specified, metrics will be computed based on intersecting groups formed by the columns. 
+
 The second building block is the `Learner`.
 It is a wrapper around an ML algorithm, e.g., an implementation of logistic regression or a decision tree.
 It can be trained on a `Task` and used for obtaining a `Prediction` on an independent test set which can subsequently be scored using a `Measure` to get an estimate for the predictive performance on new data.
@@ -262,7 +267,7 @@ prediction = learner$predict(task, idx$test)
 prediction$score(measure)
 ```
 
-As the split into training set and test set is stochastic, the procedure should be repeated multiple times for smaller datasets [@bischl2016] and the resulting performance values should be aggregated.
+As the split into training set and test set is stochastic, the procedure should be repeated multiple times for smaller datasets [@bischl2012resampling] and the resulting performance values should be aggregated.
 This process is called resampling, and can easily be performed with the `resample()` function, yielding a `ResampleResult` object:
 ```{r}
 # use a 10-fold cross-validation strategy
@@ -277,7 +282,7 @@ rr$aggregate(measure)
 
 To properly compare competing modeling approaches, candidates can be benchmarked against each other using the `benchmark()` function (yielding a `BenchmarkResult`). In the following, we compare the decision tree from above to logistic regression.
 
-```{r, warning = FALSE, fig.height = 3.5, fig.width = 3.5}
+```{r, warning = FALSE, fig.height = 3.5, fig.width = 3.5, fig.cap = "Model comparison for decision trees (rpart) and logistic regression (log\\_reg)."}
 # try a logistic regression as alternative
 learner2 = lrn("classif.log_reg", predict_type = "prob")
 
@@ -300,8 +305,8 @@ autoplot(bmr, measure = measure)
 For a given task, we can select one or multiple protected attributes.
 In \CRANpkg{mlr3}, the protected attribute is identified by the column role `pta` and can be set as follows:
 
-```{r}
-task$col_roles$pta = "gender"
+```{r, eval = FALSE}
+task$col_roles$pta = "race"
 ```
 
 This information is then automatically passed on when the task is used, e.g. when computing fairness metrics.
@@ -310,31 +315,33 @@ This information is then automatically passed on when the task is used, e.g. whe
 
 With the \CRANpkg{mlr3fairness} package loaded, fairness measures can be constructed via `msr()` like any other measure in \CRANpkg{mlr3}.
 They are listed with prefix *fairness*, and simply calling `msr()` without any arguments will return a list of all available measures.
-Table \ref{tab:metrics} gives a brief overview over some popular fairness measures which are readily available.
-Furthermore, custom fairness measures can be easily implemented by composing them from both regular performance metrics and by combining performance metrics with fairness measures.
-This process is extensively documented in an accompanying vignette.
+Table \ref{tab:metrics} provides a brief overview over some popular fairness measures which are readily available.
+The full list can be obtained from `mlr_measures_fairness`.
 
-Table: Selection of implemented fairness metrics. The full list can be obtained from `mlr_measures_fairness`.\label{tab:metrics}
+Table: Selection of implemented fairness metrics.
+\label{tab:metrics}
 
-|key                   |description                                                                                 |
-|:---------------------|:-------------------------------------------------------------------------------------------|
-|fairness.acc          | Accuracy equality \citet{gendershades}                                                     |
-|fairness.mse          | Mean squared error equality (regression)                                                   |
+|key                   |description                                                                                  |
+|:---------------------|:--------------------------------------------------------------------------------------------|
+|fairness.acc          | Accuracy equality \citet{gendershades}                                                      |
+|fairness.mse          | Mean squared error equality (regression)                                                    |
 |fairness.fpr          | False positive rate equality / Pedictive equality \citet{chouldechova2017fair}              |
 |fairness.tpr          | True positive rate equality / Equality of opportunity \citet{hardt2016equality}             |
-|fairness.fnr          | False negative / False omission rate equality \citet{richardcompas}                        |
-|fairness.eod          | Equalized odds: fairness.fpr + fairness.tpr \citet{hardt2016equality}                      |
-|fairness.cv           | Demographic parity / equalized positive rates \citet{Calders2010}                           |
-|fairness.acc\_eod=.05 | Accuracy under equalized odds constraint \citet{perrone2021fair}                           |
-|fairness.acc\_ppv=.05 | Accuracy under equalized odds constraint \citet{perrone2021fair}                           |
+|fairness.fnr          | False negative / False omission rate equality \citet{richardcompas}                         |
+|fairness.eod          | Equalized odds \citet{hardt2016equality}                                                    |
+|fairness.cv           | Demographic parity / Equalized positive rates \citet{Calders2010}                           |
+|fairness.acc\_eod=.05 | Accuracy under equalized odds constraint \citet{perrone2021fair}                            |
+|fairness.acc\_ppv=.05 | Accuracy under ppv constraint \citet{perrone2021fair}                                       |
 
-
+Furthermore, new custom fairness measures can be easily implemented, either by implementing them directly or by composing them from existing metrics.
+This process is extensively documented in an accompanying [vignette](https://mlr3fairness.mlr-org.com/articles/measures-vignette.html).
 
 Here we choose the binary accuracy measure `"classif.acc"` and the equalized odds metric from above using `"fairness.eod"`:
 
 ```{r}
 measures = list(msr("classif.acc"), msr("fairness.eod"))
 ```
+
 The constructed list of measures can now be used to score a single `Prediction`, a `ResampleResult` or `BenchmarkResult`, e.g.
 
 ```{r}
@@ -357,7 +364,7 @@ fairness_prediction_density(prediction, task)
 compare_metrics(prediction, msrs(c("fairness.fpr", "fairness.tpr", "fairness.eod")), task)
 ```
 
-```{r, echo = FALSE, fig.height=3, fig.width=6, fig.align='center'}
+```{r, echo = FALSE, fig.height=3, fig.width=6, fig.align='center', fig.cap = "Left: Prediction densities for the negative class for races Caucasian and African-American. Right: Fairness metrics comparison for FPR, TPR, EOd fairness metrics."}
 library(patchwork)
 p1 = fairness_prediction_density(prediction, task)
 p2 = compare_metrics(prediction, msrs(c("fairness.fpr", "fairness.tpr", "fairness.eod")), task)
@@ -367,9 +374,13 @@ p2 = compare_metrics(prediction, msrs(c("fairness.fpr", "fairness.tpr", "fairnes
 
 ### Debiasing
 
+As mentioned above, several ways to improve a model's fairness exist. 
+While non-technical interventions, such as e.g. collecting more data should be prefered, 
+\CRANpkg{mlr3fairnes} provides several debiasing techniques that can be used together with a `Learner` to obtain fairer models.
 Table \ref{tab:debiasing} provides an overview over implemented debiasing techniques.
-Debiasing techniques are implemented as `PipeOps` from \CRANpkg{mlr3pipelines} and can be
-combined with arbitrary learners to build a pipeline.
+Debiasing techniques are implemented as `PipeOps` from the \CRANpkg{mlr3pipelines} package and can be
+combined with arbitrary learners to build a pipeline. 
+An introduction to \CRANpkg{mlr3pipelines} is available in the [mlr3book](https://mlr3book.mlr-org.com/pipelines.html).
 
 ```{r, eval = FALSE}
 # Automatically reweigh data before training a learner:
@@ -389,20 +400,19 @@ Table: Overview over available debiasing techniques.\label{tab:debiasing}
 
 It is simple for users or package developers to extend \CRANpkg{mlr3fairness} with additional
 debiasing methods -- as an example, the \CRANpkg{mcboost} package adds further postprocessing methods
-that can further improve fairness and \CRANpkg{mlr3pipelines} similarly comes with several operators,
-e.g. threshold tuning that can reduce biases.<br>
+that can improve fairness.<br>
 Along with pipeline operators, \CRANpkg{mlr3fairness} contains several algorithms that can directly incorporate
 fairness constraints. They can similarly be constructed using `lrn()`.
 
 Table: Overview over fair ML algorihtms.\label{tab:fairlearns}
 
-| key               | package | reference             |
-| :---------------- | :------ | :-------------------- |
-| regr.fairfrrm     | fairml  | \citet{scutari}      |
-| classif.fairfgrrm | fairml  | \citet{scutari}      |
+| key               | package | reference              |
+| :---------------- | :------ | :--------------------  |
+| regr.fairfrrm     | fairml  | \citet{scutari}        |
+| classif.fairfgrrm | fairml  | \citet{scutari}        |
 | regr.fairzlm      | fairml  | \citet{Zafar2017}      |
 | classif.fairzlrm  | fairml  | \citet{Zafar2017}      |
-| regr.fairnclm     | fairml  | \citet{komiyama}      |
+| regr.fairnclm     | fairml  | \citet{komiyama}       |
 
 ###  Reports
 
@@ -441,7 +451,7 @@ In order to get an initial perspective, we benchmark three models using 3-fold c
 
 * a classification tree from the \CRANpkg{rpart} package,
 * a penalized logistic regression from the \CRANpkg{glmnet} package and
-* a penalized logistic regression from the \CRANpkg{glmnet} package, but with reweighs preprocessing.
+* a penalized logistic regression from the \CRANpkg{glmnet} package, but with reweighing preprocessing.
 
 The logistic regression in the latter two approaches do not support operating on factor features natively, therefore we pre-process the data with a feature encoder from \CRANpkg{mlr3pipelines}:
 
@@ -464,7 +474,7 @@ bmr1$aggregate(measures)[, c(4, 7, 8)]
 The preprocessing step of reweighing already improved the fairness while sacrificing only a tiny bit of performance.
 To see if we can further improve, we use \CRANpkg{mlr3tuning} to jointly tune all hyperparameters of the *glmnet* model as well as our reweighing hyperparameter.
 In order to do this, we use an `AutoTuner` from \CRANpkg{mlr3tuning}; a model that tunes its own hyperparameters during training.
-The full code for setting up this model can be found in the appendix and is omitted here for brevity.
+The full code for setting up this model can be found in the appendix.
 An `AutoTuner` requires a specific metric to tune for.
 Here, we define a fairness-thresholded accuracy metric. We set $\epsilon = 0.01$ as a threshold.
 
@@ -475,10 +485,10 @@ Here, we define a fairness-thresholded accuracy metric. We set $\epsilon = 0.01$
 ```{r}
 metric = msr("fairness.constraint",
     performance_measure = msr("classif.acc"),
-    fairness_measure = msr("fairness.eod")
+    fairness_measure = msr("fairness.eod"),
+    epsilon = 0.01
 )
 ```
-
 
 ```{r, echo = FALSE, message = FALSE}
 # Enable paralellization utilizing all cores
@@ -520,7 +530,7 @@ The results of both benchmark experiments can then be collected and jointly visu
 In addition to aggregate scores, individual iterations of the 3 fold Cross-Validation are depicted
 to visualize variations in the individual results.
 
-```{r, fig.width = 6, fig.height = 5, fig.align='center'}
+```{r, fig.width = 6, fig.height = 5, fig.align='center', fig.cap = "Fairness-Accuracy tradeoff for 3-fold CV on the adult train set."}
 bmr = c(bmr1, bmr2)
 fairness_accuracy_tradeoff(bmr, fairness_measure = measures[[1]])
 ```

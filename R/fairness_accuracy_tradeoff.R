@@ -6,6 +6,7 @@
 #' This can assist in gauging the optimal model from a set of options along with estimates of variance
 #' (through individual resampling iterations).
 #'
+#' @template pta
 #'
 #' @param object ([PredictionClassif] | [BenchmarkResult] | [ResampleResult])\cr
 #'   The binary class prediction object that will be evaluated.

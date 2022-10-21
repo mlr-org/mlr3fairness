@@ -1,10 +1,15 @@
 ---
 title: "Fairness Metrics"
+preamble: |
+  \usepackage{longtable}
+  \usepackage{bbm}
+bibliography: paper/mlr3fairness.bib
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Fairness Metrics}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  
 ---
 
 ```{r, include = FALSE}
@@ -21,13 +26,14 @@ Fairness measures (or metrics) allow us to assess and audit for possible biases 
 
 - **Statistical Group Fairness Metrics**: Given a set of predictions from our model, we assess for differences in one or multiple metrics across groups.
 
-- **Individual Fairness**: Basically requires that similar people are treated similar independent of the protected attribute. This is more of a philosophical concept and concrete implementations of this fairness notion are not immediately clear.
+- **Individual Fairness**: Basically requires that similar people are treated similar independent of the protected attribute.
+  We will briefly introduce individual fairness in a dedicated section below.
 
 - **Causal Fairness Notions**: An important realization in the context of Fairness is, that whether a process is fair is often subject to the underlying causal directed acyclic graph (DAG). Knowledge of the DAG allows for causally assessing reasons for (un-)fairness. Since DAG's are often hard to construct for a given dataset, we currently do not provide any causal fairness metrics.
 
 ## Core Idea: Statistical Group Fairness
 
-A simple way to assess the fairness of a model is to find a definition of fairness that is relevant to a problem at hand. We might for example define a model to be fair if the chance to be accepted for a job given you are qualified is independent of a protected attribute e.g. `gender`. This can e.g. be measured using the `true positive rate`(TPR): in `mlr3` this metric is called `"classif.tpr"`. In this case we measure discrepancies between groups by computing differences `(-)` but we could also compute quotients.
+One way to assess the fairness of a model is to find a definition of fairness that is relevant to a problem at hand. We might for example define a model to be fair if the chance to be accepted for a job given you are qualified is independent of a protected attribute e.g. `gender`. This can e.g. be measured using the `true positive rate`(TPR): in `mlr3` this metric is called `"classif.tpr"`. In this case we measure discrepancies between groups by computing differences `(-)` but we could also compute quotients.
 In practice, we often compute absolute differences.
 
 $$
@@ -200,3 +206,12 @@ l = lrn("classif.rpart")
 prds = l$train(t)$predict(t)
 prds$score(mm, t)
 ```
+
+## Individual Fairness
+
+Individual fairness notions were first proposed by [@Dwork]
+Individual fairness therefore requires defining distance metrics between individuals and between outcomes.
+This is often diffic
+
+Fairness Through Awareness
+Heidari at al., 2018 and Binns, 2019

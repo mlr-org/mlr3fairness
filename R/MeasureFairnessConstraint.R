@@ -4,6 +4,7 @@
 #'   This measure allows constructing for 'constraint' measures of the following form:\cr
 #'   \deqn{min performance subject to fairness < \epsilon}
 #'
+#' @template pta
 #' @seealso mlr_measures_fairness
 #' @export
 #' @examples

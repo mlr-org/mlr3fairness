@@ -38,6 +38,15 @@ A \link{TaskClassif}. Needs \code{col_role} \code{"pta"} to be set.}
 \description{
 A fairness tensor is a list of groupwise confusion matrices.
 }
+\section{Protected Attributes}{
+
+The protected attribute is specified as a \code{col_role} in the corresponding \code{\link[=Task]{Task()}}:\cr
+\verb{<Task>$col_roles$pta = "name_of_attribute"} \cr
+This also allows specifying more than one protected attribute,
+in which case fairness will be considered on the level of intersecting groups defined by all columns
+selected as a predicted attribute.
+}
+
 \examples{
 task = tsk("compas")
 prediction = lrn("classif.rpart")$train(task)$predict(task)

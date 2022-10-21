@@ -61,7 +61,7 @@
   x$add("fairness.acc_eod=.05", MeasureFairnessConstraint, performance_measure = msr("classif.acc"),
     fairness_measure = msr("fairness.eod"), epsilon = 0.05, id = "fairness.acc_eod=.05", range = c(-1, 1))
   x$add("fairness.acc_ppv=.05", MeasureFairnessConstraint, performance_measure = msr("classif.acc"),
-    fairness_measure = msr("fairness.ppv"), epsilon = 0.05, id = "fairness.acc_eod=.05", range = c(-1, 1))
+    fairness_measure = msr("fairness.ppv"), epsilon = 0.05, id = "fairness.acc_ppv=.05", range = c(-1, 1))
 
   x = getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
   x$add("reweighing_wts", PipeOpReweighingWeights)

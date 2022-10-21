@@ -43,6 +43,15 @@ resampling iterations.
 This can assist in gauging the optimal model from a set of options along with estimates of variance
 (through individual resampling iterations).
 }
+\section{Protected Attributes}{
+
+The protected attribute is specified as a \code{col_role} in the corresponding \code{\link[=Task]{Task()}}:\cr
+\verb{<Task>$col_roles$pta = "name_of_attribute"} \cr
+This also allows specifying more than one protected attribute,
+in which case fairness will be considered on the level of intersecting groups defined by all columns
+selected as a predicted attribute.
+}
+
 \examples{
 library(mlr3learners)
 library(ggplot2)
