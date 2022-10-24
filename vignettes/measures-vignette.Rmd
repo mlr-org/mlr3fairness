@@ -215,3 +215,31 @@ This is often diffic
 
 Fairness Through Awareness
 Heidari at al., 2018 and Binns, 2019
+
+
+## Using metrics on non-mlr3 predictions
+
+We can similarly employ mlr3 metrics on predictions stemming from different models.
+To do so, we create a `data.table` containing the different components.
+
+```{r}
+# Get adult data as a data.table
+train = tsk("adult_train")$data()
+mod = rpart::rpart(target ~ ., train)
+
+# Predict on test data
+test = tsk("adult_test")$data()
+yhat = predict(mod, test, type = "vector")
+
+# Convert to a factor with the same levels
+yhat = as.factor(yhat)
+levels(yhat) = levels(test$target)
+
+compute_metrics(
+  data = test, 
+  target = "target",
+  prediction = yhat,
+  protected_attribute = "sex",
+  metrics = msr("fairness.acc")
+)
+```
