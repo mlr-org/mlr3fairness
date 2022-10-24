@@ -566,16 +566,25 @@ bmr2$aggregate(measures)[, c(4, 7, 8)]
 The result improves w.r.t.\ accuracy while only slightly decreasing the measured fairness.
 Note, that the generalization error is estimated using a holdout strategy during training
 and slight violations of the desired threshold $\epsilon$ can therefore happen.
-The results of both benchmark experiments can then be collected and jointly visualized.
-In addition to aggregate scores, individual iterations of the 3 fold Cross-Validation are depicted
+The results of both benchmark experiments can then be collected and jointly visualized in Figure @ref(fig:fat).
+In addition to aggregate scores (denoted by a cross) individual iterations of the 3 fold Cross-Validation (denoted by points) are shown 
 to visualize variations in the individual results.
 
-```{r, fig.width = 6, fig.height = 5, fig.align='center', fig.cap = "Fairness-Accuracy tradeoff for 3-fold CV on the adult train set."}
+
+```{r, results = 'hide', include = FALSE, fig.width = 6, fig.height = 4, fig.align='center', fig.cap = "Fairness-Accuracy tradeoff for 3-fold CV on the adult train set."}
 bmr = c(bmr1, bmr2)
 fairness_accuracy_tradeoff(bmr, fairness_measure = measures[[1]])
 ```
+
+```{r fat, echo = FALSE, fig.width = 6, fig.height = 4, fig.align='center', fig.cap = "Fairness-Accuracy tradeoff for 3-fold CV on the adult train set.", dpi=300}
+bmr = c(bmr1, bmr2)
+fairness_accuracy_tradeoff(bmr, fairness_measure = measures[[1]]) +
+  guides(shape = "none") + 
+  theme_minimal()
+```
+
 Especially when considering optimizing accuracy while still retaining a fair model,
-tuning can be helpful and further improve
+tuning can be helpful and further improve upon available trade-offs.
 
 
 # Summary
@@ -585,7 +594,7 @@ Implementations of such methods are still not widely available, especially consi
 
 We have presented \CRANpkg{mlr3fairness}, a package for fairness auditing and bias correction on \CRANpkg{mlr3} models.
 Integrated fairness metrics allow for auditing ML models with respect to a multiplicity of fairness criteria and models identified as biased can subsequently be retrained / debiased using implemented debiasing methods.
-We hope that this package can constitute a first step toward more equitable outcomes in automated decision making.
+We hope that this package can constitute a first step to support users in detecting fairness problems in machine learning models as well as with locating the root problems for such biases.
 
 \pagebreak 
 
