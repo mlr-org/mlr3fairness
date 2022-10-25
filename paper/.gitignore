@@ -4,3 +4,9 @@
 *.pdf
 mlr3fairness_rj_files/
 
+*.aux
+*.blg
+*.brf
+*.fls
+*.fdb_latexmk
+*.out

@@ -110,12 +110,8 @@ For the sake of simplicity, we consider a *binary classification* scenario and a
 Each observation has an associated label $Y, Y \in \{0, 1\}$ we aim to predict, e.g. whether a defendant was caught re-offending. 
 A system then makes a prediction $\hat{Y}, \hat{Y} \in \{0,1\}$ with the the goal to predict whether an individual might re-offend. 
 We assume that $Y = 1$ is the favored outcome in the following exposition.
-<<<<<<< HEAD
 However, the concepts discussed in the following often extend naturally to more complex scenarios including multi-class classification, regression or survival analysis and similarly to settings with multiple protected attributes.
 We now provide and discuss two metrics from @hardt2016equality to provide further intuition about the purpose of such metrics.
-=======
-However, the concepts discussed in the following often extend naturally to more complex scenarios including multiclass classification, regression or survival analysis and similarly to settings with multiple protected attributes.
-<<<<<<< HEAD
 We now provide and discuss several metrics grouped into metrics that require *Separation* and *Independence* [@fairmlbook] to provide further intuition regarding core concepts and possible applications.
 
 ### Separation
@@ -125,10 +121,7 @@ This essentially requires, that some notion of model error, e.g. accuracy or fal
 From this notion, we can derive several metrics that come with different implications.
 It is important to note, that those metrics can only meaningfully identify biases under the assumption that no disparities exist in the data, or that they are legally justified. 
 For this reason, @wachter-vlr2020 refer to those metrics as *bias-preserving* metrics since underlying disparities are not addressed.
-=======
 We now provide and discuss several metrics to provide further intuition regarding core concepts and possible applications.
->>>>>>> refs/remotes/origin/main
->>>>>>> 30fb7e2cc5082407650f2a54684bbd99f74632db
 
 #### Equalized Odds
 
@@ -140,9 +133,6 @@ In short, we require the same true positive rates (TPR) and false positive rates
 <<<<<<< HEAD
 This intuitively requires, that independent of the protected attribute, qualified individuals have the same chance to be accepted and unqualified individuals are rejected, e.g. in the case of university admission.
 Similar arguments have been made for equalized false positive rates [@chouldechova2017fair] and false omission rates [@richardcompas] depending on the exact scenario.
-=======
-This intuitively requires, e.g. in the case of university admission, that independent of the protected attribute, qualified individuals have the same chance to be accepted, and unqualified individuals have the same chance to be rejected.
->>>>>>> 30fb7e2cc5082407650f2a54684bbd99f74632db
 
 #### Equality of Opportunity
 
@@ -186,45 +176,26 @@ I.e., with $\mathbb{P}\left(\hat{Y} = 1 \mid A = \star, Y = 1\right)$ denoted as
 \Delta_{\mathrm{TPR}} = \mathrm{TPR}_{A=0} - \mathrm{TPR}_{A=1}.
 \]
 
-<<<<<<< HEAD
-To provide a binary conclusion, a model could be considered fair, if $|\Delta_{\mathrm{TPR}}| < \epsilon$ for a given threshold $\epsilon > 0$, e.g., $\epsilon = 0.05$ to allow for small deviations from perfect fairness due to variance in the estimation of $\mathrm{TPR}_{A=\star}$ or additional sources of bias.
-It is important to note, that such thresholds are arbitrary and do not translate to legal doctrines, such as e.g. disparate impact [@chen22].
-A collection of this and similarly constructed metrics can be found in (@saleiro2018aequitas, @kim2020fact, @mehrabi).
-
-#### Choosing a fairness metric
-=======
 To provide a binary conclusion, a model could be considered fair, if $|\Delta_{\mathrm{TPR}}| < \epsilon$ for a given threshold $\epsilon > 0$, e.g., $\epsilon = 0.05$ to allow for small deviations from perfect fairness due to variance in the estimation of $\mathrm{TPR}_{A=\star}$ or additional sources of bias. 
 It is important to note, that such thresholds are arbitrary and do not translate to legal doctrines, such as e.g. disparate impact [@chen22].
 A collection of this and similarly constructed metrics can be found in (@saleiro2018aequitas, @kim2020fact, @mehrabi).
 
 
 #### Selecting fairness metrics
->>>>>>> 30fb7e2cc5082407650f2a54684bbd99f74632db
 
 While the three metrics are conceptually similar, they encode a different belief of what constitutes *fair* in a given scenario.
 @wachter-vlr2020 differentiate between *bias-preserving* and *bias transforming* metrics: 
 Bias-preserving metrics such as equalized odds and equality of opportunity require that errors made by a model are equal across groups.
 This can help to detect biases, stemming e.g from bias during data acquisition, but might be problematic in cases where e.g. labels are biased.
-<<<<<<< HEAD
 To provide an example, police enforcement and subsequent arrests of violent re-offenders might be different across ZIP code areas, a proxy for race. This might lead to situations where labels $Y$ suffer from differential bias depending on the protected attribute [@bao2021s].
 Bias-transforming methods, in contrast do not depend on the labels and might therefore not suffer from this problem.
 They can help detecting biases arising from different base-rates across populations, arising e.g. from aforementioned biases in the labeling or as a consequence of structural discrimination.
 Deciding which metrics to use constitutes a value judgement and requires careful assessment of the societal context a decision making system is deployed in. 
 A discussion of different metrics and their applicability can be found in the Aequitas Fairness Toolkit [@saleiro2018aequitas] which also provides guidance towards selecting a metric via the [Aequitas Fairness Tree](http://www.datasciencepublicpolicy.org/our-work/tools-guides/aequitas/).
-=======
-To provide an example, police enforcement and subsequent arrests of violent re-offenders might be different across ZIP code areas, a proxy for race. 
-This might lead to situations where labels $Y$ suffer from differential bias depending on the protected attribute [@bao2021s].
-As such, e.g. in the presence of historical injustices *bias-preserving* metrics maintain the status quo - existing disparities e.g. in base rates are not detected.
-*Bias-transforming* methods, in contrast do not depend on the labels and are therefore tailored to detect such labels in practice. 
-They can help detecting biases arising from different base-rates across populations, arising e.g. from biases in the labels or as a consequence of structural discrimination.
-Deciding which metrics to use constitutes a value judgement and requires careful assessment of the societal context a decision making system is deployed in.
-Instead of recommending concrete fairness metrics, we want to point the reader to a variety of ressources that discuss the choice of fairness notion in more detail.
-A discussion of different metrics and their applicability can be found in the Aequitas Fairness Toolkit [@saleiro2018aequitas] which also provides guidance towards selecting a metric via the Aequitas Fairness Tree.
 @wachter-vlr2020 recommend using *bias-transforming* metrics and provide a checklist that can guide the choice of fairness metric.
 @corbett2018measure on the other hand point out several limitations of available metrics and argue for grounding decisions in real world quantities in addition to abstract fairness metrics.
 Similarly, @friedler16 emphasize the need to differentiate between constructs we aim to measure (e.g. job-related knowledge) and the observed quantity that can be measured in practice (e.g. years in a job) when trying to automate decision.
 To provide an example, individuals with similar ability might exhibit different measured quantities (grades) due to structural bias, e.g. worse access to after-school tutoring programs.
->>>>>>> 30fb7e2cc5082407650f2a54684bbd99f74632db
 
 #### The dangers of fairness metrics
 
