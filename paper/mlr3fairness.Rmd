@@ -103,7 +103,7 @@ Each observation has an associated label $Y, Y \in \{0, 1\}$ we aim to predict, 
 A system then makes a prediction $\hat{Y}, \hat{Y} \in \{0,1\}$ with the the goal to predict whether an individual might re-offend. 
 We assume that $Y = 1$ is the favored outcome in the following exposition.
 However, the concepts discussed in the following often extend naturally to more complex scenarios including multiclass classification, regression or survival analysis and similarly to settings with multiple protected attributes.
-We now provide and discuss two metrics from @hardt2016equality to provide further intuition about the purpose of such metrics.
+We now provide and discuss several metrics to provide further intuition regarding core concepts and possible applications.
 
 #### Equalized Odds
 
