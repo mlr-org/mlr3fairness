@@ -103,7 +103,15 @@ Each observation has an associated label $Y, Y \in \{0, 1\}$ we aim to predict, 
 A system then makes a prediction $\hat{Y}, \hat{Y} \in \{0,1\}$ with the the goal to predict whether an individual might re-offend. 
 We assume that $Y = 1$ is the favored outcome in the following exposition.
 However, the concepts discussed in the following often extend naturally to more complex scenarios including multiclass classification, regression or survival analysis and similarly to settings with multiple protected attributes.
-We now provide and discuss several metrics to provide further intuition regarding core concepts and possible applications.
+We now provide and discuss several metrics grouped into metrics that require *Separation* and *Independence* [@fairmlbook] to provide further intuition regarding core concepts and possible applications.
+
+### Separation
+
+One group of widely used fairness notions requires **Separation**: $\hat{Y} \perp A | Y$. 
+This essentially requires, that some notion of model error, e.g. accuracy or false positive rates is equal across groups $A$.
+From this notion, we can derive several metrics that come with different implications.
+It is important to note, that those metrics can only meaningfully identify biases under the assumption that no disparities exist in the data, or that they are legally justified. 
+For this reason, @wachter-vlr2020 refer to those metrics as *bias-preserving* metrics since underlying disparities are not addressed.
 
 #### Equalized Odds
 
@@ -113,6 +121,7 @@ A predictor $\hat{Y}$ satisfies *equalized odds* with respect to a protected att
 \end{equation}
 In short, we require the same true positive rates (TPR) and false positive rates (FPR) across both groups $A = 0$ and $A = 1$.
 This intuitively requires, that independent of the protected attribute, qualified individuals have the same chance to be accepted and unqualified individuals are rejected, e.g. in the case of university admission.
+Similar arguments have been made for equalized false positive rates [@chouldechova2017fair] and false omission rates [@richardcompas] depending on the exact scenario.
 
 #### Equality of Opportunity
 
@@ -123,13 +132,30 @@ This is a relaxation of the aforementioned *equalized odds* essentially only req
 \end{equation}
 Intuitively, this only requires that independent of the protected attribute, qualified individuals have the same chance of acceptance.
 
-#### Demographic Parity
+#### Performance Parity
 
-A predictor $\hat{Y}$ satisfies *demographic parity* with respect to a protected attribute $A$ and observed outcome $Y$, if $\hat{Y}$ and $A$ are conditionally independent.
+A more general formulation can be applied when we require parity of some performance metric across groups. 
+To provide an example, @gendershades compare accuracy across intersectional subgroups, essentially arguing that model performance should be equal across groups:
+
+\begin{equation} \label{eq:accp}
+\mathbb{P}\left(\hat{Y} = Y \mid A = 0\right) = \mathbb{P}\left(\hat{Y} = Y \mid A = 1\right) \quad Y \in \{0,1\}.
+\end{equation}
+This intuitively requires, that the model should work equally well for all groups, i.e. individuals are correctly accepted or denied at the same rate, independent of the predicted attribute.
+This notion can be extended across supervised learning settings and performance metrics, leading to considerations of equal mean squared error, e.g. in a regression setting.
+
+
+### Independence (Demographic Parity)
+
+A second group of fairness metrics is given by so-called *bias-transforming* metrics [ @wachter-vlr2020]. 
+They require, that prediction rates, such as the positive rate are equal across groups
+
+A predictor $\hat{Y}$ satisfies *demographic parity* [@{Calders2010] with respect to a protected attribute $A$ and observed outcome $Y$, if $\hat{Y}$ and $A$ are conditionally independent.
 \begin{equation} \label{eq:dp}
 \mathbb{P}\left(\hat{Y} = 1 \mid A = 0\right) = \mathbb{P}\left(\hat{Y} = 1 \mid A = 1\right).
 \end{equation}
-In contrast to the previous definitions, this now requires that the chance of acceptance is equal across groups. 
+In contrast to the previous definitions, this now requires that the chance of acceptance is equal across groups.
+This notion can identify biases e.g. arising from societal biases that manifest in different base rates across groups.
+At the same time, employing such notions poses a considerable risk, as blindly optimizing for demographic parity might result in predictors that e.g. jail innocent people from an advantaged group in order to achieve parity across both groups [@dwork2012, @richardcompas].
 
 #### Fairness metrics
 
@@ -139,9 +165,9 @@ I.e., with $\mathbb{P}\left(\hat{Y} = 1 \mid A = \star, Y = 1\right)$ denoted as
 \Delta_{\mathrm{TPR}} = \mathrm{TPR}_{A=0} - \mathrm{TPR}_{A=1}.
 \]
 
-To provide a binary conclusion, a model could be considered fair, if $|\Delta_{\mathrm{TPR}}| < \epsilon$ for a given threshold $\epsilon > 0$, e.g., $\epsilon = 0.05$ to allow for small deviations from perfect fairness due to variance in the estimation of $\mathrm{TPR}_{A=\star}$ or additional sources of bias. It is important to note, that such thresholds are arbitrary and do not translate to legal doctrines, such as e.g. disparate impact [@chen22].
+To provide a binary conclusion, a model could be considered fair, if $|\Delta_{\mathrm{TPR}}| < \epsilon$ for a given threshold $\epsilon > 0$, e.g., $\epsilon = 0.05$ to allow for small deviations from perfect fairness due to variance in the estimation of $\mathrm{TPR}_{A=\star}$ or additional sources of bias.
+It is important to note, that such thresholds are arbitrary and do not translate to legal doctrines, such as e.g. disparate impact [@chen22].
 A collection of this and similarly constructed metrics can be found in (@saleiro2018aequitas, @kim2020fact, @mehrabi).
-
 
 #### Choosing a fairness metric
 
@@ -152,7 +178,7 @@ To provide an example, police enforcement and subsequent arrests of violent re-o
 Bias-transforming methods, in contrast do not depend on the labels and might therefore not suffer from this problem.
 They can help detecting biases arising from different base-rates across populations, arising e.g. from aforementioned biases in the labeling or as a consequence of structural discrimination.
 Deciding which metrics to use constitutes a value judgement and requires careful assessment of the societal context a decision making system is deployed in. 
-A discussion of different metrics and their applicability can be found in the Aequitas Fairness Toolkit [@saleiro2018aequitas] which also provides guidance towards selecting a metric via the Aequitas Fairness Tree.
+A discussion of different metrics and their applicability can be found in the Aequitas Fairness Toolkit [@saleiro2018aequitas] which also provides guidance towards selecting a metric via the [Aequitas Fairness Tree](http://www.datasciencepublicpolicy.org/our-work/tools-guides/aequitas/).
 
 #### The dangers of fairness metrics
 
@@ -165,6 +191,24 @@ Furthermore, practitioners need to look beyond the model, but also the data used
 If the data e.g. exhibits disparate measurement errors in the features or labels, valid fairness assessments can become impossible.
 Similarly, feedback loops might arise from a prediction leading to changes in the data collected in the future.
 Even an *initially fair* model might then lead to adverse effects in the long term [@schwobel-facct22a].
+
+### Fairness Constraints 
+
+It is important, that in practice we might not be able to perfectly satisfy a selected metric, e.g. due to stochasticity in data and labels.
+One approach to take this into account might therefore be to impose constraints, e.g. $|\Delta M| \leq \epsilon$ requiring that the absolute difference in a metric $M$ between groups 
+is smaller than a chosen value $\epsilon$. 
+The goal of finding a model now reduces to e.g. maximizing some notion of model performance subject to a constraint on unfairness. 
+In the following, we denote the fairness metric with $\Delta M$ and the performance metric with $\rho$. 
+\[
+  \rho_{|\Delta| M \leq \epsilon} = \left\{
+\begin{array}{ll}
+\rho         & |\Delta M| \leq \epsilon      \\
+- |\Delta M| &  \textrm{else}                \\
+\end{array}
+\right.
+\]
+
+This approach has e.g. been employed by [@perrone2021fair] as the goal of an AutoML system.
 
 ## Debiasing Models
 
