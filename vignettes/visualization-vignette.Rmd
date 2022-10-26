@@ -111,3 +111,51 @@ The required metrics to create custom visualizations can also be easily computed
 ```{r}
 bmr$score(msr("fairness.tpr"))
 ```
+
+
+# Interpretability
+
+Fairness metrics, in combination with tools from interpretable machine learning can help pinpointing sources of bias. 
+In the following example, we try to figure out which variables have a high feature importance for the difference in `classif.eod`, the equalized odds difference. 
+In the following example
+
+
+```{r}
+set.seed(432L)
+library("iml")
+library("mlr3fairness")
+
+learner = lrn("classif.rpart", predict_type = "prob")
+task = tsk("adult_train")
+# Make the task smaller:
+task$filter(sample(task$row_ids, 2000))
+task$select(c("sex", "relationship", "race", "capital_loss", "age", "education"))
+target = task$target_names
+learner$train(task)
+
+model = Predictor$new(model = learner,
+                      data = task$data()[,.SD, .SDcols = !target],
+                      y = task$data()[, ..target])
+
+custom_metric = function(actual, predicted) {
+  compute_metrics(
+    data = task$data(),
+    target = task$target_names,
+    protected_attribute = task$col_roles$pta,
+    prediction = predicted,
+    metrics = msr("fairness.eod")
+  )
+}
+
+imp <- FeatureImp$new(model, loss = custom_metric, n.repetitions = 5L)
+plot(imp)
+```
+
+We can now investigate this variable a little deeper by looking at the distribution of labels in each of the two groups.
+
+```{r}
+data = task$data()
+data[, setNames(as.list(summary(relationship)/.N),levels(data$relationship)), by = "sex"]
+```
+
+We can see, that the different levels are skewed across groups, e.g. 25\% of females in our data are unmarried in contrast to 3\% of males are unmarried.

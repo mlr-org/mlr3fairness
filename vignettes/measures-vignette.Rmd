@@ -217,7 +217,7 @@ Fairness Through Awareness
 Heidari at al., 2018 and Binns, 2019
 
 
-## Using metrics on non-mlr3 predictions
+## Using metrics for non-mlr3 predictions
 
 We can similarly employ mlr3 metrics on predictions stemming from different models.
 To do so, we create a `data.table` containing the different components.
