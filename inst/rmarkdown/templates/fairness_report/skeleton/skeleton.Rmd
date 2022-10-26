@@ -81,9 +81,7 @@ resample_result$learner
 We could report more than one fairness metric, but keep in mind. Below the metrics are the mean of all the resample results.
 
 ```{r}
-fair_metrics = msrs(c("fairness.acc","fairness.eod","fairness.fnr",
-  "fairness.fpr","fairness.npv","fairness.ppv","fairness.tnr",
-  "fairness.tpr"))
+fair_metrics = msrs(c("fairness.acc","fairness.eod","fairness.fnr", "fairness.fpr","fairness.ppv", "fairness.cv"))
 ```
 
 ```{r}

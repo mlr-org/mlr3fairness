@@ -56,10 +56,10 @@ compute_metrics = function(data, target, protected_attribute, prediction, metric
     "response" = prediction
   )
 
-  if (task_type == "classif") {
+  if  (class(data[[target]]) == "factor") {
     assert_factor(prediction, levels = t$levels(target)[[1]])
     prd = as_prediction_classif(df)
-  } else {
+  } else if (class(data[[target]]) %in% c("integer", "numeric"))  {
     prd = as_prediction_regr(df)
   }
 

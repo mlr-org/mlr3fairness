@@ -53,7 +53,7 @@
       base_measure = msr(sprintf("classif.%s", key)))
   }
 
-  x$add("fairness.cv", MeasureFairness, base_measure = msr("classif.pp"), range = c(0, 1), operation = groupdiff_diff)
+  x$add("fairness.cv", MeasureFairness, base_measure = msr("classif.pp"), range = c(0, 1), operation = groupdiff_abs)
   # compositions
   x$add("fairness.eod", MeasureFairnessComposite, measures = msrs(c("fairness.fpr", "fairness.tpr")), range = c(0, 1),
     id = "equalized_odds")

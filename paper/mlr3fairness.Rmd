@@ -88,14 +88,11 @@ Several sources of such biases are worth mentioning in this context:
 Data often contains **historical biases** such as gender or racial stereotypes, that -- if picked up by the model -- will be replicated into the future.
 Similarly, unprivileged populations are often not represented in data due to **sampling biases** leading to models that perform well in groups sufficiently represented in the data but worse on others [@gendershades] - this includes a higher rate of missing data.
 Other biases include biases in the *label generating process* and **feedback** loops where repeated decisions affect the population subject to such decisions. 
-
 For an in-depth discussion and further sources of biases, the interested reader is referred to [@mehrabi, @mitchell2021algorithmic].
-We will briefly introduce the main concepts for quantifying fairness and correcting for bias in models.
-
 
 ## Quantifying Fairness
 
-We now turn to the question of how such biases can be quantified in a model.
+We now turn to the question of how we can detect whether disparities exist in a model and if so, how they can be quantified.
 Note, that fairness definitions in this case serve a dual purpose [@wachter-vlr2020]:
 First, as a *diagnostic tool* with the goal to detect disparities.
 This e.g. allows assessing whether a model has inherited biases, e.g. from historical disparities reflected in the data.
@@ -187,7 +184,8 @@ While the three metrics are conceptually similar, they encode a different belief
 @wachter-vlr2020 differentiate between *bias-preserving* and *bias transforming* metrics: 
 Bias-preserving metrics such as equalized odds and equality of opportunity require that errors made by a model are equal across groups.
 This can help to detect biases, stemming e.g from bias during data acquisition, but might be problematic in cases where e.g. labels are biased.
-To provide an example, police enforcement and subsequent arrests of violent re-offenders might be different across ZIP code areas, a proxy for race. This might lead to situations where labels $Y$ suffer from differential bias depending on the protected attribute [@bao2021s].
+To provide an example, police enforcement and subsequent arrests of violent re-offenders might be different across ZIP code areas, a proxy for race.
+This might lead to situations where labels $Y$ suffer from differential bias depending on the protected attribute [@bao2021s].
 Bias-transforming methods, in contrast do not depend on the labels and might therefore not suffer from this problem.
 They can help detecting biases arising from different base-rates across populations, arising e.g. from aforementioned biases in the labeling or as a consequence of structural discrimination.
 Deciding which metrics to use constitutes a value judgement and requires careful assessment of the societal context a decision making system is deployed in. 
