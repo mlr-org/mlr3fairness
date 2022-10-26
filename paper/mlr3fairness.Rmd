@@ -574,6 +574,7 @@ metric = msr("fairness.constraint",
 )
 ```
 
+We then design the pipeline and the hyperparameters we want to  tune over. 
 ```{r, echo = FALSE, message = FALSE}
 # Enable paralellization utilizing all cores
 # future::plan("multisession")
@@ -627,9 +628,31 @@ fairness_accuracy_tradeoff(bmr, fairness_measure = measures[[1]]) +
   theme_minimal()
 ```
 
+and print the aggregated scores:
+
+```{r}
+bmr$aggregate(measures)[, c(4, 7, 8)]
+```
+
 Especially when considering optimizing accuracy while still retaining a fair model,
 tuning can be helpful and further improve upon available trade-offs.
+In this example, the `AutoTuner` improves w.r.t. the fairness metric while offering accuracy comparable with the simple `glmnet` model.
+We therefore assume that the model obtained from the `AutoTuner` is the model we might want to use going forward.
+Having decided for a final model, we can now train the final model:
 
+```{r}
+at_lrn = bmr$learners$learner[[4]]
+at_lrn$train(tsk("adult_train"))
+```
+
+and predict on the held out test set available for the `Adult` dataset to obtain a final estimate.
+
+```{r, warning = FALSE}
+test = tsk("adult_test")
+at_lrn$predict(test)$score(measures, test)
+```
+
+On the held-out test set, the fairness constraint is slightly violated which can happen due to the comparatively large variance in the estimation of fairness metrics.
 
 # Summary
 
@@ -761,4 +784,3 @@ prd$score(c(metric, msr("classif.acc"), msr("fairness.eod")),  tsk("adult_test")
 
 So our tuned model manages to obtain an accuracy of `~0.84` while satisfying the specified constraint of $\Delta_{EOd} < 0.1$. 
 So to summarize, we have tuned a model with the goal to optimize accuracy with respect to a constraint on a selected fairness metric using an `AutoTuner`.
-
