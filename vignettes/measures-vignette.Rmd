@@ -20,18 +20,20 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-# FairnessMeasures
+# Fairness Measures
 
-Fairness measures (or metrics) allow us to assess and audit for possible biases in a trained model. There are several types of metrics that are widely used in order to assess a model's fairness. They can be coarsely classified into three groups:
+Fairness measures (or metrics) allow us to assess and audit for possible biases in a trained model. 
+There are several types of metrics that are widely used in order to assess a model's fairness. 
+They can be coarsely classified into three groups:
 
-- **Statistical Group Fairness Metrics**: Given a set of predictions from our model, we assess for differences in one or multiple metrics across groups.
+- **Statistical Group Fairness Metrics**: Given a set of predictions from our model, we assess for differences in one or multiple metrics across groups given by a *protected attribute*.
 
 - **Individual Fairness**: Basically requires that similar people are treated similar independent of the protected attribute.
   We will briefly introduce individual fairness in a dedicated section below.
 
-- **Causal Fairness Notions**: An important realization in the context of Fairness is, that whether a process is fair is often subject to the underlying causal directed acyclic graph (DAG). Knowledge of the DAG allows for causally assessing reasons for (un-)fairness. Since DAG's are often hard to construct for a given dataset, we currently do not provide any causal fairness metrics.
+- **Causal Fairness Notions**: An important realization in the context of Fairness is, that whether a process is fair is often subject to the underlying causal directed acyclic graph (DAG). Knowledge of the DAG allows for causally assessing reasons for (un-)fairness. Since DAG's are often hard to construct for a given dataset, `mlr3fairness` currently does not provide any causal fairness metrics.
 
-## Core Idea: Statistical Group Fairness
+## Statistical Group Fairness Metrics
 
 One way to assess the fairness of a model is to find a definition of fairness that is relevant to a problem at hand. We might for example define a model to be fair if the chance to be accepted for a job given you are qualified is independent of a protected attribute e.g. `gender`. This can e.g. be measured using the `true positive rate`(TPR): in `mlr3` this metric is called `"classif.tpr"`. In this case we measure discrepancies between groups by computing differences `(-)` but we could also compute quotients.
 In practice, we often compute absolute differences.
@@ -209,12 +211,23 @@ prds$score(mm, t)
 
 ## Individual Fairness
 
-Individual fairness notions were first proposed by [@Dwork]
-Individual fairness therefore requires defining distance metrics between individuals and between outcomes.
-This is often diffic
+Individual fairness notions were first proposed by [@dwork2012].
+The core idea comes from the principle of *treating similar cases similarly and different cases differently*.
+In contrast to statistical group fairness notions, this notion allows assessing *fairness* at an individual level and 
+would therefore allow to determine whether an individual is treated fairly. 
+A more in-depth treatment of individual fairness notions is given by @binns2020apparent and @heidari2019.
 
-Fairness Through Awareness
-Heidari at al., 2018 and Binns, 2019
+In order to translate this from an abstract concept into practice, we need to define two distance metrics:
+- A distance metric $d(x_i, x_j)$ that measures how *similar* two cases $x_i$ and $x_j$ are
+- A distance metric between treatments, here the predictions of our model $f$: $\phi(f({x}_i), f({x}_j))$.
+
+Intuitively, we would now want, that if $d(x_i, x_j)$ is small, the difference in predictions  $\phi(f({x}_i), f({x}_j))$ should also be small.
+This essentially requires Lipschitz continuity of $f$ with respect to $d$. 
+Given a Lipschitz constant $L > 0$, we can write this as:
+
+ $$ \phi(f({x}_i), f({x}_j)) \leq L \cdot d(x_i, x_j).$$
+
+Currently, `mlr3fairness` does not support individual fairness metrics, but we aim to introduce such metrics in the future.
 
 
 ## Using metrics for non-mlr3 predictions
