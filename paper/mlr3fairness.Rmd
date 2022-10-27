@@ -197,9 +197,12 @@ To provide an example, individuals with similar ability might exhibit different 
 #### The dangers of fairness metrics
 
 We want to stress, that overly trusting in metrics can be dangerous and that fairness metrics can and should not be used to *prove* or *guarantee* fairness.
-Whether a selected fairness notion is actually fair depends on the societal context in which a decision is made and which action should be derived from a given prediction.
+Whether a selected fairness notion (and a corresponding numerical value) is actually fair depends on the societal context in which a decision is made and which action should be derived from a given prediction.
 Therefore, selecting the correct fairness metric requires a thorough understanding of the societal context decisions are made in as well as possible implications of such decisions.
-Fairness metrics merely provide a reduction of the aforementioned fairness notions into mathematical objectives.
+To provide an example, in some cases discrepancies in positive predictions might be justified or even desired, as they e.g.
+allow for a more nuanced, gender-specific diagnosis [@cirillo2020sex].
+Furthermore, fairness metrics might not detect biases in more fine-grained subgroups, e.g. at the intersection of multiple protected attributes.
+It is also important to note, that fairness metrics merely provide a reduction of the aforementioned fairness notions into mathematical objectives.
 As such, they require a variety of abstraction steps that might invalidate the metric [@chen22], as they e.g. require that the data is a large enough and representative sample of the entire population that we aim to investigate.
 Furthermore, practitioners need to look beyond the model, but also the data used to train it and the process of acquiring data and labels.
 If the data e.g. exhibits disparate measurement errors in the features or labels, valid fairness assessments can become impossible.
@@ -208,6 +211,7 @@ Even an *initially fair* model might then lead to adverse effects in the long te
 
 
 #### Other notions of fairness
+
 In addition to *statistical group fairness notions* introduced above, several additional fairness notions exist.
 The notion of *individual fairness* was  proposed by [@dwork2012].
 Its core idea comes from the principle of *treating similar cases similarly and different cases differently*.
