@@ -256,6 +256,7 @@ In practice, this usually comes with several drawbacks:
 First, bias mitigation strategies often lead to a decrease in a classifier's predictive performance [@corbettcompas]. 
 In addition, processing schemes can worsen interpretability or introduce stochasticity during prediction (see e.g. [@hardt2016equality]).
 Furthermore, we want to caution against favoring bias mitigation techniques over policy interventions that tackle biases at their root cause.
+A different set of risk is posed by *fairwashing* [@fairwashing], i.e. finding fair explanations or satisfying fairness metrics for otherwise unfair models.
 If biases are only addressed at a given moment and without regard for downstream effects, they might simultaneously lead to a decrease in predictive performance in the near term and to negative consequences for the protected group in the long term [@schwobel-facct22a].
 
 # mlr3fairness {#main}
