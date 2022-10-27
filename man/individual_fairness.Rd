@@ -2,7 +2,7 @@
 % Please edit documentation in R/individual_fairness.R
 \name{individual_fairness}
 \alias{individual_fairness}
-\title{ompute observation-wise individual fairness.}
+\title{Compute observation-wise individual fairness.}
 \usage{
 individual_fairness(data, prediction, dX = NULL, dY = NULL, frac = 1)
 }

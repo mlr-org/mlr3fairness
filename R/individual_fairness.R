@@ -1,4 +1,4 @@
-#' @title ompute observation-wise individual fairness.
+#' @title Compute observation-wise individual fairness.
 #' 
 #' @description 
 #' Implements a fairness notion roughly requiring that "similar individuals should be treated similarly".
@@ -13,6 +13,7 @@
 #' This is computed by comparing differences between predictions and differences between features, be default using the
 #' Gower distance. The user is encouraged to adapt the distance metric and features used for computation to form a
 #' relevant distance metric that encodes ethical or regulatory considerations.
+#' 
 #' @details 
 #' Both dX and dY need to be functions that take as input arguments `x`, `y` (two data.tables) and 
 #' an argument `cols` which specifies the colnames to be used for computing distances.
@@ -25,6 +26,7 @@
 #' @param prediction [`Prediction`] Predictions to compare.
 #' @param dX [`function] distance metric for features. Defaults to `gower::gower_dist`. See `details` for additional info.
 #' @param dY [`function] distance metric for predictions. Defaults to `gower::gower_dist`.  See `details` for additional info.
+#' @param L [`numeric`] Lipschitz constant relating distances in predictions to distances in features.
 #' @param fraction [`numeric] For large datasets: Should computation be approximated by computing on only a fraction?
 #' 
 #' @return 

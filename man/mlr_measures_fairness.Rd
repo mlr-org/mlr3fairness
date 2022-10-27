@@ -5,7 +5,7 @@
 \alias{mlr_measures_fairness}
 \title{Fairness Measures in mlr3}
 \format{
-An object of class \code{data.table} (inherits from \code{data.frame}) with 16 rows and 2 columns.
+An object of class \code{data.table} (inherits from \code{data.frame}) with 17 rows and 2 columns.
 }
 \usage{
 mlr_measures_fairness
@@ -26,6 +26,8 @@ ggroupwise_metrics(measure, task) to instantiate a measure for each subgroup in 
 \strong{key} \tab \strong{description} \cr
 fairness.acc         \tab Absolute differences in accuracy across groups                                                          \cr
 fairness.mse         \tab Absolute differences in mean squared error across groups                                                \cr
+fairness.eod         \tab Equalized Odds: Sum of absolute differences between true positive and false positive rates across groups\cr
+fairness.cv          \tab Equalized positive decision rates                                                                       \cr
 fairness.fnr         \tab Absolute differences in false negative rates across groups                                              \cr
 fairness.fpr         \tab Absolute differences in false positive rates across groups                                              \cr
 fairness.tnr         \tab Absolute differences in true negative rates across groups                                               \cr
@@ -37,7 +39,6 @@ fairness.fp          \tab Absolute differences in false positives across groups 
 fairness.tp          \tab Absolute differences in true positives across groups                                                    \cr
 fairness.tn          \tab Absolute differences in true negatives across groups                                                    \cr
 fairness.fn          \tab Absolute differences in false negatives across groups                                                   \cr
-fairness.eod         \tab Equalized Odds: Sum of absolute differences between true positive and false positive rates across groups\cr
 fairness.acc_eod=.05 \tab Accuracy under equalized odds < 0.05 constraint                                                         \cr
 fairness.acc_ppv=.05 \tab Accuracy under ppv difference < 0.05 constraint
 }

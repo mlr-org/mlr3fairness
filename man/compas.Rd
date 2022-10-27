@@ -62,13 +62,17 @@ that indicate the screening date happened before the arrest date.
 }
 
 \section{Construction}{
-\preformatted{mlr_tasks$get("compas")
-tsk("compas")
-}
 
-\preformatted{mlr_tasks$get("compas_race_binary")
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{mlr_tasks$get("compas")
+tsk("compas")
+}\if{html}{\out{</div>}}
+
+
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{mlr_tasks$get("compas_race_binary")
 tsk("compas_race_binary")
-}
+}\if{html}{\out{</div>}}
 }
 
 \examples{

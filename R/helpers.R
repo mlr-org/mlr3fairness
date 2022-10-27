@@ -127,4 +127,3 @@ get_pta = function(task, rows = NULL, intersect = FALSE) {
   }
   return(groups)
 }
-

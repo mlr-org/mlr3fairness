@@ -8,6 +8,7 @@
 #' ([mlr_measures_classif.fpr]).
 #' The operation for comparison (e.g., difference or quotient) can be specified using the `operation`
 #' parameter, e.g. [groupdiff_absdiff()] or [groupdiff_tau()].
+#' See  `?groupdiff_tau` for more information about implemented operations.
 #'
 #' Composite measures encompasing multiple fairness metrics can be built using
 #' [MeasureFairnessComposite].

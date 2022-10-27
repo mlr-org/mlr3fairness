@@ -20,6 +20,9 @@ mlr_measures_fairness = rowwise_table(
   "fairness.acc", "Absolute differences in accuracy across groups",
   "fairness.mse", "Absolute differences in mean squared error across groups",
 
+  "fairness.eod", "Equalized Odds: Sum of absolute differences between true positive and false positive rates across groups",
+  "fairness.cv",  "Equalized positive decision rates",
+  
   "fairness.fnr", "Absolute differences in false negative rates across groups",
   "fairness.fpr", "Absolute differences in false positive rates across groups",
   "fairness.tnr", "Absolute differences in true negative rates across groups",
@@ -33,8 +36,6 @@ mlr_measures_fairness = rowwise_table(
   "fairness.tp", "Absolute differences in true positives across groups",
   "fairness.tn", "Absolute differences in true negatives across groups",
   "fairness.fn", "Absolute differences in false negatives across groups",
-
-  "fairness.eod", "Equalized Odds: Sum of absolute differences between true positive and false positive rates across groups",
 
   "fairness.acc_eod=.05", "Accuracy under equalized odds < 0.05 constraint",
   "fairness.acc_ppv=.05", "Accuracy under ppv difference < 0.05 constraint"
