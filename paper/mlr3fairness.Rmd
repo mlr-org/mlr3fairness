@@ -167,14 +167,22 @@ At the same time, employing such notions poses a considerable risk, as blindly o
 #### Fairness metrics
 
 In order to encode the requirements in equations \ref{eq:eod}) - \ref{eq:dp} into a fairness metric, we often encode differences between measured quantities in two groups.
-I.e., with $\mathbb{P}\left(\hat{Y} = 1 \mid A = \star, Y = 1\right)$ denoted as $\mathrm{TPR}_{A=\star}$, we calculate the difference in TPR between the two groups as
+For a performance metric $M$, e.g. the true positive rate (TPR), we calculate the difference in the metric across the two groups:
+
+\[
+\Delta_{\mathrm{M}} = \mathrm{M}_{A=0} - \mathrm{M}_{A=1}.
+\]
+When $\Delta_{\mathrm{M}}$ now significantly deviates from $0$, this can be indicative of a fairness violation with respect to the fairness notion described via $M$.
+To provide an example, with $\mathbb{P}\left(\hat{Y} = 1 \mid A = \star, Y = 1\right)$ denoted with $\mathrm{TPR}_{A=\star}$, we calculate the difference in TPR between the two groups: 
 \[
 \Delta_{\mathrm{TPR}} = \mathrm{TPR}_{A=0} - \mathrm{TPR}_{A=1}.
 \]
+When $\Delta_{\mathrm{FPR}}$ now significantly deviates from $0$, the prediction $\hat{Y} violates the requirement for *equality of opportunity* formulated above.
 
-To provide a binary conclusion, a model could be considered fair, if $|\Delta_{\mathrm{TPR}}| < \epsilon$ for a given threshold $\epsilon > 0$, e.g., $\epsilon = 0.05$ to allow for small deviations from perfect fairness due to variance in the estimation of $\mathrm{TPR}_{A=\star}$ or additional sources of bias. 
-It is important to note, that such thresholds are arbitrary and do not translate to legal doctrines, such as e.g. disparate impact [@chen22].
-A collection of this and similarly constructed metrics can be found in (@saleiro2018aequitas, @kim2020fact, @mehrabi).
+It is important to note, that in practice we might not be able to perfectly satisfy a given metric, e.g. due to stochasticity in data and labels.
+Instead, to provide a binary conclusion regarding fairness, a model could be considered fair, if $|\Delta_{\mathrm{TPR}}| < \epsilon$ for a given threshold $\epsilon > 0$, e.g., $\epsilon = 0.05$. This allows for small deviations from perfect fairness due to variance in the estimation of $\mathrm{TPR}_{A=\star}$ or additional sources of bias. 
+It is important to note, that choosing apropriate thresholds is difficult and widely used values for $\epsilon$ such as $0.05$ are arbitrary and do not translate to legal doctrines, such as e.g. disparate impact [@chen22].
+A more in-depth treatment of metrics along with additional fairness metrics are described in (@saleiro2018aequitas, @kim2020fact, @mehrabi and @wachter-vlr2020).
 
 
 #### Selecting fairness metrics
@@ -223,9 +231,10 @@ They argue, that assessing fairness requires incorporating causal relationships 
 
 ### Fairness Constraints 
 
-It is important, that in practice we might not be able to perfectly satisfy a selected metric, e.g. due to stochasticity in data and labels.
+
 One approach to take this into account might therefore be to impose constraints, e.g. $|\Delta M| \leq \epsilon$ requiring that the absolute difference in a metric $M$ between groups 
-is smaller than a chosen value $\epsilon$. 
+is smaller than a chosen value $\epsilon$.
+However, how those 
 The goal of finding a model now reduces to e.g. maximizing some notion of model performance subject to a constraint on unfairness. 
 In the following, we denote the fairness metric with $\Delta M$ and the performance metric with $\rho$. 
 \[
