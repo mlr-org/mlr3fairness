@@ -163,7 +163,7 @@ task_summary = function(task) {
     "Number of features: ",
     "Target Name: ",
     "Feature Names: ",
-    "The Protected Attribute: "
+    "Protected Attribute(s): "
   )
 
   # Create the skeleton of summary table

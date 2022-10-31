@@ -29,7 +29,7 @@ test_that("reweighing_wts", {
 
 test_that("reweighing_wts with initial weights", {
   skip_on_cran()
-  t1 = tsk("compas")
+  t1 = suppressWarnings(tsk("compas"))
   t2 = t1$clone()
   t2$set_col_roles("age", "weight")
 

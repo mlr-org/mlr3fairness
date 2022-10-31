@@ -20,7 +20,7 @@ pred_small = function() {
 }
 
 test_tasks = function() {
-  tasks = list(tsk("adult_train")$filter(1:500), tsk("compas")$filter(1:500))
+  tasks = list(tsk("adult_train")$filter(1:500), suppressWarnings(tsk("compas")$filter(1:500)))
 }
 
 test_measures = function() {

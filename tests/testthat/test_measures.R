@@ -36,7 +36,7 @@ test_that("dictionary constructors work", {
 })
 
 test_that("fairness measures work as expcted", {
-  tsk = tsk("compas")
+  tsk = suppressWarnings(tsk("compas"))
   prds = list(
     lrn("classif.rpart")$train(tsk)$predict(tsk),
     lrn("classif.rpart", predict_type = "prob")$train(tsk)$predict(tsk),
@@ -238,7 +238,7 @@ test_that("Args are passed on correctly", {
   )
 
   mta = MeasureTestArgs$new()
-  t = tsk("compas")
+  t = suppressWarnings(tsk("compas"))
   l = lrn("classif.rpart")
   prd = l$train(t)$predict(t)
   prd$score(mta, task = t, train_set = 1:10)

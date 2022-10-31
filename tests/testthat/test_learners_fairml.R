@@ -3,7 +3,7 @@ test_that("classif.fairfgrrm", {
     skip_if_not_installed("fairml")
     learner = lrn("classif.fairfgrrm")
     out = expect_learner(learner)
-    simple_autotest(learner, tsk("compas")$select(cols = c("age_cat", "priors_count")))
+    simple_autotest(learner, suppressWarnings(tsk("compas")$select(cols = c("age_cat", "priors_count"))))
     result = run_autotest(learner, exclude = "sanity")
     expect_true(result, info = result$error)
 })
@@ -41,7 +41,7 @@ test_that("classif.fairzlrm", {
     learner = lrn("classif.fairzlrm", unfairness = 0.2)
     out = expect_learner(learner)
 
-    simple_autotest(learner, tsk("compas")$select(cols = c("age_cat", "priors_count")))
+    simple_autotest(learner, suppressWarnings(tsk("compas")$select(cols = c("age_cat", "priors_count"))))
 
     result = run_autotest(learner, exclude = "sanity")
     expect_true(result, info = result$error)

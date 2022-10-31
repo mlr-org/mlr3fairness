@@ -112,5 +112,6 @@ get_compas_task_race_binary = function() { # nocov start
   task = mlr3::TaskClassif$new("compas_race_binary", b, target = "two_year_recid")
   task$col_roles$pta = "race"
   b$hash = task$man = "mlr3fairness::mlr_tasks_compas_race_binary"
+  warning("Using the COMPAS dataset for benchmarking is generally discouraged in fairness literature. See `help('compas') for additional information.`")
   task
 } # nocov end

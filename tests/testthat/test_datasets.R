@@ -7,14 +7,14 @@ check_data_format = function(data) {
 
 test_that("tasks can be loaded", {
   for (name in c("compas", "adult_train", "adult_test")) {
-    tsk_obj = tsk(name)
+    tsk_obj = suppressWarnings(tsk(name))
     expect_true(inherits(tsk_obj, "TaskClassif"))
   }
 })
 
 test_that("compas dataset can be loaded with correct format", {
   skip_on_cran()
-  compas = tsk("compas")
+  compas = expect_warning(tsk("compas"))
   expect_r6(compas, "TaskClassif")
   compas_data = compas$data()
   check_data_format(compas_data)

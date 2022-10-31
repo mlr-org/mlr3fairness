@@ -14,7 +14,7 @@ test_that("measure constructor works", {
 
 test_that("measure", {
   m = MeasureSubgroup$new(base_measure = msr("classif.acc"), subgroup = "Female")
-  t = tsk("compas")
+  t = suppressWarnings(tsk("compas"))
   l = lrn("classif.rpart")
   out = l$train(t)$predict(t)$score(m, t)
   expect_number(out, lower = 0, upper = 1)
@@ -22,7 +22,7 @@ test_that("measure", {
 })
 
 test_that("measure", {
-  t = tsk("compas")
+  t = suppressWarnings(tsk("compas"))
   l = lrn("classif.rpart")
   m = groupwise_metrics(msr("classif.acc"), t, intersect = FALSE)
   expect_set_equal(map_chr(m, "subgroup"), t$levels(t$col_roles$pta)[[1]])
@@ -43,7 +43,7 @@ test_that("measure", {
 
 test_that("multi pta", {
   skip_on_cran()
-  t = tsk("compas")
+  t = suppressWarnings(tsk("compas"))
   t$col_roles$pta = c("sex", "race")
   l = lrn("classif.rpart")
   m = groupwise_metrics(msr("classif.acc"), t)
