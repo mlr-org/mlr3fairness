@@ -3,7 +3,7 @@ title: "Fairness Metrics"
 preamble: |
   \usepackage{longtable}
   \usepackage{bbm}
-bibliography: paper/mlr3fairness.bib
+bibliography: ../paper/mlr3fairness.bib
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Fairness Metrics}
@@ -170,11 +170,11 @@ m = MeasureFairnessComposite$new(measures = ms, aggfun = mean)
 
 In this example, we create a `BenchmarkInstance`. Then by using `aggregate()` function they could access the fairness measures easily. The following example demonstrates the process to evaluate the fairness metrics on Benchmark Results:
 
-```{r}
+```{r, warning = FALSE}
 design = benchmark_grid(
   tasks = tsks("compas"),
   learners = lrns(c("classif.ranger", "classif.rpart"),
-    predict_type = "prob", predict_sets = c("train", "predict")),
+    predict_type = "prob", predict_sets = c("train", "test")),
   resamplings = rsmps("cv", folds = 3)
 )
 
