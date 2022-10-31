@@ -1,13 +1,21 @@
-\begin{thebibliography}{60}
+\begin{thebibliography}{61}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem[Agrawal et~al.(2020)Agrawal, Chen, Vollmer, and Blaom]{fairnessjl}
+\bibitem[Agrawal et~al.(2020{\natexlab{a}})Agrawal, Chen, Vollmer, and
+  Blaom]{fairnessjl}
 A.~Agrawal, J.~Chen, S.~Vollmer, and A.~Blaom.
-\newblock Fairness.jl, 2020.
+\newblock Fairness.jl, 2020{\natexlab{a}}.
+
+\bibitem[Agrawal et~al.(2020{\natexlab{b}})Agrawal, Pfisterer, Bischl, Chen,
+  Sood, Shah, Buet-Golfouse, Mateen, and Vollmer]{agrawal2020debiasing}
+A.~Agrawal, F.~Pfisterer, B.~Bischl, J.~Chen, S.~Sood, S.~Shah,
+  F.~Buet-Golfouse, B.~A. Mateen, and S.~Vollmer.
+\newblock Debiasing classifiers: is reality at variance with expectation?,
+  2020{\natexlab{b}}.
 
 \bibitem[Aivodji et~al.(2019)Aivodji, Arai, Fortineau, Gambs, Hara, and
   Tapp]{fairwashing}
