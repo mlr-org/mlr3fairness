@@ -9,6 +9,18 @@
 #' Contains 6172 observations and 14 features.
 #' The target column could either be "is_recid" or "two_year_recid", but often "two_year_recid" is prefered.
 #' The column `"sex"` is set as protected attribute, but more often `"race"` is used.
+#' 
+#' @section Using COMPAS - Known Problems:
+#' The COMPAS dataset was collected as part of the ProPublica analysis of machine bias in criminal sentencing.
+#' It is important to note, that using COMPAS is generally discouraged for the following reasons:
+#' * The prediction task derived from this dataset has little connection to actually relevant tasks in the
+#'   context of risk assessment instruments.
+#' * Collected data and labels suffer from disparate measurement bias.
+#'
+#' For a more in-depth treatment, see Bao et al., 2021.
+#' We replicate the dataset here because known problems with COMPAS manifest to raise awareness for such issues.
+#' Furthermore, similar issues exist across a wide variety of datasets widely used in the context of fairness auditing
+#' and we therefore consider issues, e.g. derived from disparate measurement bias an important issue in the context of fairness audits.
 #'
 #' @section Pre-processing:
 #' * Identifying columns are removed
@@ -18,7 +30,7 @@
 #' * Removed observations where score_text != 'N/A'.
 #' * Factorize the features that are categorical.
 #' * Add length of stay (c_jail_out - c_jail_in) in the dataset.
-#' * `Pre-processing Resouce:` @url https://github.com/propublica/compas-analysis/blob/master/Compas%20Analysis.ipynb
+#' * `Pre-processing Resource:` @url https://github.com/propublica/compas-analysis/blob/master/Compas%20Analysis.ipynb
 #'
 #' @section Metadata:
 #' * (integer) age : The age of defendants.
@@ -37,6 +49,9 @@
 #' * (numeric) length_of_stay: The count of days stay in jail.
 #'
 #' @source \url{https://github.com/propublica/compas-analysis}
+#' @source `r format_bib("bao2021s")`
+#' 
+#'
 #'
 #' @docType data
 #' @keywords data
@@ -65,6 +80,7 @@ get_compas_task = function() { # nocov start
   task = mlr3::TaskClassif$new("compas", b, target = "two_year_recid")
   task$col_roles$pta = "sex"
   b$hash = task$man = "mlr3fairness::mlr_tasks_compas"
+  warning("Using the COMPAS dataset for benchmarking is generally discouraged in fairness literature. See `help('compas') for additional information.`")
   task
 } # nocov end
 

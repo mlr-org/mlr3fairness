@@ -1,4 +1,4 @@
-\begin{thebibliography}{55}
+\begin{thebibliography}{60}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -8,6 +8,16 @@
 \bibitem[Agrawal et~al.(2020)Agrawal, Chen, Vollmer, and Blaom]{fairnessjl}
 A.~Agrawal, J.~Chen, S.~Vollmer, and A.~Blaom.
 \newblock Fairness.jl, 2020.
+
+\bibitem[Aivodji et~al.(2019)Aivodji, Arai, Fortineau, Gambs, Hara, and
+  Tapp]{fairwashing}
+U.~Aivodji, H.~Arai, O.~Fortineau, S.~Gambs, S.~Hara, and A.~Tapp.
+\newblock Fairwashing: the risk of rationalization.
+\newblock In K.~Chaudhuri and R.~Salakhutdinov, editors, \emph{Proceedings of
+  the 36th International Conference on Machine Learning}, volume~97 of
+  \emph{Proceedings of Machine Learning Research}, pages 161--170. PMLR, 09--15
+  Jun 2019.
+\newblock URL \url{https://proceedings.mlr.press/v97/aivodji19a.html}.
 
 \bibitem[Angwin et~al.(2016)Angwin, Larson, Mattu, and Kichner]{compas}
 J.~Angwin, J.~Larson, S.~Mattu, and L.~Kichner.
@@ -68,6 +78,12 @@ M.~Binder, F.~Pfisterer, M.~Lang, L.~Schneider, L.~Kotthoff, and B.~Bischl.
 \newblock \emph{Journal of Machine Learning Research}, 22\penalty0
   (184):\penalty0 1--7, 2021.
 \newblock URL \url{https://jmlr.org/papers/v22/21-0281.html}.
+
+\bibitem[Binns(2020)]{binns2020apparent}
+R.~Binns.
+\newblock On the apparent conflict between individual and group fairness.
+\newblock In \emph{Proceedings of the 2020 conference on fairness,
+  accountability, and transparency}, pages 514--524, 2020.
 
 \bibitem[Bird et~al.(2020)Bird, Dud{\'i}k, Edgar, Horn, Lutz, Milan, Sameki,
   Wallach, and Walker]{fairlearn}
@@ -149,6 +165,13 @@ D.~Dua and C.~Graff.
 \newblock {UCI} machine learning repository, 2017.
 \newblock URL \url{http://archive.ics.uci.edu/ml}.
 
+\bibitem[Dwork et~al.(2012)Dwork, Hardt, Pitassi, Reingold, and
+  Zemel]{dwork2012}
+C.~Dwork, M.~Hardt, T.~Pitassi, O.~Reingold, and R.~Zemel.
+\newblock Fairness through awareness.
+\newblock In \emph{Proceedings of the 3rd innovations in theoretical computer
+  science conference}, pages 214--226, 2012.
+
 \bibitem[Eubanks(2018)]{eubanks2018automating}
 V.~Eubanks.
 \newblock \emph{Automating inequality: How high-tech tools profile, police, and
@@ -182,12 +205,30 @@ M.~Hardt, E.~Price, and N.~Srebro.
 \newblock \emph{Advances in neural information processing systems},
   29:\penalty0 3315--3323, 2016.
 
+\bibitem[Heidari et~al.(2019)Heidari, Loi, Gummadi, and Krause]{heidari2019}
+H.~Heidari, M.~Loi, K.~P. Gummadi, and A.~Krause.
+\newblock A moral framework for understanding fair ml through economic models
+  of equality of opportunity.
+\newblock In \emph{Proceedings of the Conference on Fairness, Accountability,
+  and Transparency}, FAT* '19, page 181–190, New York, NY, USA, 2019.
+  Association for Computing Machinery.
+\newblock ISBN 9781450361255.
+\newblock \doi{10.1145/3287560.3287584}.
+\newblock URL \url{https://doi.org/10.1145/3287560.3287584}.
+
 \bibitem[Kamiran and Calders(2012)]{kamiran2012data}
 F.~Kamiran and T.~Calders.
 \newblock Data preprocessing techniques for classification without
   discrimination.
 \newblock \emph{Knowledge and Information Systems}, 33\penalty0 (1):\penalty0
   1--33, 2012.
+
+\bibitem[Kilbertus et~al.(2017)Kilbertus, Rojas~Carulla, Parascandolo, Hardt,
+  Janzing, and Sch{\"o}lkopf]{kilbertus2017avoiding}
+N.~Kilbertus, M.~Rojas~Carulla, G.~Parascandolo, M.~Hardt, D.~Janzing, and
+  B.~Sch{\"o}lkopf.
+\newblock Avoiding discrimination through causal reasoning.
+\newblock \emph{Advances in neural information processing systems}, 30, 2017.
 
 \bibitem[Kim et~al.(2020)Kim, Chen, and Talwalkar]{kim2020fact}
 J.~S. Kim, J.~Chen, and A.~Talwalkar.

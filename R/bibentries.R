@@ -83,5 +83,20 @@ bibentries = c(
     author="Saleiro, Pedro and Kuester, Benedict and Hinkson, Loren and London, Jesse and Stevens, Abby and Anisfeld, Ari and Rodolfa, Kit T and Ghani, Rayid",
     journal="arXiv preprint arXiv:1811.05577",
     year="2018"
+  ),
+
+  bao2021s = bibentry("inproceedings",
+    title="It's COMPASlicated: The Messy Relationship between RAI Datasets and Algorithmic Fairness Benchmarks",
+    author="Bao, Michelle and Zhou, Angela and Zottola, Samantha A and Brubach, Brian and Desmarais, Sarah and Horowitz, Aaron Seth and Lum, Kristian and Venkatasubramanian, Suresh",
+    booktitle="Thirty-fifth Conference on Neural Information Processing Systems Datasets and Benchmarks Track (Round 1)",
+    year="2021"
+  ),
+
+  ding2021retiring = bibentry("inproceedings",
+    title="Retiring adult: New datasets for fair machine learning",
+    author="Ding, Frances and Hardt, Moritz and Miller, John and Schmidt, Ludwig",
+    booktitle="Thirty-fifth Conference on Neural Information Processing Systems Datasets and Benchmarks Track (Round 1)",
+    year="2021"
   )
+
 )

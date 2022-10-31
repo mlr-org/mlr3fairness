@@ -10,6 +10,9 @@
 Dua, Dheeru, Graff, Casey (2017).
 \dQuote{UCI Machine Learning Repository.}
 \url{http://archive.ics.uci.edu/ml/}.
+Ding, Frances, Hardt, Moritz, Miller, John, Schmidt, Ludwig (2021).
+\dQuote{Retiring adult: New datasets for fair machine learning.}
+In \emph{Thirty-fifth Conference on Neural Information Processing Systems Datasets and Benchmarks Track (Round 1)}.
 }
 \description{
 Dataset used to predict whether income exceeds $50K/yr based on census data.
@@ -19,6 +22,16 @@ Test dataset contains 13 features and 15315 observations.
 Target column is "target": A binary factor where 1: <=50K and 2: >50K for annual income.
 The column \code{"sex"} is set as protected attribute.
 }
+\section{Using Adult - Known Problems}{
+
+The adult dataset has several known limitations such as its age, limited documentation, and outdated feature encodings (Ding et al., 2021).
+Furthermore, the selected threshold (income <=50K) has strong implications on the outcome of analysis, such that
+"In many cases, the $50k threshold understates and misrepresents the broader picture" (Ding et al., 2021).
+As a result, conclusions w.r.t. real-world implications are severely limited.
+
+We decide to replicate the dataset here, as it is a widely used benchmark dataset and it can still serve this purpose.
+}
+
 \section{Pre-processing}{
 
 \itemize{
@@ -38,7 +51,7 @@ The column \code{"sex"} is set as protected attribute.
 \item (integer) education_num: the highest level of education achieved in numerical form.
 \item (factor) marital_status: marital status of an individual.
 \item (factor) occupation: the general type of occupation of an individual
-\item (factor) relationship: twhether the individual is in a relationship-
+\item (factor) relationship: whether the individual is in a relationship-
 \item (factor) race: Descriptions of an individual’s race
 \item (factor) sex: the biological sex of the individual
 \item (integer) captain-gain: capital gains for an individual
