@@ -9,7 +9,7 @@ render(fp)
 
 report_file = paste0(dir, "/modelcard")
 unlink(report_file, recursive = TRUE)
-report_modelcard(report_file)
+fp = report_modelcard(report_file)
 render(fp)
 
 
