@@ -12,7 +12,6 @@
 #' @param protected_attribute (`character`) \cr The name(s) of the protected attributes(s). Must be available in `data`.
 #' @param prediction (`vector`) \cr A vector containing predictions. 
 #' @param metrics (`Metric`|`list`) \cr (List of) mlr3 metrics to apply.
-#' @param task_type (`character`) \cr Type of 
 #' @export
 #' @examples
 #' # Get adult data as a data.table
@@ -40,8 +39,7 @@ compute_metrics = function(data, target, protected_attribute, prediction, metric
   assert_vector(prediction)
   assert_choice(protected_attribute, colnames(data))
 
-
-  if (class(data[[target]]) == "factor") {
+  if (inherits(data[[target]], "factor")) {
     t = as_task_classif(data, target = target)
   } else if (class(data[[target]]) %in% c("integer", "numeric")) {
     t = as_task_regr(data, target = target)
@@ -56,7 +54,7 @@ compute_metrics = function(data, target, protected_attribute, prediction, metric
     "response" = prediction
   )
 
-  if  (class(data[[target]]) == "factor") {
+  if (inherits(data[[target]], "factor")) {
     assert_factor(prediction, levels = t$levels(target)[[1]])
     prd = as_prediction_classif(df)
   } else if (class(data[[target]]) %in% c("integer", "numeric"))  {

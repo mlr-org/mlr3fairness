@@ -451,8 +451,6 @@ Table: Selection of implemented fairness metrics.
 |fairness.acc\_eod=.05 | Accuracy under equalized odds constraint \citep{perrone2021fair}                            |
 |fairness.acc\_ppv=.05 | Accuracy under ppv constraint \citep{perrone2021fair}                                       |
 
-
-
 Furthermore, new custom fairness measures can be easily implemented, either by implementing them directly or by composing them from existing metrics.
 This process is extensively documented in an accompanying [vignette](https://mlr3fairness.mlr-org.com/articles/measures-vignette.html).
 
@@ -702,11 +700,7 @@ On the held-out test set, the fairness constraint is slightly violated which can
 
 The large-scale availability and use of automated decision making systems have resulted in growing concerns for a lack of fairness in the decisions made by such systems. As a result, fairness auditing methods that allow for investigating (un-)fairness in such systems are required.
 Implementations of such methods are still not widely available, especially considering the required interoperability with machine learning toolkits that allows for ease of use and integration into model evaluation and tuning.
-
-We have presented \CRANpkg{mlr3fairness}, a package for fairness auditing and bias correction on \CRANpkg{mlr3} models.
-Integrated fairness metrics allow for auditing ML models with respect to a multiplicity of fairness criteria and models identified as biased can subsequently be retrained / debiased using implemented debiasing methods.
-In future work we plan on implementing several tools that further support the user w.r.t. pinpointing potential fairness issues in the data, especially through the help of interpretability tools, such as the \CRANpkg{iml} package. We furthermore aim to implement additional fairness metrics from the realm of 'individual fairness' [@dwork2012] and 'conditional demographic parity [wachter-vlr2020].
-We hope that this package can constitute a first step to support users in detecting fairness problems in machine learning models as well as with locating the root problems for such biases.
+In future work we plan on implementing several tools that further support the user w.r.t. pinpointing potential fairness issues in the data, especially through the help of interpretability tools, such as the \CRANpkg{iml} package. We furthermore aim to implement additional fairness metrics from the realm of \`individual fairness' [@dwork2012] and \`conditional demographic parity' [wachter-vlr2020].
 
 \pagebreak 
 

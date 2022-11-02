@@ -16,8 +16,6 @@ compute_metrics(data, target, protected_attribute, prediction, metrics = NULL)
 \item{prediction}{(\code{vector}) \cr A vector containing predictions.}
 
 \item{metrics}{(\code{Metric}|\code{list}) \cr (List of) mlr3 metrics to apply.}
-
-\item{task_type}{(\code{character}) \cr Type of}
 }
 \description{
 Allows computing metrics for predictions that do not stem from mlr3, and were

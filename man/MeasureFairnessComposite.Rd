@@ -53,7 +53,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<div class="r">}}\preformatted{MeasureFairnessComposite$new(
   id = NULL,
   measures,
-  aggfun = function(x) mean(x, na.rm = TRUE),
+  aggfun = function(x) mean(x),
   operation = groupdiff_absdiff,
   minimize = TRUE,
   range = c(-Inf, Inf)

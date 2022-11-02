@@ -33,7 +33,7 @@ MeasureFairnessComposite = R6::R6Class("MeasureFairnessComposite", inherit = Mea
     #'   Should the measure be minimized? Defaults to `TRUE`.
     #' @param range (`numeric(2)`)\cr
     #'   Range of the resulting measure. Defaults to `c(-Inf, Inf)`.
-    initialize = function(id = NULL, measures, aggfun = function(x) mean(x, na.rm = TRUE),
+    initialize = function(id = NULL, measures, aggfun = function(x) mean(x),
       operation = groupdiff_absdiff, minimize = TRUE, range = c(-Inf, Inf)) {
 
       private$.measures = assert_measures(as_measures(measures))
