@@ -1,4 +1,4 @@
-\begin{thebibliography}{61}
+\begin{thebibliography}{62}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -145,6 +145,14 @@ A.~Chouldechova.
   prediction instruments.
 \newblock \emph{Big Data}, 5\penalty0 (2):\penalty0 153--163, June 2017.
 \newblock \doi{10.1089/big.2016.0047}.
+
+\bibitem[Cirillo et~al.(2020)Cirillo, Catuara-Solarz, Morey, Guney, Subirats,
+  Mellino, Gigante, Valencia, Rementeria, Chadha, et~al.]{cirillo2020sex}
+D.~Cirillo, S.~Catuara-Solarz, C.~Morey, E.~Guney, L.~Subirats, S.~Mellino,
+  A.~Gigante, A.~Valencia, M.~J. Rementeria, A.~S. Chadha, et~al.
+\newblock Sex and gender differences and biases in artificial intelligence for
+  biomedicine and healthcare.
+\newblock \emph{NPJ digital medicine}, 3\penalty0 (1):\penalty0 1--11, 2020.
 
 \bibitem[Corbett-Davies and Goel(2018)]{corbett2018measure}
 S.~Corbett-Davies and S.~Goel.

@@ -29,7 +29,7 @@ abstract: >
   imperative that along with tools to develop and improve such models there are sufficient capabilities
   to analyze and assess models with respect to potential biases. We present the package \CRANpkg{mlr3fairness},
   a collection of metrics and methods that allow for the assessment of bias in machine learning models.
-  Our package implements a variety of widely used fairness metrics that can be used to audit models for potential biases along with a set of visualizations that can help to provide additional insights into such biases. \CRANpkg{mlr3fairness} furthermore integrates debiasing methods that can help allevaite biases in ML models through data preprocessing or post-processing of predictions. These allow practicioners to trade off performance and fairness metric that are appropriate for their use case.
+  Our package implements a variety of widely used fairness metrics that can be used to audit models for potential biases along with a set of visualizations that can help to provide additional insights into such biases. \CRANpkg{mlr3fairness} furthermore integrates debiasing methods that can help alleviate biases in ML models through data preprocessing or post-processing of predictions. These allow practitioners to trade off performance and fairness metric that are appropriate for their use case.
 preamble: |
   \usepackage{longtable}
   \usepackage{bbm}
@@ -62,7 +62,7 @@ Humans are increasingly subject to data-driven automated decision-making.
 Those automated procedures such as credit risk assessments are often applied using predictive models [@galindo2000credit].
 It is imperative that along with tools to develop and improve such models, we also develop sufficient capabilities to analyze and assess models not only with respect to their robustness and predictive performance, but also address potential biases.
 This is highlighted by the GDPR requirement to process data fairly.
-Popular R [@R] modeling frameworks such as \CRANpkg{caret} [@caret], \CRANpkg{tidymodels} [@tidymodels], \CRANpkg{SuperLearner} [@superlearner], or \CRANpkg{mlr} [@mlr] implement a plethora of metrics to measure performance, but fairness metrics are widely missing.
+Popular R [@R] modelling frameworks such as \CRANpkg{caret} [@caret], \CRANpkg{tidymodels} [@tidymodels], \CRANpkg{SuperLearner} [@superlearner], or \CRANpkg{mlr} [@mlr] implement a plethora of metrics to measure performance, but fairness metrics are widely missing.
 This lack of availability can be detrimental to obtaining fair and unbiased models if the result is to forgo bias audits due to the considerable complexity of implementing such metrics.
 Consequently, there exists considerable necessity for R packages (a) implementing such metrics, and (b) connecting these metrics to existing ML frameworks.
 If biases are detected and need to be mitigated, we might furthermore want to employ debiasing techniques that tightly integrate with the fitting and evaluation of the resulting models in order to obtain trade-offs between a model's fairness and utility (e.g., predictive accuracy).
@@ -218,7 +218,7 @@ This e.g. allows assessing whether a model has inherited biases, e.g. from histo
 The second purpose is as a basis for *model selection* and making fair decisions in practice.
 In this setting, fairness notions are employed with the goal to audit ML models or to select which model should be used in practice.
 It is important to note, that fairness metrics should however not be used as the sole basis for making decisions about whether to employ a given ML model or to assess whether a given system is fair.
-We therefore explicitly encourage using the presented metrics in an explorative manner.
+We therefore explicitly encourage using the presented metrics in an exploratory manner.
 
 #### Other notions of fairness
 
@@ -377,7 +377,7 @@ rr$aggregate(measure)
 We can call the `aggregate` method on the `ResampleResult` to obtain the accuracy aggregated across all $10$ replications.
 Here, we again obtain an accuracy of `r round(rr$aggregate(measure), 4)`, so slightly higher than previous scores, due to using a larger fraction of the data.
 Furthermore, this estimate has a lower variance (as it is an aggregate) at the cost of additional computation time. 
-To properly compare competing modeling approaches, candidates can be benchmarked against each other using the `benchmark()` function (yielding a `BenchmarkResult`).
+To properly compare competing modelling approaches, candidates can be benchmarked against each other using the `benchmark()` function (yielding a `BenchmarkResult`).
 In the following, we compare the decision tree from above to a logistic regression model.
 To do this, we use the `benchmark_grid` function to compare the two `Learners` across the same `Task` and resampling procedure.
 
@@ -392,7 +392,7 @@ bmr$aggregate(measure)[, .(learner_id, classif.acc)]
 After running the benchmark, we can again call `.$aggregate` to obtain aggregated scores. 
 The \CRANpkg{mlr3viz} package comes with several ready-made visualizations for objects from `mlr3` via the `autoplot` function.
 For a `BenchmarkResult`, the `autoplot` function provides a Box-plot comparison of performances across the cross-validation folds for each `Learner`.
-Figure @ref(fig:bmrbox) contains the box-plot comparison.
+Figure \@ref(fig:bmrbox) contains the box-plot comparison.
 We can see, that `log_reg` has a higher accuracy and lower inter-quartile range across the 10 folds and we might therefore want to prefer the `log_reg` model. 
 
 ```{r, warning = FALSE, include = FALSE}
@@ -613,7 +613,7 @@ metric = msr("fairness.constraint",
 
 We then design the pipeline and the hyperparameters we want to tune over. 
 ```{r, echo = FALSE, message = FALSE}
-# Enable paralellization utilizing all cores
+# Enable parallelization utilizing all cores
 # future::plan("multisession")
 
 lrn = as_learner(po("encode") %>>% po("reweighing_wts") %>>% po("learner", lrn("classif.glmnet")))
@@ -652,7 +652,7 @@ bmr2$aggregate(measures)[, c(4, 7, 8)]
 The result improves w.r.t.\ accuracy while only slightly decreasing the measured fairness.
 Note, that the generalization error is estimated using a holdout strategy during training
 and slight violations of the desired threshold $\epsilon$ can therefore happen.
-The results of both benchmark experiments can then be collected and jointly visualized in Figure @ref(fig:fat).
+The results of both benchmark experiments can then be collected and jointly visualized in Figure \@ref(fig:fat).
 In addition to aggregate scores (denoted by a cross) individual iterations of the 3 fold Cross-Validation (denoted by points) are shown 
 to visualize variations in the individual results.
 
@@ -721,7 +721,7 @@ library(mlr3pipelines)
 library(mlr3fairness)
 library(mlr3tuning)
 
-# Enable paralellization utilizing all cores
+# Enable parallelization utilizing all cores
 # future::plan("multicore")
 ```
 
@@ -730,7 +730,7 @@ set.seed(1234L)
 ```
 
 We then instantiate an ML pipeline using \pkg{mlr3pipelines}. This connects several
-modeling steps, in our case **categorical encoding**, **reweighing** and a final **learner** using the
+modelling steps, in our case **categorical encoding**, **reweighing** and a final **learner** using the
 `%>>%` (double caret) operator, ultimately forming a new learner. This learner can
 then subsequently be fit on a `Task`. We use the `po(<key>)` shorthand to construct a new
 pipeline operator from a dictionary of implemented operators. We conduct **categorical encoding**
