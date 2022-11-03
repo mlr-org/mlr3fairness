@@ -184,38 +184,38 @@ A more in-depth treatment of metrics are described in @saleiro2018aequitas, @kim
 #### Selecting fairness metrics
 
 While the three metrics are conceptually similar, they encode a different belief of what constitutes *fair* in a given scenario.
-@wachter-vlr2020 differentiate between *bias-preserving* and *bias transforming* metrics:
+@wachter-vlr2020 differentiate between *bias-preserving* and *bias-transforming* metrics:
 Bias-preserving metrics such as equalized odds and equality of opportunity require that errors made by a model are equal across groups.
 This can help to detect biases stemming, e.g., from data acquisition, but might be problematic in cases where labels are biased.
 To provide an example, police enforcement and subsequent arrests of violent re-offenders might be different across ZIP code areas, a proxy for race.
 This might lead to situations where labels $Y$ suffer from differential measurement bias strongly correlated with race [@bao2021s].
 
 Bias-transforming methods, in contrast, do not depend on labels and might therefore not suffer from this problem.
-They can help detect biases arising from different base-rates across populations, arising e.g. from aforementioned biases in the labeling or as a consequence of structural discrimination.
+They can help detect biases arising from different base-rates across populations, arising, e.g., from aforementioned biases in the labeling or as a consequence of structural discrimination.
 Deciding which metrics to use constitutes a value judgement and requires careful assessment of the societal context a decision-making system is deployed in.
 A discussion of different metrics and their applicability can be found in the Aequitas Fairness Toolkit [@saleiro2018aequitas] which also provides guidance towards selecting a metric via the [Aequitas Fairness Tree](http://www.datasciencepublicpolicy.org/our-work/tools-guides/aequitas/).
 @wachter-vlr2020 recommend using *bias-transforming* metrics and provide a checklist that can guide the choice of fairness metric.
 @corbett2018measure, on the other hand, point out several limitations of available metrics and argue for grounding decisions in real world quantities in addition to abstract fairness metrics.
-Similarly, @friedler16 emphasize the need to differentiate between constructs we aim to measure (e.g. job-related knowledge) and the observed quantity that can be measured in practice (e.g. years in a job) when trying to automate decision, since disparities in how constructs translate to observed quantities might suffer from bias.
-To provide an example, individuals with similar ability might exhibit different measured quantities (grades) due to structural bias, e.g. worse access to after-school tutoring programs.
+Similarly, @friedler16 emphasize the need to differentiate between constructs we aim to measure (e.g., job-related knowledge) and the observed quantity that can be measured in practice (e.g., years in a job) when trying to automate decision, since disparities in how constructs translate to observed quantities might suffer from bias.
+To provide another example, individuals with similar ability might exhibit different measured quantities (grades) due to structural bias, e.g., worse access to after-school tutoring programs.
 
 #### The dangers of fairness metrics
 
 We want to stress that overly trusting in metrics can be dangerous and that fairness metrics can and should not be used to *prove* or *guarantee* fairness.
 Whether a selected fairness notion (and a corresponding numerical value) is actually fair depends on the societal context in which a decision is made and which action should be derived from a given prediction.
-Therefore, selecting the correct fairness metric requires a thorough understanding of the societal context, decisions are made in, as well as possible implications of such decisions.
-To provide an example, in some cases discrepancies in positive predictions might be justified or even desired, as they, e.g. allow for a more nuanced, gender-specific diagnosis [@cirillo2020sex].
-Furthermore, fairness metrics might not detect biases in more fine-grained subgroups, e.g. at the intersection of multiple protected attributes.
-It is also important to note, that fairness metrics merely provide a reduction of the aforementioned fairness notions into mathematical objectives.
-As such, they require a variety of abstraction steps that might invalidate the metric [@chen22], as they e.g. require that the data is a large enough and representative sample of the entire population that we aim to investigate.
+Therefore, selecting the correct fairness metric requires a thorough understanding of the societal context in which decisions are made in, as well as possible implications of such decisions.
+To provide an example, in some cases discrepancies in positive predictions might be justified or even desired, as they, e.g., allow for a more nuanced, gender-specific diagnosis [@cirillo2020sex].
+Furthermore, fairness metrics might not detect biases in more fine-grained subgroups, e.g., at the intersection of multiple protected attributes.
+It is also important to note that fairness metrics merely provide a reduction of the aforementioned fairness notions into mathematical objectives.
+As such, they require a variety of abstraction steps that might invalidate the metric [@chen22], as they, e.g., require that the data is a large enough and representative sample of the entire population that we aim to investigate.
 Furthermore, practitioners need to look beyond the model, but also at the data used for training and the process of data and label acquisition.
-If the data e.g. exhibits disparate measurement errors in the features or labels, valid fairness assessments can become impossible.
+If the data for example exhibits disparate measurement errors in the features or labels, valid fairness assessments can become impossible.
 Similarly, feedback loops might arise from a prediction leading to changes in the data collected in the future.
 Even an *initially fair* model might then lead to adverse effects in the long term [@schwobel-facct22a].
 
-Note, that the fairness definitions presented above serve a dual purpose [@wachter-vlr2020]:
+Note that the fairness definitions presented above serve a dual purpose [@wachter-vlr2020]:
 First, as a *diagnostic tool* to detect disparities.
-This e.g. allows assessing whether a model has inherited biases, e.g., from historical disparities reflected in the data.
+This allows assessing whether a model has inherited biases, e.g., from historical disparities reflected in the data.
 The second purpose is as a basis for *model selection* and making fair decisions in practice.
 In this setting, fairness notions are employed to audit ML models or to select which model should be used in practice.
 However, it is important to note that fairness metrics should not be used as the sole basis for making decisions about whether to employ a given ML model or to assess whether a given system is fair.
@@ -224,33 +224,33 @@ We therefore explicitly encourage using the presented metrics in an exploratory 
 #### Other notions of fairness
 
 In addition to *statistical group fairness notions* introduced above, several additional fairness notions exist.
-The notion of *individual fairness* was proposed by [@dwork2012].
+The notion of *individual fairness* was proposed by @dwork2012.
 Its core idea comes from the principle of *treating similar cases similarly and different cases differently*.
 In contrast to statistical group fairness notions, this notion allows assessing *fairness* at an individual level and
 would therefore allow determining, whether an individual is treated fairly.
 A more in-depth treatment of individual fairness notions is given by @binns2020apparent and @heidari2019.
-Similarly, a variety of *causal* fairness notions exist (c.f. @kilbertus2017avoiding).
-They argue, that assessing fairness requires incorporating causal relationships in the data.
+Similarly, a variety of *causal* fairness notions exist (@kilbertus2017avoiding).
+They argue that assessing fairness requires incorporating causal relationships in the data.
 
 ### Fairness Constraints
 
 Statistical group fairness notions suffer from two further problems in practice:
-First, it might be hard to exactly satisfy the required fairness notions, e.g. due to limited amount of data available for evaluation.
-Secondly, only requiring fairness might lead to degenerate solutions [@corbett2018measure] or models that have low utility, e.g. in separating *good* and *bad* credit risk.
+First, it might be hard to exactly satisfy the required fairness notions, e.g., due to limited amount of data available for evaluation.
+Secondly, only requiring fairness might lead to degenerate solutions [@corbett2018measure] or models that have low utility, e.g., in separating *good* and *bad* credit risk.
 One approach to take this into account is to employ models which maximize utility but satisfy some maximum constraint on potential unfairness.
-This can be achieved via constraints on the employed fairness measure, e.g. $|\Delta M| \leq \epsilon$ requiring that the absolute difference in a metric $M$ between groups
+This can be achieved via constraints on the employed fairness measure, e.g. $|\Delta_M| \leq \epsilon$ requiring that the absolute difference in a metric $M$ between groups
 is smaller than a chosen value $\epsilon$.
-In the following, we denote the fairness metric we want to minimize with $\Delta M$ and the performance metric with $\rho$ (assuming the latter should be maximized).
+In the following, we denote the fairness metric we want to minimize with $\Delta_M$ and the performance metric with $\rho$ (assuming the latter should be maximized).
 \[
-  \rho_{|\Delta| M \leq \epsilon} = \left\{
+  \rho_{|\Delta_M| \leq \epsilon} = \left\{
 \begin{array}{ll}
-\rho         & |\Delta M| \leq \epsilon      \\
-- |\Delta M| &  \textrm{else}                \\
+\rho         & |\Delta_M| \leq \epsilon      \\
+- |\Delta_M| &  \textrm{else}                \\
 \end{array}
 \right.
 \]
 
-This approach has e.g. been employed by [@perrone2021fair] as the objective of an AutoML system.
+This approach has, e.g., been employed by [@perrone2021fair] as the objective of an AutoML system.
 It is not immediately clear, how the constraint $\epsilon$ should be chosen.
 An alternative therefore is to employ *multi-objective optimization* in order to investigate available trade-offs between performance and accuracy metrics.
 This can be done via \CRANpkg{mlr3tuning} which contains functionality to tune models for multiple metrics, described in more detail in the [mlr3book](https://mlr3book.mlr-org.com/optimization.html#mult-measures-tuning).
@@ -260,19 +260,19 @@ The result of the optimization is the *pareto-set*: A list of models which optim
 
 If biases are detected in a model, we might now be interested in improving models in order to potentially mitigate such biases.
 Bias in models might arise from a variety of sources, so a careful understanding of the data, data quality and distribution might lead to approaches that can help in decreasing biases, e.g. through the collection of better or additional data or a better balancing of protected groups.
-Similarly, biases might arise from the model, e.g. through under- or overfitting and more careful tuning of model hyperparameters might help with improving fairness.
+Similarly, biases might arise from the model, e.g., through under- or overfitting and more careful tuning of model hyperparameters might help with improving fairness.
 Especially in the case of *bias-transforming* metrics, a better solution might often be to address fairness problems in the real world instead of relying on algorithmic interventions to solve fairness not only momentarily.
 In addition, a variety of algorithmic **debiasing techniques**, that might help with obtaining fairer models have been proposed.
 Their goal is to reduce measured gaps in fairness, either via data pre-processing, employing models that incorporate fairness or by applying post-processing techniques on a model's predictions.
 Popular examples for such techniques include computing instance weights before training [@kamiran2012data], where each observation is weighted proportional to the inverse frequency of it's label and protected attribute.
-Other methods work by directly learning fair models that incorporate fairness constraints into the fitting procedure [@Zafar2017] or by adapting model predictions, e.g. [@hardt2016equality] propose to randomly flip a small fraction of predictions in each group given by $\hat{Y}$ and $A$, such that fairness metrics are satisfied in expectation.
+Other methods work by directly learning fair models that incorporate fairness constraints into the fitting procedure [@Zafar2017] or by adapting model predictions, e.g., [@hardt2016equality] propose to randomly flip a small fraction of predictions in each group given by $\hat{Y}$ and $A$, such that fairness metrics are satisfied in expectation.
 Since debiasing techniques are often tailored towards a particular fairness metric, the optimal choice of debiasing technique is often not trivial and a combination of algorithms and debiasing techniques, e.g. determined via tuning might result in an optimal model.
 
-Bias mitigation techniques, as proposed above, have the goal of mitigating fairness issues, as e.g. measured by fairness metrics.
+Bias-mitigation techniques, as proposed above, have the goal of mitigating fairness issues, as measured by fairness metrics.
 In practice, this usually comes with several drawbacks:
-First, bias mitigation strategies often lead to a decrease in a classifier's predictive performance [@corbett2018measure].
-In addition, processing schemes can worsen interpretability or introduce stochasticity during prediction (see e.g. [@hardt2016equality]).
-Furthermore, we want to caution against favoring bias mitigation techniques over policy interventions that tackle biases at their root cause.
+First, bias-mitigation strategies often lead to a decrease in a classifier's predictive performance [@corbett2018measure].
+In addition, processing schemes can worsen interpretability or introduce stochasticity during prediction (see, e.g., @hardt2016equality).
+Furthermore, we want to caution against favoring bias-mitigation techniques over policy interventions that tackle biases at their root cause.
 A different set of risks is posed by *fairwashing* [@fairwashing], i.e., finding fair explanations or satisfying fairness metrics for otherwise unfair models.
 If biases are only addressed at a given moment and without regard for downstream effects, they might simultaneously lead to a decrease in predictive performance in the near term and to negative consequences for the protected group in the long term [@schwobel-facct22a].
 
@@ -305,13 +305,10 @@ Multiple extension packages bring numerous additional advantages and extra funct
 In the context of fairness, the following extension packages deserve special mention:
 
 * \CRANpkg{mlr3pipelines} [@mlr3pipelines] for pre- and postprocessing via pipelining.
-  This allows merging debiasing with arbitrary ML algorithms shipped with \CRANpkg{mlr3} as well as comparison of different models through joint resampling and tuning.
+  This allows composing debiasing techniques with arbitrary ML algorithms shipped with \CRANpkg{mlr3} as well as fusing ML algorithms with preprocessing steps such as imputation or class balancing.
   It furthermore integrates with \CRANpkg{mcboost} [@mcboost], which implements additional debiasing methods.
   We present an example in the supplementary material.
 * \CRANpkg{mlr3tuning} for its extensive tuning capabilities.
-  Fusing debiasing techniques with ML algorithms as well as other often necessary
-  preprocessing steps such as imputation of missing values or class balancing allow for joint tuning of hyperparameters with respect to
-  arbitrary performance and fairness metrics.
 * \CRANpkg{mlr3proba} [@mlr3proba] for survival analysis.
 * \CRANpkg{mlr3benchmark} for post-hoc analysis of benchmarked approaches.
 * \CRANpkg{mlr3oml} as a connector to OpenML [@Vanschoren2014], an online scientific platform for collaborative ML.
@@ -335,8 +332,8 @@ task = tsk("compas_race_binary")
 print(task)
 ```
 
-The protected attribute(s) are identified by a `col_role` named `pta` and can be set accordingly, e.g. via
-`task$col_roles$pta = c("gender, "race")`.
+The columns which serve as protected attribute(s) are marked by a designated `col_role` named `pta` and can be set accordingly, e.g., via
+`task$set_col_roles(c("gender, "race"), add_to = "pta")`.
 If more than one protected attribute is specified, metrics will be computed based on intersecting groups formed by the columns.
 
 The second building block is the `Learner`.
@@ -370,16 +367,20 @@ prediction$score(measure)
 In the example above, we obtain an accuracy score of `r round(prediction$score(measure), 4)`, meaning our ML model correctly classifies roughly `r round(100 * prediction$score(measure))` \% of the samples in the test data.
 As the split into training set and test set is stochastic, the procedure should be repeated multiple times for smaller datasets [@bischl2012resampling] and the resulting performance values should be aggregated.
 This process is called resampling, and can easily be performed with the `resample()` function, yielding a `ResampleResult` object.
-In the following, we employ 10-fold cross-validation as a resampling strategy.
+In the following, we employ 10-fold cross-validation as a resampling strategy:
 
 ```{r}
 resampling = rsmp("cv", folds = 10)
 rr = resample(task, learner, resampling)
-rr$aggregate(measure)
 ```
 
 We can call the `aggregate` method on the `ResampleResult` to obtain the accuracy aggregated across all $10$ replications.
-Here, we again obtain an accuracy of `r round(rr$aggregate(measure), 4)`, so slightly higher than previous scores, due to using a larger fraction of the data.
+
+```{r}
+rr$aggregate(measure)
+```
+
+Here, we obtain an accuracy of `r round(rr$aggregate(measure), 4)`, so slightly higher than previous scores, due to using a larger fraction of the data.
 Furthermore, this estimate has a lower variance (as it is an aggregate) at the cost of additional computation time.
 To properly compare competing modelling approaches, candidates can be benchmarked against each other using the `benchmark()` function (yielding a `BenchmarkResult`).
 In the following, we compare the decision tree from above to a logistic regression model.
@@ -398,7 +399,7 @@ bmr$aggregate(measure)[, .(learner_id, classif.acc)]
 After running the benchmark, we can again call `.$aggregate` to obtain aggregated scores.
 The \CRANpkg{mlr3viz} package comes with several ready-made visualizations for objects from `mlr3` via the `autoplot` function.
 For a `BenchmarkResult`, the `autoplot` function provides a Box-plot comparison of performances across the cross-validation folds for each `Learner`.
-Figure \@ref(fig:bmrbox) contains the box-plot comparison.
+Figure \ref{fig:bmrbox} contains the box-plot comparison.
 We can see that `log_reg` has higher accuracy and lower interquartile range across the 10 folds and we might therefore want to prefer the `log_reg` model.
 
 ```{r, warning = FALSE, include = FALSE}
