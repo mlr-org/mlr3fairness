@@ -11,7 +11,7 @@
 \link[R6:R6Class]{R6::R6Class} inheriting from \link{TaskClassif}.
 }
 \source{
-\url{https://github.com/propublica/compas-analysis}
+ProPublica Analysis: \url{https://github.com/propublica/compas-analysis}
 
 Bao, Michelle, Zhou, Angela, Zottola, A S, Brubach, Brian, Desmarais, Sarah, Horowitz, Seth A, Lum, Kristian, Venkatasubramanian, Suresh (2021).
 \dQuote{It's COMPASlicated: The Messy Relationship between RAI Datasets and Algorithmic Fairness Benchmarks.}
@@ -24,12 +24,17 @@ Contains 6172 observations and 14 features.
 The target column could either be "is_recid" or "two_year_recid", but often "two_year_recid" is prefered.
 The column \code{"sex"} is set as protected attribute, but more often \code{"race"} is used.
 
-A classification task for the \link{compas} data set.
+Derived tasks: \cr
+\itemize{
+\item \code{compas} : A classification task for the \link{compas} data set with the protected attribute 'sex'.
+}
 
-A classification task for the \link{compas} data set.
+\itemize{
+\item \code{compas_race_binary} : A classification task for the \link{compas} data set with the protected attribute 'race'.
 The observations have been filtered, keeping only observations with race
 \code{"Caucasian"} and \code{"African-American"}. The protected attribute has been set
 to \code{"race"}.
+}
 }
 \section{Using COMPAS - Known Problems}{
 

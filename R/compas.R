@@ -48,7 +48,7 @@
 #' * (factor) two_year_recid: Binary variable indicate whether defendant is rearrested at within two years.
 #' * (numeric) length_of_stay: The count of days stay in jail.
 #'
-#' @source \url{https://github.com/propublica/compas-analysis}
+#' @source ProPublica Analysis: \url{https://github.com/propublica/compas-analysis}
 #' @source `r format_bib("bao2021s")`
 #' 
 #'
@@ -72,7 +72,8 @@ NULL
 #' ```
 #'
 #' @description
-#' A classification task for the [compas] data set.
+#' Derived tasks: \cr
+#' * `compas` : A classification task for the [compas] data set with the protected attribute 'sex'.
 NULL
 
 get_compas_task = function() { # nocov start
@@ -97,10 +98,10 @@ get_compas_task = function() { # nocov start
 #' ```
 #'
 #' @description
-#' A classification task for the [compas] data set.
-#' The observations have been filtered, keeping only observations with race
-#' `"Caucasian"` and `"African-American"`. The protected attribute has been set
-#' to `"race"`.
+#' * `compas_race_binary` : A classification task for the [compas] data set with the protected attribute 'race'.
+#'   The observations have been filtered, keeping only observations with race
+#'   `"Caucasian"` and `"African-American"`. The protected attribute has been set
+#'   to `"race"`.
 NULL
 
 get_compas_task_race_binary = function() { # nocov start
