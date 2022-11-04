@@ -12,6 +12,10 @@
 #' Target column is "target": A binary factor where 1: <=50K and 2: >50K for annual income.
 #' The column `"sex"` is set as protected attribute.
 #' 
+#' @section Derived tasks:
+#' * `adult_train`: Original train split for the adult task available at UCI.
+#' * `adult_test`: Original test split for the adult task available at UCI.
+#' 
 #' @section Using Adult - Known Problems:
 #' The adult dataset has several known limitations such as its age, limited documentation, and outdated feature encodings (Ding et al., 2021). 
 #' Furthermore, the selected threshold (income <=50K) has strong implications on the outcome of analysis, such that 

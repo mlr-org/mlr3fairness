@@ -22,6 +22,14 @@ Test dataset contains 13 features and 15315 observations.
 Target column is "target": A binary factor where 1: <=50K and 2: >50K for annual income.
 The column \code{"sex"} is set as protected attribute.
 }
+\section{Derived tasks}{
+
+\itemize{
+\item \code{adult_train}: Original train split for the adult task available at UCI.
+\item \code{adult_test}: Original test split for the adult task available at UCI.
+}
+}
+
 \section{Using Adult - Known Problems}{
 
 The adult dataset has several known limitations such as its age, limited documentation, and outdated feature encodings (Ding et al., 2021).
