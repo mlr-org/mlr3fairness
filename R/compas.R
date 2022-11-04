@@ -18,7 +18,7 @@
 #' * Collected data and labels suffer from disparate measurement bias.
 #'
 #' For a more in-depth treatment, see Bao et al., 2021.
-#' We replicate the dataset here because known problems with COMPAS manifest to raise awareness for such issues.
+#' We replicate the dataset here to raise awareness for this issue.
 #' Furthermore, similar issues exist across a wide variety of datasets widely used in the context of fairness auditing
 #' and we therefore consider issues, e.g. derived from disparate measurement bias an important issue in the context of fairness audits.
 #'
