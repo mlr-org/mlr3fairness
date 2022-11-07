@@ -1,7 +1,7 @@
 to_factor = function(dataset) {
   dataset$workclass = as.factor(dataset$workclass)
   dataset$education = as.factor(dataset$education)
-  dataset$martial_status = as.factor(dataset$martial_status)
+  dataset$marital_status = as.factor(dataset$marital_status)
   dataset$occupation = as.factor(dataset$occupation)
   dataset$relationship = as.factor(dataset$relationship)
   dataset$race = as.factor(dataset$race)
