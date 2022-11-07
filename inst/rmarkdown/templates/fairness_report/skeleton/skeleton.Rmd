@@ -54,8 +54,8 @@ task_summary(task) %>%
 We also report the number of missing values, types and the levels for each feature:
 
 ```{r}
-df_summary = data.frame(task$col_info)[task$col_info$id != "..row_id",
-                                       !(names(task$col_info) %in% c("id", "label", "fix_factor_levels"))]
+df_summary = data.frame(task$col_info)
+df_summary = df_summary[df_summary$id %in% c(task$feature_names, task$target_names), ]
 df_summary %>%
   cbind(data.frame("Missings (%)" = task$missings() / task$nrow)) %>%
   kbl() %>%
@@ -130,11 +130,11 @@ imp <- FeatureImp$new(model, loss = "ce")
 plot(imp)
 ```
 
-Or generate the feature effects plot using the following code:
+Or generate the feature effects plot:
 
 ```{r, warning = FALSE}
-effect = FeatureEffects$new(model, method = "pdp")
-effect$plot(features = c("age", "c_charge_degree"))
+effect = FeatureEffects$new(model, method = "pdp", grid.size = 10)
+effect$plot(features = c("age", "marital_status"))
 ```
 
-For more details on interpretability, you might want to check the documentation of the `iml` package.
+For more details on interpretability, check the documentation of the `iml` package.
