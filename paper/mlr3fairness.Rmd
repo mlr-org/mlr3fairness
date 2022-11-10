@@ -178,7 +178,7 @@ It is important to note that in practice, we might not be able to perfectly sati
 Instead, to provide a binary conclusion regarding fairness, a model could be considered fair if $|\Delta_{\mathrm{TPR}}| < \epsilon$ for a given threshold $\epsilon > 0$, e.g., $\epsilon = 0.05$.
 This allows for small deviations from perfect fairness due to variance in the estimation of $\mathrm{TPR}_{A=\star}$ or additional sources of bias.
 However, choosing appropriate thresholds is difficult, and widely used values for $\epsilon$ such as $0.05$ are arbitrary and do not translate to legal doctrines, such as, e.g., disparate impact [@chen22].
-A more in-depth treatment of metrics are described in @saleiro2018aequitas, @kim2020fact, @mehrabi, and @wachter-vlr2020.
+A more in-depth treatment of metrics is given in (@fairmlbook, @saleiro2018aequitas, @kim2020fact, @mehrabi, and @wachter-vlr2020).
 
 
 #### Selecting fairness metrics
@@ -228,7 +228,7 @@ The notion of *individual fairness* was proposed by @dwork2012.
 Its core idea comes from the principle of *treating similar cases similarly and different cases differently*.
 In contrast to statistical group fairness notions, this notion allows assessing *fairness* at an individual level and
 would therefore allow determining, whether an individual is treated fairly.
-A more in-depth treatment of individual fairness notions is given by @binns2020apparent and @heidari2019.
+A more in-depth treatment of individual fairness notions is given by @binns2020apparent.
 Similarly, a variety of *causal* fairness notions exist (@kilbertus2017avoiding).
 They argue that assessing fairness requires incorporating causal relationships in the data.
 
