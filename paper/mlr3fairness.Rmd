@@ -1,5 +1,5 @@
 ---
-title: Fairness Audits And Debiasing Using mlr3fairness
+title: Fairness Audits and Debiasing Using mlr3fairness
 abstract: >
   Given an increase in data-driven automated decision-making based on machine learning models, it is
   imperative that along with tools to develop and improve such models there are sufficient capabilities
