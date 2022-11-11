@@ -261,7 +261,7 @@ The result of the optimization is the *Pareto-set*: A list of models which optim
 If biases are detected in a model, we might now be interested in improving models in order to potentially mitigate such biases.
 Bias in models might arise from a variety of sources, so a careful understanding of the data, data quality and distribution might lead to approaches that can help in decreasing biases, e.g. through the collection of better or additional data or a better balancing of protected groups.
 Similarly, biases might arise from the model, e.g., through under- or overfitting and more careful tuning of model hyperparameters might help with improving fairness.
-Especially if the goal is to satisfy *bias-transforming* metrics, a better solution might often be to address fairness problems in the real world instead of relying on algorithmic interventions to solve fairness. This might lead to more robust, long-term solutions instead of temporary addressing issues via algorithmic interventions.
+Especially if the goal is to satisfy *bias-transforming* metrics, a better solution might often be to address fairness problems in the real world instead of relying on algorithmic interventions to solve fairness. This might lead to more robust, long-term solutions instead of temporarily addressing issues via algorithmic interventions.
 In addition, a variety of algorithmic **debiasing techniques**, that might help with obtaining fairer models have been proposed.
 Their goal is to reduce measured gaps in fairness, either via data pre-processing, employing models that incorporate fairness or by applying post-processing techniques to a model's predictions.
 Popular examples of such techniques include computing instance weights before training [@kamiran2012data], where each observation is weighted proportional to the inverse frequency of its label and protected attribute.
@@ -292,7 +292,7 @@ It tightly integrates with \CRANpkg{DALEX} [@dalex] to gain further insight usin
 
 Outside R, in Python, the \pkg{fairlearn} module [@fairlearn] provides ample functionality to study a wide variety of metrics, debias with respect to a variety of pre-, in- and postprocessing methods as well as to visualize differences.
 It furthermore provides a *fairlearn dashboard* providing a comprehensive fairness report.
-The \pkg{aif360} [@aif360]  module similarly provides metrics as well as debiasing techniques while the \pkg{aequitas} fairness toolkit [@saleiro2018aequitas] provides similar capabilities.
+The \pkg{aif360} [@aif360] module similarly provides metrics as well as debiasing techniques while the \pkg{aequitas} fairness toolkit [@saleiro2018aequitas] provides similar capabilities.
 Interoperability with the \pkg{scikit-learn} [@sklearn] ML framework allows for debiasing a wide variety of ML models in all aforementioned systems.
 Similar capabilities are also available in Julia's \pkg{Fairness.jl} [@fairnessjl] library.
 

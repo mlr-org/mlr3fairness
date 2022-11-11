@@ -16,6 +16,7 @@ A.~Agrawal, F.~Pfisterer, B.~Bischl, J.~Chen, S.~Sood, S.~Shah,
   F.~Buet-Golfouse, B.~A. Mateen, and S.~Vollmer.
 \newblock Debiasing classifiers: is reality at variance with expectation?,
   2020{\natexlab{b}}.
+\newblock arXiv:2011.02407.
 
 \bibitem[Aivodji et~al.(2019)Aivodji, Arai, Fortineau, Gambs, Hara, and
   Tapp]{fairwashing}
@@ -55,15 +56,14 @@ M.~Becker, M.~Binder, N.~Foss, L.~Kotthoff, M.~Lang, F.~Pfisterer, N.~G. Reich,
 \newblock mlr3book, 09 2022.
 \newblock URL \url{https://mlr3book.mlr-org.com}.
 
-\bibitem[Bellamy et~al.(2018)Bellamy, Dey, Hind, Hoffman, Houde, Kannan, Lohia,
-  Martino, Mehta, Mojsilovic, Nagar, Ramamurthy, Richards, Saha, Sattigeri,
-  Singh, Varshney, and Zhang]{aif360}
-R.~K.~E. Bellamy, K.~Dey, M.~Hind, S.~C. Hoffman, S.~Houde, K.~Kannan,
-  P.~Lohia, J.~Martino, S.~Mehta, A.~Mojsilovic, S.~Nagar, K.~N. Ramamurthy,
-  J.~Richards, D.~Saha, P.~Sattigeri, M.~Singh, K.~R. Varshney, and Y.~Zhang.
-\newblock {AI Fairness} 360: An extensible toolkit for detecting,
-  understanding, and mitigating unwanted algorithmic bias, Oct. 2018.
-\newblock URL \url{https://arxiv.org/abs/1810.01943}.
+\bibitem[Bellamy et~al.(2019)Bellamy, Dey, Hind, Hoffman, Houde, Kannan, Lohia,
+  Martino, Mehta, Mojsilovi{\'c}, et~al.]{aif360}
+R.~K. Bellamy, K.~Dey, M.~Hind, S.~C. Hoffman, S.~Houde, K.~Kannan, P.~Lohia,
+  J.~Martino, S.~Mehta, A.~Mojsilovi{\'c}, et~al.
+\newblock {AI Fairness 360}: An extensible toolkit for detecting and mitigating
+  algorithmic bias.
+\newblock \emph{IBM Journal of Research and Development}, 63\penalty0
+  (4/5):\penalty0 4--1, 2019.
 
 \bibitem[Berk et~al.(2018)Berk, Heidari, Jabbari, Kearns, and
   Roth]{richardcompas}
@@ -74,7 +74,7 @@ R.~Berk, H.~Heidari, S.~Jabbari, M.~Kearns, and A.~Roth.
 
 \bibitem[Biecek(2018)]{dalex}
 P.~Biecek.
-\newblock Dalex: Explainers for complex predictive models in r.
+\newblock {DALEX}: Explainers for complex predictive models in{R}.
 \newblock \emph{Journal of Machine Learning Research}, 19\penalty0
   (84):\penalty0 1--5, 2018.
 \newblock URL \url{https://jmlr.org/papers/v19/18-416.html}.
@@ -90,8 +90,8 @@ M.~Binder, F.~Pfisterer, M.~Lang, L.~Schneider, L.~Kotthoff, and B.~Bischl.
 \bibitem[Binns(2020)]{binns2020apparent}
 R.~Binns.
 \newblock On the apparent conflict between individual and group fairness.
-\newblock In \emph{Proceedings of the 2020 conference on fairness,
-  accountability, and transparency}, pages 514--524, 2020.
+\newblock In \emph{Proceedings of the 2020 Conference on Fairness,
+  Accountability, and Transparency}, FAT* '20, pages 514--524, 2020.
 
 \bibitem[Bird et~al.(2020)Bird, Dud{\'i}k, Edgar, Horn, Lutz, Milan, Sameki,
   Wallach, and Walker]{fairlearn}
@@ -107,14 +107,14 @@ S.~Bird, M.~Dud{\'i}k, R.~Edgar, B.~Horn, R.~Lutz, V.~Milan, M.~Sameki,
 B.~Bischl, O.~Mersmann, H.~Trautmann, and C.~Weihs.
 \newblock Resampling methods for meta-model validation with recommendations for
   evolutionary computation.
-\newblock \emph{Evolutionary computation}, 20\penalty0 (2):\penalty0 249--275,
+\newblock \emph{Evolutionary Computation}, 20\penalty0 (2):\penalty0 249--275,
   2012.
 
 \bibitem[Bischl et~al.(2016)Bischl, Lang, Kotthoff, Schiffner, Richter,
   Studerus, Casalicchio, and Jones]{mlr}
 B.~Bischl, M.~Lang, L.~Kotthoff, J.~Schiffner, J.~Richter, E.~Studerus,
   G.~Casalicchio, and Z.~M. Jones.
-\newblock mlr: Machine learning in r.
+\newblock mlr: Machine learning in {R}.
 \newblock \emph{Journal of Machine Learning Research}, 17\penalty0
   (170):\penalty0 1--5, 2016.
 \newblock URL \url{https://jmlr.org/papers/v17/15-066.html}.
@@ -123,7 +123,7 @@ B.~Bischl, M.~Lang, L.~Kotthoff, J.~Schiffner, J.~Richter, E.~Studerus,
 J.~Buolamwini and T.~Gebru.
 \newblock Gender shades: Intersectional accuracy disparities in commercial
   gender classification.
-\newblock In \emph{Conference on fairness, accountability and transparency},
+\newblock In \emph{Conference on Fairness, Accountability, and Transparency},
   pages 77--91. PMLR, 2018.
 
 \bibitem[Calders and Verwer(2010)]{Calders2010}
@@ -185,8 +185,8 @@ D.~Dua and C.~Graff.
   Zemel]{dwork2012}
 C.~Dwork, M.~Hardt, T.~Pitassi, O.~Reingold, and R.~Zemel.
 \newblock Fairness through awareness.
-\newblock In \emph{Proceedings of the 3rd innovations in theoretical computer
-  science conference}, pages 214--226, 2012.
+\newblock In \emph{Proceedings of the 3rd Innovations in Theoretical Computer
+  Science Conference}, pages 214--226, 2012.
 
 \bibitem[Eubanks(2018)]{eubanks2018automating}
 V.~Eubanks.
@@ -233,7 +233,7 @@ F.~Kamiran and T.~Calders.
 N.~Kilbertus, M.~Rojas~Carulla, G.~Parascandolo, M.~Hardt, D.~Janzing, and
   B.~Sch{\"o}lkopf.
 \newblock Avoiding discrimination through causal reasoning.
-\newblock \emph{Advances in neural information processing systems}, 30, 2017.
+\newblock \emph{Advances in Neural Information Processing Systems}, 30, 2017.
 
 \bibitem[Kim et~al.(2020)Kim, Chen, and Talwalkar]{kim2020fact}
 J.~S. Kim, J.~Chen, and A.~Talwalkar.
@@ -309,13 +309,13 @@ S.~Mitchell, E.~Potash, S.~Barocas, A.~D'Amour, and K.~Lum.
 
 \bibitem[Noble(2018)]{noble2018algorithms}
 S.~U. Noble.
-\newblock \emph{Algorithms of oppression}.
+\newblock \emph{Algorithms of Oppression}.
 \newblock New York University Press, 2018.
 
 \bibitem[O'neil(2016)]{o2016weapons}
 C.~O'neil.
-\newblock \emph{Weapons of math destruction: How big data increases inequality
-  and threatens democracy}.
+\newblock \emph{Weapons of Math Destruction: How Big Data Increases Inequality
+  and Threatens Democracy}.
 \newblock Crown, 2016.
 
 \bibitem[Pedregosa et~al.(2011)Pedregosa, Varoquaux, Gramfort, Michel, Thirion,
@@ -323,21 +323,21 @@ C.~O'neil.
 F.~Pedregosa, G.~Varoquaux, A.~Gramfort, V.~Michel, B.~Thirion, O.~Grisel,
   M.~Blondel, P.~Prettenhofer, R.~Weiss, V.~Dubourg, et~al.
 \newblock Scikit-learn: Machine learning in python.
-\newblock \emph{the Journal of Machine Learning Research}, 12:\penalty0
-  2825--2830, 2011.
+\newblock \emph{Journal of Machine Learning Research}, 12:\penalty0 2825--2830,
+  2011.
 
 \bibitem[Perrone et~al.(2021)Perrone, Donini, Zafar, Schmucker, Kenthapadi, and
   Archambeau]{perrone2021fair}
 V.~Perrone, M.~Donini, M.~B. Zafar, R.~Schmucker, K.~Kenthapadi, and
   C.~Archambeau.
-\newblock Fair bayesian optimization.
+\newblock {Fair Bayesian Optimization}.
 \newblock In \emph{Proceedings of the 2021 AAAI/ACM Conference on AI, Ethics,
   and Society}, pages 854--863, 2021.
 
 \bibitem[Pfisterer et~al.(2021)Pfisterer, Kern, Dandl, Sun, Kim, and
   Bischl]{mcboost}
 F.~Pfisterer, C.~Kern, S.~Dandl, M.~Sun, M.~P. Kim, and B.~Bischl.
-\newblock mcboost: Multi-calibration boosting for r.
+\newblock mcboost: Multi-calibration boosting for {R}.
 \newblock \emph{Journal of Open Source Software}, 6\penalty0 (64):\penalty0
   3453, 2021.
 \newblock \doi{10.21105/joss.03453}.
