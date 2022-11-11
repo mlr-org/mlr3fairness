@@ -309,7 +309,7 @@ In the context of fairness, the following extension packages deserve special men
   It furthermore integrates with \CRANpkg{mcboost} [@mcboost], which implements additional debiasing methods.
   We present an example in the supplementary material.
 * \CRANpkg{mlr3tuning} for its extensive tuning capabilities.
-* \CRANpkg{mlr3proba} [@mlr3proba] for survival analysis.
+* \pkg{mlr3proba} [@mlr3proba] for survival analysis.
 * \CRANpkg{mlr3benchmark} for post-hoc analysis of benchmarked approaches.
 * \CRANpkg{mlr3oml} as a connector to OpenML [@Vanschoren2014], an online scientific platform for collaborative ML.
 
@@ -499,7 +499,7 @@ p2 = compare_metrics(prediction, msrs(c("fairness.fpr", "fairness.tpr", "fairnes
 
 As mentioned above, several ways to improve a model's fairness exist.
 While non-technical interventions, such as e.g. collecting more data should be preferred,
-\CRANpkg{mlr3fairnes} provides several debiasing techniques that can be used together with a `Learner` to obtain fairer models.
+\CRANpkg{mlr3fairness} provides several debiasing techniques that can be used together with a `Learner` to obtain fairer models.
 Table \ref{tab:debiasing} provides an overview of implemented debiasing techniques.
 They are implemented as `PipeOps` from the \CRANpkg{mlr3pipelines} package and can be
 combined with arbitrary learners to build a pipeline.
