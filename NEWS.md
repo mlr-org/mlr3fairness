@@ -1,6 +1,8 @@
 # mlr3fairness 0.3.1-9000
+* The `Task` printer now prints the protected attribute.
 * `fairness_ tensor` has a new argument `normalize` that controls normalization.
   Possible values are `"all"` (global) `"group"` (by group) and `"none"` (no normalization).
+
 
 # mlr3fairness 0.3.1
 

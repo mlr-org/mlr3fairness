@@ -23,7 +23,7 @@
   # teach mlr3 about the new column role "pta" (protected attribute)
   x = getFromNamespace("mlr_reflections", ns = "mlr3")
   x$task_col_roles = map(x$task_col_roles, function(cr) union(cr, "pta"))
-  x$task_print_col_roles$after = union(x$task_print_col_roles$after, c("PTA" = "pta"))
+  x$task_print_col_roles$after = c(x$task_print_col_roles$after, c("Protected attribute" = "pta"))
 
   # register pipeop tag fairness
   x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")

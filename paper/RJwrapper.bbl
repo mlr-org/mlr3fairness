@@ -221,17 +221,6 @@ M.~Hardt, E.~Price, and N.~Srebro.
 \newblock \emph{Advances in neural information processing systems},
   29:\penalty0 3315--3323, 2016.
 
-\bibitem[Heidari et~al.(2019)Heidari, Loi, Gummadi, and Krause]{heidari2019}
-H.~Heidari, M.~Loi, K.~P. Gummadi, and A.~Krause.
-\newblock A moral framework for understanding fair ml through economic models
-  of equality of opportunity.
-\newblock In \emph{Proceedings of the Conference on Fairness, Accountability,
-  and Transparency}, FAT* '19, page 181–190, New York, NY, USA, 2019.
-  Association for Computing Machinery.
-\newblock ISBN 9781450361255.
-\newblock \doi{10.1145/3287560.3287584}.
-\newblock URL \url{https://doi.org/10.1145/3287560.3287584}.
-
 \bibitem[Kamiran and Calders(2012)]{kamiran2012data}
 F.~Kamiran and T.~Calders.
 \newblock Data preprocessing techniques for classification without
@@ -263,6 +252,13 @@ N.~Kozodoi and T.~{V. Varga}.
 \newblock \emph{fairness: Algorithmic Fairness Metrics}, 2021.
 \newblock URL \url{https://CRAN.R-project.org/package=fairness}.
 \newblock R package version 1.2.1.
+
+\bibitem[Kozodoi et~al.(2022)Kozodoi, Jacob, and Lessmann]{kozodoi2022fairness}
+N.~Kozodoi, J.~Jacob, and S.~Lessmann.
+\newblock Fairness in credit scoring: Assessment, implementation and profit
+  implications.
+\newblock \emph{European Journal of Operational Research}, 297\penalty0
+  (3):\penalty0 1083--1094, 2022.
 
 \bibitem[Kuhn(2021)]{caret}
 M.~Kuhn.
