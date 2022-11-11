@@ -1,5 +1,13 @@
 ---
 title: Fairness Audits And Debiasing Using mlr3fairness
+abstract: >
+  Given an increase in data-driven automated decision-making based on machine learning models, it is
+  imperative that along with tools to develop and improve such models there are sufficient capabilities
+  to analyze and assess models with respect to potential biases. We present the package \CRANpkg{mlr3fairness},
+  a collection of metrics and methods that allow for the assessment of bias in machine learning models.
+  Our package implements a variety of widely used fairness metrics that can be used to audit models for potential biases along with a set of visualizations that can help to provide additional insights into such biases. \CRANpkg{mlr3fairness} furthermore integrates debiasing methods that can help alleviate biases in Machine Learning (ML) models through data preprocessing or post-processing of predictions. These allow practitioners to trade off performance and fairness metric that are appropriate for their use case.
+date: "2022-11-09"
+draft: true
 author:
   - name: Florian Pfisterer
     orcid: 0000-0001-8867-762X
@@ -24,22 +32,10 @@ author:
     orcid: 0000-0001-6002-6980
     affiliation: LMU Munich
     affiliation2: Munich Center for Machine Learning
-
-
-abstract: >
-  Given an increase in data-driven automated decision-making based on machine learning models, it is
-  imperative that along with tools to develop and improve such models there are sufficient capabilities
-  to analyze and assess models with respect to potential biases. We present the package \CRANpkg{mlr3fairness},
-  a collection of metrics and methods that allow for the assessment of bias in machine learning models.
-  Our package implements a variety of widely used fairness metrics that can be used to audit models for potential biases along with a set of visualizations that can help to provide additional insights into such biases. \CRANpkg{mlr3fairness} furthermore integrates debiasing methods that can help alleviate biases in Machine Learning (ML) models through data preprocessing or post-processing of predictions. These allow practitioners to trade off performance and fairness metric that are appropriate for their use case.
 preamble: |
   \usepackage{longtable}
   \usepackage{bbm}
-
-# per R journal requirement, the bib filename should be the same as the output
-# tex file. Don't forget to rename the bib file and change this example value.
 bibliography: mlr3fairness.bib
-
 output: rticles::rjournal_article
 ---
 
@@ -211,7 +207,7 @@ Therefore, selecting the correct fairness metric requires a thorough understandi
 To provide an example, in some cases discrepancies in positive predictions might be justified or even desired, as they, e.g., allow for a more nuanced, gender-specific diagnosis [@cirillo2020sex].
 Furthermore, fairness metrics might not detect biases in more fine-grained subgroups, e.g., at the intersection of multiple protected attributes.
 It is also important to note that fairness metrics merely provide a reduction of the aforementioned fairness notions into mathematical objectives.
-As such, they require a variety of abstraction steps that might invalidate the metric [@chen22], as they, e.g., require that the data is a large enough and a representative sample of the entire population that we aim to investigate.
+As such, they require a variety of abstraction steps that might invalidate the metric [@chen22], as they, e.g., require that the data is a large enough and representative sample of the entire population that we aim to investigate.
 Furthermore, practitioners need to look beyond the model, and also at the data used for training and the process of data and label acquisition.
 If the data for example exhibit disparate measurement errors in the features or labels, valid fairness assessments can become impossible.
 Similarly, feedback loops might arise from a prediction leading to changes in the data collected in the future.
@@ -407,7 +403,7 @@ library(mlr3viz)
 autoplot(bmr, measure = measure)
 ```
 
-```{r bmrbox, echo = FALSE, warning = FALSE, fig.height = 3.5, fig.width = 3.5, fig.cap = "Model comparison for decision trees (rpart) and logistic regression (log\\_reg).", fig.align = 'center'}
+```{r bmrbox, echo = FALSE, warning = FALSE, fig.height = 3.5, fig.width = 3.5, fig.cap = "Model comparison based on accuracy for decision trees (rpart) and logistic regression (log\\_reg) across resampling splits.", fig.align = 'center'}
 library(mlr3viz)
 autoplot(bmr, measure = measure) +
   theme(
@@ -491,7 +487,7 @@ fairness_prediction_density(prediction, task)
 compare_metrics(prediction, msrs(c("fairness.fpr", "fairness.tpr", "fairness.eod")), task)
 ```
 
-```{r predplots, echo = FALSE, fig.height=3, fig.width=6, fig.align='center', fig.cap = "Left: Prediction densities for the negative class for races Caucasian and African-American. Right: Fairness metrics comparison for FPR, TPR, EOd fairness metrics."}
+```{r predplots, echo = FALSE, fig.height=3, fig.width=6, fig.align='center', fig.cap = "Visualizing predictions of the decision tree model. Left: Prediction densities for the negative class for races Caucasian and African-American. Right: Fairness metrics comparison for FPR, TPR, EOd metrics."}
 library(patchwork)
 p1 = fairness_prediction_density(prediction, task) + theme(legend.position="bottom")
 p2 = compare_metrics(prediction, msrs(c("fairness.fpr", "fairness.tpr", "fairness.eod")), task)
