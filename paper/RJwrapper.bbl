@@ -1,4 +1,4 @@
-\begin{thebibliography}{62}
+\begin{thebibliography}{61}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -68,13 +68,14 @@ R.~K. Bellamy, K.~Dey, M.~Hind, S.~C. Hoffman, S.~Houde, K.~Kannan, P.~Lohia,
 \bibitem[Berk et~al.(2018)Berk, Heidari, Jabbari, Kearns, and
   Roth]{richardcompas}
 R.~Berk, H.~Heidari, S.~Jabbari, M.~Kearns, and A.~Roth.
-\newblock Fairness in criminal justice risk assessments: The state of the art.
+\newblock {Fairness in Criminal Justice Risk Assessments: The State of the
+  Art}.
 \newblock \emph{Sociological Methods \& Research}, Aug. 2018.
 \newblock \doi{10.1177/0049124118782533}.
 
 \bibitem[Biecek(2018)]{dalex}
 P.~Biecek.
-\newblock {DALEX}: Explainers for complex predictive models in{R}.
+\newblock {DALEX}: {Explainers for Complex Predictive Models} in {R}.
 \newblock \emph{Journal of Machine Learning Research}, 19\penalty0
   (84):\penalty0 1--5, 2018.
 \newblock URL \url{https://jmlr.org/papers/v19/18-416.html}.
@@ -121,14 +122,15 @@ B.~Bischl, M.~Lang, L.~Kotthoff, J.~Schiffner, J.~Richter, E.~Studerus,
 
 \bibitem[Buolamwini and Gebru(2018)]{gendershades}
 J.~Buolamwini and T.~Gebru.
-\newblock Gender shades: Intersectional accuracy disparities in commercial
-  gender classification.
+\newblock {Gender shades: Intersectional accuracy disparities in commercial
+  gender classification}.
 \newblock In \emph{Conference on Fairness, Accountability, and Transparency},
   pages 77--91. PMLR, 2018.
 
 \bibitem[Calders and Verwer(2010)]{Calders2010}
 T.~Calders and S.~Verwer.
-\newblock Three naive bayes approaches for discrimination-free classification.
+\newblock {Three naive Bayes approaches for discrimination-free
+  classification}.
 \newblock \emph{Data Mining and Knowledge Discovery}, 21\penalty0 (2):\penalty0
   277--292, 2010.
 \newblock \doi{10.1007/s10618-010-0190-x}.
@@ -303,7 +305,7 @@ M.~Mitchell, S.~Wu, A.~Zaldivar, P.~Barnes, L.~Vasserman, B.~Hutchinson,
 \bibitem[Mitchell et~al.(2021)Mitchell, Potash, Barocas, D'Amour, and
   Lum]{mitchell2021algorithmic}
 S.~Mitchell, E.~Potash, S.~Barocas, A.~D'Amour, and K.~Lum.
-\newblock Algorithmic fairness: Choices, assumptions, and definitions.
+\newblock {Algorithmic fairness: Choices, assumptions, and definitions}.
 \newblock \emph{Annual Review of Statistics and Its Application}, 8:\penalty0
   141--163, 2021.
 
@@ -349,13 +351,6 @@ E.~Polley, E.~LeDell, C.~Kennedy, and M.~{van der Laan}.
 \newblock \emph{SuperLearner: Super Learner Prediction}, 2021.
 \newblock URL \url{https://CRAN.R-project.org/package=SuperLearner}.
 \newblock R package version 2.0-28.
-
-\bibitem[{R Core Team}(2021)]{R}
-{R Core Team}.
-\newblock \emph{R: A Language and Environment for Statistical Computing}.
-\newblock R Foundation for Statistical Computing, Vienna, Austria, 2021.
-\newblock URL \url{http://www.R-project.org/}.
-\newblock {ISBN} 3-900051-07-0.
 
 \bibitem[Saleiro et~al.(2018)Saleiro, Kuester, Hinkson, London, Stevens,
   Anisfeld, Rodolfa, and Ghani]{saleiro2018aequitas}
@@ -450,7 +445,7 @@ Y.~Xie, C.~Dervieux, and E.~Riederer.
 \bibitem[Zafar et~al.(2017)Zafar, Valera, {Gomez Rodriguez}, and
   Gummadi]{Zafar2017}
 M.~B. Zafar, I.~Valera, M.~{Gomez Rodriguez}, and K.~P. Gummadi.
-\newblock Fairness beyond disparate treatment {\&} disparate impact.
+\newblock {Fairness beyond Disparate treatment {\&} Disparate Impact}.
 \newblock In \emph{Proceedings of the 26th International Conference on World
   Wide Web}, pages 1171--1180, Geneva, Switzerland, Apr. 2017. International
   World Wide Web Conferences Steering Committee.

@@ -1,5 +1,5 @@
 ---
-title: Fairness Audits and Debiasing Using mlr3fairness
+title: Fairness Audits and Debiasing Using \pkg{mlr3fairness}
 abstract: >
   Given an increase in data-driven automated decision-making based on machine learning models, it is
   imperative that along with tools to develop and improve such models there are sufficient capabilities
@@ -13,25 +13,33 @@ author:
     orcid: 0000-0001-8867-762X
     email:  florian.pfisterer@stat.uni-muenchen.de
     affiliation: LMU Munich
+    address: Munich, Germany
     affiliation2: Munich Center for Machine Learning
+    address2: Munich, Germany
   - name: Siyi Wei
     email: weisiyi2@gmail.com
     affiliation: University of Toronto
+    address: Toronto, Canada
   - name: Sebastian Vollmer
     email: svollmer@stat.uni-muenchen.de
     affiliation: DFKI
+    address: Kaiserslautern, Germany
     affiliation2: University of Kaiserslautern
-    affiliation3: Univeristy of Warwick
+    address2: Kaiserslautern, Germany
   - name: Michel Lang
     email: michel.lang@stat.uni-muenchen.de
     orcid: 0000-0001-9754-0393
     affiliation: Research Center Trustworthy Data Science and Security
+    address: Dortmund, Germany
     affiliation2: TU Dortmund University
+    address2: Dortmund, Germany
   - name: Bernd Bischl
     email: bernd.bischl@stat.uni-muenchen.de
     orcid: 0000-0001-6002-6980
     affiliation: LMU Munich
+    address: Munich, Germany
     affiliation2: Munich Center for Machine Learning
+    address2: Munich, Germany
 preamble: |
   \usepackage{longtable}
   \usepackage{bbm}
@@ -60,7 +68,7 @@ Humans are increasingly subject to data-driven automated decision-making.
 Those automated procedures such as credit risk assessments are often applied using predictive models [@kozodoi2022fairness, @galindo2000credit].
 It is imperative that, along with tools to develop and improve such models, we also develop sufficient capabilities to analyze and assess models not only with respect to their robustness and predictive performance but also with respect to potential biases.
 This is highlighted by the General Data Protection Regulation (GDPR) which requires data to be processed fairly.
-Popular R [@R] modelling frameworks such as \CRANpkg{caret} [@caret], \CRANpkg{tidymodels} [@tidymodels], \CRANpkg{SuperLearner} [@superlearner], or \CRANpkg{mlr} [@mlr] implement a plethora of metrics to measure performance, but fairness metrics are widely missing.
+Popular R modelling frameworks such as \CRANpkg{caret} [@caret], \CRANpkg{tidymodels} [@tidymodels], \CRANpkg{SuperLearner} [@superlearner], or \CRANpkg{mlr} [@mlr] implement a plethora of metrics to measure performance, but fairness metrics are widely missing.
 This lack of availability can be detrimental to obtaining fair and unbiased models if the result is to forgo bias audits due to the considerable complexity of implementing such metrics.
 Consequently, there exists a considerable necessity for R packages to (a) implement such metrics, and (b) to connect these metrics to existing ML frameworks.
 If biases are detected and need to be mitigated, we might furthermore want to employ debiasing techniques that tightly integrate with the fitting and evaluation of the resulting models in order to obtain trade-offs between a model's fairness and utility (e.g., predictive accuracy).
@@ -276,7 +284,7 @@ Furthermore, we want to caution against favouring bias-mitigation techniques ove
 A different set of risks is posed by *fairwashing* [@fairwashing], i.e., finding fair explanations or satisfying fairness metrics for otherwise unfair models.
 If biases are only addressed at a given moment and without regard for downstream effects, they might simultaneously lead to a decrease in predictive performance in the near term and to negative consequences for the protected group in the long term [@schwobel-facct22a].
 
-# mlr3fairness {#main}
+# The \pkg{mlr3fairness} package {#main}
 
 In this section, we first give an overview of related software.
 Next, we give a very briefly introduce to the \CRANpkg{mlr3} ecosystem of packages.
