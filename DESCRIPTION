@@ -56,6 +56,7 @@ Suggests:
     posterdown,
     kableExtra,
     fairml,
+    rlang,
     iml
 RoxygenNote: 7.2.1
 Config/testthat/edition: 3
