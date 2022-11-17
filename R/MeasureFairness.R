@@ -19,6 +19,7 @@
 #' @seealso [MeasureFairnessComposite]
 #' @export
 #' @examples
+#' library("mlr3")
 #' # Create MeasureFairness to measure the Predictive Parity.
 #' t = tsk("adult_train")
 #' learner = lrn("classif.rpart", cp = .01)

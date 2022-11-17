@@ -14,18 +14,18 @@
 #' @keywords internal
 "_PACKAGE"
 
-.onLoad = function(libname, pkgname) { # nolint
-  # register tasks
-  x = getFromNamespace("mlr_tasks", ns = "mlr3") # nocov start
-  x$add("adult_train", get_adult_task_train)
-  x$add("adult_test", get_adult_task_test)
-  x$add("compas", get_compas_task)
-  x$add("compas_race_binary", get_compas_task_race_binary)
-
+register_mlr3 = function() {
   # teach mlr3 about the new column role "pta" (protected attribute)
   x = getFromNamespace("mlr_reflections", ns = "mlr3")
   x$task_col_roles = map(x$task_col_roles, function(cr) union(cr, "pta"))
   x$task_print_col_roles$after = c(x$task_print_col_roles$after, c("Protected attribute" = "pta"))
+
+    # register tasks
+  x = getFromNamespace("mlr_tasks", ns = "mlr3")
+  x$add("adult_train", get_adult_task_train)
+  x$add("adult_test", get_adult_task_test)
+  x$add("compas", get_compas_task)
+  x$add("compas_race_binary", get_compas_task_race_binary)
 
   # register pipeop tag fairness
   x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
@@ -78,10 +78,24 @@
   x$add("regr.fairfrrm", LearnerRegrFairfrrm)
   x$add("classif.fairfgrrm", LearnerClassifFairfgrrm)
   x$add("regr.fairnclm", LearnerRegrFairnclm)
-
-  # static code checks should not complain about commonly used data.table columns
-  utils::globalVariables(c("variable", "value", "learner_id", "n_tgt", "n_pta", "pta", "task_id",
-    "pta_cols", "wt", "N", "agg", "row_ids", "id", ".")) # nocov end
 }
 
+.onLoad = function(libname, pkgname) { # nolint
+  # nocov start
+  register_mlr3()
+  setHook(packageEvent("mlr3", "onLoad"), function(...) register_mlr3(), action = "append")
+  backports::import(pkgname)
+}
+
+.onUnload = function(libpath) { # nocov start
+   event = packageEvent("mlr3", "onLoad")
+   hooks = getHook(event)
+   pkgname = vapply(hooks[-1], function(x) environment(x)$pkgname, NA_character_)
+   setHook(event, hooks[pkgname != "mlr3fairness"], action = "replace")
+} # nocov end
+
+# static code checks should not complain about commonly used data.table columns
+utils::globalVariables(c("variable", "value", "learner_id", "n_tgt", "n_pta", "pta", "task_id", # nocov start
+  "pta_cols", "wt", "N", "agg", "row_ids", "id", ".")) 
+# nocov end
 mlr3misc::leanify_package()
