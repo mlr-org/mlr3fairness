@@ -66,7 +66,8 @@ fairness_accuracy_tradeoff.PredictionClassif = function(object, fairness_measure
   assert_measure(fairness_measure)
   assert_measure(acc_measure)
   data = as.data.frame(t(object$score(list(acc_measure, fairness_measure), task = task)))
-  ggplot(data, aes_string(x = acc_measure$id, y = fairness_measure$id)) +
+
+  ggplot(data, aes(x = .data[[acc_measure$id]], y = .data[[fairness_measure$id]])) +
     geom_point()
 }
 
@@ -83,9 +84,9 @@ fairness_accuracy_tradeoff.BenchmarkResult = function(object, fairness_measure =
     data = rbind(data, insert_named(tmp, list("aggi" = 0, agg = "replication")), fill = TRUE)
   }
 
+
   ggplot(data,
-    aes_string(x = acc_measure$id, y = fairness_measure$id, colour = "learner_id", size = "aggi",
-      alpha = "aggi", pch = "agg")) +
+    aes(x = .data[[acc_measure$id]], y = .data[[fairness_measure$id]], colour = .data[["learner_id"]], size = .data[["aggi"]], alpha = .data[["aggi"]], pch = .data[["agg"]])) +
     geom_point() +
     scale_alpha(range = c(0.5, 1)) +
     scale_size(range = c(3, 6)) +
