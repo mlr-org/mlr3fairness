@@ -119,6 +119,7 @@ You could generate the variable importance plot like this
 library("iml")
 
 target = task$target_names
+twocols = task$feature_names[1:2]
 learner = resample_result$learner
 learner$train(task)
 
@@ -134,7 +135,7 @@ Or generate the feature effects plot:
 
 ```{r, warning = FALSE}
 effect = FeatureEffects$new(model, method = "pdp", grid.size = 10)
-effect$plot(features = c("age", "marital_status"))
+effect$plot(features = twocols)
 ```
 
 For more details on interpretability, check the documentation of the `iml` package.

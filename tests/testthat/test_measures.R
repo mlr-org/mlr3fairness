@@ -126,7 +126,7 @@ test_that("fairness works on non-binary target", {
   expect_error(prd$score(msr("fairness.acc"), task = task), "role 'pta'", fixed = TRUE)
   task$col_roles$pta = "pta"
   expect_number(prd$score(msr("fairness.acc"), task = task), lower = 0, upper = 1)
-  expect_warning(prd$score(msr("fairness.tpr"), task = task), "is missing properties")
+  suppressWarnings(expect_warning(prd$score(msr("fairness.tpr"), task = task), "is missing properties"))
 })
 
 
@@ -272,7 +272,7 @@ test_that("fairness measures work as expected - simulated data", {
         }
         if (tsk$properties == "multiclass") {
           if ("twoclass" %in% ms$base_measure$task_properties) {
-            expect_warning(prd$score(measures = ms, task = tsk))
+            suppressWarnings(expect_warning(prd$score(measures = ms, task = tsk)))
           } else {
             out = prd$score(measures = ms, task = tsk)
             expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
@@ -282,3 +282,4 @@ test_that("fairness measures work as expected - simulated data", {
     }
   }
 })
+

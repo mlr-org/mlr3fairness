@@ -1,14 +1,16 @@
+#' @import R6
+#' @import data.table
+#' @import checkmate
 #' @import mlr3
 #' @import mlr3misc
-#' @import R6
-#' @import checkmate
-#' @import mlr3pipelines
 #' @import mlr3measures
+#' @import mlr3pipelines
+#' @import mlr3learners
 #' @import ggplot2
 #' @import paradox
-#' @import data.table
 #' @importFrom utils getFromNamespace data
 #' @importFrom stats runif dist predict setNames na.omit
+#' @importFrom rlang .data
 #' @keywords internal
 "_PACKAGE"
 

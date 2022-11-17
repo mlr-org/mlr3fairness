@@ -50,7 +50,7 @@ The dataset should therefore not be used to benchmark new fairness algorithms or
 For a more in-depth treatment, see Bao et al., 2021: It's COMPASlicated: The Messy Relationship between RAI Datasets and Algorithmic Fairness Benchmarks.
 We replicate the dataset here to raise awareness for this issue.
 Furthermore, similar issues exist across a wide variety of datasets widely used in the context of fairness auditing
-and we therefore consider issues, e.g. derived from disparate measurement bias an important issue in the context of fairness audits.
+and we, therefore, consider issues, e.g. derived from disparate measurement bias an important issue in the context of fairness audits.
 }
 
 \section{Pre-processing}{
