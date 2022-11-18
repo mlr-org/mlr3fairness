@@ -15,12 +15,13 @@
 "_PACKAGE"
 
 register_mlr3 = function() {
+  # nocov start
   # teach mlr3 about the new column role "pta" (protected attribute)
   x = getFromNamespace("mlr_reflections", ns = "mlr3")
   x$task_col_roles = map(x$task_col_roles, function(cr) union(cr, "pta"))
   x$task_print_col_roles$after = c(x$task_print_col_roles$after, c("Protected attribute" = "pta"))
 
-    # register tasks
+  # register tasks
   x = getFromNamespace("mlr_tasks", ns = "mlr3")
   x$add("adult_train", get_adult_task_train)
   x$add("adult_test", get_adult_task_test)
@@ -77,16 +78,17 @@ register_mlr3 = function() {
   x$add("regr.fairfrrm", LearnerRegrFairfrrm)
   x$add("classif.fairfgrrm", LearnerClassifFairfgrrm)
   x$add("regr.fairnclm", LearnerRegrFairnclm)
-}
+} # nocov end
 
 .onLoad = function(libname, pkgname) { # nolint
   # nocov start
   register_mlr3()
   setHook(packageEvent("mlr3", "onLoad"), function(...) register_mlr3(), action = "append")
   backports::import(pkgname)
-}
+} # nocov end
 
-.onUnload = function(libpath) { # nocov start
+.onUnload = function(libpath) { # nolint
+  # nocov start
    event = packageEvent("mlr3", "onLoad")
    hooks = getHook(event)
    pkgname = vapply(hooks[-1], function(x) environment(x)$pkgname, NA_character_)
@@ -94,7 +96,8 @@ register_mlr3 = function() {
 } # nocov end
 
 # static code checks should not complain about commonly used data.table columns
-utils::globalVariables(c("variable", "value", "learner_id", "n_tgt", "n_pta", "pta", "task_id", # nocov start
+# nocov start
+utils::globalVariables(c("variable", "value", "learner_id", "n_tgt", "n_pta", "pta", "task_id", 
   "pta_cols", "wt", "N", "agg", "row_ids", "id", ".")) 
 # nocov end
 mlr3misc::leanify_package()
