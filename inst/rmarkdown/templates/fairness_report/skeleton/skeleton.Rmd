@@ -40,7 +40,7 @@ In this fairness report, we investigate the fairness of the following task:
 task
 ```
 
-### The General Task Documentation for the task:
+### Task Documentation:
 
 Here we  the basic details for the task.
 
