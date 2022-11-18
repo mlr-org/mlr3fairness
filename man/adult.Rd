@@ -70,6 +70,7 @@ We decide to replicate the dataset here, as it is a widely used benchmark datase
 }
 
 \examples{
+library("mlr3")
 data("adult_test", package = "mlr3fairness")
 data("adult_train", package = "mlr3fairness")
 }

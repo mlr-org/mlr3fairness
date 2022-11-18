@@ -17,8 +17,8 @@ selected as a predicted attribute.
 }
 
 \examples{
-# Accurcy subject to equalized odds fairness constraint:
-library(mlr3)
+# Accuracy subject to equalized odds fairness constraint:
+library("mlr3")
 t = tsk("adult_train")
 learner = lrn("classif.rpart", cp = .01)
 learner$train(t)

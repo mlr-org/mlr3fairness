@@ -43,6 +43,7 @@ Uses the awesome markdown template created by Chris Garbin
 \href{https://github.com/fau-masters-collected-works-cgarbin/model-card-template}{from Github}.
 }
 \examples{
+  library("mlr3")
   report_file = tempfile()
   task = tsk("compas")
   learner = lrn("classif.rpart", predict_type = "prob")

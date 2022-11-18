@@ -26,5 +26,6 @@ The information includes
 }
 }
 \examples{
-  task_summary(tsk("adult_train"))
+library("mlr3")
+task_summary(tsk("adult_train"))
 }

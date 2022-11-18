@@ -70,6 +70,7 @@ report_modelcard = function(filename = "modelcard.Rmd", edit = FALSE, build = FA
 #' @export
 #' @return Invisibly returns the path to the newly created file(s).
 #' @examples
+#'   library("mlr3")
 #'   report_file = tempfile()
 #'   task = tsk("compas")
 #'   learner = lrn("classif.rpart", predict_type = "prob")

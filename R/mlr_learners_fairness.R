@@ -10,6 +10,7 @@
 #' @export
 #' @return A data.table containing an overview of available fair learners.
 #' @examples
+#' library("mlr3")
 #' # Available learners:
 #' mlr_learners_fairness
 mlr_learners_fairness = rowwise_table(

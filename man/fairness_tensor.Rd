@@ -48,6 +48,7 @@ selected as a predicted attribute.
 }
 
 \examples{
+library("mlr3")
 task = tsk("compas")
 prediction = lrn("classif.rpart")$train(task)$predict(task)
 fairness_tensor(prediction, task = task)

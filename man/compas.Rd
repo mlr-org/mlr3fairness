@@ -102,6 +102,7 @@ tsk("compas_race_binary")
 }
 
 \examples{
+library("mlr3")
 data("compas", package = "mlr3fairness")
 }
 \keyword{data}

@@ -14,6 +14,7 @@
 #' @export
 #' @return A data.table containing an overview of available fairness metrics.
 #' @examples
+#' library("mlr3")
 #' # Predefined measures:
 #' mlr_measures_fairness$key
 mlr_measures_fairness = rowwise_table(

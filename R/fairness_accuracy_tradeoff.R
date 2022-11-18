@@ -35,8 +35,9 @@
 #' @export
 #' @return A 'ggplot2' object.
 #' @examples
-#' library(mlr3learners)
-#' library(ggplot2)
+#' library("mlr3")
+#' library("mlr3learners")
+#' library("ggplot2")
 #'
 #' # Setup the Fairness measure and tasks
 #' task = tsk("adult_train")$filter(1:500)

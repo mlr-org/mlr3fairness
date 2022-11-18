@@ -7,6 +7,7 @@
 #'
 #' @export
 #' @examples
+#' library("mlr3")
 #' # Create Positive Probability Measure
 #' t = tsk("adult_train")
 #' learner = lrn("classif.rpart", cp = .01)

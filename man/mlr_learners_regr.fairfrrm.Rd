@@ -47,6 +47,7 @@ lrn("regr.fairfrrm")
 }
 
 \examples{
+library("mlr3")
 # stop example failing with warning if package not installed
 learner = suppressWarnings(mlr3::lrn("regr.fairfrrm"))
 print(learner)

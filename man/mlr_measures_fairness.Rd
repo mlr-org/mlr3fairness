@@ -49,6 +49,7 @@ fairness.acc_ppv=.05 \tab Accuracy under ppv difference < 0.05 constraint
 }
 
 \examples{
+library("mlr3")
 # Predefined measures:
 mlr_measures_fairness$key
 }

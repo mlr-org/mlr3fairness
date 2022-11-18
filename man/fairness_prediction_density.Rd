@@ -38,7 +38,8 @@ selected as a predicted attribute.
 }
 
 \examples{
-library(mlr3learners)
+library("mlr3")
+library("mlr3learners")
 
 task = tsk("adult_train")$filter(1:500)
 learner = lrn("classif.rpart", predict_type = "prob", cp = 0.001)

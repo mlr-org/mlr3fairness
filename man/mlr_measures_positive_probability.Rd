@@ -9,6 +9,7 @@ Return the probabiliy of a positive prediction, often known as 'Calders-Wevers' 
 This is defined as count of positive predictions divided by the number of observations.
 }
 \examples{
+library("mlr3")
 # Create Positive Probability Measure
 t = tsk("adult_train")
 learner = lrn("classif.rpart", cp = .01)

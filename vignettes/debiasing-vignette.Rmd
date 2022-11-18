@@ -23,9 +23,9 @@ If you are not familiar with [mlr3pipelines](https://github.com/mlr-org/mlr3pipe
 
 We again showcase debiasing using the `adult_train` task:
 ```{r}
+library(mlr3)
 library(mlr3fairness)
 library(mlr3pipelines)
-library(mlr3)
 
 task = tsk("adult_train")
 ```

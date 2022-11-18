@@ -42,7 +42,8 @@
 #' @seealso https://mlr3book.mlr-org.com/list-pipeops.html
 #' @export
 #' @examples
-#' library(mlr3pipelines)
+#' library("mlr3")
+#' library("mlr3pipelines")
 #' epta = po("explicit_pta")
 #' new = epta$train(list(tsk("adult_train")))
 PipeOpExplicitPta = R6Class("PipeOpExplicitPta",

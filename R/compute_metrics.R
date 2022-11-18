@@ -14,6 +14,7 @@
 #' @param metrics (`Metric`|`list`) \cr (List of) mlr3 metrics to apply.
 #' @export
 #' @examples
+#' library("mlr3")
 #' # Get adult data as a data.table
 #' train = tsk("adult_train")$data()
 #' mod = rpart::rpart(target ~ ., train)

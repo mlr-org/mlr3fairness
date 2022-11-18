@@ -28,9 +28,10 @@
 #'     The data task that contains the protected column, only required when object is ([PredictionClassif]).
 #'
 #' @export
-#' @return A 'ggplo2' object.
+#' @return A 'ggplot2' object.
 #' @examples
-#' library(mlr3learners)
+#' library("mlr3")
+#' library("mlr3learners")
 #'
 #' # Setup the Fairness Measures and tasks
 #' task = tsk("adult_train")$filter(1:500)

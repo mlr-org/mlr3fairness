@@ -60,7 +60,8 @@
 #' @seealso https://mlr3book.mlr-org.com/list-pipeops.html
 #' @export
 #' @examples
-#' library(mlr3pipelines)
+#' library("mlr3")
+#' library("mlr3pipelines")
 #'
 #' reweighing = po("reweighing_wts")
 #' learner_po = po("learner", learner = lrn("classif.rpart"))

@@ -15,9 +15,9 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
+library(mlr3)
 library(mlr3fairness)
 library(mlr3learners)
-library(mlr3)
 ```
 
 # Why we need fairness visualizations:

@@ -8,6 +8,7 @@
 #' 
 #' @export
 #' @examples
+#' library("mlr3")
 #' # Equalized Odds Metric
 #' MeasureFairnessComposite$new(measures = msrs(c("fairness.fpr", "fairness.tpr")))
 #'

@@ -57,6 +57,7 @@
 #' @docType data
 #' @keywords data
 #' @examples
+#' library("mlr3")
 #' data("compas", package = "mlr3fairness")
 NULL
 

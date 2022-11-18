@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup-load, echo = FALSE, message = FALSE}
+library(mlr3)
 library(mlr3fairness)
 td = "../docs/articles"
 if (!dir.exists(td)) dir.create(td, recursive = TRUE)

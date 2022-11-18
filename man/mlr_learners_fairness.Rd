@@ -40,6 +40,7 @@ selected as a predicted attribute.
 }
 
 \examples{
+library("mlr3")
 # Available learners:
 mlr_learners_fairness
 }

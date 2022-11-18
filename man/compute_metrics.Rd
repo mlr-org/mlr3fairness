@@ -32,6 +32,7 @@ selected as a predicted attribute.
 }
 
 \examples{
+library("mlr3")
 # Get adult data as a data.table
 train = tsk("adult_train")$data()
 mod = rpart::rpart(target ~ ., train)

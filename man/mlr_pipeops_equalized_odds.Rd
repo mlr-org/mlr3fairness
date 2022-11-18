@@ -58,7 +58,8 @@ Methods inherited from \link{PipeOpTaskPreproc}/\link{PipeOp}.
 }
 
 \examples{
-library(mlr3pipelines)
+library("mlr3")
+library("mlr3pipelines")
 
 eod = po("EOd")
 learner_po = po("learner_cv",
