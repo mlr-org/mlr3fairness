@@ -26,6 +26,7 @@ Instantiates one new measure per protected attribute group in a task.
 Each metric is then evaluated only on predictions made for the given specific subgroup.
 }
 \examples{
+  library("mlr3")
   t = tsk("compas")
   l = lrn("classif.rpart")
   m = groupwise_metrics(msr("classif.acc"), t)

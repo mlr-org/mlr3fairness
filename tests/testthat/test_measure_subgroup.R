@@ -13,6 +13,7 @@ test_that("measure constructor works", {
 })
 
 test_that("measure", {
+  skip_if_not_installed("rpart")
   m = MeasureSubgroup$new(base_measure = msr("classif.acc"), subgroup = "Female")
   t = tsk("compas")
   l = lrn("classif.rpart")
@@ -22,6 +23,7 @@ test_that("measure", {
 })
 
 test_that("measure", {
+  skip_if_not_installed("rpart")
   t = tsk("compas")
   l = lrn("classif.rpart")
   m = groupwise_metrics(msr("classif.acc"), t, intersect = FALSE)
@@ -43,6 +45,7 @@ test_that("measure", {
 
 test_that("multi pta", {
   skip_on_cran()
+  skip_if_not_installed("rpart")
   t = tsk("compas")
   t$col_roles$pta = c("sex", "race")
   l = lrn("classif.rpart")
@@ -61,6 +64,7 @@ test_that("multi pta", {
 
 test_that("pp differences", {
   skip_on_cran()
+  skip_if_not_installed("rpart")
   t = tsk("adult_train")
   l = as_learner(po("reweighing_os") %>>% lrn("classif.rpart"))
   l$train(t)

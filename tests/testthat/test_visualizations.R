@@ -1,5 +1,6 @@
 # fairness_accuracy_tradeoff Tests
 test_that("fairness_accuracy_tradeoff", {
+  skip_if_not_installed("rpart")
   tasks = test_tasks()
   fairness_measures = test_measures()
   bmr = test_bmr()
@@ -23,6 +24,7 @@ test_that("fairness_accuracy_tradeoff", {
 })
 
 test_that("compare_metrics", {
+  skip_if_not_installed("rpart")
   tasks = test_tasks()
   fairness_measures = test_measures()
   bmr = test_bmr()
@@ -44,6 +46,7 @@ test_that("compare_metrics", {
 })
 
 test_that("prediction_density", {
+  skip_if_not_installed("rpart")
   tasks = test_tasks()
   fairness_measures = test_measures()
   bmr = test_bmr()

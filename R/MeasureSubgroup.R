@@ -95,6 +95,7 @@ MeasureSubgroup = R6::R6Class("MeasureSubgroup", inherit = Measure,
 #' @seealso [MeasureSubgroup]
 #' @export
 #' @examples
+#'   library("mlr3")
 #'   t = tsk("compas")
 #'   l = lrn("classif.rpart")
 #'   m = groupwise_metrics(msr("classif.acc"), t)

@@ -1,5 +1,7 @@
 test_that("write_files", {
   skip_on_cran()
+  skip_if_not_installed("rpart")
+  skip_if_not_installed("rmarkdown")
   tdir = tempdir()
   tdir = paste0(tdir, "/report")
   if (!dir.exists(tdir)) dir.create(tdir)

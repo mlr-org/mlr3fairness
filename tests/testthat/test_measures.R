@@ -36,6 +36,7 @@ test_that("dictionary constructors work", {
 })
 
 test_that("fairness measures work as expcted", {
+  skip_if_not_installed("rpart")
   tsk = tsk("compas")
   prds = list(
     lrn("classif.rpart")$train(tsk)$predict(tsk),
@@ -210,7 +211,7 @@ test_that("fairness constraint measures - simulated data", {
 })
 
 test_that("Args are passed on correctly", {
-
+  skip_if_not_installed("rpart")
   MeasureTestArgs = R6::R6Class("MeasureTestArgs",
     inherit = mlr3::Measure,
     public = list(

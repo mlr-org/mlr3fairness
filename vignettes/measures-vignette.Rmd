@@ -3,7 +3,7 @@ title: "Fairness Metrics"
 preamble: |
   \usepackage{longtable}
   \usepackage{bbm}
-bibliography: ../paper/mlr3fairness.bib
+bibliography: '`r system.file("references.bib", package="mypackage")`'
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Fairness Metrics}
@@ -26,12 +26,12 @@ Fairness measures (or metrics) allow us to assess and audit for possible biases 
 There are several types of metrics that are widely used in order to assess a model's fairness. 
 They can be coarsely classified into three groups:
 
-- **Statistical Group Fairness Metrics**: Given a set of predictions from our model, we assess for differences in one or multiple metrics across groups given by a *protected attribute*.
+- **Statistical Group Fairness Metrics**: Given a set of predictions from our model, we assess for differences in one or multiple metrics across groups given by a *protected attribute* [@fairmlbook; @hardt2016equality]. 
 
-- **Individual Fairness**: Basically requires that similar people are treated similar independent of the protected attribute.
+- **Individual Fairness**: Basically requires that similar people are treated similar independent of the protected attribute [@dwork2012].
   We will briefly introduce individual fairness in a dedicated section below.
 
-- **Causal Fairness Notions**: An important realization in the context of Fairness is, that whether a process is fair is often subject to the underlying causal directed acyclic graph (DAG). Knowledge of the DAG allows for causally assessing reasons for (un-)fairness. Since DAG's are often hard to construct for a given dataset, `mlr3fairness` currently does not provide any causal fairness metrics.
+- **Causal Fairness Notions**: An important realization in the context of Fairness is, that whether a process is fair is often subject to the underlying causal directed acyclic graph (DAG). Knowledge of the DAG allows for causally assessing reasons for (un-)fairness. Since DAG's are often hard to construct for a given dataset, `mlr3fairness` currently does not provide any causal fairness metrics [@kilbertus2017avoiding].
 
 ## Statistical Group Fairness Metrics
 
@@ -55,7 +55,7 @@ knitr::kable(mlr3fairness:::mlr_measures_fairness)
 ## Assessing for Bias: A first look
 
 This vignette assumes that you are familiar with the basics of `mlr3` and it's core objects.
-The [mlr3 book](https://mlr3book.mlr-org.com/index.html) can be a great ressource in case you want to learn more about mlr3's internals.
+The [mlr3 book](https://mlr3book.mlr-org.com/index.html) can be a great resource in case you want to learn more about mlr3's internals.
 
 We first start by training a model for which we want to conduct an audit.
 For this example, we use the `adult_train` dataset.
@@ -148,8 +148,8 @@ While fairness measures are widely defined or used with binary protected attribu
 fairness measures such that they work with non-binary valued protected attributes.
 
 In order to do this, we have to supply an `operation` that reduces the desired metric measured in each subgroup
-to a single value. Two examples for such operations are `groupdiff_absdiff` and `groupdiff_tau` but
-custom functions can also be applied. Note, that **mlr3** `Measure`s are designed for a scalar output
+to a single value. Two examples for such operations are `groupdiff_absdiff` and `groupdiff_tau` but custom functions can also be applied. 
+Note, that **mlr3** `Measure`s are designed for a scalar output
 and `operation` therefore always has to result in a single scalar value.
 
 ## Composite Fairness Measures
@@ -215,8 +215,8 @@ prds$score(mm, t)
 Individual fairness notions were first proposed by [@dwork2012].
 The core idea comes from the principle of *treating similar cases similarly and different cases differently*.
 In contrast to statistical group fairness notions, this notion allows assessing *fairness* at an individual level and 
-would therefore allow to determine whether an individual is treated fairly. 
-A more in-depth treatment of individual fairness notions is given by @binns2020apparent and @heidari2019.
+would therefore allow determining whether an individual is treated fairly. 
+A more in-depth treatment of individual fairness notions is given by [@binns2020apparent].
 
 In order to translate this from an abstract concept into practice, we need to define two distance metrics:
 - A distance metric $d(x_i, x_j)$ that measures how *similar* two cases $x_i$ and $x_j$ are
