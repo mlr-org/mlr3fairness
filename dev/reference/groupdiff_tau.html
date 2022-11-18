@@ -124,6 +124,15 @@ Measured performance in group 1, 2, ...</p></dd>
 
 <p>A single <code>numeric</code>.</p>
     </div>
+    <div class="section level2">
+    <h2 id="protected-attributes">Protected Attributes<a class="anchor" aria-label="anchor" href="#protected-attributes"></a></h2>
+    
+
+<p>The protected attribute is specified as a <code>col_role</code> in the corresponding <code><a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">Task()</a></code>:<br><code>&lt;Task&gt;$col_roles$pta = "name_of_attribute"</code> <br>
+This also allows specifying more than one protected attribute,
+in which case fairness will be considered on the level of intersecting groups defined by all columns
+selected as a predicted attribute.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>

@@ -4,13 +4,6 @@ body {
   margin-right:auto;
 }
 
-html {
-    height: 100%;
-}
-body {
-    min-height: 100%;
-}
-
 div.poster_wrap {
   padding:  1in;
 }
@@ -20,4 +13,9 @@ div.title_container {
 }
 h1#title {
   font-size: 125pt;
+}
+
+h2 {
+  margin-block-start:.4em;
+  margin-block-end: .4em;
 }

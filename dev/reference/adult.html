@@ -107,7 +107,27 @@ The column <code>"sex"</code> is set as protected attribute.</p>
     <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
     <p>Dua, Dheeru, Graff, Casey (2017).
 “UCI Machine Learning Repository.”
-<a href="http://archive.ics.uci.edu/ml/" class="external-link">http://archive.ics.uci.edu/ml/</a>.</p>
+<a href="http://archive.ics.uci.edu/ml/" class="external-link">http://archive.ics.uci.edu/ml/</a>.
+Ding, Frances, Hardt, Moritz, Miller, John, Schmidt, Ludwig (2021).
+“Retiring adult: New datasets for fair machine learning.”
+In <em>Thirty-fifth Conference on Neural Information Processing Systems Datasets and Benchmarks Track (Round 1)</em>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="derived-tasks">Derived tasks<a class="anchor" aria-label="anchor" href="#derived-tasks"></a></h2>
+    
+
+<ul><li><p><code>adult_train</code>: Original train split for the adult task available at UCI.</p></li>
+<li><p><code>adult_test</code>: Original test split for the adult task available at UCI.</p></li>
+</ul></div>
+    <div class="section level2">
+    <h2 id="using-adult-known-problems">Using Adult - Known Problems<a class="anchor" aria-label="anchor" href="#using-adult-known-problems"></a></h2>
+    
+
+<p>The adult dataset has several known limitations such as its age, limited documentation, and outdated feature encodings (Ding et al., 2021).
+Furthermore, the selected threshold (income &lt;=50K) has strong implications on the outcome of analysis, such that
+"In many cases, the $50k threshold understates and misrepresents the broader picture" (Ding et al., 2021).
+As a result, conclusions w.r.t. real-world implications are severely limited.</p>
+<p>We decide to replicate the dataset here, as it is a widely used benchmark dataset and it can still serve this purpose.</p>
     </div>
     <div class="section level2">
     <h2 id="pre-processing">Pre-processing<a class="anchor" aria-label="anchor" href="#pre-processing"></a></h2>
@@ -128,7 +148,7 @@ The column <code>"sex"</code> is set as protected attribute.</p>
 <li><p>(integer) education_num: the highest level of education achieved in numerical form.</p></li>
 <li><p>(factor) marital_status: marital status of an individual.</p></li>
 <li><p>(factor) occupation: the general type of occupation of an individual</p></li>
-<li><p>(factor) relationship: twhether the individual is in a relationship-</p></li>
+<li><p>(factor) relationship: whether the individual is in a relationship-</p></li>
 <li><p>(factor) race: Descriptions of an individual’s race</p></li>
 <li><p>(factor) sex: the biological sex of the individual</p></li>
 <li><p>(integer) captain-gain: capital gains for an individual</p></li>
@@ -139,7 +159,8 @@ The column <code>"sex"</code> is set as protected attribute.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"adult_test"</span>, package <span class="op">=</span> <span class="st">"mlr3fairness"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://mlr3.mlr-org.com" class="external-link">"mlr3"</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"adult_test"</span>, package <span class="op">=</span> <span class="st">"mlr3fairness"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"adult_train"</span>, package <span class="op">=</span> <span class="st">"mlr3fairness"</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>

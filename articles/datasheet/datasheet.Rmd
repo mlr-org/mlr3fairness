@@ -11,8 +11,8 @@ affiliation:
   - num: 2
     address: Planet Earth, Milky Way
 column_numbers: 4
-poster_height: 100%
-poster_width: 100%
+poster_height: 95%
+poster_width: 96%
 primary_colour: "#235187"
 output: 
   posterdown::posterdown_html:

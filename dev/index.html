@@ -138,7 +138,9 @@
 </h2>
 <p>Machine Learning model predictions can be skewed by a range of factors and thus might be considered unfair towards certain groups or individuals. An example would be the COMPAS algorithm, which is a popular commercial algorithm used by judges and parole officers for scoring criminal defendant’s likelihood of reoffending (recidivism). <a href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing" class="external-link">Studies</a> have shown, that the algorithm might be biased in favor of white defendants. Biases can occur in a large variety of situations where algorithms automate or support human decision making e.g. credit checks, automatic HR tools along with a variety of other domains.</p>
 <p>The <strong>goal of <code>mlr3fairness</code></strong> is to allow for auditing of <code>mlr3</code> learners, visualization and subsequently trying to improve fairness using debiasing strategies.</p>
-<blockquote><p><span class="emoji" data-emoji="warning">⚠️</span> <strong>Note</strong> Bias auditing and debiasing solely based on observational data <strong>can not</strong> guarantee fairness of a decision making system. Several biases, for example comming from the data can not be detected using the approaches implemented in <code>mlr3fairness</code>. This goal of this software is thus to allow for a better understanding and first hints at possible fairness problems in a studied model.</p></blockquote>
+<blockquote>
+<p><span class="emoji" data-emoji="warning">⚠️</span> <strong>Note</strong> Bias auditing and debiasing solely based on observational data <strong>can not</strong> guarantee fairness of a decision making system. Several biases, for example comming from the data can not be detected using the approaches implemented in <code>mlr3fairness</code>. This goal of this software is thus to allow for a better understanding and first hints at possible fairness problems in a studied model.</p>
+</blockquote>
 </div>
 <div class="section level2">
 <h2 id="feature-overview">Feature Overview<a class="anchor" aria-label="anchor" href="#feature-overview"></a>
@@ -368,6 +370,12 @@
 </h3>
 <p>An important step towards achieving more equitable outcomes for ML models is adequate documentation for datasets and models in machine learning. <code>mlr3fairness</code> comes with reporting aides for <code>models</code> and <code>datasets</code>. This provides empty templates that can be used to create interactive reports through <code>RMarkdown</code>.</p>
 <table class="table">
+<colgroup>
+<col width="13%">
+<col width="16%">
+<col width="15%">
+<col width="54%">
+</colgroup>
 <thead><tr class="header">
 <th>Report</th>
 <th>Description</th>
@@ -427,7 +435,9 @@
 <div class="section level3">
 <h3 id="extensions">Extensions<a class="anchor" aria-label="anchor" href="#extensions"></a>
 </h3>
-<ul><li>The <a href="https://github.com/mlr-org/mcboost" class="external-link">mcboost</a> package integrates with <strong>mlr3</strong> and offers additional debiasing post-processing functionality for <strong>classification</strong>, <strong>regression</strong> and <strong>survival</strong>.</li></ul>
+<ul>
+<li>The <a href="https://github.com/mlr-org/mcboost" class="external-link">mcboost</a> package integrates with <strong>mlr3</strong> and offers additional debiasing post-processing functionality for <strong>classification</strong>, <strong>regression</strong> and <strong>survival</strong>.</li>
+</ul>
 </div>
 <div class="section level3">
 <h3 id="other-fairness-toolkits-in-r">Other Fairness Toolkits in R<a class="anchor" aria-label="anchor" href="#other-fairness-toolkits-in-r"></a>
@@ -466,7 +476,9 @@
 <h2 id="bugs-feedback-and-questions">Bugs, Feedback and Questions<a class="anchor" aria-label="anchor" href="#bugs-feedback-and-questions"></a>
 </h2>
 <p><code>mlr3fairness</code> is a free and open source software project that encourages participation and feedback. If you have any issues, questions, suggestions or feedback, please do not hesitate to open an “issue” about it on the GitHub page! In case of problems / bugs, it is often helpful if you provide a “minimum working example” that showcases the behaviour.</p>
-<ol style="list-style-type: decimal"><li>The fairness report is inspired by the <a href="http://aequitas.dssg.io/example.html" class="external-link">Aequitas Bias report</a>.</li></ol>
+<ol style="list-style-type: decimal">
+<li>The fairness report is inspired by the <a href="http://aequitas.dssg.io/example.html" class="external-link">Aequitas Bias report</a>.</li>
+</ol>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

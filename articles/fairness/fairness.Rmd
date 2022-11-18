@@ -7,7 +7,7 @@ bibliography: references.bib
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo=FALSE)
 library("mlr3")
 library("mlr3viz")
 library("mlr3fairness")
@@ -40,9 +40,9 @@ In this fairness report, we investigate the fairness of the following task:
 task
 ```
 
-### The General Task Documentation for the task:
+### Task Documentation:
 
-Here we could get the basic details for the task.
+Here we  the basic details for the task.
 
 ```{r}
 task_summary(task) %>%
@@ -51,13 +51,13 @@ task_summary(task) %>%
 ```
 ### Exploratory Data Analysis: 
 
-We could also report the number of missing values, types and the levels for each feature:
+We also report the number of missing values, types and the levels for each feature:
 
 ```{r}
-df_summary = data.frame(task$col_info)[task$col_info$id != "..row_id",
-                                       !(names(task$col_info) %in% c("id", "label"))]
-data.frame("Count_of_Missing_Value" = task$missings()) %>%
-  cbind(df_summary) %>%
+df_summary = data.frame(task$col_info)
+df_summary = df_summary[df_summary$id %in% c(task$feature_names, task$target_names), ]
+df_summary %>%
+  cbind(data.frame("Missings (%)" = task$missings() / task$nrow)) %>%
   kbl() %>%
   kable_paper("hover", full_width = F)
 ```
@@ -78,23 +78,22 @@ resample_result$learner
 
 ### Fairness Metrics
 
-We could report more than one fairness metric, but keep in mind. Below the metrics are the mean of all the resample results.
+We furthermore report more than one fairness metric. 
+Below metrics are the mean across all the resample results.
 
 ```{r}
-fair_metrics = msrs(c("fairness.acc","fairness.eod","fairness.fnr",
-  "fairness.fpr","fairness.npv","fairness.ppv","fairness.tnr",
-  "fairness.tpr"))
+fair_metrics = msrs(c("fairness.acc","fairness.eod","fairness.fnr", "fairness.fpr","fairness.ppv", "fairness.cv"))
 ```
 
 ```{r}
 resample_result$aggregate(fair_metrics) %>%
-  kbl() %>%
+  kbl(col.names = c("value")) %>%
   kable_paper("hover", full_width = F)
 ```
 
-We could also use visualization to report the fairness.
-For example, the fairness and accuracy trade off, compare metrics visualization and the fairness prediction density of the model `classif.rpart` .
-For more detailed usage and examples, you may want to check the visualization vignette.
+We can furthermore employ several visualizations to report the fairness.
+For example, the fairness and accuracy trade off, compare metrics visualization and the fairness prediction density of our model.
+For more detailed usage and examples, you may want to check the [visualization vignette](https://mlr3fairness.mlr-org.com/articles/visualization-vignette.html).
 
 ```{r}
 fairness_accuracy_tradeoff(resample_result, msr("fairness.fnr"))
@@ -110,7 +109,9 @@ compare_metrics(resample_result, fair_metrics)
 
 ## Interpretability
 
-Finally, we could use the external package to analyze the interpretability of the parameters. For the following example we choose `iml` as a demonstration. We need first extract the learner from `resample_result` and retrain it.
+Finally, we use the external package to gain further insight into our model.
+For the following example we use the `iml` package as a demonstration.
+We need first extract the learner from `resample_result` and wrap it in a `Predictor` object.
 
 You could generate the variable importance plot like this
 
@@ -118,6 +119,7 @@ You could generate the variable importance plot like this
 library("iml")
 
 target = task$target_names
+twocols = task$feature_names[1:2]
 learner = resample_result$learner
 learner$train(task)
 
@@ -129,13 +131,11 @@ imp <- FeatureImp$new(model, loss = "ce")
 plot(imp)
 ```
 
-Or generate the feature effectness plot use the following code:
+Or generate the feature effects plot:
 
 ```{r, warning = FALSE}
-effect = FeatureEffects$new(model, method = "pdp")
-effect$plot(features = c("age", "c_charge_degree"))
+effect = FeatureEffects$new(model, method = "pdp", grid.size = 10)
+effect$plot(features = twocols)
 ```
 
-For more details of interpretability, you might want to check the documentation of `iml`.
-
-# References
+For more details on interpretability, check the documentation of the `iml` package.
