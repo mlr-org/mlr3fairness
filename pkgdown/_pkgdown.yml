@@ -48,6 +48,7 @@ reference:
       - MeasureSubgroup
       - contains("groupdiff")
       - groupwise_metrics
+      - compute_metrics
       - mlr_measures_positive_probability
   - title: Detecting Bias
     contents:
