@@ -3,7 +3,7 @@ title: "Fairness Metrics"
 preamble: |
   \usepackage{longtable}
   \usepackage{bbm}
-bibliography: '`r system.file("references.bib", package="mypackage")`'
+bibliography: '`r system.file("references.bib", package="mlr3fairness")`'
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Fairness Metrics}
