@@ -306,7 +306,7 @@ e.g. compute the absolute differences in true positive rates.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">prd</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.tpr"</span><span class="op">)</span>, task <span class="op">=</span> <span class="va">test</span><span class="op">)</span></span>
 <span><span class="co">#&gt; fairness.tpr </span></span>
-<span><span class="co">#&gt;   0.08495496</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.08405039</span></span></code></pre></div>
 <p>The exact measure to choose is often data-set and situation
 dependent. The <a href="https://textbook.coleridgeinitiative.org/chap-bias.html" class="external-link">Aequitas
 Fairness Tree</a> can be a great ressource to get started.</p>
@@ -315,7 +315,7 @@ Fairness Tree</a> can be a great ressource to get started.</p>
 <code class="sourceCode R"><span><span class="va">meas</span> <span class="op">=</span> <span class="fu"><a href="../reference/groupwise_metrics.html">groupwise_metrics</a></span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"classif.tpr"</span><span class="op">)</span>, <span class="va">test</span><span class="op">)</span></span>
 <span><span class="va">prd</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="va">meas</span>, task <span class="op">=</span> <span class="va">test</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   subgroup.tpr_Male subgroup.tpr_Female </span></span>
-<span><span class="co">#&gt;           0.8924308           0.9773858</span></span></code></pre></div>
+<span><span class="co">#&gt;           0.8924308           0.9764812</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="fairness-measures---an-in-depth-look">Fairness Measures - An in-depth look<a class="anchor" aria-label="anchor" href="#fairness-measures---an-in-depth-look"></a>
@@ -464,8 +464,8 @@ evaluate the fairness metrics on Benchmark Results:</p>
 <span><span class="co">#&gt; 1:  1 &lt;ResampleResult[21]&gt; adult_train classif.ranger            cv     3</span></span>
 <span><span class="co">#&gt; 2:  2 &lt;ResampleResult[21]&gt; adult_train  classif.rpart            cv     3</span></span>
 <span><span class="co">#&gt;    fairness.tpr fairness.npv fairness.acc classif.acc</span></span>
-<span><span class="co">#&gt; 1:   0.06390961   0.02415141    0.1020057   0.8619701</span></span>
-<span><span class="co">#&gt; 2:   0.05973159   0.03487019    0.1218632   0.8407774</span></span></code></pre></div>
+<span><span class="co">#&gt; 1:   0.06339834    0.0152679    0.1015413   0.8620028</span></span>
+<span><span class="co">#&gt; 2:   0.05975228    0.0345592    0.1218959   0.8407773</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="metrics-aggregation---groupdiff_">Metrics aggregation - groupdiff_*<a class="anchor" aria-label="anchor" href="#metrics-aggregation---groupdiff_"></a>
