@@ -162,8 +162,8 @@ insights.</p>
 <code class="sourceCode R"><span><span class="va">predictions</span><span class="op">$</span><span class="va">confusion</span></span>
 <span><span class="co">#&gt;         truth</span></span>
 <span><span class="co">#&gt; response &lt;=50K &gt;50K</span></span>
-<span><span class="co">#&gt;    &lt;=50K  3493  481</span></span>
-<span><span class="co">#&gt;    &gt;50K    267  759</span></span></code></pre></div>
+<span><span class="co">#&gt;    &lt;=50K  3485  483</span></span>
+<span><span class="co">#&gt;    &gt;50K    275  757</span></span></code></pre></div>
 <p>We furthermore design a small experiment allowing us to compare a
 random forest (<code>ranger</code>) and a decision tree
 (<code>rpart</code>). The result, <code>bmr</code> is a
@@ -236,12 +236,12 @@ easily computed using the <code>$score()</code> method.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bmr</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.tpr"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                   uhash nr              task     task_id</span></span>
-<span><span class="co">#&gt; 1: d8df7277-4ca6-411a-bdd0-2cdd10c5484a  1 &lt;TaskClassif[50]&gt; adult_train</span></span>
-<span><span class="co">#&gt; 2: d8df7277-4ca6-411a-bdd0-2cdd10c5484a  1 &lt;TaskClassif[50]&gt; adult_train</span></span>
-<span><span class="co">#&gt; 3: d8df7277-4ca6-411a-bdd0-2cdd10c5484a  1 &lt;TaskClassif[50]&gt; adult_train</span></span>
-<span><span class="co">#&gt; 4: e7ab870b-d367-461a-a1b4-788d8f95100b  2 &lt;TaskClassif[50]&gt; adult_train</span></span>
-<span><span class="co">#&gt; 5: e7ab870b-d367-461a-a1b4-788d8f95100b  2 &lt;TaskClassif[50]&gt; adult_train</span></span>
-<span><span class="co">#&gt; 6: e7ab870b-d367-461a-a1b4-788d8f95100b  2 &lt;TaskClassif[50]&gt; adult_train</span></span>
+<span><span class="co">#&gt; 1: fb6000b6-90ea-4cbb-9549-c606a0fe4fe2  1 &lt;TaskClassif[50]&gt; adult_train</span></span>
+<span><span class="co">#&gt; 2: fb6000b6-90ea-4cbb-9549-c606a0fe4fe2  1 &lt;TaskClassif[50]&gt; adult_train</span></span>
+<span><span class="co">#&gt; 3: fb6000b6-90ea-4cbb-9549-c606a0fe4fe2  1 &lt;TaskClassif[50]&gt; adult_train</span></span>
+<span><span class="co">#&gt; 4: 03b70af9-b84f-4cf3-b286-c595a9cc9e4a  2 &lt;TaskClassif[50]&gt; adult_train</span></span>
+<span><span class="co">#&gt; 5: 03b70af9-b84f-4cf3-b286-c595a9cc9e4a  2 &lt;TaskClassif[50]&gt; adult_train</span></span>
+<span><span class="co">#&gt; 6: 03b70af9-b84f-4cf3-b286-c595a9cc9e4a  2 &lt;TaskClassif[50]&gt; adult_train</span></span>
 <span><span class="co">#&gt;                       learner     learner_id         resampling resampling_id</span></span>
 <span><span class="co">#&gt; 1: &lt;LearnerClassifRanger[38]&gt; classif.ranger &lt;ResamplingCV[20]&gt;            cv</span></span>
 <span><span class="co">#&gt; 2: &lt;LearnerClassifRanger[38]&gt; classif.ranger &lt;ResamplingCV[20]&gt;            cv</span></span>
@@ -250,12 +250,12 @@ easily computed using the <code>$score()</code> method.</p>
 <span><span class="co">#&gt; 5:  &lt;LearnerClassifRpart[38]&gt;  classif.rpart &lt;ResamplingCV[20]&gt;            cv</span></span>
 <span><span class="co">#&gt; 6:  &lt;LearnerClassifRpart[38]&gt;  classif.rpart &lt;ResamplingCV[20]&gt;            cv</span></span>
 <span><span class="co">#&gt;    iteration              prediction fairness.tpr</span></span>
-<span><span class="co">#&gt; 1:         1 &lt;PredictionClassif[20]&gt;   0.08030978</span></span>
-<span><span class="co">#&gt; 2:         2 &lt;PredictionClassif[20]&gt;   0.06037491</span></span>
-<span><span class="co">#&gt; 3:         3 &lt;PredictionClassif[20]&gt;   0.08278436</span></span>
-<span><span class="co">#&gt; 4:         1 &lt;PredictionClassif[20]&gt;   0.06587635</span></span>
-<span><span class="co">#&gt; 5:         2 &lt;PredictionClassif[20]&gt;   0.04965000</span></span>
-<span><span class="co">#&gt; 6:         3 &lt;PredictionClassif[20]&gt;   0.15802926</span></span></code></pre></div>
+<span><span class="co">#&gt; 1:         1 &lt;PredictionClassif[20]&gt;   0.08811877</span></span>
+<span><span class="co">#&gt; 2:         2 &lt;PredictionClassif[20]&gt;   0.08169841</span></span>
+<span><span class="co">#&gt; 3:         3 &lt;PredictionClassif[20]&gt;   0.05579026</span></span>
+<span><span class="co">#&gt; 4:         1 &lt;PredictionClassif[20]&gt;   0.05961957</span></span>
+<span><span class="co">#&gt; 5:         2 &lt;PredictionClassif[20]&gt;   0.09875598</span></span>
+<span><span class="co">#&gt; 6:         3 &lt;PredictionClassif[20]&gt;   0.03946527</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="interpretability">Interpretability<a class="anchor" aria-label="anchor" href="#interpretability"></a>
