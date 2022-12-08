@@ -125,13 +125,13 @@
 <a href="https://github.com/mlr-org/mlr3fairness" class="external-link">mlr3fairness</a> <img src="reference/figures/scale_mlr3.png" align="right"><a class="anchor" aria-label="anchor" href="#mlr3fairness-"></a>
 </h1></div>
 <p>Machine Learning Fairness Extension for <a href="https://github.com/mlr-org/mlr3" class="external-link">mlr3</a>.</p>
-<p><a href="https://github.com/mlr-org/mlr3fairness/actions" class="external-link"><img src="https://github.com/mlr-org/mlr3fairness/workflows/tic/badge.svg?branch=main" alt="tic"></a> <a href="https://CRAN.R-project.org/package=mlr3fairness" class="external-link"><img src="https://www.r-pkg.org/badges/version/mlr3fairness" alt="CRAN status"></a> <a href="https://stackoverflow.com/questions/tagged/mlr3" class="external-link"><img src="https://img.shields.io/badge/stackoverflow-mlr3-orange.svg" alt="StackOverflow"></a> <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/" class="external-link"><img src="https://img.shields.io/badge/chat-mattermost-orange.svg" alt="Mattermost"></a></p>
+<p><a href="https://github.com/mlr-org/mlr3fairness/actions/workflows/r-cmd-check.yml" class="external-link"><img src="https://github.com/mlr-org/mlr3fairness/actions/workflows/r-cmd-check.yml/badge.svg" alt="r-cmd-check"></a> <a href="https://CRAN.R-project.org/package=mlr3fairness" class="external-link"><img src="https://www.r-pkg.org/badges/version/mlr3fairness" alt="CRAN status"></a> <a href="https://stackoverflow.com/questions/tagged/mlr3" class="external-link"><img src="https://img.shields.io/badge/stackoverflow-mlr3-orange.svg" alt="StackOverflow"></a> <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/" class="external-link"><img src="https://img.shields.io/badge/chat-mattermost-orange.svg" alt="Mattermost"></a></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>Install the development version from github:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"mlr-org/mlr3fairness"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"mlr-org/mlr3fairness"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="why-should-i-care-about-fairness-in-machine-learning">Why should I care about fairness in machine learning?<a class="anchor" aria-label="anchor" href="#why-should-i-care-about-fairness-in-machine-learning"></a>
@@ -175,8 +175,8 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3fairness.mlr-org.com">mlr3fairness</a></span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="16%">
-<col width="83%">
+<col width="17%">
+<col width="82%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">key</th>
@@ -241,11 +241,11 @@
 </tr>
 <tr class="odd">
 <td align="left">fairness.eod</td>
-<td align="left">Equalized Odds: Sum of absolute differences between true positive and false positive rates across groups</td>
+<td align="left">Equalized Odds: Mean of absolute differences between true positive and false positive rates across groups</td>
 </tr>
 <tr class="even">
 <td align="left">fairness.pp</td>
-<td align="left">Predictive Parity: Sum of absolute differences between ppv and npv across groups</td>
+<td align="left">Predictive Parity: Mean of absolute differences between ppv and npv across groups</td>
 </tr>
 <tr class="odd">
 <td align="left">fairness.acc_eod=.05</td>
@@ -282,37 +282,37 @@
 <p><strong>Overview:</strong></p>
 <table style="width:100%;" class="table">
 <colgroup>
-<col width="17%">
 <col width="18%">
+<col width="14%">
 <col width="21%">
-<col width="19%">
+<col width="23%">
 <col width="22%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">key</th>
+<th align="right">output.num</th>
 <th align="left">input.type.train</th>
 <th align="left">input.type.predict</th>
 <th align="left">output.type.train</th>
-<th align="left">output.type.predict</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">EOd</td>
+<td align="right">1</td>
 <td align="left">TaskClassif</td>
 <td align="left">TaskClassif</td>
 <td align="left">NULL</td>
-<td align="left">PredictionClassif</td>
 </tr>
 <tr class="even">
 <td align="left">reweighing_os</td>
-<td align="left">TaskClassif</td>
+<td align="right">1</td>
 <td align="left">TaskClassif</td>
 <td align="left">TaskClassif</td>
 <td align="left">TaskClassif</td>
 </tr>
 <tr class="odd">
 <td align="left">reweighing_wts</td>
-<td align="left">TaskClassif</td>
+<td align="right">1</td>
 <td align="left">TaskClassif</td>
 <td align="left">TaskClassif</td>
 <td align="left">TaskClassif</td>
@@ -372,9 +372,9 @@
 <table class="table">
 <colgroup>
 <col width="13%">
-<col width="16%">
+<col width="17%">
 <col width="15%">
-<col width="54%">
+<col width="52%">
 </colgroup>
 <thead><tr class="header">
 <th>Report</th>
@@ -398,7 +398,8 @@
 <tr class="odd">
 <td><code>report_fairness</code></td>
 <td>Fairness Report</td>
-<td>-[1]</td>
+<td>-<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;The fairness report is inspired by the &lt;a href="http://aequitas.dssg.io/example.html" class="external-link"&gt;Aequitas Bias report&lt;/a&gt;.&lt;/p&gt;'><sup>1</sup></a>
+</td>
 <td><a href="https://mlr3fairness.mlr-org.com/articles/fairness/fairness.html">link</a></td>
 </tr>
 </tbody>
@@ -476,11 +477,10 @@
 <h2 id="bugs-feedback-and-questions">Bugs, Feedback and Questions<a class="anchor" aria-label="anchor" href="#bugs-feedback-and-questions"></a>
 </h2>
 <p><code>mlr3fairness</code> is a free and open source software project that encourages participation and feedback. If you have any issues, questions, suggestions or feedback, please do not hesitate to open an “issue” about it on the GitHub page! In case of problems / bugs, it is often helpful if you provide a “minimum working example” that showcases the behaviour.</p>
-<ol style="list-style-type: decimal">
-<li>The fairness report is inspired by the <a href="http://aequitas.dssg.io/example.html" class="external-link">Aequitas Bias report</a>.</li>
-</ol>
 </div>
 </div>
+
+
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
