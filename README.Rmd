@@ -20,7 +20,7 @@ options(datatable.print.class = FALSE, datatable.print.keys = FALSE)
 
 Machine Learning Fairness Extension for [mlr3](https://github.com/mlr-org/mlr3).
 
-[![tic](https://github.com/mlr-org/mlr3fairness/workflows/tic/badge.svg?branch=main)](https://github.com/mlr-org/mlr3fairness/actions)
+[![r-cmd-check](https://github.com/mlr-org/mlr3fairness/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/mlr-org/mlr3fairness/actions/workflows/r-cmd-check.yml)
 [![CRAN status](https://www.r-pkg.org/badges/version/mlr3fairness)](https://CRAN.R-project.org/package=mlr3fairness)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
 [![Mattermost](https://img.shields.io/badge/chat-mattermost-orange.svg)](https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/)
@@ -184,9 +184,9 @@ and `datasets`. This provides empty templates that can be used to create interac
 
 **Usage:**
 
-The `report_*` functions instantiate a new `.Rmd` template that contains a set of pre-defined 
+The `report_*` functions instantiate a new `.Rmd` template that contains a set of pre-defined
 questions which can be used for reporting as well as initial graphics.
-The goal is that a user extends this `.Rmd` file to create comprehensive documentation for 
+The goal is that a user extends this `.Rmd` file to create comprehensive documentation for
 datasets, ML models or to document a model's fairness.
 It can later be converted into a `html` report using`rmarkdown`'s `render`.
 
