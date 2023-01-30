@@ -35,12 +35,16 @@ The **goal of `mlr3fairness`** is to allow for auditing of `mlr3`
 learners, visualization and subsequently trying to improve fairness
 using debiasing strategies.
 
-> :warning: **Note** Bias auditing and debiasing solely based on
-> observational data **can not** guarantee fairness of a decision making
-> system. Several biases, for example comming from the data can not be
-> detected using the approaches implemented in `mlr3fairness`. This goal
-> of this software is thus to allow for a better understanding and first
-> hints at possible fairness problems in a studied model.
+--- 
+
+:warning: **Note** Bias auditing and debiasing solely based on
+observational data **can not** guarantee fairness of a decision making
+system. Several biases, for example comming from the data can not be
+detected using the approaches implemented in `mlr3fairness`. The goal
+of this software is **instead** to allow for a better understanding and first
+hints at possible fairness problems in a studied model.
+
+---
 
 ## Feature Overview
 
