@@ -22,11 +22,12 @@ register_mlr3 = function() {
   x$task_print_col_roles$after = c(x$task_print_col_roles$after, c("Protected attribute" = "pta"))
 
   # register tasks
+  tasks[["adult_train"]] = get_adult_task_train()
+  tasks[["adult_test"]] = get_adult_task_test()
+  tasks[["compas"]] = get_compas_task()
+  tasks[["compas_race_binary"]] = get_compas_task_race_binary()
   x = getFromNamespace("mlr_tasks", ns = "mlr3")
-  x$add("adult_train", get_adult_task_train)
-  x$add("adult_test", get_adult_task_test)
-  x$add("compas", get_compas_task)
-  x$add("compas_race_binary", get_compas_task_race_binary)
+  iwalk(tasks, function(o, nm) {x$add(nm, o)})
 
   # register pipeop tag fairness
   x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
@@ -34,65 +35,74 @@ register_mlr3 = function() {
 
   # Define a set of widely used metrics. Documented in mlr_measures_fairness
   x = getFromNamespace("mlr_measures", ns = "mlr3")
-  # constructors
-  x$add("fairness", MeasureFairness)
-  x$add("fairness.composite", MeasureFairnessComposite)
-  x$add("fairness.constraint", MeasureFairnessConstraint)
-  x$add("classif.pp", MeasurePositiveProbability)
-  x$add("subgroup", MeasureSubgroup)
+  # constructor
+  measures[["fairness"]] = MeasureFairness
+  measures[["fairness.composite"]] = MeasureFairnessComposite
+  measures[["fairness.constraint"]] = MeasureFairnessConstraint
+  measures[["classif.pp"]] = MeasurePositiveProbability
+  measures[["subgroup"]] = MeasureSubgroup
   # regression
   for (key in c("mse")) {
-    x$add(sprintf("fairness.%s", key), MeasureFairness,
-      base_measure = msr(sprintf("regr.%s", key)), range = c(-Inf, Inf))
+    measures[[sprintf("fairness.%s", key)]] = MeasureFairness$new(base_measure = msr(sprintf("regr.%s", key)), range = c(-Inf, Inf))
   }
   # rates classif
   for (key in c("acc", "fnr", "fpr", "tnr", "tpr", "npv", "ppv", "fomr")) {
-    x$add(sprintf("fairness.%s", key), MeasureFairness,
-      base_measure = msr(sprintf("classif.%s", key)), range = c(0, 1))
+    measures[[sprintf("fairness.%s", key)]] = MeasureFairness$new(base_measure = msr(sprintf("classif.%s", key)), range = c(0, 1))
   }
   # counts
   for (key in c("fn", "fp", "tn", "tp")) {
-    x$add(sprintf("fairness.%s", key), MeasureFairness,
-      base_measure = msr(sprintf("classif.%s", key)))
+    measures[[sprintf("fairness.%s", key)]] = MeasureFairness$new(base_measure = msr(sprintf("classif.%s", key)))
   }
-  x$add("fairness.cv", MeasureFairness, base_measure = msr("classif.pp"), range = c(0, 1), operation = groupdiff_absdiff)
+
+  iwalk(measures, function(o, nm) {x$add(nm, o)})
+  measures[["fairness.cv"]] = MeasureFairness$new(base_measure = msr("classif.pp"), range = c(0, 1), operation = groupdiff_absdiff)
   # compositions
-  x$add("fairness.eod", MeasureFairnessComposite, measures = msrs(c("fairness.fpr", "fairness.tpr")), range = c(0, 1),
+  measures[["fairness.eod"]] = MeasureFairnessComposite$new(measures = msrs(c("fairness.fpr", "fairness.tpr")), range = c(0, 1),
     id = "equalized_odds")
-  x$add("fairness.pp", MeasureFairnessComposite, measures = msrs(c("fairness.ppv", "fairness.npv")), range = c(0, 1),
+  measures[["fairness.pp"]] = MeasureFairnessComposite$new(measures = msrs(c("fairness.ppv", "fairness.npv")), range = c(0, 1),
     id = "predictive_parity")
-  x$add("fairness.acc_eod=.05", MeasureFairnessConstraint, performance_measure = msr("classif.acc"),
+  iwalk(measures, function(o, nm) {x$add(nm, o)})
+
+  measures[["fairness.acc_eod=.05"]] = MeasureFairnessConstraint$new(performance_measure = msr("classif.acc"),
     fairness_measure = msr("fairness.eod"), epsilon = 0.05, id = "fairness.acc_eod=.05", range = c(-1, 1))
-  x$add("fairness.acc_ppv=.05", MeasureFairnessConstraint, performance_measure = msr("classif.acc"),
+  measures[["fairness.acc_ppv=.05"]] = MeasureFairnessConstraint$new(performance_measure = msr("classif.acc"),
     fairness_measure = msr("fairness.ppv"), epsilon = 0.05, id = "fairness.acc_ppv=.05", range = c(-1, 1))
+  x = getFromNamespace("mlr_measures", ns = "mlr3")
+  iwalk(measures, function(o, nm) {x$add(nm, o)})
 
+
+  pipeops[["reweighing_wts"]] = PipeOpReweighingWeights
+  pipeops[["reweighing_os"]] = PipeOpReweighingOversampling
+  pipeops[["EOd"]] = PipeOpEOd
+  pipeops[["explicit_pta"]] = PipeOpExplicitPta
   x = getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
-  x$add("reweighing_wts", PipeOpReweighingWeights)
-  x$add("reweighing_os", PipeOpReweighingOversampling)
-  x$add("EOd", PipeOpEOd)
-  x$add("explicit_pta", PipeOpExplicitPta)
+  iwalk(pipeops, function(o, nm) {x$add(nm, o)})
 
+  learners[["regr.fairzlm"]] = LearnerRegrFairzlm
+  learners[["classif.fairzlrm"]] = LearnerClassifFairzlrm
+  learners[["regr.fairfrrm"]] = LearnerRegrFairfrrm
+  learners[["classif.fairfgrrm"]] = LearnerClassifFairfgrrm
+  learners[["regr.fairnclm"]] = LearnerRegrFairnclm
   x = getFromNamespace("mlr_learners", ns = "mlr3")
-  x$add("regr.fairzlm", LearnerRegrFairzlm)
-  x$add("classif.fairzlrm", LearnerClassifFairzlrm)
-  x$add("regr.fairfrrm", LearnerRegrFairfrrm)
-  x$add("classif.fairfgrrm", LearnerClassifFairfgrrm)
-  x$add("regr.fairnclm", LearnerRegrFairnclm)
+  iwalk(learners, function(o, nm) {x$add(nm, o)})
 } # nocov end
 
 .onLoad = function(libname, pkgname) { # nolint
   # nocov start
-  register_mlr3()
-  setHook(packageEvent("mlr3", "onLoad"), function(...) register_mlr3(), action = "append")
-  backports::import(pkgname)
+  register_namespace_callback(pkgname, "mlr3", register_mlr3)
 } # nocov end
 
 .onUnload = function(libpath) { # nolint
   # nocov start
-   event = packageEvent("mlr3", "onLoad")
-   hooks = getHook(event)
-   pkgname = vapply(hooks[-1], function(x) environment(x)$pkgname, NA_character_)
-   setHook(event, hooks[pkgname != "mlr3fairness"], action = "replace")
+  # Delete objects
+  mlr_tasks = mlr3::mlr_tasks
+  walk(names(tasks), function(id) mlr_tasks$remove(id))
+  mlr_measures = mlr3::mlr_measures
+  walk(names(measures), function(id) mlr_measures$remove(id))
+  mlr_learners = mlr3::mlr_learners
+  walk(names(learners), function(id) mlr_learners$remove(id))
+  mlr_pipeops = mlr3pipelines::mlr_pipeops
+  walk(names(pipeops), function(id) mlr_pipeops$remove(id))
 } # nocov end
 
 # static code checks should not complain about commonly used data.table columns
