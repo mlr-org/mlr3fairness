@@ -9,6 +9,7 @@
   Blaom]{fairnessjl}
 A.~Agrawal, J.~Chen, S.~Vollmer, and A.~Blaom.
 \newblock Fairness.jl, 2020{\natexlab{a}}.
+\newblock URL \url{https://github.com/ashryaagr/Fairness.jl}.
 
 \bibitem[Agrawal et~al.(2020{\natexlab{b}})Agrawal, Pfisterer, Bischl, Chen,
   Sood, Shah, Buet-Golfouse, Mateen, and Vollmer]{agrawal2020debiasing}
@@ -246,7 +247,7 @@ J.~S. Kim, J.~Chen, and A.~Talwalkar.
 \bibitem[Komiyama et~al.(2018)Komiyama, Takeda, Honda, and Shimao]{komiyama}
 J.~Komiyama, A.~Takeda, J.~Honda, and H.~Shimao.
 \newblock Nonconvex optimization for regression with fairness constraints.
-\newblock In \emph{International conference on machine learning}, pages
+\newblock In \emph{International Conference on Machine Learning}, pages
   2737--2746. PMLR, 2018.
 
 \bibitem[Kozodoi and {V. Varga}(2021)]{fairness}
@@ -281,7 +282,6 @@ M.~Lang, M.~Binder, J.~Richter, P.~Schratz, F.~Pfisterer, S.~Coors, Q.~Au,
 \newblock {mlr3}: A modern object-oriented machine learning framework in {R}.
 \newblock \emph{Journal of Open Source Software}, dec 2019.
 \newblock \doi{10.21105/joss.01903}.
-\newblock URL \url{https://joss.theoj.org/papers/10.21105/joss.01903}.
 
 \bibitem[Mehrabi et~al.(2021)Mehrabi, Morstatter, Saxena, Lerman, and
   Galstyan]{mehrabi}
@@ -298,9 +298,7 @@ M.~Mitchell, S.~Wu, A.~Zaldivar, P.~Barnes, L.~Vasserman, B.~Hutchinson,
 \newblock In \emph{Proceedings of the Conference on Fairness, Accountability,
   and Transparency}, FAT* '19, page 220–229, New York, NY, USA, 2019.
   Association for Computing Machinery.
-\newblock ISBN 9781450361255.
 \newblock \doi{10.1145/3287560.3287596}.
-\newblock URL \url{https://doi.org/10.1145/3287560.3287596}.
 
 \bibitem[Mitchell et~al.(2021)Mitchell, Potash, Barocas, D'Amour, and
   Lum]{mitchell2021algorithmic}
@@ -343,7 +341,7 @@ F.~Pfisterer, C.~Kern, S.~Dandl, M.~Sun, M.~P. Kim, and B.~Bischl.
 \newblock \emph{Journal of Open Source Software}, 6\penalty0 (64):\penalty0
   3453, 2021.
 \newblock \doi{10.21105/joss.03453}.
-\newblock URL \url{https://doi.org/10.21105/joss.03453}.
+\newblock URL \url{https://github.com/mlr-org/mcboost}.
 
 \bibitem[Polley et~al.(2021)Polley, LeDell, Kennedy, and {van der
   Laan}]{superlearner}
@@ -367,7 +365,6 @@ C.~Schumann, J.~S. Foster, N.~Mattei, and J.~P. Dickerson.
   Autonomous Agents and MultiAgent Systems}, AAMAS '20, page 1716–1720,
   Richland, SC, 2020. International Foundation for Autonomous Agents and
   Multiagent Systems.
-\newblock ISBN 9781450375184.
 
 \bibitem[Schwöbel and Remmers(2022)]{schwobel-facct22a}
 P.~Schwöbel and P.~Remmers.
@@ -385,7 +382,6 @@ M.~Scutari, F.~Panero, and M.~Proissl.
 R.~Sonabend, F.~J. Király, A.~Bender, B.~Bischl, and M.~Lang.
 \newblock {mlr3proba: An R Package for Machine Learning in Survival Analysis}.
 \newblock \emph{Bioinformatics}, 02 2021.
-\newblock ISSN 1367-4803.
 \newblock \doi{10.1093/bioinformatics/btab039}.
 
 \bibitem[Topol(2019)]{Topol2019}
@@ -412,7 +408,6 @@ J.~Vanschoren, J.~N. van Rijn, B.~Bischl, and L.~Torgo.
 \newblock \emph{{ACM} {SIGKDD} Explorations Newsletter}, 15\penalty0
   (2):\penalty0 49--60, June 2014.
 \newblock \doi{10.1145/2641190.2641198}.
-\newblock URL \url{https://doi.org/10.1145/2641190.2641198}.
 
 \bibitem[Wachter et~al.(2020)Wachter, Mittelstadt, and
   Russell]{wachter-vlr2020}
@@ -432,7 +427,6 @@ J.~Wiśniewski and P.~Biecek.
 \newblock fairmodels: a flexible tool for bias detection, visualization, and
   mitigation in binary classification models.
 \newblock \emph{The R Journal}, 14:\penalty0 227--243, 2022.
-\newblock \doi{10.32614/RJ-2022-019}.
 \newblock URL \url{https://rj.urbanek.nz/articles/RJ-2022-019/}.
 
 \bibitem[Xie et~al.(2020)Xie, Dervieux, and Riederer]{rmarkdown}
@@ -440,7 +434,6 @@ Y.~Xie, C.~Dervieux, and E.~Riederer.
 \newblock \emph{R Markdown Cookbook}.
 \newblock Chapman and Hall/CRC, Boca Raton, Florida, 2020.
 \newblock URL \url{https://bookdown.org/yihui/rmarkdown-cookbook}.
-\newblock ISBN 9780367563837.
 
 \bibitem[Zafar et~al.(2017)Zafar, Valera, {Gomez Rodriguez}, and
   Gummadi]{Zafar2017}

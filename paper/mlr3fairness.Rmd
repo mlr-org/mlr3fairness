@@ -12,7 +12,7 @@ author:
   - name: Florian Pfisterer
     orcid: 0000-0001-8867-762X
     email:  florian.pfisterer@stat.uni-muenchen.de
-    affiliation: LMU Munich
+    affiliation: Ludwig-Maximilians-Universität München
     address: Munich, Germany
     affiliation2: Munich Center for Machine Learning
     address2: Munich, Germany
@@ -22,7 +22,7 @@ author:
     address: Toronto, Canada
   - name: Sebastian Vollmer
     email: svollmer@stat.uni-muenchen.de
-    affiliation: DFKI
+    affiliation: Deutsches Forschungszentrum für Künstliche Intelligenz
     address: Kaiserslautern, Germany
     affiliation2: University of Kaiserslautern
     address2: Kaiserslautern, Germany
@@ -36,7 +36,7 @@ author:
   - name: Bernd Bischl
     email: bernd.bischl@stat.uni-muenchen.de
     orcid: 0000-0001-6002-6980
-    affiliation: LMU Munich
+    affiliation: Ludwig-Maximilians-Universität München
     address: Munich, Germany
     affiliation2: Munich Center for Machine Learning
     address2: Munich, Germany
@@ -248,12 +248,12 @@ Secondly, only requiring fairness might lead to degenerate solutions [@corbett20
 One approach to take this into account is to employ models which maximize utility but satisfy some maximum constraint on potential unfairness.
 This can be achieved via constraints on the employed fairness measure, e.g. $|\Delta_M| \leq \epsilon$ requiring that the absolute difference in a metric $M$ between groups
 is smaller than a chosen value $\epsilon$.
-In the following, we denote the fairness metric we want to minimize with $\Delta_M$ and the performance metric with $\rho$ (assuming the latter should be maximized).
+In the following, we denote the fairness metric we want to minimize with $\Delta_M$ and a strictly positive performance metric with $\rho$ (assuming the latter should be maximized)
 \[
   \rho_{|\Delta_M| \leq \epsilon} = \left\{
 \begin{array}{ll}
 \rho         & |\Delta_M| \leq \epsilon      \\
-- |\Delta_M| &  \textrm{else}                \\
+- |\Delta_M| &  \textrm{else.}                \\
 \end{array}
 \right.
 \]
@@ -335,7 +335,6 @@ The column `"sex"` is set as a binary protected attribute with levels `"Female"`
 library("mlr3verse")
 library("mlr3fairness")
 
-# get a simplified compas example data set
 task = tsk("adult_train")
 print(task)
 ```
@@ -344,20 +343,13 @@ The second building block is the `Learner`.
 It is a wrapper around an ML algorithm, e.g., an implementation of logistic regression or a decision tree.
 It can be trained on a `Task` and used for obtaining a `Prediction` on an independent test set which can subsequently be scored using a `Measure` to get an estimate for the predictive performance on new data.
 The shorthand constructors `lrn()` and `msr()` allow for the instantiation of implemented `Learner`s and `Measure`s, respectively.
-In the following example, we will instantiate a learner, train it on the train set of the dataset and evaluate predictions on held-out test data.
+In the following example, we will first instantiate a learner, then split our data into a train and test set, afterwards train it on the train set of the dataset and finally evaluate predictions on held-out test data.
 The train-test split in this case is given by row indices, here stored in the `idx` variable.
 
 ```{r}
-# initialize a classification tree from package rpart, predicting probabilities
 learner = lrn("classif.rpart", predict_type = "prob")
-
-# split into a list with train and test set
 idx = partition(task)
-
-# fit model on train set
 learner$train(task, idx$train)
-
-# predict on observations of test set
 prediction = learner$predict(task, idx$test)
 ```
 
@@ -389,15 +381,14 @@ Furthermore, this estimate has a lower variance (as it is an aggregate) at the c
 To properly compare competing modelling approaches, candidates can be benchmarked against each other using the `benchmark()` function (yielding a `BenchmarkResult`).
 In the following, we compare the decision tree from above to a logistic regression model.
 To do this, we use the `benchmark_grid` function to compare the two `Learners` across the same `Task` and resampling procedure.
+Finally, we aggregate the measured scores each learner obtains on each cross-validation split using the `$aggregate` function.
 
 ```{r, warning = FALSE}
 learner2 = lrn("classif.log_reg", predict_type = "prob")
 
-# build an exhaustive grid design and run benchmark
 grid = benchmark_grid(task, list(learner, learner2), resampling)
 bmr = benchmark(grid)
 
-# aggregate the stored results
 bmr$aggregate(measure)[, .(learner_id, classif.acc)]
 ```
 After running the benchmark, we can again call `.$aggregate` to obtain aggregated scores.
@@ -459,7 +450,7 @@ Table: Selection of implemented fairness metrics.
 |fairness.tnr          | Positive predictive value equality                                                          |
 |fairness.cv           | Demographic parity / Equalized positive rates \citep{Calders2010}                           |
 |fairness.pp           | Predictive parity / Equalized precision \citep{chouldechova2017fair}                        |
-|fairness.\{tp, fp, tn, fn\}         | Equal true positives, false positives, ...                                    |
+|fairness.\{tp, fp, tn, fn\}         | Equal true positives, false positives, true negatives, false negatives        |
 |fairness.acc\_eod=.05 | Accuracy under equalized odds constraint \citep{perrone2021fair}                            |
 |fairness.acc\_ppv=.05 | Accuracy under ppv constraint \citep{perrone2021fair}                                       |
 
@@ -510,14 +501,13 @@ While non-technical interventions, such as e.g. collecting more data should be p
 \CRANpkg{mlr3fairness} provides several debiasing techniques that can be used together with a `Learner` to obtain fairer models.
 Table \ref{tab:debiasing} provides an overview of implemented debiasing techniques.
 They are implemented as `PipeOps` from the \CRANpkg{mlr3pipelines} package and can be
-combined with arbitrary learners to build a pipeline.
+combined with arbitrary learners using the `%>>%` operator to build a pipeline.
+In the following example, we show how to combine a learner with a reweighing scheme (`reweighing_wts`) or alternatively how to post-process predictions using the equalized odds debiasing (`EOd`) strategy.
 An introduction to \CRANpkg{mlr3pipelines} is available in the corresponding [mlr3book chapter](https://mlr3book.mlr-org.com/pipelines.html).
 
 ```{r, eval = FALSE}
-# Automatically reweigh data before training a learner:
-po("reweighing_wts") %>>% po("learner", lrn("classif.glmnet"))
+po("reweighing_wts") %>>% lrn("classif.glmnet")
 
-# Post-process predictions for equalized odds.
 po("learner_cv", lrn("classif.glmnet")) %>>% po("EOd")
 ```
 
@@ -588,14 +578,17 @@ In order to get an initial perspective, we benchmark three models using 3-fold c
 * a penalized logistic regression from the \CRANpkg{glmnet} package and
 * a penalized logistic regression from the \CRANpkg{glmnet} package, but with reweighing preprocessing.
 
-The logistic regression in the latter two approaches do not support operating on factor features natively, therefore we pre-process the data with a feature encoder from \CRANpkg{mlr3pipelines}:
+The logistic regression in the latter two approaches do not support operating on factor features natively, therefore we pre-process the data with a feature encoder from \CRANpkg{mlr3pipelines}.
+To achieve this, we connect the feature encoder `po("encode")` with the learner using the `%>>%` operator.
+We then evaluate all three learners on the `adult_train` data using 3-fold cross-validation by building up a grid of experiments we want to run using `benchmark_grid`.
+This grid is then executed using the `benchmark` function, and we can aggregate the performance and fairness metric scores via the `$aggregate()` function.
 
 ```{r, message = FALSE, warning=FALSE, error=FALSE}
 set.seed(4321)
 learners = list(
     lrn("classif.rpart"),
     po("encode") %>>% lrn("classif.glmnet"),
-    po("encode") %>>% po("reweighing_wts") %>>% po("learner", lrn("classif.glmnet"))
+    po("encode") %>>% po("reweighing_wts") %>>% lrn("classif.glmnet")
 )
 
 grid = benchmark_grid(
@@ -643,8 +636,9 @@ vals = list(
 lrn$param_set$values = insert_named(lrn$param_set$values, vals)
 ```
 We then design the pipeline and the hyperparameters we want to tune over.
-In the following example, we choose `tuning_iters = 3L` and choose a small range for the hyperparameters in `vals` to shorten the run time of the tuning procedure.
+In the following example, we choose `tuning_iters = 3L` and set a small range for the hyperparameters in `vals` to shorten the run time of the tuning procedure.
 In real settings, this parameter would be set to a larger number, such as $100$.
+To construct a self-tuning learner, we construct an `AutoTuner` that takes as input a learner, the resampling procedure and metric used for tuning as well as the tuning strategy along with a termination criterion (here how many tuning iterations should be run). We can then use this self-tuning learner like any other learner and benchmark it using `benchmark` as described above.
 
 ```{r}
 tuning_iters = 3L
@@ -667,7 +661,7 @@ bmr2$aggregate(measures)[, c(4, 7, 8)]
 The result improves w.r.t.\ accuracy while only slightly decreasing the measured fairness.
 Note that the generalization error is estimated using a holdout strategy during training and slight violations of the desired threshold $\epsilon$ can therefore happen.
 The results of both benchmark experiments can then be collected and jointly visualized in Figure \ref{fig:fat} visualizing accuracy and fairness of models in our benchmark. 
-In addition to aggregate scores (denoted by a cross) individual iterations of the 3 fold Cross-Validation (represented by points) are shown to visualize variations in the individual results.
+In addition to aggregate scores (denoted by a cross) individual iterations of the 3-fold Cross-Validation (represented by points) are shown to visualize variations in the individual results.
 
 
 ```{r, results = 'hide', include = FALSE, fig.width = 6, fig.height = 4, fig.align='center', fig.cap = "Fairness-Accuracy tradeoff for 3-fold CV on the adult train set."}
