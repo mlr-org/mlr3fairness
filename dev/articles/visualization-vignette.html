@@ -162,8 +162,8 @@ insights.</p>
 <code class="sourceCode R"><span><span class="va">predictions</span><span class="op">$</span><span class="va">confusion</span></span>
 <span><span class="co">#&gt;         truth</span></span>
 <span><span class="co">#&gt; response &lt;=50K &gt;50K</span></span>
-<span><span class="co">#&gt;    &lt;=50K  3498  501</span></span>
-<span><span class="co">#&gt;    &gt;50K    262  739</span></span></code></pre></div>
+<span><span class="co">#&gt;    &lt;=50K  3488  488</span></span>
+<span><span class="co">#&gt;    &gt;50K    272  752</span></span></code></pre></div>
 <p>We furthermore design a small experiment allowing us to compare a
 random forest (<code>ranger</code>) and a decision tree
 (<code>rpart</code>). The result, <code>bmr</code> is a
@@ -235,27 +235,14 @@ with respect to multiple metrics. Again, we can use it with a
 easily computed using the <code>$score()</code> method.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bmr</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.tpr"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                                   uhash nr              task     task_id</span></span>
-<span><span class="co">#&gt; 1: 7373600d-a762-46fe-90df-f3e8068368bd  1 &lt;TaskClassif[50]&gt; adult_train</span></span>
-<span><span class="co">#&gt; 2: 7373600d-a762-46fe-90df-f3e8068368bd  1 &lt;TaskClassif[50]&gt; adult_train</span></span>
-<span><span class="co">#&gt; 3: 7373600d-a762-46fe-90df-f3e8068368bd  1 &lt;TaskClassif[50]&gt; adult_train</span></span>
-<span><span class="co">#&gt; 4: f334031e-4c40-4395-bbd1-16c6a084d6ad  2 &lt;TaskClassif[50]&gt; adult_train</span></span>
-<span><span class="co">#&gt; 5: f334031e-4c40-4395-bbd1-16c6a084d6ad  2 &lt;TaskClassif[50]&gt; adult_train</span></span>
-<span><span class="co">#&gt; 6: f334031e-4c40-4395-bbd1-16c6a084d6ad  2 &lt;TaskClassif[50]&gt; adult_train</span></span>
-<span><span class="co">#&gt;                       learner     learner_id         resampling resampling_id</span></span>
-<span><span class="co">#&gt; 1: &lt;LearnerClassifRanger[38]&gt; classif.ranger &lt;ResamplingCV[20]&gt;            cv</span></span>
-<span><span class="co">#&gt; 2: &lt;LearnerClassifRanger[38]&gt; classif.ranger &lt;ResamplingCV[20]&gt;            cv</span></span>
-<span><span class="co">#&gt; 3: &lt;LearnerClassifRanger[38]&gt; classif.ranger &lt;ResamplingCV[20]&gt;            cv</span></span>
-<span><span class="co">#&gt; 4:  &lt;LearnerClassifRpart[38]&gt;  classif.rpart &lt;ResamplingCV[20]&gt;            cv</span></span>
-<span><span class="co">#&gt; 5:  &lt;LearnerClassifRpart[38]&gt;  classif.rpart &lt;ResamplingCV[20]&gt;            cv</span></span>
-<span><span class="co">#&gt; 6:  &lt;LearnerClassifRpart[38]&gt;  classif.rpart &lt;ResamplingCV[20]&gt;            cv</span></span>
-<span><span class="co">#&gt;    iteration              prediction fairness.tpr</span></span>
-<span><span class="co">#&gt; 1:         1 &lt;PredictionClassif[20]&gt;   0.08151252</span></span>
-<span><span class="co">#&gt; 2:         2 &lt;PredictionClassif[20]&gt;   0.06811386</span></span>
-<span><span class="co">#&gt; 3:         3 &lt;PredictionClassif[20]&gt;   0.08902186</span></span>
-<span><span class="co">#&gt; 4:         1 &lt;PredictionClassif[20]&gt;   0.15639198</span></span>
-<span><span class="co">#&gt; 5:         2 &lt;PredictionClassif[20]&gt;   0.07084756</span></span>
-<span><span class="co">#&gt; 6:         3 &lt;PredictionClassif[20]&gt;   0.05668693</span></span></code></pre></div>
+<span><span class="co">#&gt;    nr     task_id     learner_id resampling_id iteration fairness.tpr</span></span>
+<span><span class="co">#&gt; 1:  1 adult_train classif.ranger            cv         1   0.08339229</span></span>
+<span><span class="co">#&gt; 2:  1 adult_train classif.ranger            cv         2   0.07886458</span></span>
+<span><span class="co">#&gt; 3:  1 adult_train classif.ranger            cv         3   0.07422722</span></span>
+<span><span class="co">#&gt; 4:  2 adult_train  classif.rpart            cv         1   0.06535105</span></span>
+<span><span class="co">#&gt; 5:  2 adult_train  classif.rpart            cv         2   0.11566858</span></span>
+<span><span class="co">#&gt; 6:  2 adult_train  classif.rpart            cv         3   0.07335446</span></span>
+<span><span class="co">#&gt; Hidden columns: uhash, task, learner, resampling, prediction</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="interpretability">Interpretability<a class="anchor" aria-label="anchor" href="#interpretability"></a>
