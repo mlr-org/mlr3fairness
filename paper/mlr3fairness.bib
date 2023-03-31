@@ -37,30 +37,6 @@
     doi = {10.1093/bioinformatics/btab039},
 }
 
-@article{Vanschoren2014,
-  doi = {10.1145/2641190.2641198},
-  year = {2014},
-  month = jun,
-  publisher = {Association for Computing Machinery ({ACM})},
-  volume = {15},
-  number = {2},
-  pages = {49--60},
-  author = {Joaquin Vanschoren and Jan N. van Rijn and Bernd Bischl and Luis Torgo},
-  title = {{OpenML}},
-  journal = {{ACM} {SIGKDD} Explorations Newsletter}
-}
-
-@article{galindo2000credit,
-  title={Credit risk assessment using statistical and machine learning: basic methodology and risk modeling applications},
-  author={Galindo, Jorge and Tamayo, Pablo},
-  journal={Computational Economics},
-  volume={15},
-  number={1},
-  pages={107--143},
-  year={2000},
-  publisher={Springer}
-}
-
 @Manual{caret,
 title = {caret: Classification and Regression Training},
 author = {Max Kuhn},
@@ -90,13 +66,113 @@ year = {2020},
   title = {mcboost: Multi-Calibration Boosting for {R}},
   journal = {Journal of Open Source Software},
   doi = {10.21105/joss.03453},
-  url = {https://github.com/mlr-org/mcboost},
+  url = {https://doi.org/10.21105/joss.03453},
   year = {2021},
   publisher = {The Open Journal},
   volume = {6},
   number = {64},
   pages = {3453}
 }
+
+ @Manual{fairness,
+    title = {fairness: Algorithmic Fairness Metrics},
+    author = {Nikita Kozodoi and Tibor {V. Varga}},
+    year = {2021},
+    note = {R package version 1.2.1},
+    url = {https://CRAN.R-project.org/package=fairness},
+  }
+
+@article{aif360,
+  title={{AI Fairness 360}: An extensible toolkit for detecting and mitigating algorithmic bias},
+  author={Bellamy, Rachel KE and Dey, Kuntal and Hind, Michael and Hoffman, Samuel C and Houde, Stephanie and Kannan, Kalapriya and Lohia, Pranay and Martino, Jacquelyn and Mehta, Sameep and Mojsilovi{\'c}, Aleksandra and others},
+  journal={IBM Journal of Research and Development},
+  volume={63},
+  number={4/5},
+  pages={4--1},
+  year={2019},
+  publisher={IBM}
+}
+
+@Article{DALEX,
+  title = {{DALEX}: {Explainers for Complex Predictive Models} in {R}},
+  author = {Przemyslaw Biecek},
+  journal = {Journal of Machine Learning Research},
+  year = {2018},
+  volume = {19},
+  pages = {1-5},
+  number = {84},
+  url = {https://jmlr.org/papers/v19/18-416.html},
+}
+
+
+@article{fairmodels,
+  title = {fairmodels: a Flexible Tool for Bias Detection, Visualization, and Mitigation in Binary Classification Models},
+  author = {Jakub Wiśniewski and Przemysław Biecek},
+  year = {2022},
+  journal = {The R Journal},
+  volume = {14},
+  issue = {1},
+  pages = {227-243},
+  url = {https://rj.urbanek.nz/articles/RJ-2022-019/},
+}
+
+
+@techreport{fairlearn,
+    author = {Bird, Sarah and Dud{\'i}k, Miro and Edgar, Richard and Horn, Brandon and Lutz, Roman and Milan, Vanessa and Sameki, Mehrnoosh and Wallach, Hanna and Walker, Kathleen},
+    title = {Fairlearn: A toolkit for assessing and improving fairness in {AI}},
+    institution = {Microsoft},
+    year = {2020},
+    month = {May},
+    url = "https://www.microsoft.com/en-us/research/publication/fairlearn-a-toolkit-for-assessing-and-improving-fairness-in-ai/",
+    number = {MSR-TR-2020-32},
+}
+
+@article{sklearn,
+  title={Scikit-learn: Machine learning in Python},
+  author={Pedregosa, Fabian and Varoquaux, Ga{\"e}l and Gramfort, Alexandre and Michel, Vincent and Thirion, Bertrand and Grisel, Olivier and Blondel, Mathieu and Prettenhofer, Peter and Weiss, Ron and Dubourg, Vincent and others},
+  journal={Journal of Machine Learning Research},
+  volume={12},
+  pages={2825--2830},
+  year={2011},
+  publisher={JMLR. org}
+}
+
+@misc{fairnessjl,
+  author       = {Ashrya Agrawal and Jiahao Chen and Sebastian Vollmer and Anthony Blaom},
+  title        = {Fairness.jl},
+  year         = {2020},
+  publisher    = {Zenodo},
+  version      = {v0.1.2},
+  doi          = {10.5281/zenodo.3977197},
+  url          = {https://github.com/ashryaagr/Fairness.jl}
+}
+
+
+@article{Vanschoren2014,
+  doi = {10.1145/2641190.2641198},
+  year = {2014},
+  month = jun,
+  publisher = {Association for Computing Machinery ({ACM})},
+  volume = {15},
+  number = {2},
+  pages = {49--60},
+  author = {Joaquin Vanschoren and Jan N. van Rijn and Bernd Bischl and Luis Torgo},
+  title = {{OpenML}},
+  journal = {{ACM} {SIGKDD} Explorations Newsletter}
+}
+
+@article{galindo2000credit,
+  title={Credit risk assessment using statistical and machine learning: basic methodology and risk modeling applications},
+  author={Galindo, Jorge and Tamayo, Pablo},
+  journal={Computational Economics},
+  volume={15},
+  number={1},
+  pages={107--143},
+  year={2000},
+  publisher={Springer}
+}
+
+
 
   # Multi-Calibration
   @inproceedings{hebert-johnson2018,
@@ -107,7 +183,7 @@ year = {2020},
     year = {2018},
     editor = {Jennifer Dy and Andreas Krause},
     volume = {80},
-    series = {Proceedings of Machine Learning Research},
+    series = {PMLR},
     address = {Stockholmsmässan, Stockholm Sweden},
     publisher = {PMLR}
   }
@@ -134,14 +210,6 @@ year = {2020},
 }
 
 
-# Fairness
-@book{fairmlbook,
-  title = {Fairness and Machine Learning},
-  author = {Solon Barocas and Moritz Hardt and Arvind Narayanan},
-  publisher = {fairmlbook.org},
-  note = {\url{http://www.fairmlbook.org}},
-  year = {2019}
-}
 
 @article{dawes1989clinical,
   title={Clinical versus actuarial judgment},
@@ -168,7 +236,7 @@ year = {2020},
 @article{rodolfa2020machine,
   title={Machine learning for public policy: Do we need to sacrifice accuracy to make models fair?},
   author={Rodolfa, Kit T and Lamba, Hemank and Ghani, Rayid},
-  journal={arXiv preprint arXiv:2012.02972},
+  journal={arXiv:2012.02972},
   year={2020}
 }
 
@@ -186,16 +254,11 @@ title = {Machine Bias},
 author = {Corbett-Davies, Sam and Pierson, Emma and Feller, Avi and Goel, Sharad and Huq, Aziz},
 title = {Algorithmic Decision Making and the Cost of Fairness},
 year = {2017},
-isbn = {9781450348874},
 publisher = {Association for Computing Machinery},
 address = {New York, NY, USA},
-url = {https://doi.org/10.1145/3097983.3098095},
 doi = {10.1145/3097983.3098095},
-abstract = {Algorithms are now regularly used to decide whether defendants awaiting trial are too dangerous to be released back into the community. In some cases, black defendants are substantially more likely than white defendants to be incorrectly classified as high risk. To mitigate such disparities, several techniques have recently been proposed to achieve algorithmic fairness. Here we reformulate algorithmic fairness as constrained optimization: the objective is to maximize public safety while satisfying formal fairness constraints designed to reduce racial disparities. We show that for several past definitions of fairness, the optimal algorithms that result require detaining defendants above race-specific risk thresholds. We further show that the optimal unconstrained algorithm requires applying a single, uniform threshold to all defendants. The unconstrained algorithm thus maximizes public safety while also satisfying one important understanding of equality: that all individuals are held to the same standard, irrespective of race. Because the optimal constrained and unconstrained algorithms generally differ, there is tension between improving public safety and satisfying prevailing notions of algorithmic fairness. By examining data from Broward County, Florida, we show that this trade-off can be large in practice. We focus on algorithms for pretrial release decisions, but the principles we discuss apply to other domains, and also to human decision makers carrying out structured decision rules.},
 booktitle = {Proceedings of the 23rd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining},
 pages = {797–806},
-numpages = {10},
-keywords = {discrimination, pretrial detention, algorithmic fairness, risk assessment, disparate impact},
 location = {Halifax, NS, Canada},
 series = {KDD '17}
 }
@@ -203,7 +266,7 @@ series = {KDD '17}
 @article{corbett2018measure,
   title={The measure and mismeasure of fairness: A critical review of fair machine learning},
   author={Corbett-Davies, Sam and Goel, Sharad},
-  journal={arXiv preprint arXiv:1808.00023},
+  journal={arXiv:1808.00023},
   year={2018}
 }
 
@@ -214,8 +277,6 @@ journal = {Sociological Methods \& Research},
 numpages = {42},
 year = {2018},
 month = aug,
-eprint = {1703.09207},
-archiveprefix = {arXiv},
 doi = {10.1177/0049124118782533}
 }
 
@@ -226,35 +287,12 @@ doi = {10.1038/s41591-018-0300-7},
 journal = {Nature Medicine},
 number = {1},
 pages = {44--56},
-title = {High-performance medicine: the convergence of human and artificial intelligence},
+title = {High-performance medicine: The convergence of human and artificial intelligence},
 volume = {25},
 year = {2019}
 }
 
-
-@book{eubanks2018automating,
-  title={Automating inequality: How high-tech tools profile, police, and punish the poor},
-  author={Eubanks, Virginia},
-  year={2018},
-  publisher={St. Martin's Press}
-}
-
-@book{o2016weapons,
-  title={Weapons of Math Destruction: How Big Data Increases Inequality and Threatens Democracy},
-  author={O'neil, Cathy},
-  year={2016},
-  publisher={Crown}
-}
-
-@book{noble2018algorithms,
-  title={Algorithms of Oppression},
-  author={Noble, Safiya Umoja},
-  year={2018},
-  publisher={New York University Press}
-}
-
 @inproceedings{Chen2019,
-archivePrefix = {arXiv},
 author = {Chen, Jiahao and Kallus, Nathan and Mao, Xiaojie and Svacha, Geofry and Udell, Madeleine},
 booktitle = {FAT* 2019 - Proceedings of the 2019 Conference on Fairness, Accountability, and Transparency},
 doi = {10.1145/3287560.3287594},
@@ -278,21 +316,6 @@ author = {Schumann, Candice and Foster, Jeffrey S. and Mattei, Nicholas and Dick
 title = {We Need Fairness and Explainability in Algorithmic Hiring},
 year = {2020},
 publisher = {International Foundation for Autonomous Agents and Multiagent Systems},
-address = {Richland, SC},
-abstract = {Algorithms and machine learning models, including the decisions made by these models,
-are becoming ubiquitous in our daily life, including hiring. We make no value judgment
-regarding this development; rather, we simply acknowledge that it is quickly becoming
-reality that automation plays a role in hiring. Increasingly, these technologies are
-used in all of the small decisions that make up the modern hiring pipeline: from which
-resumes get selected for a first screen to who gets an on site interview. Thus, these
-algorithms and models may potentially amplify bias and (un)fairness issues for many
-historically marginalized groups. While there is a rapidly expanding literature on
-algorithmic decision making and fairness, there has been limited work on fairness
-specifically for online, multi-stakeholder decision making processes such as those
-found in hiring. We outline broad challenges including formulating definitions for
-fair treatment and fair outcomes in hiring, and incorporating these definitions into
-the algorithms and processes that constitute the modern hiring pipeline. We see the
-AAMAS community as uniquely positioned to address these challenges.},
 booktitle = {Proceedings of the 19th International Conference on Autonomous Agents and MultiAgent Systems},
 pages = {1716–1720},
 numpages = {5},
@@ -326,7 +349,7 @@ series = {AAMAS '20}
 @article{hardt2016equality,
   title={Equality of opportunity in supervised learning},
   author={Hardt, Moritz and Price, Eric and Srebro, Nati},
-  journal={Advances in neural information processing systems},
+  journal={Advances in Neural Information Processing Systems},
   volume={29},
   pages={3315--3323},
   year={2016}
@@ -335,7 +358,7 @@ series = {AAMAS '20}
 @article{saleiro2018aequitas,
   title={Aequitas: A bias and fairness audit toolkit},
   author={Saleiro, Pedro and Kuester, Benedict and Hinkson, Loren and London, Jesse and Stevens, Abby and Anisfeld, Ari and Rodolfa, Kit T and Ghani, Rayid},
-  journal={arXiv preprint arXiv:1811.05577},
+  journal={arXiv:1811.05577},
   year={2018}
 }
 
@@ -359,81 +382,11 @@ series = {AAMAS '20}
   publisher={Springer}
 }
 
-
-
-## Software
-
-
- @Manual{fairness,
-    title = {fairness: Algorithmic Fairness Metrics},
-    author = {Nikita Kozodoi and Tibor {V. Varga}},
-    year = {2021},
-    note = {R package version 1.2.1},
-    url = {https://CRAN.R-project.org/package=fairness},
-  }
-
-@article{aif360,
-  title={{AI Fairness 360}: An extensible toolkit for detecting and mitigating algorithmic bias},
-  author={Bellamy, Rachel KE and Dey, Kuntal and Hind, Michael and Hoffman, Samuel C and Houde, Stephanie and Kannan, Kalapriya and Lohia, Pranay and Martino, Jacquelyn and Mehta, Sameep and Mojsilovi{\'c}, Aleksandra and others},
-  journal={IBM Journal of Research and Development},
-  volume={63},
-  number={4/5},
-  pages={4--1},
-  year={2019},
-  publisher={IBM}
-}
-
-@Article{DALEX,
-  title = {{DALEX}: {Explainers for Complex Predictive Models} in {R}},
-  author = {Przemyslaw Biecek},
-  journal = {Journal of Machine Learning Research},
-  year = {2018},
-  volume = {19},
-  pages = {1-5},
-  number = {84},
-  url = {https://jmlr.org/papers/v19/18-416.html},
-}
-
-@book{molnar2019, title = {Interpretable Machine Learning},
-author = {Christoph Molnar},
-year = {2019},
-subtitle = {A Guide for Making Black Box Models Explainable} }
-
-@techreport{fairlearn,
-    author = {Bird, Sarah and Dud{\'i}k, Miro and Edgar, Richard and Horn, Brandon and Lutz, Roman and Milan, Vanessa and Sameki, Mehrnoosh and Wallach, Hanna and Walker, Kathleen},
-    title = {Fairlearn: A toolkit for assessing and improving fairness in {AI}},
-    institution = {Microsoft},
-    year = {2020},
-    month = {May},
-    url = "https://www.microsoft.com/en-us/research/publication/fairlearn-a-toolkit-for-assessing-and-improving-fairness-in-ai/",
-    number = {MSR-TR-2020-32},
-}
-
-@article{sklearn,
-  title={Scikit-learn: Machine learning in Python},
-  author={Pedregosa, Fabian and Varoquaux, Ga{\"e}l and Gramfort, Alexandre and Michel, Vincent and Thirion, Bertrand and Grisel, Olivier and Blondel, Mathieu and Prettenhofer, Peter and Weiss, Ron and Dubourg, Vincent and others},
-  journal={Journal of Machine Learning Research},
-  volume={12},
-  pages={2825--2830},
-  year={2011},
-  publisher={JMLR. org}
-}
-
-@misc{fairnessjl,
-  author       = {Ashrya Agrawal and Jiahao Chen and Sebastian Vollmer and Anthony Blaom},
-  title        = {Fairness.jl},
-  year         = {2020},
-  publisher    = {Zenodo},
-  version      = {v0.1.2},
-  doi          = {10.5281/zenodo.3977197},
-  url          = {https://github.com/ashryaagr/Fairness.jl}
-}
-
 @article{pfisterer2019multiobjective,
   title={Multi-Objective Automatic Machine Learning with AutoxgboostMC},
   author={Florian Pfisterer and Stefan Coors and Janek Thomas and Bernd Bischl},
   year={2019},
-  journal={arXiv preprint arXiv:1908.10796},
+  journal={arXiv:1908.10796},
 }
 
 @inproceedings{feldman2015certifying,
@@ -445,7 +398,6 @@ subtitle = {A Guide for Making Black Box Models Explainable} }
 }
 
 @article{chouldechova2017fair,
-  archivePrefix = {arXiv},
   author = {Chouldechova, Alexandra},
   doi = {10.1089/big.2016.0047},
   eprint = {1703.00056},
@@ -471,7 +423,6 @@ subtitle = {A Guide for Making Black Box Models Explainable} }
 }
 
 @inproceedings{Chen2018,
-  archivePrefix = {arXiv},
   author = {Chen, Jiahao},
   eprint = {1809.04684},
   booktitle = {Proceedings of the 2nd FATREC Workshop on Responsible Recommendation},
@@ -570,7 +521,7 @@ year = {2017}
 @article{scutari,
   title={Achieving Fairness with a Simple Ridge Penalty},
   author={Scutari, Marco and Panero, Francesca and Proissl, Manuel},
-  journal={arXiv preprint arXiv:2105.13817},
+  journal={arXiv:2105.13817},
   year={2021}
 }
 
@@ -583,24 +534,11 @@ year = {2017}
   organization={PMLR}
 }
 
-@misc{chen22,
-  doi = {10.48550/ARXIV.2202.09519},
-  url = {https://arxiv.org/abs/2202.09519},
+@article{chen22,
   author = {Watkins, Elizabeth Anne and McKenna, Michael and Chen, Jiahao},
-   title = {The four-fifths rule is not disparate impact: a woeful tale of epistemic trespassing in algorithmic fairness},
-  publisher = {arXiv},
-  year = {2022}
-}
-
-@article{fairmodels,
-  title = {fairmodels: a Flexible Tool for Bias Detection, Visualization, and Mitigation in Binary Classification Models},
-  author = {Jakub Wiśniewski and Przemysław Biecek},
+  title = {The four-fifths rule is not disparate impact: a woeful tale of epistemic trespassing in algorithmic fairness},
   year = {2022},
-  journal = {The R Journal},
-  volume = {14},
-  issue = {1},
-  pages = {227-243},
-  url = {https://rj.urbanek.nz/articles/RJ-2022-019/},
+  journal={arXiv:2202.09519},
 }
 
 @misc{mlr3book,
@@ -635,14 +573,11 @@ year = {2017}
   year = {2022}
 }
 
-@misc{friedler16,
-  url = {https://arxiv.org/abs/1609.07236},
+@article{friedler16,
   author = {Friedler, Sorelle A. and Scheidegger, Carlos and Venkatasubramanian, Suresh},
-  keywords = {Computers and Society (cs.CY), Machine Learning (stat.ML), FOS: Computer and information sciences, FOS: Computer and information sciences},
   title = {On the (im)possibility of fairness},
-  publisher = {arXiv},
   year = {2016},
-  copyright = {arXiv.org perpetual, non-exclusive license}
+  journal={arXiv:1609.07236},
 }
 
 @article{bischl2012resampling,
@@ -680,7 +615,6 @@ year = {2019},
 publisher = {Association for Computing Machinery},
 address = {New York, NY, USA},
 doi = {10.1145/3287560.3287584},
-abstract = {We map the recently proposed notions of algorithmic fairness to economic models of Equality of opportunity (EOP)---an extensively studied ideal of fairness in political philosophy. We formally show that through our conceptual mapping, many existing definition of algorithmic fairness, such as predictive value parity and equality of odds, can be interpreted as special cases of EOP. In this respect, our work serves as a unifying moral framework for understanding existing notions of algorithmic fairness. Most importantly, this framework allows us to explicitly spell out the moral assumptions underlying each notion of fairness, and interpret recent fairness impossibility results in a new light. Last but not least and inspired by luck egalitarian models of EOP, we propose a new family of measures for algorithmic fairness. We illustrate our proposal empirically and show that employing a measure of algorithmic (un)fairness when its underlying moral assumptions are not satisfied, can have devastating consequences for the disadvantaged group's welfare.},
 booktitle = {Proceedings of the Conference on Fairness, Accountability, and Transparency},
 pages = {181–190},
 numpages = {10},
@@ -705,22 +639,18 @@ series = {FAT* '19}
   year = 	 {2019},
   editor = 	 {Chaudhuri, Kamalika and Salakhutdinov, Ruslan},
   volume = 	 {97},
-  series = 	 {Proceedings of Machine Learning Research},
+  series = 	 {PMLR},
   month = 	 {09--15 Jun},
   publisher =    {PMLR},
-  pdf = 	 {http://proceedings.mlr.press/v97/aivodji19a/aivodji19a.pdf},
   url = 	 {https://proceedings.mlr.press/v97/aivodji19a.html},
   abstract = 	 {Black-box explanation is the problem of explaining how a machine learning model – whose internal logic is hidden to the auditor and generally complex – produces its outcomes. Current approaches for solving this problem include model explanation, outcome explanation as well as model inspection. While these techniques can be beneficial by providing interpretability, they can be used in a negative manner to perform fairwashing, which we define as promoting the false perception that a machine learning model respects some ethical values. In particular, we demonstrate that it is possible to systematically rationalize decisions taken by an unfair black-box model using the model explanation as well as the outcome explanation approaches with a given fairness metric. Our solution, LaundryML, is based on a regularized rule list enumeration algorithm whose objective is to search for fair rule lists approximating an unfair black-box model. We empirically evaluate our rationalization technique on black-box models trained on real-world datasets and show that one can obtain rule lists with high fidelity to the black-box model while being considerably less unfair at the same time.}
 }
 
-@misc{agrawal2020debiasing,
+@article{agrawal2020debiasing,
       title={Debiasing classifiers: is reality at variance with expectation?},
       author={Ashrya Agrawal and Florian Pfisterer and Bernd Bischl and Jiahao Chen and Srijan Sood and Sameena Shah and Francois Buet-Golfouse and Bilal A Mateen and Sebastian Vollmer},
       year={2020},
-      eprint={arXiv:2011.02407},
-      note={arXiv:2011.02407},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG}
+      journal={arXiv:2011.02407}
 }
 
 @article{cirillo2020sex,
@@ -743,4 +673,44 @@ series = {FAT* '19}
   pages={1083--1094},
   year={2022},
   publisher={Elsevier}
+}
+
+## Books
+
+@book{eubanks2018automating,
+  title={Automating inequality: How high-tech tools profile, police, and punish the poor},
+  author={Eubanks, Virginia},
+  year={2018},
+  publisher={St. Martin's Press}
+}
+
+@book{o2016weapons,
+  title={Weapons of Math Destruction: How Big Data Increases Inequality and Threatens Democracy},
+  author={O'neil, Cathy},
+  year={2016},
+  publisher={Crown}
+}
+
+@book{noble2018algorithms,
+  title={Algorithms of Oppression},
+  author={Noble, Safiya Umoja},
+  year={2018},
+  publisher={New York University Press}
+}
+
+@book{fairmlbook,
+  title = {Fairness and Machine Learning},
+  author = {Solon Barocas and Moritz Hardt and Arvind Narayanan},
+  publisher = {fairmlbook.org},
+  year = {2019}
+}
+
+@book{molnar2019, 
+title = {Interpretable Machine Learning},
+author = {Christoph Molnar},
+year = {2022},
+edition    = {2},
+url        = {https://christophm.github.io/interpretable-ml-book},
+subtitle = {A Guide for Making Black Box Models Explainable},
+publisher = {}
 }

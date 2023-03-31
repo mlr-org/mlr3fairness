@@ -15,9 +15,8 @@ A.~Agrawal, J.~Chen, S.~Vollmer, and A.~Blaom.
   Sood, Shah, Buet-Golfouse, Mateen, and Vollmer]{agrawal2020debiasing}
 A.~Agrawal, F.~Pfisterer, B.~Bischl, J.~Chen, S.~Sood, S.~Shah,
   F.~Buet-Golfouse, B.~A. Mateen, and S.~Vollmer.
-\newblock Debiasing classifiers: is reality at variance with expectation?,
-  2020{\natexlab{b}}.
-\newblock arXiv:2011.02407.
+\newblock Debiasing classifiers: is reality at variance with expectation?
+\newblock \emph{arXiv:2011.02407}, 2020{\natexlab{b}}.
 
 \bibitem[Aivodji et~al.(2019)Aivodji, Arai, Fortineau, Gambs, Hara, and
   Tapp]{fairwashing}
@@ -48,7 +47,6 @@ M.~Bao, A.~Zhou, S.~A. Zottola, B.~Brubach, S.~Desmarais, A.~S. Horowitz,
 S.~Barocas, M.~Hardt, and A.~Narayanan.
 \newblock \emph{Fairness and Machine Learning}.
 \newblock fairmlbook.org, 2019.
-\newblock \url{http://www.fairmlbook.org}.
 
 \bibitem[Becker et~al.(2022)Becker, Binder, Foss, Kotthoff, Lang, Pfisterer,
   Reich, Richter, Schratz, Sonabend, Pulatov, and Bischl]{mlr3book}
@@ -161,7 +159,7 @@ D.~Cirillo, S.~Catuara-Solarz, C.~Morey, E.~Guney, L.~Subirats, S.~Mellino,
 S.~Corbett-Davies and S.~Goel.
 \newblock The measure and mismeasure of fairness: A critical review of fair
   machine learning.
-\newblock \emph{arXiv preprint arXiv:1808.00023}, 2018.
+\newblock \emph{arXiv:1808.00023}, 2018.
 
 \bibitem[Corbett-Davies et~al.(2017)Corbett-Davies, Pierson, Feller, Goel, and
   Huq]{corbettcompas}
@@ -200,8 +198,8 @@ V.~Eubanks.
 \bibitem[Friedler et~al.(2016)Friedler, Scheidegger, and
   Venkatasubramanian]{friedler16}
 S.~A. Friedler, C.~Scheidegger, and S.~Venkatasubramanian.
-\newblock On the (im)possibility of fairness, 2016.
-\newblock URL \url{https://arxiv.org/abs/1609.07236}.
+\newblock On the (im)possibility of fairness.
+\newblock \emph{arXiv:1609.07236}, 2016.
 
 \bibitem[Galindo and Tamayo(2000)]{galindo2000credit}
 J.~Galindo and P.~Tamayo.
@@ -355,16 +353,15 @@ E.~Polley, E.~LeDell, C.~Kennedy, and M.~{van der Laan}.
 P.~Saleiro, B.~Kuester, L.~Hinkson, J.~London, A.~Stevens, A.~Anisfeld, K.~T.
   Rodolfa, and R.~Ghani.
 \newblock Aequitas: A bias and fairness audit toolkit.
-\newblock \emph{arXiv preprint arXiv:1811.05577}, 2018.
+\newblock \emph{arXiv:1811.05577}, 2018.
 
 \bibitem[Schumann et~al.(2020)Schumann, Foster, Mattei, and
   Dickerson]{schumann}
 C.~Schumann, J.~S. Foster, N.~Mattei, and J.~P. Dickerson.
 \newblock We need fairness and explainability in algorithmic hiring.
 \newblock In \emph{Proceedings of the 19th International Conference on
-  Autonomous Agents and MultiAgent Systems}, AAMAS '20, page 1716–1720,
-  Richland, SC, 2020. International Foundation for Autonomous Agents and
-  Multiagent Systems.
+  Autonomous Agents and MultiAgent Systems}, AAMAS '20, page 1716–1720.
+  International Foundation for Autonomous Agents and Multiagent Systems, 2020.
 
 \bibitem[Schwöbel and Remmers(2022)]{schwobel-facct22a}
 P.~Schwöbel and P.~Remmers.
@@ -375,7 +372,7 @@ P.~Schwöbel and P.~Remmers.
 \bibitem[Scutari et~al.(2021)Scutari, Panero, and Proissl]{scutari}
 M.~Scutari, F.~Panero, and M.~Proissl.
 \newblock Achieving fairness with a simple ridge penalty.
-\newblock \emph{arXiv preprint arXiv:2105.13817}, 2021.
+\newblock \emph{arXiv:2105.13817}, 2021.
 
 \bibitem[Sonabend et~al.(2021)Sonabend, Király, Bender, Bischl, and
   Lang]{mlr3proba}
@@ -386,7 +383,7 @@ R.~Sonabend, F.~J. Király, A.~Bender, B.~Bischl, and M.~Lang.
 
 \bibitem[Topol(2019)]{Topol2019}
 E.~J. Topol.
-\newblock High-performance medicine: the convergence of human and artificial
+\newblock High-performance medicine: The convergence of human and artificial
   intelligence.
 \newblock \emph{Nature Medicine}, 25\penalty0 (1):\penalty0 44--56, 2019.
 \newblock \doi{10.1038/s41591-018-0300-7}.
@@ -419,8 +416,8 @@ S.~Wachter, B.~Mittelstadt, and C.~Russell.
 \bibitem[Watkins et~al.(2022)Watkins, McKenna, and Chen]{chen22}
 E.~A. Watkins, M.~McKenna, and J.~Chen.
 \newblock The four-fifths rule is not disparate impact: a woeful tale of
-  epistemic trespassing in algorithmic fairness, 2022.
-\newblock URL \url{https://arxiv.org/abs/2202.09519}.
+  epistemic trespassing in algorithmic fairness.
+\newblock \emph{arXiv:2202.09519}, 2022.
 
 \bibitem[Wiśniewski and Biecek(2022)]{fairmodels}
 J.~Wiśniewski and P.~Biecek.
