@@ -24,8 +24,7 @@ U.~Aivodji, H.~Arai, O.~Fortineau, S.~Gambs, S.~Hara, and A.~Tapp.
 \newblock Fairwashing: the risk of rationalization.
 \newblock In K.~Chaudhuri and R.~Salakhutdinov, editors, \emph{Proceedings of
   the 36th International Conference on Machine Learning}, volume~97 of
-  \emph{Proceedings of Machine Learning Research}, pages 161--170. PMLR, 09--15
-  Jun 2019.
+  \emph{PMLR}, pages 161--170. PMLR, 09--15 Jun 2019.
 \newblock URL \url{https://proceedings.mlr.press/v97/aivodji19a.html}.
 
 \bibitem[Angwin et~al.(2016)Angwin, Larson, Mattu, and Kichner]{compas}
@@ -90,8 +89,8 @@ M.~Binder, F.~Pfisterer, M.~Lang, L.~Schneider, L.~Kotthoff, and B.~Bischl.
 \bibitem[Binns(2020)]{binns2020apparent}
 R.~Binns.
 \newblock On the apparent conflict between individual and group fairness.
-\newblock In \emph{Proceedings of the 2020 Conference on Fairness,
-  Accountability, and Transparency}, FAT* '20, pages 514--524, 2020.
+\newblock In \emph{Proceedings of the Conference on Fairness, Accountability,
+  and Transparency}, pages 514--524, 2020.
 
 \bibitem[Bird et~al.(2020)Bird, Dud{\'i}k, Edgar, Horn, Lutz, Milan, Sameki,
   Wallach, and Walker]{fairlearn}
@@ -123,8 +122,8 @@ B.~Bischl, M.~Lang, L.~Kotthoff, J.~Schiffner, J.~Richter, E.~Studerus,
 J.~Buolamwini and T.~Gebru.
 \newblock {Gender shades: Intersectional accuracy disparities in commercial
   gender classification}.
-\newblock In \emph{Conference on Fairness, Accountability, and Transparency},
-  pages 77--91. PMLR, 2018.
+\newblock In \emph{Proceedings of the Conference on Fairness, Accountability,
+  and Transparency}, pages 77--91. PMLR, 2018.
 
 \bibitem[Calders and Verwer(2010)]{Calders2010}
 T.~Calders and S.~Verwer.
@@ -168,9 +167,7 @@ S.~Corbett-Davies, E.~Pierson, A.~Feller, S.~Goel, and A.~Huq.
 \newblock In \emph{Proceedings of the 23rd ACM SIGKDD International Conference
   on Knowledge Discovery and Data Mining}, KDD '17, page 797–806, New York,
   NY, USA, 2017. Association for Computing Machinery.
-\newblock ISBN 9781450348874.
 \newblock \doi{10.1145/3097983.3098095}.
-\newblock URL \url{https://doi.org/10.1145/3097983.3098095}.
 
 \bibitem[Dawes et~al.(1989)Dawes, Faust, and Meehl]{dawes1989clinical}
 R.~M. Dawes, D.~Faust, and P.~E. Meehl.
@@ -219,7 +216,7 @@ T.~Gebru, J.~Morgenstern, B.~Vecchione, J.~W. Vaughan, H.~Wallach, H.~D. Iii,
 \bibitem[Hardt et~al.(2016)Hardt, Price, and Srebro]{hardt2016equality}
 M.~Hardt, E.~Price, and N.~Srebro.
 \newblock Equality of opportunity in supervised learning.
-\newblock \emph{Advances in neural information processing systems},
+\newblock \emph{Advances in Neural Information Processing Systems},
   29:\penalty0 3315--3323, 2016.
 
 \bibitem[Kamiran and Calders(2012)]{kamiran2012data}
@@ -294,8 +291,8 @@ M.~Mitchell, S.~Wu, A.~Zaldivar, P.~Barnes, L.~Vasserman, B.~Hutchinson,
   E.~Spitzer, I.~D. Raji, and T.~Gebru.
 \newblock Model cards for model reporting.
 \newblock In \emph{Proceedings of the Conference on Fairness, Accountability,
-  and Transparency}, FAT* '19, page 220–229, New York, NY, USA, 2019.
-  Association for Computing Machinery.
+  and Transparency}, page 220–229, New York, NY, USA, 2019. PMLR, Association
+  for Computing Machinery.
 \newblock \doi{10.1145/3287560.3287596}.
 
 \bibitem[Mitchell et~al.(2021)Mitchell, Potash, Barocas, D'Amour, and
@@ -339,7 +336,7 @@ F.~Pfisterer, C.~Kern, S.~Dandl, M.~Sun, M.~P. Kim, and B.~Bischl.
 \newblock \emph{Journal of Open Source Software}, 6\penalty0 (64):\penalty0
   3453, 2021.
 \newblock \doi{10.21105/joss.03453}.
-\newblock URL \url{https://github.com/mlr-org/mcboost}.
+\newblock URL \url{https://doi.org/10.21105/joss.03453}.
 
 \bibitem[Polley et~al.(2021)Polley, LeDell, Kennedy, and {van der
   Laan}]{superlearner}
@@ -367,7 +364,7 @@ C.~Schumann, J.~S. Foster, N.~Mattei, and J.~P. Dickerson.
 P.~Schwöbel and P.~Remmers.
 \newblock The long arc of fairness: Formalisations and ethical discourse.
 \newblock In \emph{Proceedings of the Conference on Fairness, Accountability,
-  and Transparency (FAccT’22)}, 2022.
+  and Transparency}, 2022.
 
 \bibitem[Scutari et~al.(2021)Scutari, Panero, and Proissl]{scutari}
 M.~Scutari, F.~Panero, and M.~Proissl.

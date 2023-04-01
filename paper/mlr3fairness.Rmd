@@ -248,7 +248,8 @@ Secondly, only requiring fairness might lead to degenerate solutions [@corbett20
 One approach to take this into account is to employ models which maximize utility but satisfy some maximum constraint on potential unfairness.
 This can be achieved via constraints on the employed fairness measure, e.g. $|\Delta_M| \leq \epsilon$ requiring that the absolute difference in a metric $M$ between groups
 is smaller than a chosen value $\epsilon$.
-In the following, we denote the fairness metric we want to minimize with $\Delta_M$ and a strictly positive performance metric with $\rho$ (assuming the latter should be maximized)
+In the following, we denote the fairness metric we want to minimize with $\Delta_M$ and a performance metric with $\rho$. 
+
 \[
   \rho_{|\Delta_M| \leq \epsilon} = \left\{
 \begin{array}{ll}
@@ -258,8 +259,10 @@ In the following, we denote the fairness metric we want to minimize with $\Delta
 \right.
 \]
 
-This approach has, e.g., been employed by [@perrone2021fair] as the objective of an AutoML system.
-It is not immediately clear, how the constraint $\epsilon$ should be chosen.
+Note, that this assumes that the fairness metric $\rho$ is strictly positive and should be maximized.
+This approach is similar in spirit to the approach of [@perrone2021fair] who optimize the constrained expected improvement $cEI = \mathbb{P}(|\Delta_M| \leq \epsilon) \cdot \rho$.
+
+However, it is not immediately clear, how the constraint $\epsilon$ should be chosen.
 An alternative, therefore, is to employ *multi-objective optimization* to investigate available trade-offs between performance and accuracy metrics.
 This can be done via \CRANpkg{mlr3tuning} which contains functionality to tune models for multiple metrics, described in more detail in the [mlr3book](https://mlr3book.mlr-org.com/optimization.html#mult-measures-tuning).
 The result of the optimization is the *Pareto-set*: A list of models which optimally trade off the specified objectives.
