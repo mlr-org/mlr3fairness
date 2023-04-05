@@ -1,67 +1,9 @@
-\begin{thebibliography}{61}
+\begin{thebibliography}{12}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
-
-\bibitem[Agrawal et~al.(2020{\natexlab{a}})Agrawal, Chen, Vollmer, and
-  Blaom]{fairnessjl}
-A.~Agrawal, J.~Chen, S.~Vollmer, and A.~Blaom.
-\newblock Fairness.jl, 2020{\natexlab{a}}.
-\newblock URL \url{https://github.com/ashryaagr/Fairness.jl}.
-
-\bibitem[Agrawal et~al.(2020{\natexlab{b}})Agrawal, Pfisterer, Bischl, Chen,
-  Sood, Shah, Buet-Golfouse, Mateen, and Vollmer]{agrawal2020debiasing}
-A.~Agrawal, F.~Pfisterer, B.~Bischl, J.~Chen, S.~Sood, S.~Shah,
-  F.~Buet-Golfouse, B.~A. Mateen, and S.~Vollmer.
-\newblock Debiasing classifiers: is reality at variance with expectation?
-\newblock \emph{arXiv:2011.02407}, 2020{\natexlab{b}}.
-
-\bibitem[Aivodji et~al.(2019)Aivodji, Arai, Fortineau, Gambs, Hara, and
-  Tapp]{fairwashing}
-U.~Aivodji, H.~Arai, O.~Fortineau, S.~Gambs, S.~Hara, and A.~Tapp.
-\newblock Fairwashing: the risk of rationalization.
-\newblock In K.~Chaudhuri and R.~Salakhutdinov, editors, \emph{Proceedings of
-  the 36th International Conference on Machine Learning}, volume~97 of
-  \emph{PMLR}, pages 161--170. PMLR, 09--15 Jun 2019.
-\newblock URL \url{https://proceedings.mlr.press/v97/aivodji19a.html}.
-
-\bibitem[Angwin et~al.(2016)Angwin, Larson, Mattu, and Kichner]{compas}
-J.~Angwin, J.~Larson, S.~Mattu, and L.~Kichner.
-\newblock Machine bias, May 2016.
-\newblock URL
-  \url{https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing}.
-
-\bibitem[Bao et~al.(2021)Bao, Zhou, Zottola, Brubach, Desmarais, Horowitz, Lum,
-  and Venkatasubramanian]{bao2021s}
-M.~Bao, A.~Zhou, S.~A. Zottola, B.~Brubach, S.~Desmarais, A.~S. Horowitz,
-  K.~Lum, and S.~Venkatasubramanian.
-\newblock It's compaslicated: The messy relationship between rai datasets and
-  algorithmic fairness benchmarks.
-\newblock In \emph{Thirty-fifth Conference on Neural Information Processing
-  Systems Datasets and Benchmarks Track (Round 1)}, 2021.
-
-\bibitem[Barocas et~al.(2019)Barocas, Hardt, and Narayanan]{fairmlbook}
-S.~Barocas, M.~Hardt, and A.~Narayanan.
-\newblock \emph{Fairness and Machine Learning}.
-\newblock fairmlbook.org, 2019.
-
-\bibitem[Becker et~al.(2022)Becker, Binder, Foss, Kotthoff, Lang, Pfisterer,
-  Reich, Richter, Schratz, Sonabend, Pulatov, and Bischl]{mlr3book}
-M.~Becker, M.~Binder, N.~Foss, L.~Kotthoff, M.~Lang, F.~Pfisterer, N.~G. Reich,
-  J.~Richter, P.~Schratz, R.~Sonabend, D.~Pulatov, and B.~Bischl.
-\newblock mlr3book, 09 2022.
-\newblock URL \url{https://mlr3book.mlr-org.com}.
-
-\bibitem[Bellamy et~al.(2019)Bellamy, Dey, Hind, Hoffman, Houde, Kannan, Lohia,
-  Martino, Mehta, Mojsilovi{\'c}, et~al.]{aif360}
-R.~K. Bellamy, K.~Dey, M.~Hind, S.~C. Hoffman, S.~Houde, K.~Kannan, P.~Lohia,
-  J.~Martino, S.~Mehta, A.~Mojsilovi{\'c}, et~al.
-\newblock {AI Fairness 360}: An extensible toolkit for detecting and mitigating
-  algorithmic bias.
-\newblock \emph{IBM Journal of Research and Development}, 63\penalty0
-  (4/5):\penalty0 4--1, 2019.
 
 \bibitem[Berk et~al.(2018)Berk, Heidari, Jabbari, Kearns, and
   Roth]{richardcompas}
@@ -70,53 +12,6 @@ R.~Berk, H.~Heidari, S.~Jabbari, M.~Kearns, and A.~Roth.
   Art}.
 \newblock \emph{Sociological Methods \& Research}, Aug. 2018.
 \newblock \doi{10.1177/0049124118782533}.
-
-\bibitem[Biecek(2018)]{dalex}
-P.~Biecek.
-\newblock {DALEX}: {Explainers for Complex Predictive Models} in {R}.
-\newblock \emph{Journal of Machine Learning Research}, 19\penalty0
-  (84):\penalty0 1--5, 2018.
-\newblock URL \url{https://jmlr.org/papers/v19/18-416.html}.
-
-\bibitem[Binder et~al.(2021)Binder, Pfisterer, Lang, Schneider, Kotthoff, and
-  Bischl]{mlr3pipelines}
-M.~Binder, F.~Pfisterer, M.~Lang, L.~Schneider, L.~Kotthoff, and B.~Bischl.
-\newblock {mlr3pipelines - Flexible Machine Learning Pipelines in R}.
-\newblock \emph{Journal of Machine Learning Research}, 22\penalty0
-  (184):\penalty0 1--7, 2021.
-\newblock URL \url{https://jmlr.org/papers/v22/21-0281.html}.
-
-\bibitem[Binns(2020)]{binns2020apparent}
-R.~Binns.
-\newblock On the apparent conflict between individual and group fairness.
-\newblock In \emph{Proceedings of the Conference on Fairness, Accountability,
-  and Transparency}, pages 514--524, 2020.
-
-\bibitem[Bird et~al.(2020)Bird, Dud{\'i}k, Edgar, Horn, Lutz, Milan, Sameki,
-  Wallach, and Walker]{fairlearn}
-S.~Bird, M.~Dud{\'i}k, R.~Edgar, B.~Horn, R.~Lutz, V.~Milan, M.~Sameki,
-  H.~Wallach, and K.~Walker.
-\newblock Fairlearn: A toolkit for assessing and improving fairness in {AI}.
-\newblock Technical Report MSR-TR-2020-32, Microsoft, May 2020.
-\newblock URL
-  \url{https://www.microsoft.com/en-us/research/publication/fairlearn-a-toolkit-for-assessing-and-improving-fairness-in-ai/}.
-
-\bibitem[Bischl et~al.(2012)Bischl, Mersmann, Trautmann, and
-  Weihs]{bischl2012resampling}
-B.~Bischl, O.~Mersmann, H.~Trautmann, and C.~Weihs.
-\newblock Resampling methods for meta-model validation with recommendations for
-  evolutionary computation.
-\newblock \emph{Evolutionary Computation}, 20\penalty0 (2):\penalty0 249--275,
-  2012.
-
-\bibitem[Bischl et~al.(2016)Bischl, Lang, Kotthoff, Schiffner, Richter,
-  Studerus, Casalicchio, and Jones]{mlr}
-B.~Bischl, M.~Lang, L.~Kotthoff, J.~Schiffner, J.~Richter, E.~Studerus,
-  G.~Casalicchio, and Z.~M. Jones.
-\newblock mlr: Machine learning in {R}.
-\newblock \emph{Journal of Machine Learning Research}, 17\penalty0
-  (170):\penalty0 1--5, 2016.
-\newblock URL \url{https://jmlr.org/papers/v17/15-066.html}.
 
 \bibitem[Buolamwini and Gebru(2018)]{gendershades}
 J.~Buolamwini and T.~Gebru.
@@ -133,77 +28,12 @@ T.~Calders and S.~Verwer.
   277--292, 2010.
 \newblock \doi{10.1007/s10618-010-0190-x}.
 
-\bibitem[Chen(2018)]{Chen2018}
-J.~Chen.
-\newblock Fair lending needs explainable models for responsible recommendation.
-\newblock In \emph{Proceedings of the 2nd FATREC Workshop on Responsible
-  Recommendation}, Sept. 2018.
-
 \bibitem[Chouldechova(2017)]{chouldechova2017fair}
 A.~Chouldechova.
 \newblock Fair prediction with disparate impact: A study of bias in recidivism
   prediction instruments.
 \newblock \emph{Big Data}, 5\penalty0 (2):\penalty0 153--163, June 2017.
 \newblock \doi{10.1089/big.2016.0047}.
-
-\bibitem[Cirillo et~al.(2020)Cirillo, Catuara-Solarz, Morey, Guney, Subirats,
-  Mellino, Gigante, Valencia, Rementeria, Chadha, et~al.]{cirillo2020sex}
-D.~Cirillo, S.~Catuara-Solarz, C.~Morey, E.~Guney, L.~Subirats, S.~Mellino,
-  A.~Gigante, A.~Valencia, M.~J. Rementeria, A.~S. Chadha, et~al.
-\newblock Sex and gender differences and biases in artificial intelligence for
-  biomedicine and healthcare.
-\newblock \emph{NPJ digital medicine}, 3\penalty0 (1):\penalty0 1--11, 2020.
-
-\bibitem[Corbett-Davies and Goel(2018)]{corbett2018measure}
-S.~Corbett-Davies and S.~Goel.
-\newblock The measure and mismeasure of fairness: A critical review of fair
-  machine learning.
-\newblock \emph{arXiv:1808.00023}, 2018.
-
-\bibitem[Corbett-Davies et~al.(2017)Corbett-Davies, Pierson, Feller, Goel, and
-  Huq]{corbettcompas}
-S.~Corbett-Davies, E.~Pierson, A.~Feller, S.~Goel, and A.~Huq.
-\newblock Algorithmic decision making and the cost of fairness.
-\newblock In \emph{Proceedings of the 23rd ACM SIGKDD International Conference
-  on Knowledge Discovery and Data Mining}, KDD '17, page 797–806, New York,
-  NY, USA, 2017. Association for Computing Machinery.
-\newblock \doi{10.1145/3097983.3098095}.
-
-\bibitem[Dawes et~al.(1989)Dawes, Faust, and Meehl]{dawes1989clinical}
-R.~M. Dawes, D.~Faust, and P.~E. Meehl.
-\newblock Clinical versus actuarial judgment.
-\newblock \emph{Science}, 243\penalty0 (4899):\penalty0 1668--1674, 1989.
-
-\bibitem[Dua and Graff(2017)]{uci}
-D.~Dua and C.~Graff.
-\newblock {UCI} machine learning repository, 2017.
-\newblock URL \url{http://archive.ics.uci.edu/ml}.
-
-\bibitem[Dwork et~al.(2012)Dwork, Hardt, Pitassi, Reingold, and
-  Zemel]{dwork2012}
-C.~Dwork, M.~Hardt, T.~Pitassi, O.~Reingold, and R.~Zemel.
-\newblock Fairness through awareness.
-\newblock In \emph{Proceedings of the 3rd Innovations in Theoretical Computer
-  Science Conference}, pages 214--226, 2012.
-
-\bibitem[Eubanks(2018)]{eubanks2018automating}
-V.~Eubanks.
-\newblock \emph{Automating inequality: How high-tech tools profile, police, and
-  punish the poor}.
-\newblock St. Martin's Press, 2018.
-
-\bibitem[Friedler et~al.(2016)Friedler, Scheidegger, and
-  Venkatasubramanian]{friedler16}
-S.~A. Friedler, C.~Scheidegger, and S.~Venkatasubramanian.
-\newblock On the (im)possibility of fairness.
-\newblock \emph{arXiv:1609.07236}, 2016.
-
-\bibitem[Galindo and Tamayo(2000)]{galindo2000credit}
-J.~Galindo and P.~Tamayo.
-\newblock Credit risk assessment using statistical and machine learning: basic
-  methodology and risk modeling applications.
-\newblock \emph{Computational Economics}, 15\penalty0 (1):\penalty0 107--143,
-  2000.
 
 \bibitem[Gebru et~al.(2021)Gebru, Morgenstern, Vecchione, Vaughan, Wallach,
   Iii, and Crawford]{datasheets}
@@ -226,64 +56,11 @@ F.~Kamiran and T.~Calders.
 \newblock \emph{Knowledge and Information Systems}, 33\penalty0 (1):\penalty0
   1--33, 2012.
 
-\bibitem[Kilbertus et~al.(2017)Kilbertus, Rojas~Carulla, Parascandolo, Hardt,
-  Janzing, and Sch{\"o}lkopf]{kilbertus2017avoiding}
-N.~Kilbertus, M.~Rojas~Carulla, G.~Parascandolo, M.~Hardt, D.~Janzing, and
-  B.~Sch{\"o}lkopf.
-\newblock Avoiding discrimination through causal reasoning.
-\newblock \emph{Advances in Neural Information Processing Systems}, 30, 2017.
-
-\bibitem[Kim et~al.(2020)Kim, Chen, and Talwalkar]{kim2020fact}
-J.~S. Kim, J.~Chen, and A.~Talwalkar.
-\newblock Fact: A diagnostic for group fairness trade-offs.
-\newblock In \emph{International Conference on Machine Learning}, pages
-  5264--5274. PMLR, 2020.
-
 \bibitem[Komiyama et~al.(2018)Komiyama, Takeda, Honda, and Shimao]{komiyama}
 J.~Komiyama, A.~Takeda, J.~Honda, and H.~Shimao.
 \newblock Nonconvex optimization for regression with fairness constraints.
-\newblock In \emph{International Conference on Machine Learning}, pages
-  2737--2746. PMLR, 2018.
-
-\bibitem[Kozodoi and {V. Varga}(2021)]{fairness}
-N.~Kozodoi and T.~{V. Varga}.
-\newblock \emph{fairness: Algorithmic Fairness Metrics}, 2021.
-\newblock URL \url{https://CRAN.R-project.org/package=fairness}.
-\newblock R package version 1.2.1.
-
-\bibitem[Kozodoi et~al.(2022)Kozodoi, Jacob, and Lessmann]{kozodoi2022fairness}
-N.~Kozodoi, J.~Jacob, and S.~Lessmann.
-\newblock Fairness in credit scoring: Assessment, implementation and profit
-  implications.
-\newblock \emph{European Journal of Operational Research}, 297\penalty0
-  (3):\penalty0 1083--1094, 2022.
-
-\bibitem[Kuhn(2021)]{caret}
-M.~Kuhn.
-\newblock \emph{caret: Classification and Regression Training}, 2021.
-\newblock URL \url{https://CRAN.R-project.org/package=caret}.
-\newblock R package version 6.0-88.
-
-\bibitem[Kuhn and Wickham(2020)]{tidymodels}
-M.~Kuhn and H.~Wickham.
-\newblock \emph{Tidymodels: a collection of packages for modeling and machine
-  learning using tidyverse principles.}, 2020.
-\newblock URL \url{https://www.tidymodels.org}.
-
-\bibitem[Lang et~al.(2019)Lang, Binder, Richter, Schratz, Pfisterer, Coors, Au,
-  Casalicchio, Kotthoff, and Bischl]{mlr3}
-M.~Lang, M.~Binder, J.~Richter, P.~Schratz, F.~Pfisterer, S.~Coors, Q.~Au,
-  G.~Casalicchio, L.~Kotthoff, and B.~Bischl.
-\newblock {mlr3}: A modern object-oriented machine learning framework in {R}.
-\newblock \emph{Journal of Open Source Software}, dec 2019.
-\newblock \doi{10.21105/joss.01903}.
-
-\bibitem[Mehrabi et~al.(2021)Mehrabi, Morstatter, Saxena, Lerman, and
-  Galstyan]{mehrabi}
-N.~Mehrabi, F.~Morstatter, N.~Saxena, K.~Lerman, and A.~Galstyan.
-\newblock A survey on bias and fairness in machine learning.
-\newblock \emph{ACM Computing Surveys (CSUR)}, 54\penalty0 (6):\penalty0 1--35,
-  2021.
+\newblock In \emph{International Conference on Machine Learning}, PMLR, pages
+  2737--2746, 2018.
 
 \bibitem[Mitchell et~al.(2019)Mitchell, Wu, Zaldivar, Barnes, Vasserman,
   Hutchinson, Spitzer, Raji, and Gebru]{modelcards}
@@ -295,32 +72,6 @@ M.~Mitchell, S.~Wu, A.~Zaldivar, P.~Barnes, L.~Vasserman, B.~Hutchinson,
   for Computing Machinery.
 \newblock \doi{10.1145/3287560.3287596}.
 
-\bibitem[Mitchell et~al.(2021)Mitchell, Potash, Barocas, D'Amour, and
-  Lum]{mitchell2021algorithmic}
-S.~Mitchell, E.~Potash, S.~Barocas, A.~D'Amour, and K.~Lum.
-\newblock {Algorithmic fairness: Choices, assumptions, and definitions}.
-\newblock \emph{Annual Review of Statistics and Its Application}, 8:\penalty0
-  141--163, 2021.
-
-\bibitem[Noble(2018)]{noble2018algorithms}
-S.~U. Noble.
-\newblock \emph{Algorithms of Oppression}.
-\newblock New York University Press, 2018.
-
-\bibitem[O'neil(2016)]{o2016weapons}
-C.~O'neil.
-\newblock \emph{Weapons of Math Destruction: How Big Data Increases Inequality
-  and Threatens Democracy}.
-\newblock Crown, 2016.
-
-\bibitem[Pedregosa et~al.(2011)Pedregosa, Varoquaux, Gramfort, Michel, Thirion,
-  Grisel, Blondel, Prettenhofer, Weiss, Dubourg, et~al.]{sklearn}
-F.~Pedregosa, G.~Varoquaux, A.~Gramfort, V.~Michel, B.~Thirion, O.~Grisel,
-  M.~Blondel, P.~Prettenhofer, R.~Weiss, V.~Dubourg, et~al.
-\newblock Scikit-learn: Machine learning in python.
-\newblock \emph{Journal of Machine Learning Research}, 12:\penalty0 2825--2830,
-  2011.
-
 \bibitem[Perrone et~al.(2021)Perrone, Donini, Zafar, Schmucker, Kenthapadi, and
   Archambeau]{perrone2021fair}
 V.~Perrone, M.~Donini, M.~B. Zafar, R.~Schmucker, K.~Kenthapadi, and
@@ -329,105 +80,10 @@ V.~Perrone, M.~Donini, M.~B. Zafar, R.~Schmucker, K.~Kenthapadi, and
 \newblock In \emph{Proceedings of the 2021 AAAI/ACM Conference on AI, Ethics,
   and Society}, pages 854--863, 2021.
 
-\bibitem[Pfisterer et~al.(2021)Pfisterer, Kern, Dandl, Sun, Kim, and
-  Bischl]{mcboost}
-F.~Pfisterer, C.~Kern, S.~Dandl, M.~Sun, M.~P. Kim, and B.~Bischl.
-\newblock mcboost: Multi-calibration boosting for {R}.
-\newblock \emph{Journal of Open Source Software}, 6\penalty0 (64):\penalty0
-  3453, 2021.
-\newblock \doi{10.21105/joss.03453}.
-\newblock URL \url{https://doi.org/10.21105/joss.03453}.
-
-\bibitem[Polley et~al.(2021)Polley, LeDell, Kennedy, and {van der
-  Laan}]{superlearner}
-E.~Polley, E.~LeDell, C.~Kennedy, and M.~{van der Laan}.
-\newblock \emph{SuperLearner: Super Learner Prediction}, 2021.
-\newblock URL \url{https://CRAN.R-project.org/package=SuperLearner}.
-\newblock R package version 2.0-28.
-
-\bibitem[Saleiro et~al.(2018)Saleiro, Kuester, Hinkson, London, Stevens,
-  Anisfeld, Rodolfa, and Ghani]{saleiro2018aequitas}
-P.~Saleiro, B.~Kuester, L.~Hinkson, J.~London, A.~Stevens, A.~Anisfeld, K.~T.
-  Rodolfa, and R.~Ghani.
-\newblock Aequitas: A bias and fairness audit toolkit.
-\newblock \emph{arXiv:1811.05577}, 2018.
-
-\bibitem[Schumann et~al.(2020)Schumann, Foster, Mattei, and
-  Dickerson]{schumann}
-C.~Schumann, J.~S. Foster, N.~Mattei, and J.~P. Dickerson.
-\newblock We need fairness and explainability in algorithmic hiring.
-\newblock In \emph{Proceedings of the 19th International Conference on
-  Autonomous Agents and MultiAgent Systems}, AAMAS '20, page 1716–1720.
-  International Foundation for Autonomous Agents and Multiagent Systems, 2020.
-
-\bibitem[Schwöbel and Remmers(2022)]{schwobel-facct22a}
-P.~Schwöbel and P.~Remmers.
-\newblock The long arc of fairness: Formalisations and ethical discourse.
-\newblock In \emph{Proceedings of the Conference on Fairness, Accountability,
-  and Transparency}, 2022.
-
 \bibitem[Scutari et~al.(2021)Scutari, Panero, and Proissl]{scutari}
 M.~Scutari, F.~Panero, and M.~Proissl.
 \newblock Achieving fairness with a simple ridge penalty.
 \newblock \emph{arXiv:2105.13817}, 2021.
-
-\bibitem[Sonabend et~al.(2021)Sonabend, Király, Bender, Bischl, and
-  Lang]{mlr3proba}
-R.~Sonabend, F.~J. Király, A.~Bender, B.~Bischl, and M.~Lang.
-\newblock {mlr3proba: An R Package for Machine Learning in Survival Analysis}.
-\newblock \emph{Bioinformatics}, 02 2021.
-\newblock \doi{10.1093/bioinformatics/btab039}.
-
-\bibitem[Topol(2019)]{Topol2019}
-E.~J. Topol.
-\newblock High-performance medicine: The convergence of human and artificial
-  intelligence.
-\newblock \emph{Nature Medicine}, 25\penalty0 (1):\penalty0 44--56, 2019.
-\newblock \doi{10.1038/s41591-018-0300-7}.
-
-\bibitem[Turner and McBurnett(2019)]{Turner2019}
-M.~Turner and M.~McBurnett.
-\newblock Predictive models with explanatory concepts: a general framework for
-  explaining machine learning credit risk models that simultaneously increases
-  predictive power.
-\newblock In \emph{Proceedings of the 15th Credit Scoring and Credit Control
-  Conference}, 2019.
-\newblock URL
-  \url{https://crc.business-school.ed.ac.uk/wp-content/uploads/sites/55/2019/07/C12-Predictive-Models-with-Explanatory-Concepts-McBurnett.pdf}.
-
-\bibitem[Vanschoren et~al.(2014)Vanschoren, van Rijn, Bischl, and
-  Torgo]{Vanschoren2014}
-J.~Vanschoren, J.~N. van Rijn, B.~Bischl, and L.~Torgo.
-\newblock {OpenML}.
-\newblock \emph{{ACM} {SIGKDD} Explorations Newsletter}, 15\penalty0
-  (2):\penalty0 49--60, June 2014.
-\newblock \doi{10.1145/2641190.2641198}.
-
-\bibitem[Wachter et~al.(2020)Wachter, Mittelstadt, and
-  Russell]{wachter-vlr2020}
-S.~Wachter, B.~Mittelstadt, and C.~Russell.
-\newblock Bias preservation in machine learning: the legality of fairness
-  metrics under {EU} non-discrimination law.
-\newblock \emph{West Virginia Law Review}, 123, 2020.
-
-\bibitem[Watkins et~al.(2022)Watkins, McKenna, and Chen]{chen22}
-E.~A. Watkins, M.~McKenna, and J.~Chen.
-\newblock The four-fifths rule is not disparate impact: a woeful tale of
-  epistemic trespassing in algorithmic fairness.
-\newblock \emph{arXiv:2202.09519}, 2022.
-
-\bibitem[Wiśniewski and Biecek(2022)]{fairmodels}
-J.~Wiśniewski and P.~Biecek.
-\newblock fairmodels: a flexible tool for bias detection, visualization, and
-  mitigation in binary classification models.
-\newblock \emph{The R Journal}, 14:\penalty0 227--243, 2022.
-\newblock URL \url{https://rj.urbanek.nz/articles/RJ-2022-019/}.
-
-\bibitem[Xie et~al.(2020)Xie, Dervieux, and Riederer]{rmarkdown}
-Y.~Xie, C.~Dervieux, and E.~Riederer.
-\newblock \emph{R Markdown Cookbook}.
-\newblock Chapman and Hall/CRC, Boca Raton, Florida, 2020.
-\newblock URL \url{https://bookdown.org/yihui/rmarkdown-cookbook}.
 
 \bibitem[Zafar et~al.(2017)Zafar, Valera, {Gomez Rodriguez}, and
   Gummadi]{Zafar2017}

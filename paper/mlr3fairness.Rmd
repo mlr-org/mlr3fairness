@@ -406,7 +406,7 @@ library(mlr3viz)
 autoplot(bmr, measure = measure)
 ```
 
-```{r bmrbox, echo = FALSE, warning = FALSE, fig.height = 3.5, fig.width = 3.5, fig.cap = "Model comparison based on accuracy for decision trees (rpart) and logistic regression (log\\_reg) across resampling splits.", fig.align = 'center'}
+```{r bmrbox, echo = FALSE, warning = FALSE, fig.height = 3.5, fig.width = 3.5, fig.cap = "Model comparison based on accuracy for decision trees (rpart) and logistic regression (log\\_reg) across resampling splits.", fig.align = 'center', fig.alt = "Side-by-side comparison of twoboxplots for the rpart and log\\_reg learners, both showing a classification accuracy of around .845 and IQR of .005 with log\\_reg having slightly higher accuracy."}
 library(mlr3viz)
 autoplot(bmr, measure = measure) +
   theme(
@@ -490,7 +490,7 @@ fairness_prediction_density(prediction, task)
 compare_metrics(prediction, msrs(c("fairness.fpr", "fairness.tpr", "fairness.eod")), task)
 ```
 
-```{r predplots, echo = FALSE, fig.height=3, fig.width=6, fig.align='center', fig.cap = "Visualizing predictions of the decision tree model. Left: Prediction densities for the negative class for races Caucasian and African-American. Right: Fairness metrics comparison for FPR, TPR, EOd metrics. Plots show a higher likelihood for the '<50k' class for females resulting in large fairness metrics."}
+```{r predplots, echo = FALSE, fig.height=3, fig.width=6, fig.align='center', fig.cap = "Visualizing predictions of the decision tree model. Left: Prediction densities for the negative class for Female and Male. Right: Fairness metrics comparison for FPR, TPR, EOd metrics. Plots show a higher likelihood for the '<50k' class for females resulting in large fairness metrics.", fig.alt = "Two pannel plot. On the left hand side, a plot of rediction densities for the negative class for groups Female and Male with density concentrating towards the right.  Plots show a higher likelihood for the '<50k' class for females resulting in large fairness metrics. Right: Fairness metrics comparison using bar plots for FPR, TPR, EOd metrics indicating disparities of aroung 0.1 for all metrics."}
 library(patchwork)
 p1 = fairness_prediction_density(prediction, task) + theme(legend.position="bottom")
 p2 = compare_metrics(prediction, msrs(c("fairness.fpr", "fairness.tpr", "fairness.eod")), task)
@@ -586,7 +586,7 @@ To achieve this, we connect the feature encoder `po("encode")` with the learner 
 We then evaluate all three learners on the `adult_train` data using 3-fold cross-validation by building up a grid of experiments we want to run using `benchmark_grid`.
 This grid is then executed using the `benchmark` function, and we can aggregate the performance and fairness metric scores via the `$aggregate()` function.
 
-```{r, message = FALSE, warning=FALSE, error=FALSE}
+```{r, message = FALSE, warning = FALSE, error = FALSE}
 set.seed(4321)
 learners = list(
     lrn("classif.rpart"),
@@ -708,7 +708,7 @@ On the held-out test set, the fairness constraint is slightly violated which can
 # Summary
 
 The large-scale availability and use of automated decision making systems have resulted in growing concerns for a lack of fairness in the decisions made by such systems. As a result, fairness auditing methods that allow for investigating (un-)fairness in such systems, especially ones that provide interoperability with machine learning toolkits that allows for ease of use and integration into model evaluation and tuning.
-In future work we plan on implementing several tools that further support the user w.r.t. pinpointing potential fairness issues in the data, especially through the help of interpretability tools, such as the \CRANpkg{iml} [@iml] package or counterfactual fairness notions [@kilbertus2017avoiding, @dandl2022multi]. We furthermore aim to implement additional fairness metrics from the realm of \`individual fairness' [@dwork2012] and \`conditional demographic parity' [@wachter-vlr2020].
+In future work we plan on implementing several tools that further support the user w.r.t. pinpointing potential fairness issues in the data, especially through the help of interpretability tools, such as the \CRANpkg{iml} [@iml] package. We furthermore aim to implement additional fairness metrics from the realm of \`individual fairness' [@dwork2012] and \`conditional demographic parity' [@wachter-vlr2020].
 
 \pagebreak
 

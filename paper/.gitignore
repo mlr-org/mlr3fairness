@@ -10,3 +10,6 @@ mlr3fairness_rj_files/
 *.fls
 *.fdb_latexmk
 *.out
+
+mlr3fairness_files
+*.bbl
