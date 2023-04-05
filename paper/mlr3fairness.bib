@@ -1,3 +1,5 @@
+## R Packages
+
 @Manual{R,
   title = {R: A Language and Environment for Statistical Computing},
   author = {{R Core Team}},
@@ -15,6 +17,18 @@
     year = {2019},
     month = {dec},
     doi = {10.21105/joss.01903}
+}
+
+@article{mlr,
+    title = {mlr: Machine Learning in {R}},
+    author = {Bernd Bischl and Michel Lang and Lars Kotthoff and Julia Schiffner and Jakob Richter and Erich Studerus
+      and Giuseppe Casalicchio and Zachary M. Jones},
+    journal = {Journal of Machine Learning Research},
+    year = {2016},
+    volume = {17},
+    number = {170},
+    pages = {1-5},
+    url = {https://jmlr.org/papers/v17/15-066.html}
 }
 
 @Article{mlr3pipelines,
@@ -73,23 +87,25 @@ year = {2020},
   pages = {3453}
 }
 
- @Manual{fairness,
-    title = {fairness: Algorithmic Fairness Metrics},
-    author = {Nikita Kozodoi and Tibor {V. Varga}},
-    year = {2021},
-    note = {R package version 1.2.1},
-    url = {https://CRAN.R-project.org/package=fairness},
-  }
+@Manual{fairness,
+  title = {fairness: Algorithmic Fairness Metrics},
+  author = {Nikita Kozodoi and Tibor {V. Varga}},
+  year = {2021},
+  note = {R package version 1.2.1},
+  url = {https://CRAN.R-project.org/package=fairness},
+}
 
-@article{aif360,
-  title={{AI Fairness 360}: An extensible toolkit for detecting and mitigating algorithmic bias},
-  author={Bellamy, Rachel KE and Dey, Kuntal and Hind, Michael and Hoffman, Samuel C and Houde, Stephanie and Kannan, Kalapriya and Lohia, Pranay and Martino, Jacquelyn and Mehta, Sameep and Mojsilovi{\'c}, Aleksandra and others},
-  journal={IBM Journal of Research and Development},
-  volume={63},
-  number={4/5},
-  pages={4--1},
-  year={2019},
-  publisher={IBM}
+@Article{iml,
+  author = {Christoph Molnar and Bernd Bischl and Giuseppe Casalicchio},
+  title = {iml: An R package for Interpretable Machine Learning},
+  doi = {10.21105/joss.00786},
+  url = {https://joss.theoj.org/papers/10.21105/joss.00786},
+  year = {2018},
+  publisher = {Journal of Open Source Software},
+  volume = {3},
+  number = {26},
+  pages = {786},
+  journal = {JOSS},
 }
 
 @Article{dalex,
@@ -103,7 +119,6 @@ year = {2020},
   url = {https://jmlr.org/papers/v19/18-416.html},
 }
 
-
 @article{fairmodels,
   title = {fairmodels: a Flexible Tool for Bias Detection, Visualization, and Mitigation in Binary Classification Models},
   author = {Jakub Wiśniewski and Przemysław Biecek},
@@ -115,6 +130,26 @@ year = {2020},
   url = {https://rj.urbanek.nz/articles/RJ-2022-019/},
 }
 
+@Book{ggplot2,
+  author = {Hadley Wickham},
+  title = {ggplot2: Elegant Graphics for Data Analysis},
+  publisher = {Springer-Verlag New York},
+  year = {2016},
+  url = {https://ggplot2.tidyverse.org},
+}
+
+## Python/ Other Software
+@article{aif360,
+  title={{AI Fairness 360}: An extensible toolkit for detecting and mitigating algorithmic bias},
+  author={Bellamy, Rachel KE and Dey, Kuntal and Hind, Michael and Hoffman, Samuel C and Houde, Stephanie and Kannan, Kalapriya and Lohia, Pranay and Martino, Jacquelyn and Mehta, Sameep and Mojsilovi{\'c}, Aleksandra and others},
+  journal={IBM Journal of Research and Development},
+  volume={63},
+  number={4/5},
+  pages={4--1},
+  year={2019},
+  publisher={IBM},
+  url={https://aif360.mybluemix.net/}
+}
 
 @techreport{fairlearn,
     author = {Bird, Sarah and Dud{\'i}k, Miro and Edgar, Richard and Horn, Brandon and Lutz, Roman and Milan, Vanessa and Sameki, Mehrnoosh and Wallach, Hanna and Walker, Kathleen},
@@ -146,13 +181,8 @@ year = {2020},
   url          = {https://github.com/ashryaagr/Fairness.jl}
 }
 
-@Book{ggplot2,
-  author = {Hadley Wickham},
-  title = {ggplot2: Elegant Graphics for Data Analysis},
-  publisher = {Springer-Verlag New York},
-  year = {2016},
-  url = {https://ggplot2.tidyverse.org},
-}
+
+## Papers 
 
 @article{Vanschoren2014,
   doi = {10.1145/2641190.2641198},
@@ -178,43 +208,30 @@ year = {2020},
   publisher={Springer}
 }
 
-
-
-  # Multi-Calibration
-  @inproceedings{hebert-johnson2018,
-    title = {Multicalibration: Calibration for the ({C}omputationally-Identifiable) Masses},
-    author = {Hebert-Johnson, Ursula and Kim, Michael P. and Reingold, Omer and Rothblum, Guy},
-    booktitle = {International Conference on Machine Learning},
-    pages = {1939--1948},
-    year = {2018},
-    volume = {80},
-    series = {PMLR},
-    address = {Stockholmsmässan, Stockholm Sweden},
-    publisher = {PMLR}
-  }
-  # Multi-Accuracy
-  @inproceedings{kim2019,
-    author = {Kim, Michael P. and Ghorbani, Amirata and Zou, James},
-    title = {Multiaccuracy: Black-Box Post-Processing for Fairness in Classification},
-    year = {2019},
-    publisher = {Association for Computing Machinery},
-    address = {New York, NY, USA},
-    doi = {10.1145/3306618.3314287},
-    booktitle = {Proceedings of the 2019 AAAI/ACM Conference on AI, Ethics, and Society},
-    pages = {247--254},
-    location = {Honolulu, HI, USA},
-    series = {AIES '19}
-  }
-
-@misc{uci ,
-    author = "Dua, Dheeru and Graff, Casey",
-    year = "2017",
-    title = "{UCI} Machine Learning Repository",
-    url = "http://archive.ics.uci.edu/ml",
-    institution = "University of California, Irvine, School of Information and Computer Sciences"
+@inproceedings{hebert-johnson2018,
+  title = {Multicalibration: Calibration for the ({C}omputationally-Identifiable) Masses},
+  author = {Hebert-Johnson, Ursula and Kim, Michael P. and Reingold, Omer and Rothblum, Guy},
+  booktitle = {International Conference on Machine Learning},
+  pages = {1939--1948},
+  year = {2018},
+  volume = {80},
+  series = {PMLR},
+  address = {Stockholmsmässan, Stockholm Sweden},
+  publisher = {PMLR}
 }
 
-
+@inproceedings{kim2019,
+  author = {Kim, Michael P. and Ghorbani, Amirata and Zou, James},
+  title = {Multiaccuracy: Black-Box Post-Processing for Fairness in Classification},
+  year = {2019},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  doi = {10.1145/3306618.3314287},
+  booktitle = {Proceedings of the 2019 AAAI/ACM Conference on AI, Ethics, and Society},
+  pages = {247--254},
+  location = {Honolulu, HI, USA},
+  series = {AIES '19}
+}
 
 @article{dawes1989clinical,
   title={Clinical versus actuarial judgment},
@@ -224,6 +241,7 @@ year = {2020},
   number={4899},
   pages={1668--1674},
   year={1989},
+  doi={10.1126/science.2648573},
   publisher={American Association for the Advancement of Science}
 }
 
@@ -234,19 +252,8 @@ year = {2020},
   volume={104},
   pages={671},
   year={2016},
+  doi={10.15779/Z38BG31},
   publisher={HeinOnline}
-}
-
-
-
-@misc{compas,
-author = {Julia Angwin and Jeff Larson and Surya Mattu and Lauren Kichner},
-publisher = {ProPublica},
-url = {https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing},
-year = 2016,
-month = may,
-day = 23,
-title = {Machine Bias},
 }
 
 @inproceedings{corbettcompas,
@@ -262,11 +269,28 @@ location = {Halifax, NS, Canada},
 series = {KDD '17}
 }
 
-@article{corbett2018measure,
-  title={The measure and mismeasure of fairness: A critical review of fair machine learning},
-  author={Corbett-Davies, Sam and Goel, Sharad},
-  journal={arXiv:1808.00023},
-  year={2018}
+@article{cirillo2020sex,
+  title={Sex and gender differences and biases in artificial intelligence for biomedicine and healthcare},
+  author={Cirillo, Davide and Catuara-Solarz, Silvina and Morey, Czuee and Guney, Emre and Subirats, Laia and Mellino, Simona and Gigante, Annalisa and Valencia, Alfonso and Rementeria, Mar{\'\i}a Jos{\'e} and Chadha, Antonella Santuccione and others},
+  journal={NPJ Digital Medicine},
+  volume={3},
+  number={1},
+  pages={1--11},
+  year={2020},
+  doi={10.1038/s41746-020-0288-5},
+  publisher={Nature Publishing Group}
+}
+
+@article{kozodoi2022fairness,
+  title={Fairness in credit scoring: Assessment, implementation and profit implications},
+  author={Kozodoi, Nikita and Jacob, Johannes and Lessmann, Stefan},
+  journal={European Journal of Operational Research},
+  volume={297},
+  number={3},
+  pages={1083--1094},
+  doi={10.1016/j.ejor.2021.06.023},
+  year={2022},
+  publisher={Elsevier}
 }
 
 @article{richardcompas,
@@ -305,7 +329,7 @@ booktitle = {Proceedings of the 15th Credit Scoring and Credit Control Conferenc
 title = {Predictive models with explanatory concepts: a general framework for explaining machine learning credit risk models that simultaneously increases predictive power},
 url = {https://crc.business-school.ed.ac.uk/wp-content/uploads/sites/55/2019/07/C12-Predictive-Models-with-Explanatory-Concepts-McBurnett.pdf},
 year = {2019},
-numpages = 11
+numpages = {11}
 }
 
 @inproceedings{schumann,
@@ -351,13 +375,6 @@ series = {AAMAS '20}
   year={2016}
 }
 
-@article{saleiro2018aequitas,
-  title={Aequitas: A bias and fairness audit toolkit},
-  author={Saleiro, Pedro and Kuester, Benedict and Hinkson, Loren and London, Jesse and Stevens, Abby and Anisfeld, Ari and Rodolfa, Kit T and Ghani, Rayid},
-  journal={arXiv:1811.05577},
-  year={2018}
-}
-
 @inproceedings{kim2020fact,
   title={Fact: A diagnostic for group fairness trade-offs},
   author={Kim, Joon Sik and Chen, Jiahao and Talwalkar, Ameet},
@@ -400,18 +417,6 @@ series = {AAMAS '20}
   year = {2017}
 }
 
-@article{mlr,
-    title = {mlr: Machine Learning in {R}},
-    author = {Bernd Bischl and Michel Lang and Lars Kotthoff and Julia Schiffner and Jakob Richter and Erich Studerus
-      and Giuseppe Casalicchio and Zachary M. Jones},
-    journal = {Journal of Machine Learning Research},
-    year = {2016},
-    volume = {17},
-    number = {170},
-    pages = {1-5},
-    url = {https://jmlr.org/papers/v17/15-066.html}
-}
-
 @inproceedings{Chen2018,
   author = {Chen, Jiahao},
   eprint = {1809.04684},
@@ -421,15 +426,6 @@ series = {AAMAS '20}
   title = {Fair lending needs explainable models for responsible recommendation},
   year = {2018}
 }
-
- @Book{rmarkdown,
-    title = {R Markdown Cookbook},
-    author = {Yihui Xie and Christophe Dervieux and Emily Riederer},
-    publisher = {Chapman and Hall/CRC},
-    address = {Boca Raton, Florida},
-    year = {2020},
-    url = {https://bookdown.org/yihui/rmarkdown-cookbook},
-  }
 
 @inproceedings{modelcards,
 author = {Mitchell, Margaret and Wu, Simone and Zaldivar, Andrew and Barnes, Parker and Vasserman, Lucy and Hutchinson, Ben and Spitzer, Elena and Raji, Inioluwa Deborah and Gebru, Timnit},
@@ -454,15 +450,6 @@ organization={PMLR}
   publisher={ACM New York, NY, USA}
 }
 
-@inproceedings{gendershades,
-  title={{Gender shades: Intersectional accuracy disparities in commercial gender classification}},
-  author={Buolamwini, Joy and Gebru, Timnit},
-  booktitle={Proceedings of the Conference on Fairness, Accountability, and Transparency},
-  pages={77--91},
-  year={2018},
-  organization={PMLR}
-}
-
 @article{Calders2010,
 author = {Calders, Toon and Verwer, Sicco},
 doi = {10.1007/s10618-010-0190-x},
@@ -481,7 +468,6 @@ year = {2010}
   pages={854--863},
   year={2021}
 }
-
 
 @inproceedings{Zafar2017,
 address = {Geneva, Switzerland},
@@ -502,16 +488,8 @@ year = {2017}
   volume={8},
   pages={141--163},
   year={2021},
+  doi={10.1146/annurev-statistics-042720-125902},
   publisher={Annual Reviews}
-}
-
-@misc{mlr3book,
-  title = {mlr3book},
-  author = {Marc Becker and Martin Binder and Natalie Foss and Lars Kotthoff and Michel Lang and Florian Pfisterer and Nicholas G. Reich and Jakob Richter and Patrick Schratz and Raphael Sonabend and Damir Pulatov and Bernd Bischl},
-  url = {https://mlr3book.mlr-org.com},
-  year = {2022},
-  month = {09},
-  day = {25},
 }
 
 @article{wachter-vlr2020,
@@ -578,6 +556,16 @@ year = {2017}
 
 
 ## FAT/ FACT
+
+@inproceedings{gendershades,
+  title={{Gender shades: Intersectional accuracy disparities in commercial gender classification}},
+  author={Buolamwini, Joy and Gebru, Timnit},
+  booktitle={Proceedings of the Conference on Fairness, Accountability, and Transparency},
+  pages={77--91},
+  year={2018},
+  organization={PMLR}
+}
+
 @inproceedings{heidari2019,
 author = {Heidari, Hoda and Loi, Michele and Gummadi, Krishna P. and Krause, Andreas},
 title = {A Moral Framework for Understanding Fair ML through Economic Models of Equality of Opportunity},
@@ -586,7 +574,7 @@ publisher = {Association for Computing Machinery},
 address = {New York, NY, USA},
 doi = {10.1145/3287560.3287584},
 booktitle = {Proceedings of the Conference on Fairness, Accountability, and Transparency},
-pages = {181–190},
+pages = {181--190},
 }
 
 @inproceedings{binns2020apparent,
@@ -606,31 +594,9 @@ pages = {181–190},
   booktitle={Proceedings of the Conference on Fairness, Accountability, and Transparency},
   year = {2022},
   publisher = {Association for Computing Machinery},
+  pages={2179--2188},
   address = {New York, NY, USA},
   doi = {10.1145/3531146.3534635},
-}
-
-
-@article{cirillo2020sex,
-  title={Sex and gender differences and biases in artificial intelligence for biomedicine and healthcare},
-  author={Cirillo, Davide and Catuara-Solarz, Silvina and Morey, Czuee and Guney, Emre and Subirats, Laia and Mellino, Simona and Gigante, Annalisa and Valencia, Alfonso and Rementeria, Mar{\'\i}a Jos{\'e} and Chadha, Antonella Santuccione and others},
-  journal={NPJ Digital Medicine},
-  volume={3},
-  number={1},
-  pages={1--11},
-  year={2020},
-  publisher={Nature Publishing Group}
-}
-
-@article{kozodoi2022fairness,
-  title={Fairness in credit scoring: Assessment, implementation and profit implications},
-  author={Kozodoi, Nikita and Jacob, Johannes and Lessmann, Stefan},
-  journal={European Journal of Operational Research},
-  volume={297},
-  number={3},
-  pages={1083--1094},
-  year={2022},
-  publisher={Elsevier}
 }
 
 ## ARXIV
@@ -655,6 +621,13 @@ pages = {181–190},
   year={2021}
 }
 
+@article{corbett2018measure,
+  title={The measure and mismeasure of fairness: A critical review of fair machine learning},
+  author={Corbett-Davies, Sam and Goel, Sharad},
+  journal={arXiv:1808.00023},
+  year={2018}
+}
+
 @article{chen22,
   author = {Watkins, Elizabeth Anne and McKenna, Michael and Chen, Jiahao},
   title = {The four-fifths rule is not disparate impact: a woeful tale of epistemic trespassing in algorithmic fairness},
@@ -676,12 +649,37 @@ pages = {181–190},
   year={2020}
 }
 
+@article{saleiro2018aequitas,
+  title={Aequitas: A bias and fairness audit toolkit},
+  author={Saleiro, Pedro and Kuester, Benedict and Hinkson, Loren and London, Jesse and Stevens, Abby and Anisfeld, Ari and Rodolfa, Kit T and Ghani, Rayid},
+  journal={arXiv:1811.05577},
+  year={2018}
+}
 
+## MISC
+@misc{uci,
+    author = {Dua, Dheeru and Graff, Casey},
+    year = {2017},
+    title = {{UCI} Machine Learning Repository},
+    url = {http://archive.ics.uci.edu/ml},
+    institution = {University of California, Irvine, School of Information and Computer Sciences}
+}
+
+@misc{compas,
+author = {Julia Angwin and Jeff Larson and Surya Mattu and Lauren Kichner},
+publisher = {ProPublica},
+url = {https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing},
+year = 2016,
+month = may,
+day = 23,
+title = {Machine Bias},
+}
 
 ## Books
 @book{eubanks2018automating,
   title={Automating inequality: How high-tech tools profile, police, and punish the poor},
   author={Eubanks, Virginia},
+  isbn={9781250215789},
   year={2018},
   publisher={St. Martin's Press}
 }
@@ -690,6 +688,7 @@ pages = {181–190},
   title={Weapons of Math Destruction: How Big Data Increases Inequality and Threatens Democracy},
   author={O'neil, Cathy},
   year={2016},
+  isbn={9780553418835},
   publisher={Crown}
 }
 
@@ -697,14 +696,28 @@ pages = {181–190},
   title={Algorithms of Oppression},
   author={Noble, Safiya Umoja},
   year={2018},
-  publisher={New York University Press}
+  publisher={New York University Press},
+  isbn={9781479837243}
 }
+
+@Book{rmarkdown,
+  title = {R Markdown Cookbook},
+  author = {Yihui Xie and Christophe Dervieux and Emily Riederer},
+  publisher = {Chapman and Hall/CRC},
+  address = {Boca Raton, Florida},
+  year = {2020},
+  url = {https://bookdown.org/yihui/rmarkdown-cookbook},
+  isbn = {9780367563820}
+}
+
+## Books Web
 
 @book{fairmlbook,
   title = {Fairness and Machine Learning},
   author = {Solon Barocas and Moritz Hardt and Arvind Narayanan},
   publisher = {fairmlbook.org},
   year = {2019}
+  url = {https://fairmlbook.org/}
 }
 
 @book{molnar2019, 
@@ -713,18 +726,14 @@ author = {Christoph Molnar},
 year = {2022},
 edition    = {2},
 subtitle = {A Guide for Making Black Box Models Explainable},
-publisher = {}
+url = {https://christophm.github.io/interpretable-ml-book/}
 }
 
-@Article{iml,
-  author = {Christoph Molnar and Bernd Bischl and Giuseppe Casalicchio},
-  title = {iml: An R package for Interpretable Machine Learning},
-  doi = {10.21105/joss.00786},
-  url = {https://joss.theoj.org/papers/10.21105/joss.00786},
-  year = {2018},
-  publisher = {Journal of Open Source Software},
-  volume = {3},
-  number = {26},
-  pages = {786},
-  journal = {JOSS},
+@misc{mlr3book,
+  title = {mlr3book},
+  author = {Marc Becker and Martin Binder and Natalie Foss and Lars Kotthoff and Michel Lang and Florian Pfisterer and Nicholas G. Reich and Jakob Richter and Patrick Schratz and Raphael Sonabend and Damir Pulatov and Bernd Bischl},
+  url = {https://mlr3book.mlr-org.com},
+  year = {2022},
+  month = {09},
+  day = {25},
 }
