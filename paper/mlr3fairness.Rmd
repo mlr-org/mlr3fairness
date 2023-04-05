@@ -5,7 +5,7 @@ abstract: >
   imperative that along with tools to develop and improve such models there are sufficient capabilities
   to analyze and assess models with respect to potential biases. We present the package \CRANpkg{mlr3fairness},
   a collection of metrics and methods that allow for the assessment of bias in machine learning models.
-  Our package implements a variety of widely used fairness metrics that can be used to audit models for potential biases along with a set of visualizations that can help to provide additional insights into such biases. \CRANpkg{mlr3fairness} furthermore integrates debiasing methods that can help alleviate biases in Machine Learning (ML) models through data preprocessing or post-processing of predictions. These allow practitioners to trade off performance and fairness metric that are appropriate for their use case.
+  Our package implements a variety of widely used fairness metrics that can be used to audit models for potential biases along with a set of visualizations that can help to provide additional insights into such biases. \CRANpkg{mlr3fairness} furthermore integrates bias mitigation methods that can help alleviate biases in Machine Learning (ML) models through data preprocessing or post-processing of predictions. These allow practitioners to trade off performance and fairness metric that are appropriate for their use case.
 date: "2022-11-09"
 draft: true
 author:
@@ -44,7 +44,8 @@ preamble: |
   \usepackage{longtable}
   \usepackage{bbm}
 bibliography: mlr3fairness.bib
-output: rticles::rjournal_article
+output: 
+  rjtools::rjournal_web_article
 ---
 
 ```{r setup, include = FALSE}
@@ -71,7 +72,7 @@ This is highlighted by the General Data Protection Regulation (GDPR) which requi
 Popular R modelling frameworks such as \CRANpkg{caret} [@caret], \CRANpkg{tidymodels} [@tidymodels], \CRANpkg{SuperLearner} [@superlearner], or \CRANpkg{mlr} [@mlr] implement a plethora of metrics to measure performance, but fairness metrics are widely missing.
 This lack of availability can be detrimental to obtaining fair and unbiased models if the result is to forgo bias audits due to the considerable complexity of implementing such metrics.
 Consequently, there exists a considerable necessity for R packages to (a) implement such metrics, and (b) to connect these metrics to existing ML frameworks.
-If biases are detected and need to be mitigated, we might furthermore want to employ debiasing techniques that tightly integrate with the fitting and evaluation of the resulting models in order to obtain trade-offs between a model's fairness and utility (e.g., predictive accuracy).
+If biases are detected and need to be mitigated, we might furthermore want to employ bias mitigation techniques that tightly integrate with the fitting and evaluation of the resulting models in order to obtain trade-offs between a model's fairness and utility (e.g., predictive accuracy).
 
 In this article, we present the \CRANpkg{mlr3fairness} package which builds upon the ML framework \CRANpkg{mlr3} [@mlr3].
 Our extension contains fairness metrics, fairness visualizations, and model-agnostic pre- and postprocessing operators that aim to reduce biases in ML models.
@@ -98,7 +99,7 @@ Similarly, unprivileged populations are often not represented in data due to **s
 Other biases include biases in how *labels* and *data* are measured [@bao2021s] as well as **feedback** loops where repeated decisions affect the population subject to such decisions.
 For an in-depth discussion and further sources of biases, the interested reader is referred to [@fairmlbook; @mehrabi; @mitchell2021algorithmic].
 
-## Quantifying Fairness
+## Quantifying fairness
 
 We now turn to the question of how we can detect whether disparities exist in a model and if so, how they can be quantified.
 What constitutes a fair models depends on a society's ethical values and which normative position we take, resulting in different metrics that are applied to a problem at hand.
@@ -153,7 +154,7 @@ This intuitively requires that the model should work equally well for all groups
 This notion can be extended across supervised learning settings and performance metrics, leading to considerations of equal mean squared error, e.g., in a regression setting.
 
 
-### Independence (Demographic Parity)
+### Independence
 
 The second group of fairness metrics is given by so-called *bias-transforming* metrics [@wachter-vlr2020].
 They require that decision rates, such as the positive rate, are equal across groups.
@@ -240,7 +241,7 @@ A more in-depth treatment of individual fairness notions is, e.g., given in @bin
 Similarly, a variety of *causal* fairness notions exist (c.f. @kilbertus2017avoiding).
 They argue that assessing fairness requires incorporating causal relationships in the data and propose a variety of causal fairness metrics based on a *directed acyclic graph* describing relationships in the data.
 
-### Fairness Constraints
+### Fairness constraints
 
 Statistical group fairness notions suffer from two further problems in practice:
 First, it might be hard to exactly satisfy the required fairness notions, e.g., due to a limited amount of data available for evaluation.
@@ -267,17 +268,17 @@ An alternative, therefore, is to employ *multi-objective optimization* to invest
 This can be done via \CRANpkg{mlr3tuning} which contains functionality to tune models for multiple metrics, described in more detail in the [mlr3book](https://mlr3book.mlr-org.com/optimization.html#mult-measures-tuning).
 The result of the optimization is the *Pareto-set*: A list of models which optimally trade off the specified objectives.
 
-## Debiasing Models
+## Bias mitigation
 
 If biases are detected in a model, we might now be interested in improving models in order to potentially mitigate such biases.
 Bias in models might arise from a variety of sources, so a careful understanding of the data, data quality and distribution might lead to approaches that can help in decreasing biases, e.g. through the collection of better or additional data or a better balancing of protected groups.
 Similarly, biases might arise from the model, e.g., through under- or overfitting and more careful tuning of model hyperparameters might help with improving fairness.
 Especially if the goal is to satisfy *bias-transforming* metrics, a better solution might often be to address fairness problems in the real world instead of relying on algorithmic interventions to solve fairness. This might lead to more robust, long-term solutions instead of temporarily addressing issues via algorithmic interventions.
-In addition, a variety of algorithmic **debiasing techniques**, that might help with obtaining fairer models have been proposed.
+In addition, a variety of algorithmic **bias mitigation techniques**, that might help with obtaining fairer models have been proposed.
 Their goal is to reduce measured gaps in fairness, either via data pre-processing, employing models that incorporate fairness or by applying post-processing techniques to a model's predictions.
 Popular examples of such techniques include computing instance weights before training [@kamiran2012data], where each observation is weighted proportional to the inverse frequency of its label and protected attribute.
 Other methods work by directly learning fair models that incorporate fairness constraints into the fitting procedure [@Zafar2017] or by adapting model predictions, e.g., [@hardt2016equality] propose to randomly flip a small fraction of predictions in each group given by $\hat{Y}$ and $A$, such that fairness metrics are satisfied in expectation.
-Since debiasing techniques are often tailored towards a particular fairness metric, the optimal choice of debiasing technique is often not trivial and a combination of algorithms and debiasing techniques, e.g. determined via tuning might result in an optimal model.
+Since bias mitigation techniques are often tailored towards a particular fairness metric, the optimal choice is often not trivial and a combination of algorithms and bias mitigation techniques, e.g. determined via tuning might result in an optimal model.
 
 Bias-mitigation techniques, as proposed above, have the goal of mitigating fairness issues, as measured by fairness metrics.
 In practice, this usually comes with several drawbacks:
@@ -294,21 +295,21 @@ Next, we give a very briefly introduce to the \CRANpkg{mlr3} ecosystem of packag
 Finally, the implemented extensions for fairness are presented.
 
 
-## Related Software {#related}
+## Related software {#related}
 
 Several R packages provide similar capabilities to our software, but mostly focus on fairness metrics and visualization.
-The \CRANpkg{fairness} package [@fairness] allows for the calculation of a variety of fairness metrics, while \CRANpkg{aif360} [@aif360] wraps the Python \pkg{aif360} module allowing for the computation of fairness metrics and several debiasing techniques but has only limited interoperability with R objects such as \code{data.frame}s.
-The \CRANpkg{fairmodels} [@fairmodels] package again allows for the computation of fairness metrics for classification and regression settings as well as several debiasing techniques.
+The \CRANpkg{fairness} package [@fairness] allows for the calculation of a variety of fairness metrics, while \CRANpkg{aif360} [@aif360] wraps the Python \pkg{aif360} module allowing for the computation of fairness metrics and several bias mitigation techniques but has only limited interoperability with R objects such as \code{data.frame}s.
+The \CRANpkg{fairmodels} [@fairmodels] package again allows for the computation of fairness metrics for classification and regression settings as well as several bias mitigation techniques.
 It tightly integrates with \CRANpkg{DALEX} [@dalex] to gain further insight using interpretability techniques.
 
-Outside R, in Python, the \pkg{fairlearn} module [@fairlearn] provides ample functionality to study a wide variety of metrics, debias with respect to a variety of pre-, in- and postprocessing methods as well as to visualize differences.
+Outside R, in Python, the \pkg{fairlearn} module [@fairlearn] provides ample functionality to study a wide variety of metrics, bias mitigation with respect to a variety of pre-, in- and postprocessing methods as well as to visualize differences.
 It furthermore provides a *fairlearn dashboard* providing a comprehensive fairness report.
-The \pkg{aif360} [@aif360] module similarly provides metrics as well as debiasing techniques while the \pkg{aequitas} fairness toolkit [@saleiro2018aequitas] provides similar capabilities.
-Interoperability with the \pkg{scikit-learn} [@sklearn] ML framework allows for debiasing a wide variety of ML models in all aforementioned systems.
+The \pkg{aif360} [@aif360] module similarly provides metrics as well as bias mitigation techniques while the \pkg{aequitas} fairness toolkit [@saleiro2018aequitas] provides similar capabilities.
+Interoperability with the \pkg{scikit-learn} [@sklearn] ML framework allows for bias mitigation for a wide variety of ML models in all aforementioned systems.
 Similar capabilities are also available in Julia's \pkg{Fairness.jl} [@fairnessjl] library.
 
 
-## The mlr3 Ecosystem {#mlr3}
+## The mlr3 ecosystem {#mlr3}
 
 \CRANpkg{mlr3fairness} is tightly integrated into the ecosystem of packages around the ML framework \CRANpkg{mlr3} [@mlr3].
 \CRANpkg{mlr3} provides the infrastructure to fit, resample, and evaluate over 100 ML algorithms using a unified API.
@@ -316,8 +317,8 @@ Multiple extension packages bring numerous additional advantages and extra funct
 In the context of fairness, the following extension packages deserve special mention:
 
 * \CRANpkg{mlr3pipelines} [@mlr3pipelines] for pre- and postprocessing via pipelining.
-  This allows composing debiasing techniques with arbitrary ML algorithms shipped with \CRANpkg{mlr3} as well as fusing ML algorithms with preprocessing steps such as imputation or class balancing.
-  It furthermore integrates with \CRANpkg{mcboost} [@mcboost], which implements additional debiasing methods.
+  This allows composing bias mitigation techniques with arbitrary ML algorithms shipped with \CRANpkg{mlr3} as well as fusing ML algorithms with preprocessing steps such as imputation or class balancing.
+  It furthermore integrates with \CRANpkg{mcboost} [@mcboost], which implements additional bias mitigation methods.
   We present an example in the supplementary material.
 * \CRANpkg{mlr3tuning} for its extensive tuning capabilities.
 * \pkg{mlr3proba} [@mlr3proba] for survival analysis.
@@ -395,10 +396,10 @@ bmr = benchmark(grid)
 bmr$aggregate(measure)[, .(learner_id, classif.acc)]
 ```
 After running the benchmark, we can again call `.$aggregate` to obtain aggregated scores.
-The \CRANpkg{mlr3viz} package comes with several ready-made visualizations for objects from `mlr3` via the `autoplot` function.
+The \CRANpkg{mlr3viz} package comes with several ready-made visualizations for objects from `mlr3` via `ggplot2`'s [@ggplot2] `autoplot` function from gg.
 For a `BenchmarkResult`, the `autoplot` function provides a Box-plot comparison of performances across the cross-validation folds for each `Learner`.
 Figure \ref{fig:bmrbox} contains the box-plot comparison.
-We can see that `log_reg` has higher accuracy and lower interquartile range across the 10 folds and we might therefore want to prefer the `log_reg` model.
+We can see that `log_reg` has higher accuracy and lower interquartile range across the 10 folds, and we might therefore want to prefer the `log_reg` model.
 
 ```{r, warning = FALSE, include = FALSE}
 library(mlr3viz)
@@ -429,14 +430,14 @@ task$set_col_roles("marital_status", add_to = "pta")
 This information is then automatically passed on when the task is used, e.g., when computing fairness metrics.
 If more than one protected attribute is specified, metrics will be computed based on intersecting groups formed by the columns.
 
-### Quantifying Fairness
+### Quantifying fairness
 
 With the \CRANpkg{mlr3fairness} package loaded, fairness measures can be constructed via `msr()` like any other measure in \CRANpkg{mlr3}.
 They are listed with prefix *fairness*, and simply calling `msr()` without any arguments will return a list of all available measures.
 Table \ref{tab:metrics} provides a brief overview over some popular fairness measures which are readily available.
 
 
-Table: Selection of implemented fairness metrics.
+Table: Overview of fairness metrics available with mlr3fairness.
 \label{tab:metrics}
 
 |key                   |description                                                                                  |
@@ -489,7 +490,7 @@ fairness_prediction_density(prediction, task)
 compare_metrics(prediction, msrs(c("fairness.fpr", "fairness.tpr", "fairness.eod")), task)
 ```
 
-```{r predplots, echo = FALSE, fig.height=3, fig.width=6, fig.align='center', fig.cap = "Visualizing predictions of the decision tree model. Left: Prediction densities for the negative class for races Caucasian and African-American. Right: Fairness metrics comparison for FPR, TPR, EOd metrics."}
+```{r predplots, echo = FALSE, fig.height=3, fig.width=6, fig.align='center', fig.cap = "Visualizing predictions of the decision tree model. Left: Prediction densities for the negative class for races Caucasian and African-American. Right: Fairness metrics comparison for FPR, TPR, EOd metrics. Plots show a higher likelihood for the '<50k' class for females resulting in large fairness metrics."}
 library(patchwork)
 p1 = fairness_prediction_density(prediction, task) + theme(legend.position="bottom")
 p2 = compare_metrics(prediction, msrs(c("fairness.fpr", "fairness.tpr", "fairness.eod")), task)
@@ -497,24 +498,23 @@ p2 = compare_metrics(prediction, msrs(c("fairness.fpr", "fairness.tpr", "fairnes
 ```
 
 
-### Debiasing
+### Bias mitigation
 
 As mentioned above, several ways to improve a model's fairness exist.
 While non-technical interventions, such as e.g. collecting more data should be preferred,
-\CRANpkg{mlr3fairness} provides several debiasing techniques that can be used together with a `Learner` to obtain fairer models.
-Table \ref{tab:debiasing} provides an overview of implemented debiasing techniques.
+\CRANpkg{mlr3fairness} provides several bias mitigation techniques that can be used together with a `Learner` to obtain fairer models.
+Table \ref{tab:bias_mitigation} provides an overview of implemented bias mitigation techniques.
 They are implemented as `PipeOps` from the \CRANpkg{mlr3pipelines} package and can be
-combined with arbitrary learners using the `%>>%` operator to build a pipeline.
+combined with arbitrary learners using the `%>>%` operator to build a pipeline that can later be trained.
 In the following example, we show how to combine a learner with a reweighing scheme (`reweighing_wts`) or alternatively how to post-process predictions using the equalized odds debiasing (`EOd`) strategy.
 An introduction to \CRANpkg{mlr3pipelines} is available in the corresponding [mlr3book chapter](https://mlr3book.mlr-org.com/pipelines.html).
 
 ```{r, eval = FALSE}
 po("reweighing_wts") %>>% lrn("classif.glmnet")
-
 po("learner_cv", lrn("classif.glmnet")) %>>% po("EOd")
 ```
 
- Table: Overview of available debiasing techniques.\label{tab:debiasing}
+ Table: Overview of bias mitigation techniques available in mlr3fairness.\label{tab:bias_mitigation}
 
 |Key                | Description                      | Type              | Reference          |
 |:------------------|:---------------------------------|:------------------|:-------------------|
@@ -523,12 +523,12 @@ po("learner_cv", lrn("classif.glmnet")) %>>% po("EOd")
 | reweighing_wts    |Reweighing (Instance Weights)     |Preprocessing      | \citet{kamiran2012data}   |
 
 It is simple for users or package developers to extend \CRANpkg{mlr3fairness} with additional
-debiasing methods -- as an example, the \CRANpkg{mcboost} package adds further postprocessing methods
+bias mitigation methods -- as an example, the \CRANpkg{mcboost} package adds further postprocessing methods
 that can improve fairness.<br>
 Along with pipeline operators, \CRANpkg{mlr3fairness} contains several algorithms that can directly incorporate
 fairness constraints. They can similarly be constructed using `lrn()`.
 
-Table: Overview over fair ML algorihtms.\label{tab:fairlearns}
+Table: Overview of fair ML algorihtms available with mlr3fairness.\label{tab:fairlearns}
 
 | key               | package | reference              |
 | :---------------- | :------ | :--------------------  |
@@ -557,9 +557,9 @@ Table: Overview of reports generated by mlr3fairness.\label{tab:reports}
 | [`report_fairness`](https://mlr3fairness.mlr-org.com/articles/fairness/fairness.html)    | Fairness Report          | --                          |
 
 
-# Case Study
+# Case study
 
-In order to demonstrate a full workflow, we conduct full bias assessment and debiasing on the popular adult data set [@uci].
+In order to demonstrate a full workflow, we conduct full bias assessment and bias mitigation on the popular adult data set [@uci].
 The goal is to predict whether an individual's income is larger than \$$50.000$ with the protected attribute being *gender*.
 The data set ships with \CRANpkg{mlr3fairness}, separated into a *train* and *test* task and can be instantiated using `tsk("adult_train")` and `tsk("adult_test")`, respectively.
 As a fairness metric, we consider *true positive parity* which calls for equality in the true positive rates across groups.
@@ -609,10 +609,10 @@ To see if we can further improve, we use \CRANpkg{mlr3tuning} to jointly tune al
 In order to do this, we use an `AutoTuner` from \CRANpkg{mlr3tuning}; a model that tunes its own hyperparameters during training.
 The full code for setting up this model can be found in the appendix.
 An `AutoTuner` requires a specific metric to tune for.
-Here, we define a fairness-thresholded accuracy metric. We set $\epsilon = 0.01$ as a threshold.
+Here, we define a fairness-thresholded accuracy metric. We set $\epsilon = 0.01$ as a threshold:
 
 \[
-  if \; |\Delta_{EOd}| \leq \epsilon: \textrm{accuracy} \;\; else: \;  - |\Delta_{EOd}|
+  if \; |\Delta_{EOd}| \leq \epsilon: \textrm{accuracy} \;\; else: \;  - |\Delta_{EOd}|.
 \]
 
 ```{r}
@@ -708,13 +708,13 @@ On the held-out test set, the fairness constraint is slightly violated which can
 # Summary
 
 The large-scale availability and use of automated decision making systems have resulted in growing concerns for a lack of fairness in the decisions made by such systems. As a result, fairness auditing methods that allow for investigating (un-)fairness in such systems, especially ones that provide interoperability with machine learning toolkits that allows for ease of use and integration into model evaluation and tuning.
-In future work we plan on implementing several tools that further support the user w.r.t. pinpointing potential fairness issues in the data, especially through the help of interpretability tools, such as the \CRANpkg{iml} package. We furthermore aim to implement additional fairness metrics from the realm of \`individual fairness' [@dwork2012] and \`conditional demographic parity' [@wachter-vlr2020].
+In future work we plan on implementing several tools that further support the user w.r.t. pinpointing potential fairness issues in the data, especially through the help of interpretability tools, such as the \CRANpkg{iml} [@iml] package or counterfactual fairness notions [@kilbertus2017avoiding, @dandl2022multi]. We furthermore aim to implement additional fairness metrics from the realm of \`individual fairness' [@dwork2012] and \`conditional demographic parity' [@wachter-vlr2020].
 
 \pagebreak
 
 # Appendix
 
-## Tuning the ML Pipeline
+## Tuning the ML pipeline
 
 We include the full code to construct the `AutoTuner` with additional details
 and comments below.
@@ -773,7 +773,7 @@ In this case, we set a constraint on the *equalized odds difference* comprised o
 the differences in true positive rate (TPR) and false positive rate (FPR):
 
 $$
-\Delta_{EOd} = |\textrm{TPR}_{sex = M} - \textrm{TPR}_{sex = F}| + |\textrm{FPR}_{sex = M} - \textrm{FPR}_{sex = F}|
+\Delta_{EOd} = |\textrm{TPR}_{sex = M} - \textrm{TPR}_{sex = F}| + |\textrm{FPR}_{sex = M} - \textrm{FPR}_{sex = F}|.
 $$
 
 This can be done using the `fairness.constraint` measure.
