@@ -655,7 +655,7 @@ We then design the pipeline and the hyperparameters we want to tune over.
 In the following example, we choose `tuning_iters = 3` and set a small range for the hyperparameters in `vals` to shorten the run time of the tuning procedure.
 In real settings, this parameter would be set to a larger number, such as $100$.
 To construct a self-tuning learner, we construct an `AutoTuner` that takes as input a learner, the resampling procedure and metric used for tuning as well as the tuning strategy along with a termination criterion (here how many tuning iterations should be run). 
-In addition, we provide a new `id` for subsequent printing and visualization.
+In addition, we provide a new `id` for the learner to beautify subsequent printing and visualization.
 We can then use this self-tuning learner like any other learner and benchmark it using `benchmark` as described above.
 
 ```{r}

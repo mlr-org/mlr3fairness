@@ -13,3 +13,4 @@ mlr3fairness_rj_files/
 
 mlr3fairness_files
 *.bbl
+*.html
