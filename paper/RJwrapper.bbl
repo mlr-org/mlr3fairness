@@ -1,4 +1,4 @@
-\begin{thebibliography}{12}
+\begin{thebibliography}{6}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -35,42 +35,11 @@ A.~Chouldechova.
 \newblock \emph{Big Data}, 5\penalty0 (2):\penalty0 153--163, June 2017.
 \newblock \doi{10.1089/big.2016.0047}.
 
-\bibitem[Gebru et~al.(2021)Gebru, Morgenstern, Vecchione, Vaughan, Wallach,
-  Iii, and Crawford]{datasheets}
-T.~Gebru, J.~Morgenstern, B.~Vecchione, J.~W. Vaughan, H.~Wallach, H.~D. Iii,
-  and K.~Crawford.
-\newblock Datasheets for datasets.
-\newblock \emph{Communications of the ACM}, 64\penalty0 (12):\penalty0 86--92,
-  2021.
-
 \bibitem[Hardt et~al.(2016)Hardt, Price, and Srebro]{hardt2016equality}
 M.~Hardt, E.~Price, and N.~Srebro.
 \newblock Equality of opportunity in supervised learning.
 \newblock \emph{Advances in Neural Information Processing Systems},
   29:\penalty0 3315--3323, 2016.
-
-\bibitem[Kamiran and Calders(2012)]{kamiran2012data}
-F.~Kamiran and T.~Calders.
-\newblock Data preprocessing techniques for classification without
-  discrimination.
-\newblock \emph{Knowledge and Information Systems}, 33\penalty0 (1):\penalty0
-  1--33, 2012.
-
-\bibitem[Komiyama et~al.(2018)Komiyama, Takeda, Honda, and Shimao]{komiyama}
-J.~Komiyama, A.~Takeda, J.~Honda, and H.~Shimao.
-\newblock Nonconvex optimization for regression with fairness constraints.
-\newblock In \emph{International Conference on Machine Learning}, PMLR, pages
-  2737--2746, 2018.
-
-\bibitem[Mitchell et~al.(2019)Mitchell, Wu, Zaldivar, Barnes, Vasserman,
-  Hutchinson, Spitzer, Raji, and Gebru]{modelcards}
-M.~Mitchell, S.~Wu, A.~Zaldivar, P.~Barnes, L.~Vasserman, B.~Hutchinson,
-  E.~Spitzer, I.~D. Raji, and T.~Gebru.
-\newblock Model cards for model reporting.
-\newblock In \emph{Proceedings of the Conference on Fairness, Accountability,
-  and Transparency}, page 220–229, New York, NY, USA, 2019. PMLR, Association
-  for Computing Machinery.
-\newblock \doi{10.1145/3287560.3287596}.
 
 \bibitem[Perrone et~al.(2021)Perrone, Donini, Zafar, Schmucker, Kenthapadi, and
   Archambeau]{perrone2021fair}
@@ -79,19 +48,5 @@ V.~Perrone, M.~Donini, M.~B. Zafar, R.~Schmucker, K.~Kenthapadi, and
 \newblock {Fair Bayesian Optimization}.
 \newblock In \emph{Proceedings of the 2021 AAAI/ACM Conference on AI, Ethics,
   and Society}, pages 854--863, 2021.
-
-\bibitem[Scutari et~al.(2021)Scutari, Panero, and Proissl]{scutari}
-M.~Scutari, F.~Panero, and M.~Proissl.
-\newblock Achieving fairness with a simple ridge penalty.
-\newblock \emph{arXiv:2105.13817}, 2021.
-
-\bibitem[Zafar et~al.(2017)Zafar, Valera, {Gomez Rodriguez}, and
-  Gummadi]{Zafar2017}
-M.~B. Zafar, I.~Valera, M.~{Gomez Rodriguez}, and K.~P. Gummadi.
-\newblock {Fairness beyond Disparate treatment {\&} Disparate Impact}.
-\newblock In \emph{Proceedings of the 26th International Conference on World
-  Wide Web}, pages 1171--1180, Geneva, Switzerland, Apr. 2017. International
-  World Wide Web Conferences Steering Committee.
-\newblock \doi{10.1145/3038912.3052660}.
 
 \end{thebibliography}
