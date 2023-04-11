@@ -21,6 +21,7 @@ author:
     affiliation: University of Toronto
     address: Toronto, Canada
   - name: Sebastian Vollmer
+    orcid: 0000-0002-9025-0753
     email: svollmer@stat.uni-muenchen.de
     affiliation: Deutsches Forschungszentrum für Künstliche Intelligenz
     address: Kaiserslautern, Germany
