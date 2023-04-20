@@ -162,8 +162,8 @@ insights.</p>
 <code class="sourceCode R"><span><span class="va">predictions</span><span class="op">$</span><span class="va">confusion</span></span>
 <span><span class="co">#&gt;         truth</span></span>
 <span><span class="co">#&gt; response &lt;=50K &gt;50K</span></span>
-<span><span class="co">#&gt;    &lt;=50K  3489  485</span></span>
-<span><span class="co">#&gt;    &gt;50K    271  755</span></span></code></pre></div>
+<span><span class="co">#&gt;    &lt;=50K  3489  486</span></span>
+<span><span class="co">#&gt;    &gt;50K    271  754</span></span></code></pre></div>
 <p>We furthermore design a small experiment allowing us to compare a
 random forest (<code>ranger</code>) and a decision tree
 (<code>rpart</code>). The result, <code>bmr</code> is a
@@ -236,12 +236,12 @@ easily computed using the <code>$score()</code> method.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bmr</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"fairness.tpr"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    nr     task_id     learner_id resampling_id iteration fairness.tpr</span></span>
-<span><span class="co">#&gt; 1:  1 adult_train classif.ranger            cv         1   0.04340487</span></span>
-<span><span class="co">#&gt; 2:  1 adult_train classif.ranger            cv         2   0.08209762</span></span>
-<span><span class="co">#&gt; 3:  1 adult_train classif.ranger            cv         3   0.10568261</span></span>
-<span><span class="co">#&gt; 4:  2 adult_train  classif.rpart            cv         1   0.04993752</span></span>
-<span><span class="co">#&gt; 5:  2 adult_train  classif.rpart            cv         2   0.08556950</span></span>
-<span><span class="co">#&gt; 6:  2 adult_train  classif.rpart            cv         3   0.12907138</span></span>
+<span><span class="co">#&gt; 1:  1 adult_train classif.ranger            cv         1   0.06768615</span></span>
+<span><span class="co">#&gt; 2:  1 adult_train classif.ranger            cv         2   0.07443263</span></span>
+<span><span class="co">#&gt; 3:  1 adult_train classif.ranger            cv         3   0.09865688</span></span>
+<span><span class="co">#&gt; 4:  2 adult_train  classif.rpart            cv         1   0.11893308</span></span>
+<span><span class="co">#&gt; 5:  2 adult_train  classif.rpart            cv         2   0.07750618</span></span>
+<span><span class="co">#&gt; 6:  2 adult_train  classif.rpart            cv         3   0.06526421</span></span>
 <span><span class="co">#&gt; Hidden columns: uhash, task, learner, resampling, prediction</span></span></code></pre></div>
 </div>
 <div class="section level2">
