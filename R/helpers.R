@@ -34,9 +34,9 @@ compute_reweighing_weights = function(task, alpha = 1) {
   tab[, wt := (1 - alpha) * wt + alpha * wt]
 
   # Ensure correct feature type
-  if (inherits(dt[[pta]], "integer")) {
+  if (all(map_lgl(pta, function(x) {inherits(dt[[x]], "integer")}))) {
     set(tab, j = task$col_roles$pta, value = as.integer(tab[[pta]]))
-  } else if (inherits(dt[[pta]], "numeric")) {
+  } else if (all(map_lgl(pta, function(x) {inherits(dt[[x]], "numeric")}))) {
     set(tab, j = task$col_roles$pta, value = as.numeric(tab[[pta]]))
   }
 
