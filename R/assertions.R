@@ -10,11 +10,15 @@
 #' @noRd
 NULL
 
-# Assert task contains a pta column.
-assert_pta_task = function(task, measure = NULL) {
+# Assert task contains a pta column. 
+# Single: Has only one pta column.
+assert_pta_task = function(task, measure = NULL, single = FALSE) {
   if (length(task$col_roles$pta) == 0L) {
     stopf("Task '%s' must have a column with role 'pta' (protected attribute) for fairness operations", task$id)
   }
-
+  if (single && length(task$col_roles$pta) > 1L) {
+    stopf("The operation only allows for a single column specified as 'pta'.", task$id)
+  }
   assert_task(task)
 }
+
