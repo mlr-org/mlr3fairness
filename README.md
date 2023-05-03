@@ -131,7 +131,7 @@ group separately using `MeasureSubgroup` and `groupwise_metrics`.
 
 Visualizations can be used with either a `Prediction`, `ResampleResult`
 or a `BenchmarkResult`. For more information regarding those objects,
-refer to the [mlr3 book](https://mlr3book.mlr-org.com/basics.html).
+refer to the [mlr3 book](https://mlr3book.mlr-org.com/).
 
 - **fairness_accuracy_tradeoff**: Plot available trade-offs between
   fairness and model performance.

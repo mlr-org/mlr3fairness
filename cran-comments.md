@@ -1,8 +1,6 @@
 ## Submission
 
-Minor update to improve stability for https://cran.r-project.org/web/checks/check_results_mlr3fairness.html checks.
-
-
+Minor update adding small new features, update to comply with upcoming changes in dependencies.
 
 ## R CMD check results
 

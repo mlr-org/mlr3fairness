@@ -9,7 +9,7 @@
 #' Contains 6172 observations and 14 features.
 #' The target column could either be "is_recid" or "two_year_recid", but often "two_year_recid" is prefered.
 #' The column `"sex"` is set as protected attribute, but more often `"race"` is used.
-#' 
+#'
 #' @section Using COMPAS - Known Problems:
 #' The COMPAS dataset was collected as part of the ProPublica analysis of machine bias in criminal sentencing.
 #' It is important to note, that using COMPAS is generally discouraged for the following reasons:
@@ -51,8 +51,6 @@
 #'
 #' @source ProPublica Analysis: \url{https://github.com/propublica/compas-analysis}
 #' @source `r format_bib("bao2021s")`
-#' 
-#'
 #'
 #' @docType data
 #' @keywords data

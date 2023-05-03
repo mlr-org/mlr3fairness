@@ -55,7 +55,7 @@ knitr::kable(mlr3fairness:::mlr_measures_fairness)
 ## Assessing for Bias: A first look
 
 This vignette assumes that you are familiar with the basics of `mlr3` and it's core objects.
-The [mlr3 book](https://mlr3book.mlr-org.com/index.html) can be a great resource in case you want to learn more about mlr3's internals.
+The [mlr3 book](https://mlr3book.mlr-org.com/) can be a great resource in case you want to learn more about mlr3's internals.
 
 We first start by training a model for which we want to conduct an audit.
 For this example, we use the `adult_train` dataset.
