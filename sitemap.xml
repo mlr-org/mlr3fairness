@@ -58,6 +58,9 @@
     <loc>https://mlr3fairness.mlr-org.com/reference/compas.html</loc>
   </url>
   <url>
+    <loc>https://mlr3fairness.mlr-org.com/reference/compute_metrics.html</loc>
+  </url>
+  <url>
     <loc>https://mlr3fairness.mlr-org.com/reference/fairness_accuracy_tradeoff.html</loc>
   </url>
   <url>
