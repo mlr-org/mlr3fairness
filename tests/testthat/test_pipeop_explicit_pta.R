@@ -33,5 +33,3 @@ test_that("explicit pta prevents from dropping during encode", {
     opta = t$data(cols = t$col_roles$pta)[[1]]
     expect_equal(npta, opta)
 })
-
-

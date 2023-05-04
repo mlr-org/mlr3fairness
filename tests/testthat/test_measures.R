@@ -283,4 +283,3 @@ test_that("fairness measures work as expected - simulated data", {
     }
   }
 })
-

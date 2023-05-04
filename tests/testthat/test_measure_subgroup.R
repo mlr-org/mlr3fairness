@@ -72,8 +72,7 @@ test_that("pp differences", {
 
   out = prd$score(msr("fairness.pp"), t)
   expect_number(out, lower = 0, upper = 1)
-  
+
   out = prd$score(msr("fairness.cv"), t)
   expect_number(out, lower = -1, upper = 1)
-
 })

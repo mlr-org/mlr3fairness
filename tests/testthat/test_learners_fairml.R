@@ -60,5 +60,3 @@ test_that("regr.fairnclm", {
     result = run_autotest(learner)
     expect_true(result, info = result$error)
 })
-
-
