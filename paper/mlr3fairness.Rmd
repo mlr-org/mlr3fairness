@@ -48,7 +48,8 @@ preamble: |
   \usepackage{bbm}
 bibliography: mlr3fairness.bib
 output: 
-  rjtools::rjournal_web_article
+  - rjtools::rjournal_web_article
+  - rjtools::rjournal_pdf_article
 ---
 
 ```{r setup, include = FALSE}
@@ -324,6 +325,7 @@ Similar capabilities are also available in Julia's \pkg{Fairness.jl} [@fairnessj
 
 \CRANpkg{mlr3fairness} is tightly integrated into the ecosystem of packages around the ML framework \CRANpkg{mlr3} [@mlr3].
 \CRANpkg{mlr3} provides the infrastructure to fit, resample, and evaluate over 100 ML algorithms using a unified API.
+Packages from the ecosystem can be installed and updated via the \CRANpkg{mlr3verse} [@mlr3verse] package.
 Multiple extension packages bring numerous additional advantages and extra functionality.
 In the context of fairness, the following extension packages deserve special mention:
 
@@ -331,7 +333,7 @@ In the context of fairness, the following extension packages deserve special men
   This allows composing bias mitigation techniques with arbitrary ML algorithms shipped with \CRANpkg{mlr3} as well as fusing ML algorithms with pre-processing steps such as imputation or class balancing.
   It furthermore integrates with \CRANpkg{mcboost} [@mcboost], which implements additional bias mitigation methods.
   We present an example in the supplementary material.
-* \CRANpkg{mlr3tuning} for its extensive tuning capabilities.
+* \CRANpkg{mlr3tuning} [@mlr3tuning] and \CRANpkg{bbotk} [@bbotk] for its extensive tuning capabilities.
 * \pkg{mlr3proba} [@mlr3proba] for survival analysis.
 * \CRANpkg{mlr3benchmark} for post-hoc analysis of benchmarked approaches.
 * \CRANpkg{mlr3oml} as a connector to OpenML [@Vanschoren2014], an online scientific platform for collaborative ML.
@@ -737,13 +739,16 @@ We furthermore aim to implement additional fairness metrics from the realm of \`
 
 ## Tuning the ML pipeline
 
+```{r, eval = TRUE, echo=FALSE}
+eval_appendix = TRUE
+```
 We include the full code to construct the `AutoTuner` with additional details
 and comments below.
 We first load all required packages and use \pkg{mlr3}'s interaction with the \CRANpkg{future} [@future] package
 to automatically distribute the tuning to all available cores in parallel by setting a `plan`.
 See the documentation of \CRANpkg{future} for platform-specific hints regarding parallelization.
 
-```{r, eval = FALSE}
+```{r, eval = eval_appendix}
 library(mlr3misc)
 library(mlr3)
 library(mlr3pipelines)
@@ -754,7 +759,7 @@ library(mlr3tuning)
 future::plan("multicore")
 ```
 
-```{r, eval=FALSE, echo=FALSE}
+```{r, eval=eval_appendix, echo=FALSE}
 set.seed(1234L)
 ```
 
@@ -766,7 +771,7 @@ pipeline operator from a dictionary of implemented operators.
 We conduct **categorical encoding** because \pkg{glmnet} can not naturally handle categorical variables, and we therefore have
 to encode them (in our case using `one-hot` encoding).
 
-```{r, eval = FALSE}
+```{r, eval = eval_appendix}
 # Define the learner pipeline.
 lrn = as_learner(po("encode") %>>% po("reweighing_wts") %>>%
   po("learner", lrn("classif.glmnet")))
@@ -776,7 +781,7 @@ In addition, we have to specify the hyperparameter space our `Tuner` should tune
 We do this by defining a list of values with a `to_tune()` token specifying the range.
 Note, that hyperparameter names are prefixed with the respective operation's `id`.
 
-```{r, eval = FALSE}
+```{r, eval = eval_appendix}
 # Define the parameter space to optimize over
 vals = list(
   reweighing_wts.alpha = to_tune(0.75, 1),
@@ -797,7 +802,7 @@ $$
 
 This can be done using the `fairness.constraint` measure.
 
-```{r, eval = FALSE}
+```{r, eval = eval_appendix}
 metric = msr("fairness.constraint",
     performance_measure = msr("classif.acc"),
     fairness_measure = msr("fairness.eod"),
@@ -807,7 +812,7 @@ metric = msr("fairness.constraint",
 
 We can now instantiate a new `AutoTuner` using `lrn` defined above by additionally providing arguments specifying the tuning strategy, in our case random search, the measure to optimize for as well as the number of tuning steps.
 
-```{r, eval = FALSE}
+```{r, eval = eval_appendix}
 metric = msr("fairness.constraint",
     performance_measure = msr("classif.acc"),
     fairness_measure = msr("fairness.eod"),
@@ -829,20 +834,20 @@ In the following example, we will apply it to the `Adult` task and train our mod
 This will perform a tuning loop for the specified number of evaluations and
 automatically retrain the best found parameters on the full data.
 
-```{r, eval = FALSE}
+```{r, eval = eval_appendix}
 at$train(tsk("adult_train"))
 ```
 
 After training, we can look at the best models found, here ordered by our metric.
 Note, that our metric reports the negative constraint violation if the constraint is violated and the accuracy in case the constraint is satisfied.
 
-```{r, eval=FALSE}
+```{r, eval=eval_appendix}
 head(at$archive$data[order(fairness.acc_equalized_odds_cstrt), 1:4])
 ```
 
 We can then use the tuned model to assess our metric on the held out data:
 
-```{r, eval=FALSE}
+```{r, eval=eval_appendix}
 prd = at$predict(tsk("adult_test"))
 prd$score(c(metric, msr("classif.acc"), msr("fairness.eod")),  tsk("adult_test"))
 ```
