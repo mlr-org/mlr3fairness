@@ -9,7 +9,7 @@ vignette: >
   %\VignetteIndexEntry{Fairness Metrics}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  
+
 ---
 
 ```{r, include = FALSE}
@@ -22,11 +22,11 @@ knitr::opts_chunk$set(
 ```
 # Fairness Measures
 
-Fairness measures (or metrics) allow us to assess and audit for possible biases in a trained model. 
-There are several types of metrics that are widely used in order to assess a model's fairness. 
+Fairness measures (or metrics) allow us to assess and audit for possible biases in a trained model.
+There are several types of metrics that are widely used in order to assess a model's fairness.
 They can be coarsely classified into three groups:
 
-- **Statistical Group Fairness Metrics**: Given a set of predictions from our model, we assess for differences in one or multiple metrics across groups given by a *protected attribute* [@fairmlbook; @hardt2016equality]. 
+- **Statistical Group Fairness Metrics**: Given a set of predictions from our model, we assess for differences in one or multiple metrics across groups given by a *protected attribute* [@fairmlbook; @hardt2016equality].
 
 - **Individual Fairness**: Basically requires that similar people are treated similar independent of the protected attribute [@dwork2012].
   We will briefly introduce individual fairness in a dedicated section below.
@@ -148,7 +148,7 @@ While fairness measures are widely defined or used with binary protected attribu
 fairness measures such that they work with non-binary valued protected attributes.
 
 In order to do this, we have to supply an `operation` that reduces the desired metric measured in each subgroup
-to a single value. Two examples for such operations are `groupdiff_absdiff` and `groupdiff_tau` but custom functions can also be applied. 
+to a single value. Two examples for such operations are `groupdiff_absdiff` and `groupdiff_tau` but custom functions can also be applied.
 Note, that **mlr3** `Measure`s are designed for a scalar output
 and `operation` therefore always has to result in a single scalar value.
 
@@ -168,7 +168,7 @@ m = MeasureFairnessComposite$new(measures = ms, aggfun = mean)
 
 ## How to compare the fairness performance between different learners using Benchmarks
 
-In this example, we create a `BenchmarkInstance`. Then by using `aggregate()` function they could access the fairness measures easily. 
+In this example, we create a `BenchmarkInstance`. Then by using `aggregate()` function they could access the fairness measures easily.
 The following example demonstrates the process to evaluate the fairness metrics on Benchmark Results:
 
 ```{r, warning = FALSE}
@@ -188,11 +188,11 @@ tab = bmr$aggregate(measures)
 tab
 ```
 
-## Metrics aggregation - groupdiff_* 
+## Metrics aggregation - groupdiff_*
 
-For `MeasureFairness`, **mlr3** computes the `base_measure` in each group specified by the `pta` column. 
-If we now want to return those measures, we need to aggregate this to a single metric - e.g. using one of the 
-`groupdiff_*` functions available with mlr3. See `?groupdiff_tau` for a list. 
+For `MeasureFairness`, **mlr3** computes the `base_measure` in each group specified by the `pta` column.
+If we now want to return those measures, we need to aggregate this to a single metric - e.g. using one of the
+`groupdiff_*` functions available with mlr3. See `?groupdiff_tau` for a list.
 Note, that the `operation` below also accepts custom aggregation function, see the example below.
 
 
@@ -200,7 +200,7 @@ Note, that the `operation` below also accepts custom aggregation function, see t
 msr("fairness.acc", operation = groupdiff_diff)
 ```
 
-We can also report other metrics, e.g. the error in a specific group: 
+We can also report other metrics, e.g. the error in a specific group:
 
 ```{r}
 t = tsk("adult_train")$filter(1:1000)
@@ -214,8 +214,8 @@ prds$score(mm, t)
 
 Individual fairness notions were first proposed by [@dwork2012].
 The core idea comes from the principle of *treating similar cases similarly and different cases differently*.
-In contrast to statistical group fairness notions, this notion allows assessing *fairness* at an individual level and 
-would therefore allow determining whether an individual is treated fairly. 
+In contrast to statistical group fairness notions, this notion allows assessing *fairness* at an individual level and
+would therefore allow determining whether an individual is treated fairly.
 A more in-depth treatment of individual fairness notions is given by [@binns2020apparent].
 
 In order to translate this from an abstract concept into practice, we need to define two distance metrics:
@@ -223,7 +223,7 @@ In order to translate this from an abstract concept into practice, we need to de
 - A distance metric between treatments, here the predictions of our model $f$: $\phi(f({x}_i), f({x}_j))$.
 
 Intuitively, we would now want, that if $d(x_i, x_j)$ is small, the difference in predictions  $\phi(f({x}_i), f({x}_j))$ should also be small.
-This essentially requires Lipschitz continuity of $f$ with respect to $d$. 
+This essentially requires Lipschitz continuity of $f$ with respect to $d$.
 Given a Lipschitz constant $L > 0$, we can write this as:
 
  $$ \phi(f({x}_i), f({x}_j)) \leq L \cdot d(x_i, x_j).$$
@@ -250,7 +250,7 @@ yhat = as.factor(yhat)
 levels(yhat) = levels(test$target)
 
 compute_metrics(
-  data = test, 
+  data = test,
   target = "target",
   prediction = yhat,
   protected_attribute = "sex",
