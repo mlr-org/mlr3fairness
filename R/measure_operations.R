@@ -38,7 +38,7 @@ groupdiff_tau = function(x) {
 #' @rdname groupdiff_tau
 groupdiff_absdiff = function(x) {
   assert_numeric(x, min.len = 2L)
-  if (anyMissing(x))
+  if (anyMissing(x)) {
     return(NA)
   }
 
