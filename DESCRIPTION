@@ -17,7 +17,12 @@ Authors@R:
              family = "Lang",
              role = "aut",
              email = "michellang@gmail.com",
-             comment = c(ORCID = "0000-0001-9754-0393"))
+             comment = c(ORCID = "0000-0001-9754-0393")),
+      person(given = "Sebastian",
+             family = "Fischer",
+             role = "ctb",
+             email = "sebastian.fischer@stat.uni-muenchen.de",
+             comment = c(ORCID = "0000-0002-9609-3197"))
     )
 Description:
     Integrates fairness auditing and bias mitigation methods for the 'mlr3' ecosystem.
@@ -59,6 +64,7 @@ Suggests:
     posterdown,
     kableExtra,
     fairml,
+    withr,
     iml
 RoxygenNote: 7.3.1
 Config/testthat/edition: 3

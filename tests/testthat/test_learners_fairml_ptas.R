@@ -18,9 +18,13 @@ test_that("all learners, two pta columns", {
     skip_on_cran()
     skip_if_not_installed("fairml")
     skip_if_not_installed("cccp")
+    skip_if_not_installed("withr")
+    withr::local_seed(1)
     for (k in mlr_learners_fairness$key) {
+        print(k)
         learner = lrn(k)
         task = test_task_intersect(task_type = learner$task_type)
+        print(task)
         learner$train(task)
         p = learner$predict(task, row_ids = sample(task$row_ids, 5))
         expect_prediction(p)
