@@ -1,11 +1,11 @@
 #' @title Regression Non-convex Fair Regression Learner
 #' @author pfistfl
-#' 
-#' @details 
+#'
+#' @details
 #' Fair regression model based on nonconvex optimization from Komiyama et al. (2018).
 #' Implemented via package `fairml`.
 #' The 'unfairness' parameter is set to 0.05 as a default.
-#' 
+#'
 #' @name mlr_learners_regr.fairnclm
 #' @template class_learner
 #' @templateVar id regr.fairnclm
@@ -33,7 +33,7 @@ LearnerRegrFairnclm = R6Class("LearnerRegrFairnclm",
 
       super$initialize(
         id = "regr.fairnclm",
-        packages = "fairml",
+        packages = c("fairml", "cccp"),
         feature_types = c("integer", "numeric", "factor", "ordered"),
         predict_types = c("response"),
         param_set = ps,

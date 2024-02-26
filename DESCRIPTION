@@ -48,6 +48,7 @@ Imports:
 Suggests:
     testthat (>= 3.1.0),
     CVXR,
+    cccp,
     patchwork,
     rpart,
     ranger,
