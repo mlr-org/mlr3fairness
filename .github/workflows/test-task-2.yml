@@ -29,6 +29,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - uses: r-lib/actions/setup-pandoc@v2
+
       - name: mlr3
         run: 'echo -e "Remotes:\n    mlr-org/mlr3@feat/train-predict,\n    mlr-org/mlr3pipelines@feat/test-rows" >> DESCRIPTION'
 
