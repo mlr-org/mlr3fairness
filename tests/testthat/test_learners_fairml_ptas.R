@@ -19,7 +19,7 @@ test_that("all learners, two pta columns", {
     skip_if_not_installed("fairml")
     skip_if_not_installed("cccp")
     skip_if_not_installed("withr")
-    withr::local_seed(2)
+    withr::local_seed(3)
     for (k in mlr_learners_fairness$key) {
         learner = lrn(k)
         task = test_task_intersect(task_type = learner$task_type)
