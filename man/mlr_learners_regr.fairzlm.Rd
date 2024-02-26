@@ -28,7 +28,7 @@ lrn("regr.fairzlm")
 \item Task type: \dQuote{regr}
 \item Predict Types: \dQuote{response}
 \item Feature Types: \dQuote{integer}, \dQuote{numeric}, \dQuote{factor}, \dQuote{ordered}
-\item Required Packages: \CRANpkg{mlr3}, \CRANpkg{fairml}
+\item Required Packages: \CRANpkg{mlr3}, \CRANpkg{fairml}, \CRANpkg{CVXR}
 }
 }
 

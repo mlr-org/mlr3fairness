@@ -43,12 +43,12 @@
 #' task = tsk("adult_train")$filter(1:500)
 #' learner = lrn("classif.ranger", predict_type = "prob")
 #' fairness_measure = msr("fairness.tpr")
-#' 
+#'
 #' # Example 1 - A single prediction
 #' learner$train(task)
 #' predictions = learner$predict(task)
 #' fairness_accuracy_tradeoff(predictions, fairness_measure, task = task)
-#' 
+#'
 #' # Example2 - A benchmark
 #' design = benchmark_grid(
 #'   tasks = task,

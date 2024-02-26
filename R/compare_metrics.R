@@ -1,11 +1,11 @@
 #' Compare different metrics
-#' 
+#'
 #' @rdname fairness_compare_metrics
 #'
 #' @description
 #' Compare learners with respect to to one or multiple metrics.
 #' Metrics can but be but are not limited to fairness metrics.
-#' 
+#'
 #' @template pta
 #'
 #' @param object ([PredictionClassif] | [BenchmarkResult] | [ResampleResult])\cr
@@ -41,7 +41,7 @@
 #' design = benchmark_grid(
 #'   tasks = task,
 #'   learners = lrns(c("classif.ranger", "classif.rpart"),
-#'     predict_type = "prob", predict_sets = c("train", "predict")),
+#'     predict_type = "prob", predict_sets = c("train", "test")),
 #'   resamplings = rsmps("cv", folds = 3)
 #' )
 #'
