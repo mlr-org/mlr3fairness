@@ -64,11 +64,11 @@ test_task_multipta = function(task_type, need_pta = TRUE) {
 # Two ptas
 test_task_intersect = function(task_type, need_pta = TRUE) {
   example_data = data.frame(
-    value = rep(1:2, 10),
-    variable = rep(rep(c(1, 4, 3, 6), each = 5)),
-    var2 = rnorm(20),
-    pta1 = as.factor(rep(1:2, 5)),
-    pta2 = as.factor(rep(1:2, each = 5))
+    value = rep(1:2, 20),
+    variable = rep(rep(c(1, 4, 3, 6), each = 10)),
+    var2 = rnorm(40),
+    pta1 = as.factor(rep(1:2, 10)),
+    pta2 = as.factor(rep(1:2, each = 10))
   )
   task = make_classif_regr_task(example_data, task_type)
   if (need_pta) task$col_roles$pta = c("pta1", "pta2")
