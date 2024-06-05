@@ -41,7 +41,7 @@
 #' design = benchmark_grid(
 #'   tasks = task,
 #'   learners = lrns(c("classif.ranger", "classif.rpart"),
-#'     predict_type = "prob", predict_sets = c("train", "predict")),
+#'     predict_type = "prob", predict_sets = c("train", "test")),
 #'   resamplings = rsmps("cv", folds = 3)
 #' )
 #'
