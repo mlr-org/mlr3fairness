@@ -37,7 +37,7 @@ lrn("regr.fairnclm")
    Id \tab Type \tab Default \tab Levels \tab Range \cr
    lambda \tab numeric \tab 0 \tab  \tab \eqn{[0, \infty)}{[0, Inf)} \cr
    save.auxiliary \tab logical \tab FALSE \tab TRUE, FALSE \tab - \cr
-   covfun \tab untyped \tab stats::cov \tab  \tab - \cr
+   covfun \tab untyped \tab "stats::cov" \tab  \tab - \cr
    unfairness \tab numeric \tab - \tab  \tab \eqn{[0, 1]}{[0, 1]} \cr
 }
 }
