@@ -15,8 +15,8 @@ test_that("reweighing_wts", {
   skip_on_cran()
   skip_if_not_installed("rpart")
   tsk = po("reweighing_wts")$train(list(tsk("adult_train")$filter(1:300)))[[1]]
-  expect_true(tsk$col_roles$weight == "reweighing.WEIGHTS")
-  dt = cbind(tsk$data(cols = c("..row_id", "sex", "target")), tsk$weights)
+  expect_true(tsk$col_roles$weights_learner == "reweighing.WEIGHTS")
+  dt = cbind(tsk$data(cols = c("..row_id", "sex", "target")), tsk$weights_learner)
   dt = dt[, mean(weight) * .N, by = .(sex, target)][, sum(V1 / sum(V1)), by = "target"]
   expect_true(all(abs(dt$V1 - 1) < 1e-3))
 })
@@ -35,15 +35,15 @@ test_that("reweighing_wts with initial weights", {
   skip_if_not_installed("rpart")
   t1 = tsk("compas")
   t2 = t1$clone()
-  t2$set_col_roles("age", "weight")
+  t2$set_col_roles("age", "weights_learner")
 
   p1 = po("reweighing_wts")
   p2 = p1$clone()
 
   ot1 = p1$train(list(t1))[[1]]
   ot2 = p2$train(list(t2))[[1]]
-  w1 = ot1$weights$weight * t1$data(cols = "age")[["age"]]
-  w2 = ot2$weights$weight
+  w1 = ot1$weights_learner$weight * t1$data(cols = "age")[["age"]]
+  w2 = ot2$weights_learner$weight
   expect_true(abs(mean(w1 - w2)) < 1e-2)
 })
 
@@ -68,8 +68,8 @@ test_that("reweighing int to char conversion", {
   t = TaskClassif$new("adult_int", backend = dt, target = "target")
   t$col_roles$pta = "sex"
   tsk = po("reweighing_wts")$train(list(t))[[1]]
-  expect_true(tsk$col_roles$weight == "reweighing.WEIGHTS")
-  dt = cbind(tsk$data(cols = c("..row_id", "sex", "target")), tsk$weights)
+  expect_true(tsk$col_roles$weights_learner == "reweighing.WEIGHTS")
+  dt = cbind(tsk$data(cols = c("..row_id", "sex", "target")), tsk$weights_learner)
   dt = dt[, mean(weight) * .N, by = .(sex, target)][, sum(V1 / sum(V1)), by = "target"]
   expect_true(all(abs(dt$V1 - 1) < 1e-3))
 
@@ -79,8 +79,8 @@ test_that("reweighing int to char conversion", {
   t = TaskClassif$new("adult_int", backend = dt, target = "target")
   t$col_roles$pta = "sex"
   tsk = po("reweighing_wts")$train(list(t))[[1]]
-  expect_true(tsk$col_roles$weight == "reweighing.WEIGHTS")
-  dt = cbind(tsk$data(cols = c("..row_id", "sex", "target")), tsk$weights)
+  expect_true(tsk$col_roles$weights_learner == "reweighing.WEIGHTS")
+  dt = cbind(tsk$data(cols = c("..row_id", "sex", "target")), tsk$weights_learner)
   dt = dt[, mean(weight) * .N, by = .(sex, target)][, sum(V1 / sum(V1)), by = "target"]
   expect_true(all(abs(dt$V1 - 1) < 1e-3))
 
@@ -90,8 +90,8 @@ test_that("reweighing int to char conversion", {
   t = TaskClassif$new("adult_int", backend = dt, target = "target")
   t$col_roles$pta = "sex"
   tsk = po("reweighing_wts")$train(list(t))[[1]]
-  expect_true(tsk$col_roles$weight == "reweighing.WEIGHTS")
-  dt = cbind(tsk$data(cols = c("..row_id", "sex", "target")), tsk$weights)
+  expect_true(tsk$col_roles$weights_learner == "reweighing.WEIGHTS")
+  dt = cbind(tsk$data(cols = c("..row_id", "sex", "target")), tsk$weights_learner)
   dt = dt[, mean(weight) * .N, by = .(sex, target)][, sum(V1 / sum(V1)), by = "target"]
   expect_true(all(abs(dt$V1 - 1) < 1e-3))
 })

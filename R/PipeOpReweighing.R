@@ -113,20 +113,20 @@ PipeOpReweighingWeights = R6Class("PipeOpReweighingWeights",
       wtab = compute_reweighing_weights(task, 1)
       wcol = task$data(cols = c(task$backend$primary_key, task$target_names, task$col_roles$pta))
       wcol = wcol[wtab, on = c(task$target_names, task$col_roles$pta)][, c(task$backend$primary_key, "wt"), with = FALSE]
-      if (is.null(task$weights)) {
+      if (is.null(task$weights_learner)) {
         initial_weights = rep(1, task$nrow)
       } else {
-        initial_weights = task$weights[wcol]$weight
+        initial_weights = task$weights_learner[wcol]$weight
       }
       wcol = wcol[, wt := wt * initial_weights]
       setnames(wcol, c(task$backend$primary_key, weightcolname))
       task$cbind(wcol)
 
-      if (length(task$col_roles$weight)) {
-        task$set_col_roles(task$col_roles$weight, remove_from = "weight")
+      if (length(task$col_roles$weights_learner)) {
+        task$set_col_roles(task$col_roles$weights_learner, remove_from = "weights_learner")
       }
 
-      task$set_col_roles(weightcolname, "weight")
+      task$set_col_roles(weightcolname, "weights_learner")
       task
     },
 
