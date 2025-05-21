@@ -42,6 +42,7 @@ test_that("classif.fairzlrm", {
 test_that("regr.fairnclm", {
     skip_on_cran()
     skip_if_not_installed("fairml")
+    skip_if_not_installed("cccp")
     learner = lrn("regr.fairnclm")
     out = expect_learner(learner)
 

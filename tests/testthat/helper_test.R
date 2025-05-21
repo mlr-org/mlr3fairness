@@ -1,7 +1,7 @@
 # check plot satisfy those three conditions
 # is_ggplot, no errors, no warnings
 check_plots = function(ggplot_obj) {
-  expect_true(is.ggplot(ggplot_obj))
+  expect_true(is_ggplot(ggplot_obj))
   expect_error(ggplot_obj, NA)
   expect_warning(ggplot_obj, NA)
 }
@@ -21,7 +21,7 @@ run_autotest = function(learner, N = 30L, exclude = NULL, predict_types = learne
     x$cbind(pta)
     x$col_roles$pta = "pta"
   })
-  
+
   if (!is.null(exclude)) {
     tasks = tasks[!grepl(exclude, names(tasks))]
   }
