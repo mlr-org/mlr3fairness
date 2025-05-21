@@ -1,68 +1,64 @@
-Package: mlr3fairness
 Type: Package
+Package: mlr3fairness
 Title: Fairness Auditing and Debiasing for 'mlr3'
 Version: 0.3.2.9000
-Authors@R:
-    c(
-      person(given = "Florian",
-             family = "Pfisterer",
-             role = c("cre", "aut"),
-             email = "pfistererf@googlemail.com",
-             comment = c(ORCID = "0000-0001-8867-762X")),
-      person(given = "Wei",
-               family = "Siyi",
-               role = "aut",
-               email = "weisiyi2@gmail.com"),
-      person(given = "Michel",
-             family = "Lang",
-             role = "aut",
-             email = "michellang@gmail.com",
-             comment = c(ORCID = "0000-0001-9754-0393"))
-    )
-Description:
-    Integrates fairness auditing and bias mitigation methods for the 'mlr3' ecosystem.
-    This includes fairness metrics, reporting tools, visualizations and bias mitigation techniques such as
-    "Reweighing" described in 'Kamiran, Calders' (2012) <doi:10.1007/s10115-011-0463-8>  and
-    "Equalized Odds" described in 'Hardt et al.' (2016) <https://papers.nips.cc/paper/2016/file/9d2682367c3935defcb1f9e247a97c0d-Paper.pdf>.
-    Integration with 'mlr3' allows for auditing of ML models as well as convenient joint tuning of
-    machine learning algorithms and debiasing methods.
-URL: https://mlr3fairness.mlr-org.com, https://github.com/mlr-org/mlr3fairness
-BugReports: https://github.com/mlr-org/mlr3fairness/issues
+Authors@R:c(
+    person("Florian", "Pfisterer", , "pfistererf@googlemail.com", role = c("cre", "aut"),
+           comment = c(ORCID = "0000-0001-8867-762X")),
+    person("Wei", "Siyi", , "weisiyi2@gmail.com", role = "aut"),
+    person("Michel", "Lang", , "michellang@gmail.com", role = "aut",
+           comment = c(ORCID = "0000-0001-9754-0393"))
+  )
+Description:Integrates fairness auditing and bias mitigation methods for
+    the 'mlr3' ecosystem.  This includes fairness metrics, reporting
+    tools, visualizations and bias mitigation techniques such as
+    "Reweighing" described in 'Kamiran, Calders' (2012)
+    <doi:10.1007/s10115-011-0463-8> and "Equalized Odds" described in
+    'Hardt et al.' (2016)
+    <https://papers.nips.cc/paper/2016/file/9d2682367c3935defcb1f9e247a97c0d-Paper.pdf>.
+    Integration with 'mlr3' allows for auditing of ML models as well as
+    convenient joint tuning of machine learning algorithms and debiasing
+    methods.
 License: LGPL-3
-Encoding: UTF-8
-LazyData: true
+URL: https://mlr3fairness.mlr-org.com,
+    https://github.com/mlr-org/mlr3fairness
+BugReports: https://github.com/mlr-org/mlr3fairness/issues
 Depends:
     R (>= 3.4.0)
 Imports:
     checkmate,
-    R6 (>= 2.4.1),
     data.table (>= 1.13.6),
-    paradox,
+    ggplot2,
     mlr3 (>= 0.23.0.9000),
+    mlr3learners,
     mlr3measures,
     mlr3misc,
     mlr3pipelines,
-    mlr3learners,
-    rlang,
-    ggplot2
+    paradox,
+    R6 (>= 2.4.1),
+    rlang
 Suggests:
-    testthat (>= 3.1.0),
+    cccp,
     CVXR,
-    patchwork,
-    rpart,
-    ranger,
-    mlr3viz,
-    linprog,
-    rmarkdown,
-    knitr,
-    posterdown,
-    kableExtra,
     fairml,
-    iml
+    iml,
+    kableExtra,
+    knitr,
+    linprog,
+    mlr3viz,
+    patchwork,
+    posterdown,
+    ranger,
+    rmarkdown,
+    rpart,
+    testthat (>= 3.1.0)
+VignetteBuilder: 
+    knitr
 Remotes:
     mlr-org/mlr3
-RoxygenNote: 7.3.1
 Config/testthat/edition: 3
 Config/testthat/parallel: false
+Encoding: UTF-8
+LazyData: true
 Roxygen: list(markdown = TRUE)
-VignetteBuilder: knitr
+RoxygenNote: 7.3.1
