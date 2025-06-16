@@ -32,9 +32,11 @@
 #' * Factorize the features that are categorical.
 #' * Add length of stay (c_jail_out - c_jail_in) in the dataset.
 #' * `Pre-processing Resource:` @url https://github.com/propublica/compas-analysis/blob/master/Compas%20Analysis.ipynb
+#' 
+#' Note: The 'is_recid' column was removed as it's a target column.
 #'
 #' @section Metadata:
-#' * (integer) age : The age of defendants.
+#' * (integer) age: The age of defendants.
 #' * (factor) c_charge_degree : The charge degree of defendants. F: Felony M: Misdemeanor
 #' * (factor) race: The race of defendants.
 #' * (factor) age_cat: The age category of defendants.
@@ -45,7 +47,6 @@
 #'   If they are too far apart, that may indicate an error. If the value is negative,
 #'   that indicate the screening date happened before the arrest date.
 #' * (integer) decile_score: Indicate the risk of recidivism (Min=1, Max=10)
-#' * (integer) is_recid: Binary variable indicate whether defendant is rearrested at any time.
 #' * (factor) two_year_recid: Binary variable indicate whether defendant is rearrested at within two years.
 #' * (numeric) length_of_stay: The count of days stay in jail.
 #'
@@ -80,6 +81,7 @@ get_compas_task = function() { # nocov start
   b = as_data_backend(mlr3fairness::compas)
   task = mlr3::TaskClassif$new("compas", b, target = "two_year_recid")
   task$col_roles$pta = "sex"
+  task$col_roles$feature = setdiff(task$feature_names, "is_recid")
   b$hash = task$man = "mlr3fairness::mlr_tasks_compas"
   task
 } # nocov end
