@@ -1,7 +1,7 @@
 test_that("model cards", {
   skip_on_cran()
   skip_if_not_installed("rmarkdown")
-  skip_if_not_installed("posterdown")
+  skip_if_not_installed("pagedown")
   skip_if_not(rmarkdown::pandoc_available())
   tmp = tempdir()
   tmp = paste0(tmp, "/report")
@@ -17,7 +17,7 @@ test_that("model cards", {
 test_that("datasheets", {
   skip_on_cran()
   skip_if_not_installed("rmarkdown")
-  skip_if_not_installed("posterdown")
+  skip_if_not_installed("pagedown")
   skip_if_not(rmarkdown::pandoc_available())
   tmp = tempdir()
   tmp = paste0(tmp, "/report")

@@ -55,7 +55,7 @@ Suggests:
     linprog,
     rmarkdown,
     knitr,
-    posterdown,
+    pagedown,
     kableExtra,
     fairml,
     iml
