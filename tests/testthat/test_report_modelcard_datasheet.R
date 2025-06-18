@@ -38,7 +38,7 @@ test_that("fairness_report", {
   tmp = tempdir()
   tmp = paste0(tmp, "/report")
   unlink(tmp, recursive = TRUE)
-  task = suppressWarnings(tsk("compas")$filter(1:500)$select(c("age", "decile_score","race", "sex", "c_charge_degree")))
+  task = suppressWarnings(tsk("compas")$filter(1:500)$select(c("decile_score","race", "sex", "c_charge_degree")))
   learner = lrn("classif.rpart", predict_type = "prob")
   rr = resample(task, learner, rsmp("cv", folds = 5))
   report_fairness(tmp, list(task = task, resample_result = rr, foo = 1))

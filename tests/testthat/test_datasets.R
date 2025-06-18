@@ -19,12 +19,12 @@ test_that("compas dataset can be loaded with correct format", {
   compas_data = compas$data()
   check_data_format(compas_data)
   expect_true(nrow(compas_data) == 6172L)
-  expect_true(ncol(compas_data) == 12L)
+  expect_true(ncol(compas_data) == 11L)
   expect_true(compas$col_roles$pta == "sex")
-
-  assert_col_type = (sapply(compas_data, class) == c("factor", "integer", "factor", "factor",
-    "integer", "integer", "factor", "integer",
-    "integer", "factor", "factor", "factor"))
+  assert_col_type = (sapply(compas_data, class) == c(
+    "factor", "integer", "factor", "factor",  "integer", "integer",
+    "integer", "integer", "factor",  "factor",  "factor")
+  )
   expect_true(all(assert_col_type))
 })
 
