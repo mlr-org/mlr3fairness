@@ -47,6 +47,7 @@ test_that("fairness measures work as expcted", {
   for (prd in prds) {
     for (m in metrics) {
       ms = msr(m)
+      print(ms$id)
       if (ms$task_type == "classif" && is(ms, "MeasureFairness")) {
         out = prd$score(measures = ms, task = tsk)
         expect_number(out, lower = 0, upper = Inf, na.ok = TRUE)
