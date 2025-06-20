@@ -1,13 +1,19 @@
+
 # mlr3fairness (development version)
 
-* compatibility: `mlr3` 1.0.0
+# mlr3fairness 0.4.0
+
+* compatibility adoption for `mlr3` 1.0.0
+* replace posterdown as it is no longer available on CRAN
+* Removed the 'is_recid' variable from the compas task
+* Small fixes to unit tests, docs etc.
 
 # mlr3fairness 0.3.2
 
 * The `Task` printer now prints the protected attribute.
 * `fairness_ tensor` has a new argument `normalize` that controls normalization.
   Possible values are `"all"` (global) `"group"` (by group) and `"none"` (no normalization).
-*  Fix: unloading `leaerners`, `tasks`, `measures` and `pipeops` now removes them from dictionary.
+*  Fix: unloading `learners`, `tasks`, `measures` and `pipeops` now removes them from dictionary.
 
 # mlr3fairness 0.3.1
 

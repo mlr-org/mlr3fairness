@@ -20,7 +20,7 @@ Given we detected some form of bias during bias auditing, we are often intereste
 There are several ways to achieve this, such as collecting additional data or finding and fixing errors in the data.
 Assuming there are no biases in the data and labels, one other option is to debias models using either **preprocessing**, **postprocessing** and **inprocessing** methods.
 `mlr3fairness` provides some operators as `PipeOp`s for `mlr3pipelines`.
-If you are not familiar with `mlr3pipelines`, the [mlr3 book](https://mlr3book.mlr-org.com/pipelines.html) contains an introduction. 
+If you are not familiar with `mlr3pipelines`, the [mlr3 book](https://mlr3book.mlr-org.com/chapters/chapter7/sequential_pipelines.html) contains an introduction. 
 
 We again showcase debiasing using the `adult_train` task:
 
