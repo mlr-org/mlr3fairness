@@ -1,5 +1,5 @@
 
-# mlr3fairness (development version)
+# mlr3fairness 0.4.0
 
 # mlr3fairness 0.4.0
 
