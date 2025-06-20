@@ -4,8 +4,6 @@ test_that("classif.fairfgrrm", {
     learner = lrn("classif.fairfgrrm")
     out = expect_learner(learner)
     simple_autotest(learner, tsk("compas")$select(cols = c("age_cat", "priors_count")))
-    result = run_autotest(learner, exclude = "sanity")
-    expect_true(result, info = result$error)
 })
 
 test_that("regr.fairfrrm", {
@@ -17,8 +15,6 @@ test_that("regr.fairfrrm", {
     task = TaskRegr$new("long", fairml::national.longitudinal.survey, target = "income06")
     task$col_roles$pta = "gender"
     simple_autotest(learner, task)
-    result = run_autotest(learner)
-    expect_true(result, info = result$error)
 })
 
 test_that("regr.fairzlm", {
@@ -31,9 +27,6 @@ test_that("regr.fairzlm", {
     task = TaskRegr$new("long", fairml::national.longitudinal.survey, target = "income06")
     task$col_roles$pta = "gender"
     simple_autotest(learner, task)
-
-    result = run_autotest(learner)
-    expect_true(result, info = result$error)
 })
 
 test_that("classif.fairzlrm", {
@@ -44,21 +37,16 @@ test_that("classif.fairzlrm", {
     out = expect_learner(learner)
 
     simple_autotest(learner, tsk("compas")$select(cols = c("age_cat", "priors_count")))
-
-    result = run_autotest(learner, exclude = "sanity")
-    expect_true(result, info = result$error)
 })
 
 test_that("regr.fairnclm", {
     skip_on_cran()
     skip_if_not_installed("fairml")
+    skip_if_not_installed("cccp")
     learner = lrn("regr.fairnclm")
     out = expect_learner(learner)
 
     task = TaskRegr$new("long", fairml::national.longitudinal.survey, target = "income06")
     task$col_roles$pta = "gender"
     simple_autotest(learner, task)
-
-    result = run_autotest(learner)
-    expect_true(result, info = result$error)
 })

@@ -15,7 +15,7 @@ poster_height: 95%
 poster_width: 96%
 primary_colour: "#235187"
 output: 
-  posterdown::posterdown_html:
+  pagedown::poster_relaxed:
     self_contained: false
     css: "style.css"
 bibliography: references.bib

@@ -69,13 +69,15 @@ test_task_intersect = function(task_type, need_pta = TRUE) {
     pta2 = as.factor(1:2)
   )
   example_data = df_grid[rep(seq_len(nrow(df_grid)), each = 5), ]
-  example_data$value = rep(1:2, 10)
   example_data$variable = rep(rep(c(1, 4, 3, 6), each = 5))
   example_data$var2 = rnorm(20)
-  # Add a balanced response variable (adjust as needed)
-  example_data$y = as.factor(rep(1:2, 10))
-  
-  task = make_classif_regr_task(example_data, task_type, target = "y")
+  if (task_type == "regr"){
+    example_data$value = rnorm(20)
+  } else {
+    example_data$value = as.factor(rep(1:2, 10))
+  }
+
+  task = make_classif_regr_task(example_data, task_type)
   if (need_pta) task$col_roles$pta = c("pta1", "pta2")
   return(task)
 }

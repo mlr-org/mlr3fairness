@@ -1,4 +1,9 @@
+# mlr3fairness (development version)
+
+* compatibility: `mlr3` 1.0.0
+
 # mlr3fairness 0.3.2
+
 * The `Task` printer now prints the protected attribute.
 * `fairness_ tensor` has a new argument `normalize` that controls normalization.
   Possible values are `"all"` (global) `"group"` (by group) and `"none"` (no normalization).
@@ -24,7 +29,7 @@
 * Added 5 new learners (2 classification 3 regression) from package `fairml`.
   * classification: `classif.fairzlrm` | `classif.fairfgrrm`
   * regression:     `regr.fairnclm` | `regr.fairzlm` | `regr.fairfrrm`.
-* Added `MeasureSubgroup` and `groupwise_metrics` that allow for inspecting dis-aggregated fairness metrics. 
+* Added `MeasureSubgroup` and `groupwise_metrics` that allow for inspecting dis-aggregated fairness metrics.
 
 # mlr3fairness 0.1.0
 

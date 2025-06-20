@@ -15,7 +15,7 @@
 #' Some popular predefined measures can be found in the [dictionary][mlr3misc::Dictionary] [mlr_measures].
 #'
 #' @template pta
-#' 
+#'
 #' @seealso [MeasureFairnessComposite]
 #' @export
 #' @examples
