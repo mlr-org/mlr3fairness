@@ -35,16 +35,12 @@ The **goal of `mlr3fairness`** is to allow for auditing of `mlr3`
 learners, visualization and subsequently trying to improve fairness
 using debiasing strategies.
 
---- 
-
-:warning: **Note** Bias auditing and debiasing solely based on
-observational data **can not** guarantee fairness of a decision making
-system. Several biases, for example comming from the data can not be
-detected using the approaches implemented in `mlr3fairness`. The goal
-of this software is **instead** to allow for a better understanding and first
-hints at possible fairness problems in a studied model.
-
----
+> :warning: **Note** Bias auditing and debiasing solely based on
+> observational data **can not** guarantee fairness of a decision making
+> system. Several biases, for example comming from the data can not be
+> detected using the approaches implemented in `mlr3fairness`. This goal
+> of this software is thus to allow for a better understanding and first
+> hints at possible fairness problems in a studied model.
 
 ## Feature Overview
 
@@ -246,9 +242,6 @@ fairness_prediction_density(predictions, task_test)
 
 ### Other Fairness Toolkits in R
 
-- The [AI Fairness 360](https://aif360.mybluemix.net/) toolkit offers an
-  R extension that allows for bias auditing, visualization and
-  mitigation.
 - [fairmodels](https://github.com/ModelOriented/fairmodels/) integrates
   with the [DALEX](https://github.com/ModelOriented/DALEX) R-packages
   and similarly allows for bias auditing, visualization and mitigation.
