@@ -1,120 +1,42 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/articles/debiasing-vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/articles/measures-vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/articles/reports-vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/articles/visualization-vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/index.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/MeasureFairness.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/MeasureFairnessComposite.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/MeasureFairnessConstraint.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/MeasureSubgroup.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/adult.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/compas.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/compute_metrics.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/fairness_accuracy_tradeoff.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/fairness_compare_metrics.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/fairness_prediction_density.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/fairness_tensor.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/groupdiff_tau.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/groupwise_metrics.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr3fairness-package.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_learners_classif.fairfgrrm.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_learners_classif.fairzlrm.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_learners_fairness.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_learners_regr.fairfrrm.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_learners_regr.fairnclm.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_learners_regr.fairzlm.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_measures_fairness.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_measures_positive_probability.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_pipeops_equalized_odds.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_pipeops_explicit_pta.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_pipeops_reweighing.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/report_datasheet.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/report_fairness.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/report_modelcard.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3fairness.mlr-org.com/dev/reference/task_summary.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/LICENSE-text.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/articles/debiasing-vignette.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/articles/index.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/articles/measures-vignette.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/articles/reports-vignette.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/articles/visualization-vignette.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/authors.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/index.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/news/index.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/MeasureFairness.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/MeasureFairnessComposite.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/MeasureFairnessConstraint.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/MeasureSubgroup.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/adult.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/compas.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/compute_metrics.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/fairness_accuracy_tradeoff.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/fairness_compare_metrics.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/fairness_prediction_density.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/fairness_tensor.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/groupdiff_tau.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/groupwise_metrics.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/index.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr3fairness-package.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_learners_classif.fairfgrrm.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_learners_classif.fairzlrm.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_learners_fairness.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_learners_regr.fairfrrm.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_learners_regr.fairnclm.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_learners_regr.fairzlm.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_measures_fairness.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_measures_positive_probability.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_pipeops_equalized_odds.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_pipeops_explicit_pta.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/mlr_pipeops_reweighing.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/report_datasheet.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/report_fairness.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/report_modelcard.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/dev/reference/task_summary.html</loc></url>
 </urlset>
+

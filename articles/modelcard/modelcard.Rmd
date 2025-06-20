@@ -12,7 +12,7 @@ affiliation:
     address: Planet Earth, Milky Way
 column_numbers: 4
 output: 
-  posterdown::posterdown_html:
+  pagedown::poster_relaxed:
     self_contained: false
 bibliography: references.bib
 ---
