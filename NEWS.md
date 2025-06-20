@@ -1,6 +1,3 @@
-
-# mlr3fairness 0.4.0
-
 # mlr3fairness 0.4.0
 
 * compatibility adoption for `mlr3` 1.0.0
