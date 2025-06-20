@@ -2,14 +2,14 @@ Type: Package
 Package: mlr3fairness
 Title: Fairness Auditing and Debiasing for 'mlr3'
 Version: 0.3.2.9000
-Authors@R:c(
+Authors@R: c(
     person("Florian", "Pfisterer", , "pfistererf@googlemail.com", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0001-8867-762X")),
     person("Wei", "Siyi", , "weisiyi2@gmail.com", role = "aut"),
     person("Michel", "Lang", , "michellang@gmail.com", role = "aut",
            comment = c(ORCID = "0000-0001-9754-0393"))
   )
-Description:Integrates fairness auditing and bias mitigation methods for
+Description: Integrates fairness auditing and bias mitigation methods for
     the 'mlr3' ecosystem.  This includes fairness metrics, reporting
     tools, visualizations and bias mitigation techniques such as
     "Reweighing" described in 'Kamiran, Calders' (2012)
@@ -42,10 +42,12 @@ Suggests:
     CVXR,
     pagedown,
     fairml,
+    future,
     iml,
     kableExtra,
     knitr,
     linprog,
+    lgr,
     mlr3viz,
     patchwork,
     ranger,
@@ -61,4 +63,4 @@ Config/testthat/parallel: false
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
