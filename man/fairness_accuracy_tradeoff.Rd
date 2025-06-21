@@ -7,16 +7,16 @@
 fairness_accuracy_tradeoff(object, ...)
 }
 \arguments{
-\item{object}{(\link{PredictionClassif} | \link{BenchmarkResult} | \link{ResampleResult})\cr
+\item{object}{(\link[mlr3:PredictionClassif]{mlr3::PredictionClassif} | \link[mlr3:BenchmarkResult]{mlr3::BenchmarkResult} | \link[mlr3:ResampleResult]{mlr3::ResampleResult})\cr
 The binary class prediction object that will be evaluated.
 \itemize{
-\item If provided a \link{PredictionClassif}.
+\item If provided a \link[mlr3:PredictionClassif]{mlr3::PredictionClassif}.
 Then only one point will indicate the accuracy and fairness metrics for the current predictions.
-Requires also passing a \link{Task}.
-\item If provided a \link{ResampleResult}.
+Requires also passing a \link[mlr3:Task]{mlr3::Task}.
+\item If provided a \link[mlr3:ResampleResult]{mlr3::ResampleResult}.
 Then the plot will compare the accuracy and fairness metrics for the same model,
 but different resampling iterations  as well as the aggregate indicated by a cross.
-\item If provided a \link{BenchmarkResult}.
+\item If provided a \link[mlr3:BenchmarkResult]{mlr3::BenchmarkResult}.
 Then the plot will compare the accuracy and fairness metrics for all models and all resampling iterations.
 Points are colored according to the learner_id and faceted by task_id.
 The aggregated score is indicated by a cross.
@@ -24,14 +24,14 @@ The aggregated score is indicated by a cross.
 
 \item{...}{Arguments to be passed to methods. Such as:
 \itemize{
-\item \code{fairness_measure} (\link{Measure})\cr
+\item \code{fairness_measure} (\link[mlr3:Measure]{mlr3::Measure})\cr
 The fairness measures that will evaluated.
 Default measure set to be \code{msr("fairness.fpr")}
-\item \code{accuracy_measure} (\link{Measure})\cr
+\item \code{accuracy_measure} (\link[mlr3:Measure]{mlr3::Measure})\cr
 The accuracy measure that will evaluated.
 Default measure set to be \link[mlr3:MeasureClassif]{msr("classif.acc")}.
-\item \code{task} (\link{TaskClassif})\cr
-The data task that contains the protected column, only required when the class of object is (\link{PredictionClassif})
+\item \code{task} (\link[mlr3:TaskClassif]{mlr3::TaskClassif})\cr
+The data task that contains the protected column, only required when the class of object is (\link[mlr3:PredictionClassif]{mlr3::PredictionClassif})
 }}
 }
 \value{
@@ -45,7 +45,7 @@ This can assist in gauging the optimal model from a set of options along with es
 }
 \section{Protected Attributes}{
 
-The protected attribute is specified as a \code{col_role} in the corresponding \code{\link[=Task]{Task()}}:\cr
+The protected attribute is specified as a \code{col_role} in the corresponding \code{\link[mlr3:Task]{mlr3::Task()}}:\cr
 \verb{<Task>$col_roles$pta = "name_of_attribute"} \cr
 This also allows specifying more than one protected attribute,
 in which case fairness will be considered on the level of intersecting groups defined by all columns

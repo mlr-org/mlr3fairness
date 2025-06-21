@@ -8,29 +8,29 @@
 #'
 #' @template pta
 #'
-#' @param object ([PredictionClassif] | [BenchmarkResult] | [ResampleResult])\cr
+#' @param object ([mlr3::PredictionClassif] | [mlr3::BenchmarkResult] | [mlr3::ResampleResult])\cr
 #'   The binary class prediction object that will be evaluated.
-#'   * If provided a [PredictionClassif].
+#'   * If provided a [mlr3::PredictionClassif].
 #'     Then only one point will indicate the accuracy and fairness metrics for the current predictions.
-#'     Requires also passing a [Task].
-#'   * If provided a [ResampleResult].
+#'     Requires also passing a [mlr3::Task].
+#'   * If provided a [mlr3::ResampleResult].
 #'     Then the plot will compare the accuracy and fairness metrics for the same model,
 #'     but different resampling iterations  as well as the aggregate indicated by a cross.
-#'   * If provided a [BenchmarkResult].
+#'   * If provided a [mlr3::BenchmarkResult].
 #'     Then the plot will compare the accuracy and fairness metrics for all models and all resampling iterations.
 #'     Points are colored according to the learner_id and faceted by task_id.
 #'     The aggregated score is indicated by a cross.
 #'
 #' @param ...
 #'   Arguments to be passed to methods. Such as:
-#'   * `fairness_measure` ([Measure])\cr
+#'   * `fairness_measure` ([mlr3::Measure])\cr
 #'     The fairness measures that will evaluated.
 #'     Default measure set to be `msr("fairness.fpr")`
-#'   * `accuracy_measure` ([Measure])\cr
+#'   * `accuracy_measure` ([mlr3::Measure])\cr
 #'     The accuracy measure that will evaluated.
 #'     Default measure set to be [msr("classif.acc")][mlr3::MeasureClassif].
-#'   * `task` ([TaskClassif])\cr
-#'     The data task that contains the protected column, only required when the class of object is ([PredictionClassif])
+#'   * `task` ([mlr3::TaskClassif])\cr
+#'     The data task that contains the protected column, only required when the class of object is ([mlr3::PredictionClassif])
 #'
 #' @export
 #' @return A 'ggplot2' object.

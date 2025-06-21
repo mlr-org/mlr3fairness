@@ -25,7 +25,7 @@ predictions$score(measure, task = t)
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{base_measure}}{(\code{Measure()})\cr
+\item{\code{base_measure}}{(\code{mlr3::Measure()})\cr
 The base measure to be used by the fairness measures,
 e.g. \link{mlr_measures_classif.fpr} for the false positive rate.}
 

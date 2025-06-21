@@ -7,7 +7,7 @@
 task_summary(task)
 }
 \arguments{
-\item{task}{\link{Task}}
+\item{task}{\link[mlr3:Task]{mlr3::Task}}
 }
 \value{
 \code{data.frame} containing the reported information

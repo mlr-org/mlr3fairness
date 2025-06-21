@@ -7,13 +7,13 @@
 fairness_prediction_density(object, ...)
 }
 \arguments{
-\item{object}{(\link{PredictionClassif} | \link{ResampleResult} | \link{BenchmarkResult})\cr
+\item{object}{(\link[mlr3:PredictionClassif]{mlr3::PredictionClassif} | \link[mlr3:ResampleResult]{mlr3::ResampleResult} | \link[mlr3:BenchmarkResult]{mlr3::BenchmarkResult})\cr
 The binary class prediction object that will be evaluated.
-If \link{PredictionClassif}, a \link{Task} is required.}
+If \link[mlr3:PredictionClassif]{mlr3::PredictionClassif}, a \link[mlr3:Task]{mlr3::Task} is required.}
 
 \item{...}{The arguments to be passed to methods, such as:
 \itemize{
-\item \code{task} (\link{TaskClassif})\cr
+\item \code{task} (\link[mlr3:TaskClassif]{mlr3::TaskClassif})\cr
 The data task that contains the protected column.
 \item \code{type} \code{\link{character}}\cr
 The plot type. Either \code{violin} or \code{density}.
@@ -30,7 +30,7 @@ The title for the plot will demonstrate which class for predicted probability.
 }
 \section{Protected Attributes}{
 
-The protected attribute is specified as a \code{col_role} in the corresponding \code{\link[=Task]{Task()}}:\cr
+The protected attribute is specified as a \code{col_role} in the corresponding \code{\link[mlr3:Task]{mlr3::Task()}}:\cr
 \verb{<Task>$col_roles$pta = "name_of_attribute"} \cr
 This also allows specifying more than one protected attribute,
 in which case fairness will be considered on the level of intersecting groups defined by all columns

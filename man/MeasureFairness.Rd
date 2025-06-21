@@ -19,7 +19,7 @@ Some popular predefined measures can be found in the \link[mlr3misc:Dictionary]{
 }
 \section{Protected Attributes}{
 
-The protected attribute is specified as a \code{col_role} in the corresponding \code{\link[=Task]{Task()}}:\cr
+The protected attribute is specified as a \code{col_role} in the corresponding \code{\link[mlr3:Task]{mlr3::Task()}}:\cr
 \verb{<Task>$col_roles$pta = "name_of_attribute"} \cr
 This also allows specifying more than one protected attribute,
 in which case fairness will be considered on the level of intersecting groups defined by all columns
@@ -45,7 +45,7 @@ predictions$score(measure, task = t)
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{base_measure}}{(\code{Measure()})\cr
+\item{\code{base_measure}}{(\code{mlr3::Measure()})\cr
 The base measure to be used by the fairness measures,
 e.g. \link{mlr_measures_classif.fpr} for the false positive rate.}
 

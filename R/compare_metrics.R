@@ -8,24 +8,24 @@
 #' 
 #' @template pta
 #'
-#' @param object ([PredictionClassif] | [BenchmarkResult] | [ResampleResult])\cr
+#' @param object ([mlr3::PredictionClassif] | [mlr3::BenchmarkResult] | [mlr3::ResampleResult])\cr
 #'   The object to create a plot for.
-#'   * If provided a ([PredictionClassif]).
+#'   * If provided a ([mlr3::PredictionClassif]).
 #'     Then the visualization will compare the fairness metrics among the binary level from protected field
 #'     through bar plots.
-#'   * If provided a ([ResampleResult]).
+#'   * If provided a ([mlr3::ResampleResult]).
 #'     Then the visualization will generate the boxplots for fairness metrics, and compare them among
 #'     the binary level from protected field.
-#'   * If provided a ([BenchmarkResult]).
+#'   * If provided a ([mlr3::BenchmarkResult]).
 #'     Then the visualization will generate the boxplots for fairness metrics, and compare them among
 #'     both the binary level from protected field and the models implemented.
 #' @param ...
 #' The arguments to be passed to methods, such as:
-#'   * `fairness_measures` (list of [Measure])\cr
-#'     The fairness measures that will evaluated on object, could be single [Measure] or list of [Measure]s.
+#'   * `fairness_measures` (list of [mlr3::Measure])\cr
+#'     The fairness measures that will evaluated on object, could be single [mlr3::Measure] or list of [mlr3::Measure]s.
 #'     Default measure set to be `msr("fairness.acc")`.
-#'   * `task` ([TaskClassif])\cr
-#'     The data task that contains the protected column, only required when object is ([PredictionClassif]).
+#'   * `task` ([mlr3::TaskClassif])\cr
+#'     The data task that contains the protected column, only required when object is ([mlr3::PredictionClassif]).
 #'
 #' @export
 #' @return A 'ggplot2' object.

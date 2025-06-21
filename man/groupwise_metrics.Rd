@@ -10,7 +10,7 @@ groupwise_metrics(base_measure, task, intersect = TRUE)
 \item{base_measure}{(\code{Measure()})\cr
 The base metric evaluated within each subgroup.}
 
-\item{task}{\code{\link{Task}} \cr
+\item{task}{\code{\link[mlr3:Task]{mlr3::Task}} \cr
 \code{\link[mlr3:Task]{mlr3::Task()}} to instantiate measures for.}
 
 \item{intersect}{\code{\link{logical}} \cr

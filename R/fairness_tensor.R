@@ -5,9 +5,9 @@
 #' 
 #' @template pta
 #'
-#' @param object ([data.table()] | [PredictionClassif] | [ResampleResult])\cr
+#' @param object ([data.table::data.table()] | [mlr3::PredictionClassif] | [mlr3::ResampleResult])\cr
 #'   A data.table with columns `truth` and `prediction`,
-#'   a [PredictionClassif] or a [ResampleResult].
+#'   a [mlr3::PredictionClassif] or a [mlr3::ResampleResult].
 #' @param normalize (`character`)\cr
 #'   How should the fairness tensor be normalized? 
 #'   "all" normalizes entries by dividing by dataset size,
@@ -28,8 +28,8 @@ fairness_tensor = function(object, normalize = "all", ...) {
 }
 
 #' @rdname fairness_tensor
-#' @param task ([TaskClassif])\cr
-#'   A [TaskClassif]. Needs `col_role` `"pta"` to be set.
+#' @param task ([mlr3::TaskClassif])\cr
+#'   A [mlr3::TaskClassif]. Needs `col_role` `"pta"` to be set.
 #' @export
 fairness_tensor.data.table = function(object, normalize = "all", task, ...) { # nolint
   assert_names(colnames(object), must.include = c("truth", "prediction"))
