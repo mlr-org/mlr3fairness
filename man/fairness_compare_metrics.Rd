@@ -7,27 +7,27 @@
 compare_metrics(object, ...)
 }
 \arguments{
-\item{object}{(\link{PredictionClassif} | \link{BenchmarkResult} | \link{ResampleResult})\cr
+\item{object}{(\link[mlr3:PredictionClassif]{mlr3::PredictionClassif} | \link[mlr3:BenchmarkResult]{mlr3::BenchmarkResult} | \link[mlr3:ResampleResult]{mlr3::ResampleResult})\cr
 The object to create a plot for.
 \itemize{
-\item If provided a (\link{PredictionClassif}).
+\item If provided a (\link[mlr3:PredictionClassif]{mlr3::PredictionClassif}).
 Then the visualization will compare the fairness metrics among the binary level from protected field
 through bar plots.
-\item If provided a (\link{ResampleResult}).
+\item If provided a (\link[mlr3:ResampleResult]{mlr3::ResampleResult}).
 Then the visualization will generate the boxplots for fairness metrics, and compare them among
 the binary level from protected field.
-\item If provided a (\link{BenchmarkResult}).
+\item If provided a (\link[mlr3:BenchmarkResult]{mlr3::BenchmarkResult}).
 Then the visualization will generate the boxplots for fairness metrics, and compare them among
 both the binary level from protected field and the models implemented.
 }}
 
 \item{...}{The arguments to be passed to methods, such as:
 \itemize{
-\item \code{fairness_measures} (list of \link{Measure})\cr
-The fairness measures that will evaluated on object, could be single \link{Measure} or list of \link{Measure}s.
+\item \code{fairness_measures} (list of \link[mlr3:Measure]{mlr3::Measure})\cr
+The fairness measures that will evaluated on object, could be single \link[mlr3:Measure]{mlr3::Measure} or list of \link[mlr3:Measure]{mlr3::Measure}s.
 Default measure set to be \code{msr("fairness.acc")}.
-\item \code{task} (\link{TaskClassif})\cr
-The data task that contains the protected column, only required when object is (\link{PredictionClassif}).
+\item \code{task} (\link[mlr3:TaskClassif]{mlr3::TaskClassif})\cr
+The data task that contains the protected column, only required when object is (\link[mlr3:PredictionClassif]{mlr3::PredictionClassif}).
 }}
 }
 \value{
@@ -39,7 +39,7 @@ Metrics can but be but are not limited to fairness metrics.
 }
 \section{Protected Attributes}{
 
-The protected attribute is specified as a \code{col_role} in the corresponding \code{\link[=Task]{Task()}}:\cr
+The protected attribute is specified as a \code{col_role} in the corresponding \code{\link[mlr3:Task]{mlr3::Task()}}:\cr
 \verb{<Task>$col_roles$pta = "name_of_attribute"} \cr
 This also allows specifying more than one protected attribute,
 in which case fairness will be considered on the level of intersecting groups defined by all columns

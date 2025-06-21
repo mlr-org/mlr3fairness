@@ -6,9 +6,9 @@
 \alias{Compas}
 \title{COMPAS Dataset}
 \format{
-\link[R6:R6Class]{R6::R6Class} inheriting from \link{TaskClassif}.
+\link[R6:R6Class]{R6::R6Class} inheriting from \link[mlr3:TaskClassif]{mlr3::TaskClassif}.
 
-\link[R6:R6Class]{R6::R6Class} inheriting from \link{TaskClassif}.
+\link[R6:R6Class]{R6::R6Class} inheriting from \link[mlr3:TaskClassif]{mlr3::TaskClassif}.
 }
 \source{
 ProPublica Analysis: \url{https://github.com/propublica/compas-analysis}

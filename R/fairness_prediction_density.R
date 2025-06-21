@@ -9,12 +9,12 @@
 #' 
 #' @template pta
 #'
-#' @param object ([PredictionClassif] | [ResampleResult] | [BenchmarkResult])\cr
+#' @param object ([mlr3::PredictionClassif] | [mlr3::ResampleResult] | [mlr3::BenchmarkResult])\cr
 #'   The binary class prediction object that will be evaluated.
-#'   If [PredictionClassif], a [Task] is required.
+#'   If [mlr3::PredictionClassif], a [mlr3::Task] is required.
 #' @param ...
 #'   The arguments to be passed to methods, such as:
-#'   * `task` ([TaskClassif])\cr
+#'   * `task` ([mlr3::TaskClassif])\cr
 #'     The data task that contains the protected column.
 #'  * `type` [`character`]\cr
 #'     The plot type. Either `violin` or `density`.

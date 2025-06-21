@@ -63,7 +63,7 @@ NULL
 #' @title COMPAS Classification Task
 #'
 #' @name compas
-#' @format [R6::R6Class] inheriting from [TaskClassif].
+#' @format [R6::R6Class] inheriting from [mlr3::TaskClassif].
 #'
 #' @section Construction:
 #' ```
@@ -88,7 +88,7 @@ get_compas_task = function() { # nocov start
 #' @title COMPAS Classification Task
 #'
 #' @name compas
-#' @format [R6::R6Class] inheriting from [TaskClassif].
+#' @format [R6::R6Class] inheriting from [mlr3::TaskClassif].
 #'
 #' @section Construction:
 #' ```
