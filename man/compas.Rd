@@ -65,12 +65,14 @@ and we, therefore, consider issues, e.g. derived from disparate measurement bias
 \item Add length of stay (c_jail_out - c_jail_in) in the dataset.
 \item \verb{Pre-processing Resource:} @url https://github.com/propublica/compas-analysis/blob/master/Compas\%20Analysis.ipynb
 }
+
+Note: The 'is_recid' column was removed as it's a target column.
 }
 
 \section{Metadata}{
 
 \itemize{
-\item (integer) age : The age of defendants.
+\item (integer) age: The age of defendants.
 \item (factor) c_charge_degree : The charge degree of defendants. F: Felony M: Misdemeanor
 \item (factor) race: The race of defendants.
 \item (factor) age_cat: The age category of defendants.
@@ -81,7 +83,6 @@ and we, therefore, consider issues, e.g. derived from disparate measurement bias
 If they are too far apart, that may indicate an error. If the value is negative,
 that indicate the screening date happened before the arrest date.
 \item (integer) decile_score: Indicate the risk of recidivism (Min=1, Max=10)
-\item (integer) is_recid: Binary variable indicate whether defendant is rearrested at any time.
 \item (factor) two_year_recid: Binary variable indicate whether defendant is rearrested at within two years.
 \item (numeric) length_of_stay: The count of days stay in jail.
 }

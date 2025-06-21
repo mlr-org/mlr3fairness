@@ -75,7 +75,9 @@ MeasureSubgroup = R6::R6Class("MeasureSubgroup", inherit = Measure,
       assert_subset(unlist(self$subgroup), unlist(map(groups, function(x) {unique(as.character(x))})))
       groups[, row_ids := prediction$row_ids]
       rws = intersect(prediction$row_ids, groups[self$subgroup, on = nms]$row_ids)
-      prediction$clone()$filter(rws)$score(self$base_measure, task = task, ...)
+      args = list(...)
+      args$weights = NULL
+      invoke(prediction$clone()$filter(rws)$score, self$base_measure, task = task, .args = args)
     }
   )
 )

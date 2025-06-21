@@ -1,13 +1,7 @@
-# r cmd check workflow of the mlr3 ecosystem v0.3.1
+# dev cmd check workflow of the mlr3 ecosystem v0.2.0
 # https://github.com/mlr-org/actions
 on:
   workflow_dispatch:
-    inputs:
-      debug_enabled:
-        type: boolean
-        description: 'Run the build with tmate debugging enabled'
-        required: false
-        default: false
   push:
     branches:
       - main
@@ -15,13 +9,13 @@ on:
     branches:
       - main
 
-name: r-cmd-check
+name: dev-check
 
 jobs:
-  r-cmd-check:
+  check-package:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.dev-package }}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -30,8 +24,8 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: ubuntu-latest,   r: 'devel'}
-          - {os: ubuntu-latest,   r: 'release'}
+          - {os: ubuntu-latest, r: 'release', dev-package: 'mlr-org/mlr3'}
+          - {os: ubuntu-latest, r: 'release', dev-package: "mlr-org/paradox', 'mlr-org/mlr3learners', 'mlr-org/mlr3pipelines"}
 
     steps:
       - uses: actions/checkout@v3
@@ -47,9 +41,8 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - uses: mxschmitt/action-tmate@v3
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
-        with:
-          limit-access-to-actor: true
+      - name: Install dev versions
+        run: pak::pkg_install(c('${{ matrix.config.dev-package }}'))
+        shell: Rscript {0}
 
       - uses: r-lib/actions/check-r-package@v2

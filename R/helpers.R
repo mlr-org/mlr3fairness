@@ -13,7 +13,9 @@ score_groupwise = function(prediction, base_measure, task, ...) {
 
   # Split prediction
   map_dbl(split(prediction$row_ids, groups), function(rws) {
-    prediction$clone()$filter(rws)$score(base_measure, task = task, ...)
+    args = list(...)
+    args$weights = NULL
+    invoke(prediction$clone()$filter(rws)$score, base_measure, task = task, .args = args)
   })
 }
 
@@ -120,7 +122,7 @@ int_to_numeric = function(p) {
 #'
 #' @param task [mlr3::Task]
 #' @param rows (`integer`) rows to get
-#' @param intersect (`logical`) should groups be intersected? 
+#' @param intersect (`logical`) should groups be intersected?
 #'   If `TRUE` all pta columns are combined into a single column factor.
 #'   If `FALSE`, returns all pta columns converted to factors.
 #' @return data.table vector of group assignments.
@@ -137,7 +139,7 @@ get_pta = function(task, rows = NULL, intersect = FALSE) {
 
 #' @title Task summary for fairness report
 #'
-#' @description 
+#' @description
 #' Create the general task documentation in a dataframe for fairness report.
 #' The information includes
 #' * Audit Date

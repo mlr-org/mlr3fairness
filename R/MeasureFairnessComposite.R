@@ -5,7 +5,7 @@
 #' using `aggfun` (defaulting to [mean()]).
 #'
 #' @template pta
-#' 
+#'
 #' @export
 #' @examples
 #' library("mlr3")
@@ -63,9 +63,11 @@ MeasureFairnessComposite = R6::R6Class("MeasureFairnessComposite", inherit = Mea
     .measures = NULL,
     .aggfun = NULL,
     .score = function(prediction, task, ...) {
+      args = list(...)
+      args$weights = NULL
       private$.aggfun(
         map_dbl(private$.measures, function(m) {
-          prediction$score(m, task = task, ...)
+          invoke(prediction$score, m, task = task, .args = args)
         })
       )
     }

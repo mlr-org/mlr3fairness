@@ -1,10 +1,10 @@
 #' @title Classification Fair Logistic Regression With Covariance Constraints Learner
 #' @author pfistfl
-#' @details 
+#' @details
 #' Generalized fair regression model from Zafar et al., 2019 implemented via package `fairml`.
 #' The 'unfairness' parameter is set to 0.05 as a default.
 #' The optimized fairness metric is statistical parity.
-#' 
+#'
 #' @name mlr_learners_classif.fairzlrm
 #'
 #' @template class_learner
@@ -13,7 +13,7 @@
 #'
 #' @references
 #' `r format_bib("zafar19a")`
-#' 
+#'
 #' @template seealso_learner
 #' @template example
 #' @export
@@ -31,7 +31,7 @@ LearnerClassifFairzlrm = R6Class("LearnerClassifFairzlrm",
       ps$values = list(unfairness = 0.05, intersect = FALSE)
       super$initialize(
         id = "classif.fairzlrm",
-        packages = "fairml",
+        packages = c("fairml", "CVXR"),
         feature_types = c("integer", "numeric", "factor", "ordered"),
         predict_types = c("response", "prob"),
         properties = "twoclass",

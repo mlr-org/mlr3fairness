@@ -63,13 +63,20 @@ test_task_multipta = function(task_type, need_pta = TRUE) {
 
 # Two ptas
 test_task_intersect = function(task_type, need_pta = TRUE) {
-  example_data = data.frame(
-    value = rep(1:2, 10),
-    variable = rep(rep(c(1, 4, 3, 6), each = 5)),
-    var2 = rnorm(20),
-    pta1 = as.factor(rep(1:2, 5)),
-    pta2 = as.factor(rep(1:2, each = 5))
+  # Create a full grid for pta1 and pta2 to ensure all combinations are covered
+  df_grid = expand.grid(
+    pta1 = as.factor(1:2),
+    pta2 = as.factor(1:2)
   )
+  example_data = df_grid[rep(seq_len(nrow(df_grid)), each = 5), ]
+  example_data$variable = rep(rep(c(1, 4, 3, 6), each = 5))
+  example_data$var2 = rnorm(20)
+  if (task_type == "regr"){
+    example_data$value = rnorm(20)
+  } else {
+    example_data$value = as.factor(rep(1:2, 10))
+  }
+
   task = make_classif_regr_task(example_data, task_type)
   if (need_pta) task$col_roles$pta = c("pta1", "pta2")
   return(task)
