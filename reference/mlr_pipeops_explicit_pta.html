@@ -68,16 +68,16 @@ This keeps it from getting changed or adapted by subsequent pipelines that opera
     <h2 id="input-and-output-channels">Input and Output Channels<a class="anchor" aria-label="anchor" href="#input-and-output-channels"></a></h2>
 
 
-<p>Input and output channels are inherited from <a href="https://mlr3pipelines.mlr-org.com/reference/PipeOpTaskPreproc.html" class="external-link">PipeOpTaskPreproc</a>. Instead of a <a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">Task</a>, a
-<a href="https://mlr3.mlr-org.com/reference/TaskClassif.html" class="external-link">TaskClassif</a> is used as input and output during training and prediction.</p>
-<p>The output during training is the input <a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">Task</a> with added weights column according
+<p>Input and output channels are inherited from <a href="https://mlr3pipelines.mlr-org.com/reference/PipeOpTaskPreproc.html" class="external-link">mlr3pipelines::PipeOpTaskPreproc</a>. Instead of a <a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">mlr3::Task</a>, a
+<a href="https://mlr3.mlr-org.com/reference/TaskClassif.html" class="external-link">mlr3::TaskClassif</a> is used as input and output during training and prediction.</p>
+<p>The output during training is the input <a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">mlr3::Task</a> with added weights column according
 to target class. The output during prediction is the unchanged input.</p>
     </div>
     <div class="section level2">
     <h2 id="state">State<a class="anchor" aria-label="anchor" href="#state"></a></h2>
 
 
-<p>The <code>$state</code> is a named <code>list</code> with the <code>$state</code> elements inherited from <a href="https://mlr3pipelines.mlr-org.com/reference/PipeOpTaskPreproc.html" class="external-link">PipeOpTaskPreproc</a>.</p>
+<p>The <code>$state</code> is a named <code>list</code> with the <code>$state</code> elements inherited from <a href="https://mlr3pipelines.mlr-org.com/reference/PipeOpTaskPreproc.html" class="external-link">mlr3pipelines::PipeOpTaskPreproc</a>.</p>
     </div>
     <div class="section level2">
     <h2 id="parameters">Parameters<a class="anchor" aria-label="anchor" href="#parameters"></a></h2>
@@ -95,13 +95,13 @@ to target class. The output during prediction is the unchanged input.</p>
     <h2 id="fields">Fields<a class="anchor" aria-label="anchor" href="#fields"></a></h2>
 
 
-<p>Only fields inherited from <a href="https://mlr3pipelines.mlr-org.com/reference/PipeOpTaskPreproc.html" class="external-link">PipeOpTaskPreproc</a>/<code><a href="https://mlr3pipelines.mlr-org.com/reference/PipeOp.html" class="external-link">PipeOp</a></code>.</p>
+<p>Only fields inherited from <a href="https://mlr3pipelines.mlr-org.com/reference/PipeOpTaskPreproc.html" class="external-link">mlr3pipelines::PipeOpTaskPreproc</a>/<a href="https://mlr3pipelines.mlr-org.com/reference/PipeOp.html" class="external-link">mlr3pipelines::PipeOp</a>.</p>
     </div>
     <div class="section level2">
     <h2 id="methods">Methods<a class="anchor" aria-label="anchor" href="#methods"></a></h2>
 
 
-<p>Methods inherited from <a href="https://mlr3pipelines.mlr-org.com/reference/PipeOpTaskPreproc.html" class="external-link">PipeOpTaskPreproc</a>/<a href="https://mlr3pipelines.mlr-org.com/reference/PipeOp.html" class="external-link">PipeOp</a>.</p>
+<p>Methods inherited from <a href="https://mlr3pipelines.mlr-org.com/reference/PipeOpTaskPreproc.html" class="external-link">mlr3pipelines::PipeOpTaskPreproc</a>/<a href="https://mlr3pipelines.mlr-org.com/reference/PipeOp.html" class="external-link">mlr3pipelines::PipeOp</a>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -128,7 +128,7 @@ to target class. The output during prediction is the unchanged input.</p>
 <li><span class="pkg-link" data-pkg="mlr3pipelines" data-topic="PipeOp" data-id="train"><a href="https://mlr3pipelines.mlr-org.com/reference/PipeOp.html#method-train"><code>mlr3pipelines::PipeOp$train()</code></a></span></li>
 </ul></details></p><hr><a id="method-PipeOpExplicitPta-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
-<p>Creates a new instance of this [R6][R6::R6Class][PipeOp] R6 class.</p><div class="section">
+<p>Creates a new instance of this <a href="https://mlr3pipelines.mlr-org.com/reference/PipeOpTaskPreproc.html" class="external-link">R6::R6Class</a> R6 class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/mlr_pipeops_explicit_pta.html">PipeOpExplicitPta</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"explicit_pta"</span>, param_vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
