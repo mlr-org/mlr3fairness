@@ -83,7 +83,7 @@
 #' @family PipeOps
 #' @seealso https://mlr3book.mlr-org.com/list-pipeops.html
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("rpart")
 #' library("mlr3")
 #' library("mlr3pipelines")
 #'

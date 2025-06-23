@@ -69,7 +69,7 @@ report_modelcard = function(filename = "modelcard.Rmd", edit = FALSE, build = FA
 #' @family fairness_reports
 #' @export
 #' @return Invisibly returns the path to the newly created file(s).
-#' @examples
+#' @examplesIf rlang::is_installed("rpart")
 #'   library("mlr3")
 #'   report_file = tempfile()
 #'   task = tsk("compas")

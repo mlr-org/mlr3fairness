@@ -17,6 +17,7 @@ selected as a predicted attribute.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("rpart")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Accuracy subject to equalized odds fairness constraint:
 library("mlr3")
 t = tsk("adult_train")
@@ -25,6 +26,7 @@ learner$train(t)
 measure = msr("fairness.constraint", id = "acc_tpr", msr("classif.acc"), msr("fairness.tpr"))
 predictions = learner$predict(t)
 predictions$score(measure, task = t)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 mlr_measures_fairness

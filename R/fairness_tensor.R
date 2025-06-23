@@ -18,7 +18,7 @@
 #' @return
 #'   `list()` of confusion matrix for every group in `"pta"`.
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("rpart")
 #' library("mlr3")
 #' task = tsk("compas")
 #' prediction = lrn("classif.rpart")$train(task)$predict(task)

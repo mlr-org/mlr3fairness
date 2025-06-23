@@ -30,11 +30,12 @@
 #'     The accuracy measure that will evaluated.
 #'     Default measure set to be [msr("classif.acc")][mlr3::MeasureClassif].
 #'   * `task` ([mlr3::TaskClassif])\cr
-#'     The data task that contains the protected column, only required when the class of object is ([mlr3::PredictionClassif])
+#'     The data task that contains the protected column, only required 
+#'     when the class of object is ([mlr3::PredictionClassif])
 #'
 #' @export
 #' @return A 'ggplot2' object.
-#' @examples
+#' @examplesIf rlang::is_installed("rpart") && rlang::is_installed("ranger")
 #' library("mlr3")
 #' library("mlr3learners")
 #' library("ggplot2")

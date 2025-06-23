@@ -47,6 +47,7 @@ selected as a predicted attribute.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("rpart") && rlang::is_installed("ranger")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library("mlr3")
 library("mlr3learners")
 
@@ -73,4 +74,5 @@ compare_metrics(predictions, fairness_measures, task)
 # BenchmarkResult and ResamplingResult
 compare_metrics(bmr, fairness_measure)
 compare_metrics(bmr, fairness_measures)
+\dontshow{\}) # examplesIf}
 }

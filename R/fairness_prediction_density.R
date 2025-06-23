@@ -21,7 +21,7 @@
 #'
 #' @export
 #' @return A 'ggplot2' object.
-#' @examples
+#' @examplesIf rlang::is_installed("rpart")
 #' library("mlr3")
 #' library("mlr3learners")
 #'

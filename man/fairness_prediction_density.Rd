@@ -38,6 +38,7 @@ selected as a predicted attribute.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("rpart")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library("mlr3")
 library("mlr3learners")
 
@@ -52,4 +53,5 @@ fairness_prediction_density(predictions, task)
 # For resampling
 rr = resample(task, learner, rsmp("cv"))
 fairness_prediction_density(rr)
+\dontshow{\}) # examplesIf}
 }

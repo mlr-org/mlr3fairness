@@ -60,6 +60,7 @@ Methods inherited from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::Pip
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("rpart")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library("mlr3")
 library("mlr3pipelines")
 
@@ -79,6 +80,7 @@ glrn$predict(task)
 
 # On newdata
 glrn$predict_newdata(task$data(cols = task$feature_names))
+\dontshow{\}) # examplesIf}
 }
 \references{
 Hardt M, Price E, Srebro N (2016).

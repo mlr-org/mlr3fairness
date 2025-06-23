@@ -13,7 +13,7 @@
 #' @param prediction (`vector`) \cr A vector containing predictions. 
 #' @param metrics (`Metric`|`list`) \cr (List of) mlr3 metrics to apply.
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("rpart")
 #' library("mlr3")
 #' # Get adult data as a data.table
 #' train = tsk("adult_train")$data()

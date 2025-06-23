@@ -5,7 +5,7 @@
 #'
 #' @seealso [MeasureFairness], [groupwise_metrics]
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("rpart")
 #' library("mlr3")
 #' # Create MeasureFairness to measure the Predictive Parity.
 #' t = tsk("adult_train")

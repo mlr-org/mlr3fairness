@@ -32,6 +32,7 @@ selected as a predicted attribute.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("rpart")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library("mlr3")
 # Get adult data as a data.table
 train = tsk("adult_train")$data()
@@ -52,4 +53,5 @@ compute_metrics(
   protected_attribute = "sex",
   metrics = msr("fairness.acc")
 )
+\dontshow{\}) # examplesIf}
 }

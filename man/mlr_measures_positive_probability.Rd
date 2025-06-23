@@ -9,6 +9,7 @@ Return the probabiliy of a positive prediction, often known as 'Calders-Wevers' 
 This is defined as count of positive predictions divided by the number of observations.
 }
 \examples{
+\dontshow{if (rlang::is_installed("rpart")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library("mlr3")
 # Create Positive Probability Measure
 t = tsk("adult_train")
@@ -17,6 +18,7 @@ learner$train(t)
 measure = msr("classif.pp")
 predictions = learner$predict(t)
 predictions$score(measure, task = t)
+\dontshow{\}) # examplesIf}
 }
 \section{Super class}{
 \code{\link[mlr3:Measure]{mlr3::Measure}} -> \code{MeasurePositiveProbability}

@@ -6,7 +6,7 @@
 #' This is defined as count of positive predictions divided by the number of observations.
 #'
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("rpart")
 #' library("mlr3")
 #' # Create Positive Probability Measure
 #' t = tsk("adult_train")

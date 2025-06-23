@@ -31,7 +31,8 @@ Default measure set to be \code{msr("fairness.fpr")}
 The accuracy measure that will evaluated.
 Default measure set to be \link[mlr3:MeasureClassif]{msr("classif.acc")}.
 \item \code{task} (\link[mlr3:TaskClassif]{mlr3::TaskClassif})\cr
-The data task that contains the protected column, only required when the class of object is (\link[mlr3:PredictionClassif]{mlr3::PredictionClassif})
+The data task that contains the protected column, only required
+when the class of object is (\link[mlr3:PredictionClassif]{mlr3::PredictionClassif})
 }}
 }
 \value{
@@ -53,6 +54,7 @@ selected as a predicted attribute.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("rpart") && rlang::is_installed("ranger")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library("mlr3")
 library("mlr3learners")
 library("ggplot2")
@@ -76,4 +78,5 @@ design = benchmark_grid(
 )
 bmr = benchmark(design)
 fairness_accuracy_tradeoff(bmr, fairness_measure)
+\dontshow{\}) # examplesIf}
 }

@@ -48,8 +48,10 @@ selected as a predicted attribute.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("rpart")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library("mlr3")
 task = tsk("compas")
 prediction = lrn("classif.rpart")$train(task)$predict(task)
 fairness_tensor(prediction, task = task)
+\dontshow{\}) # examplesIf}
 }

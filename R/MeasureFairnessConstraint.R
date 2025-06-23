@@ -7,7 +7,7 @@
 #' @template pta
 #' @seealso mlr_measures_fairness
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("rpart")
 #' # Accuracy subject to equalized odds fairness constraint:
 #' library("mlr3")
 #' t = tsk("adult_train")

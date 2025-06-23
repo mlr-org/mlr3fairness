@@ -29,7 +29,7 @@
 #'
 #' @export
 #' @return A 'ggplot2' object.
-#' @examples
+#' @examplesIf rlang::is_installed("rpart") && rlang::is_installed("ranger")
 #' library("mlr3")
 #' library("mlr3learners")
 #'

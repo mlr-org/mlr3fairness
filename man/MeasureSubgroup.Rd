@@ -7,6 +7,7 @@
 Allows for calculation of arbitrary \code{\link[mlr3:Measure]{mlr3::Measure()}}s on a selected sub-group.
 }
 \examples{
+\dontshow{if (rlang::is_installed("rpart")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library("mlr3")
 # Create MeasureFairness to measure the Predictive Parity.
 t = tsk("adult_train")
@@ -15,6 +16,7 @@ learner$train(t)
 measure = msr("subgroup", base_measure = msr("classif.acc"), subgroup = "Female")
 predictions = learner$predict(t)
 predictions$score(measure, task = t)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \link{MeasureFairness}, \link{groupwise_metrics}
