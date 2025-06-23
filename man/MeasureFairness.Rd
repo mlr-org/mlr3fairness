@@ -47,7 +47,7 @@ predictions$score(measure, task = t)
 \describe{
 \item{\code{base_measure}}{(\code{mlr3::Measure()})\cr
 The base measure to be used by the fairness measures,
-e.g. \link{mlr_measures_classif.fpr} for the false positive rate.}
+e.g. \code{\link[mlr3:mlr_sugar]{mlr3::msr()}} with "classif.fpr" for the false positive rate.}
 
 \item{\code{operation}}{(\verb{function()})\cr
 The operation used to compute the difference. A function with args 'x' and 'y' that returns

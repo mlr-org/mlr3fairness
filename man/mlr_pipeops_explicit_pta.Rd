@@ -5,7 +5,7 @@
 \alias{PipeOpExplicitPta}
 \title{PipeOpExplicitPta}
 \format{
-\link{R6Class} object inheriting from \code{\link{PipeOpTaskPreproc}}/\code{\link{PipeOp}}.
+\link[R6:R6Class]{R6::R6Class} object inheriting from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}/\link[mlr3pipelines:PipeOp]{mlr3pipelines::PipeOp}.
 }
 \description{
 Turns the column with column role 'pta' into an explicit separate column prefixed with "..\emph{internal_pta}".

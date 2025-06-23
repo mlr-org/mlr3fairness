@@ -2,7 +2,7 @@
 #' 
 #' @usage NULL
 #' @name mlr_pipeops_explicit_pta
-#' @format [R6Class] object inheriting from [`PipeOpTaskPreproc`]/[`PipeOp`].
+#' @format \link[R6:R6Class]{R6::R6Class} object inheriting from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}/\link[mlr3pipelines:PipeOp]{mlr3pipelines::PipeOp}.
 #'
 #' @description
 #'   Turns the column with column role 'pta' into an explicit separate column prefixed with ".._internal_pta_".

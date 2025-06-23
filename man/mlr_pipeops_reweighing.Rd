@@ -6,7 +6,7 @@
 \alias{PipeOpReweighingOversampling}
 \title{Reweighing to balance disparate impact metric}
 \format{
-\link{R6Class} object inheriting from \code{\link{PipeOpTaskPreproc}}/\code{\link{PipeOp}}.
+\link[R6:R6Class]{R6::R6Class} object inheriting from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}/\link[mlr3pipelines:PipeOp]{mlr3pipelines::PipeOp}.
 }
 \description{
 Adjusts class balance and protected group balance in order to achieve fair(er) outcomes.

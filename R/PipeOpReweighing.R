@@ -2,7 +2,7 @@
 #'
 #' @usage NULL
 #' @name mlr_pipeops_reweighing
-#' @format [R6Class] object inheriting from [`PipeOpTaskPreproc`]/[`PipeOp`].
+#' @format \link[R6:R6Class]{R6::R6Class} object inheriting from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}/\link[mlr3pipelines:PipeOp]{mlr3pipelines::PipeOp}.
 #'
 #' @description
 #' Adjusts class balance and protected group balance in order to achieve fair(er) outcomes.
