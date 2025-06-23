@@ -18,7 +18,7 @@ Fair Learners in mlr3
 }
 \section{Predefined measures}{
 
-\CRANpkg{mlr3fairness} comes with a set of predefined fairn learners listed below:
+\CRANpkg{mlr3fairness} comes with a set of predefined 'fair learners' listed below:
 
 \tabular{lll}{
 \strong{key} \tab \strong{package} \tab \strong{reference} \cr

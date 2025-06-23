@@ -8,13 +8,13 @@
 #' Adjusts class balance and protected group balance in order to achieve fair(er) outcomes.
 #'
 #' @section PipeOpReweighingWeights:
-#' Adds a class weight column to the [Task][mlr3::Task] that different [`Learner`][mlr3::Learner]s
+#' Adds a class weight column to the [mlr3::Task] that different [mlr3::Learner]s
 #' may be using. In case initial weights are present, those are multiplied with new weights.
 #' Caution: Only fairness tasks are supported. Which means tasks need to have protected field.
 #' `tsk$col_roles$pta`.
 #'
 #' @section PipeOpReweighingOversampling:
-#' Oversamples a [Task][mlr3::Task] for more balanced ratios in subgroups and protected groups.
+#' Oversamples a [mlr3::Task] for more balanced ratios in subgroups and protected groups.
 #' Can be used if a learner does not support weights.
 #' Caution: Only fairness tasks are supported. Which means tasks need to have protected field.
 #' `tsk$col_roles$pta`.
@@ -30,31 +30,31 @@
 #' * `param_vals` (`list()`)
 #'
 #' @section Input and Output Channels:
-#' Input and output channels are inherited from [PipeOpTaskPreproc]. Instead of a [`Task`][mlr3::Task], a
-#' [TaskClassif][mlr3::TaskClassif] is used as input and output during training and prediction.
+#' Input and output channels are inherited from [mlr3pipelines::PipeOpTaskPreproc]. Instead of a [mlr3::Task], a
+#' [mlr3::TaskClassif] is used as input and output during training and prediction.
 #'
-#' The output during training is the input [Task][mlr3::Task] with added weights column according
+#' The output during training is the input [mlr3::Task] with added weights column according
 #' to target class. The output during prediction is the unchanged input.
 #'
 #' @section State:
-#' The `$state` is a named `list` with the `$state` elements inherited from [PipeOpTaskPreproc].
+#' The `$state` is a named `list` with the `$state` elements inherited from [mlr3pipelines::PipeOpTaskPreproc].
 #'
 #' @section Parameters:
 #'  * `alpha` (`numeric()`): A number between 0 (no debiasing) and 1 (full debiasing).
 #'
 #' @section Internals:
-#' Introduces, or overwrites, the "weights" column in the [Task][mlr3::Task].
-#' However, the [Learner][mlr3::Learner] method needs to
+#' Introduces, or overwrites, the "weights" column in the [mlr3::Task].
+#' However, the [mlr3::Learner] method needs to
 #' respect weights for this to have an effect.
 #'
 #' The newly introduced column is named `reweighing.WEIGHTS`; there will be a naming conflict if this
 #' column already exists and is *not* a weight column itself.
 #'
 #' @section Fields:
-#' Only fields inherited from [PipeOpTaskPreproc]/[`PipeOp`].
+#' Only fields inherited from [mlr3pipelines::PipeOpTaskPreproc]/[mlr3pipelines::PipeOp].
 #'
 #' @section Methods:
-#' Methods inherited from [PipeOpTaskPreproc]/[`PipeOp`].
+#' Methods inherited from [mlr3pipelines::PipeOpTaskPreproc]/[mlr3pipelines::PipeOp].
 #'
 #' @family PipeOps
 #' @seealso https://mlr3book.mlr-org.com/list-pipeops.html
@@ -76,7 +76,7 @@ PipeOpReweighingWeights = R6Class("PipeOpReweighingWeights",
   inherit = mlr3pipelines::PipeOpTaskPreproc,
   public = list(
     #' @description
-    #' Creates a new instance of this [R6][R6::R6Class][PipeOp] R6 class.
+    #' Creates a new instance of this [R6::R6Class][mlr3pipelines::PipeOpTaskPreproc] R6 class.
     #'
     #' @param id `character` \cr
     #'   The PipeOps identifier in the PipeOps library.

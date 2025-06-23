@@ -3,10 +3,10 @@
 #'
 #' @section Predefined measures:
 #' \CRANpkg{mlr3fairness} comes with a set of predefined fairness measures as listed below.
-#' For full flexibility, [MeasureFairness] can be used to construct classical
+#' For full flexibility, [mlr3fairness::MeasureFairness] can be used to construct classical
 #' group fairness measures based on a difference between a performance metrics across groups
 #' by combining a performance measure with an operation for measuring differences.
-#' Furthermore [MeasureSubgroup] can be used to measure performance in a given subgroup, or alternatively
+#' Furthermore [mlr3fairness::MeasureSubgroup] can be used to measure performance in a given subgroup, or alternatively
 #' groupwise_metrics(measure, task) to instantiate a measure for each subgroup in a [mlr3::Task].
 #'
 #' `r tabular(mlr_measures_fairness)`

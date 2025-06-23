@@ -1,1 +1,1 @@
-#' @format [R6::R6Class] object inheriting from [mlr3pipelines::PipeOpTaskPreproc]/[mlr3pipelines::PipeOp]. 
+#' @format [R6::R6Class] object inheriting from [mlr3pipelines::PipeOpTaskPreproc]/[mlr3pipelines::PipeOp].

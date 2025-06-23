@@ -24,16 +24,16 @@ This keeps it from getting changed or adapted by subsequent pipelines that opera
 
 \section{Input and Output Channels}{
 
-Input and output channels are inherited from \link{PipeOpTaskPreproc}. Instead of a \link[mlr3:Task]{Task}, a
-\link[mlr3:TaskClassif]{TaskClassif} is used as input and output during training and prediction.
+Input and output channels are inherited from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}. Instead of a \link[mlr3:Task]{mlr3::Task}, a
+\link[mlr3:TaskClassif]{mlr3::TaskClassif} is used as input and output during training and prediction.
 
-The output during training is the input \link[mlr3:Task]{Task} with added weights column according
+The output during training is the input \link[mlr3:Task]{mlr3::Task} with added weights column according
 to target class. The output during prediction is the unchanged input.
 }
 
 \section{State}{
 
-The \verb{$state} is a named \code{list} with the \verb{$state} elements inherited from \link[mlr3pipelines:PipeOpTaskPreproc]{PipeOpTaskPreproc}.
+The \verb{$state} is a named \code{list} with the \verb{$state} elements inherited from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}.
 }
 
 \section{Parameters}{
@@ -48,12 +48,12 @@ Copies the existing pta column to a new column.
 
 \section{Fields}{
 
-Only fields inherited from \link{PipeOpTaskPreproc}/\code{\link{PipeOp}}.
+Only fields inherited from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}/\link[mlr3pipelines:PipeOp]{mlr3pipelines::PipeOp}.
 }
 
 \section{Methods}{
 
-Methods inherited from \link[mlr3pipelines:PipeOpTaskPreproc]{PipeOpTaskPreproc}/\link[mlr3pipelines:PipeOp]{PipeOp}.
+Methods inherited from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}/\link[mlr3pipelines:PipeOp]{mlr3pipelines::PipeOp}.
 }
 
 \examples{
@@ -94,7 +94,7 @@ Other PipeOps:
 \if{html}{\out{<a id="method-PipeOpExplicitPta-new"></a>}}
 \if{latex}{\out{\hypertarget{method-PipeOpExplicitPta-new}{}}}
 \subsection{Method \code{new()}}{
-Creates a new instance of this [R6][R6::R6Class][PipeOp] R6 class.
+Creates a new instance of this \link[mlr3pipelines:PipeOpTaskPreproc]{R6::R6Class} R6 class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{PipeOpExplicitPta$new(id = "explicit_pta", param_vals = list())}\if{html}{\out{</div>}}
 }

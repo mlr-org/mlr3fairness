@@ -13,7 +13,7 @@ Adjusts class balance and protected group balance in order to achieve fair(er) o
 }
 \section{PipeOpReweighingWeights}{
 
-Adds a class weight column to the \link[mlr3:Task]{Task} that different \code{\link[mlr3:Learner]{Learner}}s
+Adds a class weight column to the \link[mlr3:Task]{mlr3::Task} that different \link[mlr3:Learner]{mlr3::Learner}s
 may be using. In case initial weights are present, those are multiplied with new weights.
 Caution: Only fairness tasks are supported. Which means tasks need to have protected field.
 \code{tsk$col_roles$pta}.
@@ -21,7 +21,7 @@ Caution: Only fairness tasks are supported. Which means tasks need to have prote
 
 \section{PipeOpReweighingOversampling}{
 
-Oversamples a \link[mlr3:Task]{Task} for more balanced ratios in subgroups and protected groups.
+Oversamples a \link[mlr3:Task]{mlr3::Task} for more balanced ratios in subgroups and protected groups.
 Can be used if a learner does not support weights.
 Caution: Only fairness tasks are supported. Which means tasks need to have protected field.
 \code{tsk$col_roles$pta}.
@@ -40,16 +40,16 @@ Caution: Only fairness tasks are supported. Which means tasks need to have prote
 
 \section{Input and Output Channels}{
 
-Input and output channels are inherited from \link{PipeOpTaskPreproc}. Instead of a \code{\link[mlr3:Task]{Task}}, a
-\link[mlr3:TaskClassif]{TaskClassif} is used as input and output during training and prediction.
+Input and output channels are inherited from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}. Instead of a \link[mlr3:Task]{mlr3::Task}, a
+\link[mlr3:TaskClassif]{mlr3::TaskClassif} is used as input and output during training and prediction.
 
-The output during training is the input \link[mlr3:Task]{Task} with added weights column according
+The output during training is the input \link[mlr3:Task]{mlr3::Task} with added weights column according
 to target class. The output during prediction is the unchanged input.
 }
 
 \section{State}{
 
-The \verb{$state} is a named \code{list} with the \verb{$state} elements inherited from \link{PipeOpTaskPreproc}.
+The \verb{$state} is a named \code{list} with the \verb{$state} elements inherited from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}.
 }
 
 \section{Parameters}{
@@ -61,8 +61,8 @@ The \verb{$state} is a named \code{list} with the \verb{$state} elements inherit
 
 \section{Internals}{
 
-Introduces, or overwrites, the "weights" column in the \link[mlr3:Task]{Task}.
-However, the \link[mlr3:Learner]{Learner} method needs to
+Introduces, or overwrites, the "weights" column in the \link[mlr3:Task]{mlr3::Task}.
+However, the \link[mlr3:Learner]{mlr3::Learner} method needs to
 respect weights for this to have an effect.
 
 The newly introduced column is named \code{reweighing.WEIGHTS}; there will be a naming conflict if this
@@ -71,12 +71,12 @@ column already exists and is \emph{not} a weight column itself.
 
 \section{Fields}{
 
-Only fields inherited from \link{PipeOpTaskPreproc}/\code{\link{PipeOp}}.
+Only fields inherited from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}/\link[mlr3pipelines:PipeOp]{mlr3pipelines::PipeOp}.
 }
 
 \section{Methods}{
 
-Methods inherited from \link{PipeOpTaskPreproc}/\code{\link{PipeOp}}.
+Methods inherited from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}/\link[mlr3pipelines:PipeOp]{mlr3pipelines::PipeOp}.
 }
 
 \examples{
@@ -130,7 +130,7 @@ Other PipeOps:
 \if{html}{\out{<a id="method-PipeOpReweighingWeights-new"></a>}}
 \if{latex}{\out{\hypertarget{method-PipeOpReweighingWeights-new}{}}}
 \subsection{Method \code{new()}}{
-Creates a new instance of this [R6][R6::R6Class][PipeOp] R6 class.
+Creates a new instance of this \link[mlr3pipelines:PipeOpTaskPreproc]{R6::R6Class} R6 class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{PipeOpReweighingWeights$new(id = "reweighing_wts", param_vals = list())}\if{html}{\out{</div>}}
 }

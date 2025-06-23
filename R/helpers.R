@@ -3,8 +3,8 @@
 #' @param prediction [mlr3::Prediction] A prediction
 #' @param base_measure [mlr3::Measure] The measure to compute in each group.
 #' @param task [mlr3::Task] the task prediction was made on.
-#' @param ... `any` passed on to respective measure.
-#' @return [numeric] Computed score
+#' @param ... any passed on to respective measure.
+#' @return numeric Computed score
 #'
 #' @noRd
 score_groupwise = function(prediction, base_measure, task, ...) {
@@ -22,7 +22,7 @@ score_groupwise = function(prediction, base_measure, task, ...) {
 #' Compute weights for PipeOpReweighing*
 #'
 #' @param task [mlr3::Task] the task
-#' @param alpha [numeric] Debiasing strength
+#' @param alpha numeric Debiasing strength
 #'
 #' @return [data.table] A data.table with counts and weights for each feature.
 #' @noRd

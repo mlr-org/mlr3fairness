@@ -2,7 +2,7 @@
 #' @name mlr_learners_fairness
 #'
 #' @section Predefined measures:
-#' \CRANpkg{mlr3fairness} comes with a set of predefined fairn learners listed below:
+#' \CRANpkg{mlr3fairness} comes with a set of predefined 'fair learners' listed below:
 #'
 #' `r tabular(mlr_learners_fairness)`
 #' 

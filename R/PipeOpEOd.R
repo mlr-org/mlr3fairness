@@ -38,7 +38,9 @@
 #' @title Equalized Odds Debiasing
 #' @usage NULL
 #' @name mlr_pipeops_equalized_odds
-#' @format \link[R6:R6Class]{R6::R6Class} object inheriting from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}/\link[mlr3pipelines:PipeOp]{mlr3pipelines::PipeOp}.
+#' @format \link[R6:R6Class]{R6::R6Class} object inheriting from 
+#' \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}/
+#' \link[mlr3pipelines:PipeOp]{mlr3pipelines::PipeOp}.
 #'
 #' @description
 #'   Fairness post-processing method to achieve equalized odds fairness.
@@ -57,26 +59,26 @@
 #' * `param_vals` (`list()`)
 #'
 #' @section Input and Output Channels:
-#' Input and output channels are inherited from [PipeOpTaskPreproc]. Instead of a [`Task`][mlr3::Task], a
-#' [TaskClassif][mlr3::TaskClassif] is used as input and output during training and prediction.
+#' Input and output channels are inherited from [mlr3pipelines::PipeOpTaskPreproc]. Instead of a [mlr3::Task], a
+#' [mlr3::TaskClassif] is used as input and output during training and prediction.
 #'
-#' The output during training is the input [Task][mlr3::Task]. The output during prediction is
-#' a [PredictionClassif][mlr3::PredictionClassif] with partially flipped predictions.
+#' The output during training is the input [mlr3::Task]. The output during prediction is
+#' a [mlr3::PredictionClassif] with partially flipped predictions.
 #'
 #' @section State:
-#' The `$state` is a named `list` with the `$state` elements inherited from [PipeOpTaskPreproc].
+#' The `$state` is a named list with the `$state` elements inherited from [mlr3pipelines::PipeOpTaskPreproc].
 #'
 #' @section Parameters:
-#'  * `alpha` (`numeric()`): A number between 0 (no debiasing) and 1 (full debiasing).
+#'  * `alpha` (numeric): A number between 0 (no debiasing) and 1 (full debiasing).
 #'    Controls the debiasing strength by multiplying the flipping probabilities with alpha.
-#'  * `privileged` (`character()`): The privileged group.
+#'  * `privileged` (character): The privileged group.
 #'
 #'
 #' @section Fields:
-#' Only fields inherited from [PipeOpTaskPreproc]/[`PipeOp`].
+#' Only fields inherited from [mlr3pipelines::PipeOpTaskPreproc]/[mlr3pipelines::PipeOp].
 #'
 #' @section Methods:
-#' Methods inherited from [PipeOpTaskPreproc]/[PipeOp].
+#' Methods inherited from [mlr3pipelines::PipeOpTaskPreproc]/[mlr3pipelines::PipeOp].
 #'
 #' @family PipeOps
 #' @seealso https://mlr3book.mlr-org.com/list-pipeops.html
@@ -102,14 +104,14 @@
 #' # On newdata
 #' glrn$predict_newdata(task$data(cols = task$feature_names))
 PipeOpEOd = R6Class("PipeOpEOd",
-  inherit = PipeOp,
+  inherit = mlr3pipelines::PipeOp,
   public = list(
     #' @description
-    #' Creates a new instance of this [R6][R6::R6Class][PipeOp] R6 class.
+    #' Creates a new instance of this [R6::R6Class][mlr3pipelines::PipeOp] R6 class.
     #'
-    #' @param id `character` \cr
+    #' @param id character \cr
     #'   The PipeOps identifier in the PipeOps library.
-    #' @param param_vals `list` \cr
+    #' @param param_vals list \cr
     #'   The parameter values to be set. See `Parameters`.
     initialize = function(id = "EOd", param_vals = list()) {
       ps = ps(

@@ -5,7 +5,9 @@
 \alias{PipeOpEOd}
 \title{Equalized Odds Debiasing}
 \format{
-\link[R6:R6Class]{R6::R6Class} object inheriting from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}/\link[mlr3pipelines:PipeOp]{mlr3pipelines::PipeOp}.
+\link[R6:R6Class]{R6::R6Class} object inheriting from
+\link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}/
+\link[mlr3pipelines:PipeOp]{mlr3pipelines::PipeOp}.
 }
 \description{
 Fairness post-processing method to achieve equalized odds fairness.
@@ -26,35 +28,35 @@ NOTE: Carefully assess the correct privileged group.
 
 \section{Input and Output Channels}{
 
-Input and output channels are inherited from \link{PipeOpTaskPreproc}. Instead of a \code{\link[mlr3:Task]{Task}}, a
-\link[mlr3:TaskClassif]{TaskClassif} is used as input and output during training and prediction.
+Input and output channels are inherited from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}. Instead of a \link[mlr3:Task]{mlr3::Task}, a
+\link[mlr3:TaskClassif]{mlr3::TaskClassif} is used as input and output during training and prediction.
 
-The output during training is the input \link[mlr3:Task]{Task}. The output during prediction is
-a \link[mlr3:PredictionClassif]{PredictionClassif} with partially flipped predictions.
+The output during training is the input \link[mlr3:Task]{mlr3::Task}. The output during prediction is
+a \link[mlr3:PredictionClassif]{mlr3::PredictionClassif} with partially flipped predictions.
 }
 
 \section{State}{
 
-The \verb{$state} is a named \code{list} with the \verb{$state} elements inherited from \link{PipeOpTaskPreproc}.
+The \verb{$state} is a named list with the \verb{$state} elements inherited from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}.
 }
 
 \section{Parameters}{
 
 \itemize{
-\item \code{alpha} (\code{numeric()}): A number between 0 (no debiasing) and 1 (full debiasing).
+\item \code{alpha} (numeric): A number between 0 (no debiasing) and 1 (full debiasing).
 Controls the debiasing strength by multiplying the flipping probabilities with alpha.
-\item \code{privileged} (\code{character()}): The privileged group.
+\item \code{privileged} (character): The privileged group.
 }
 }
 
 \section{Fields}{
 
-Only fields inherited from \link{PipeOpTaskPreproc}/\code{\link{PipeOp}}.
+Only fields inherited from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}/\link[mlr3pipelines:PipeOp]{mlr3pipelines::PipeOp}.
 }
 
 \section{Methods}{
 
-Methods inherited from \link{PipeOpTaskPreproc}/\link{PipeOp}.
+Methods inherited from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}/\link[mlr3pipelines:PipeOp]{mlr3pipelines::PipeOp}.
 }
 
 \examples{
@@ -121,7 +123,7 @@ Other PipeOps:
 \if{html}{\out{<a id="method-PipeOpEOd-new"></a>}}
 \if{latex}{\out{\hypertarget{method-PipeOpEOd-new}{}}}
 \subsection{Method \code{new()}}{
-Creates a new instance of this [R6][R6::R6Class][PipeOp] R6 class.
+Creates a new instance of this \link[mlr3pipelines:PipeOp]{R6::R6Class} R6 class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{PipeOpEOd$new(id = "EOd", param_vals = list())}\if{html}{\out{</div>}}
 }
@@ -129,10 +131,10 @@ Creates a new instance of this [R6][R6::R6Class][PipeOp] R6 class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{id}}{\code{character} \cr
+\item{\code{id}}{character \cr
 The PipeOps identifier in the PipeOps library.}
 
-\item{\code{param_vals}}{\code{list} \cr
+\item{\code{param_vals}}{list \cr
 The parameter values to be set. See \code{Parameters}.}
 }
 \if{html}{\out{</div>}}
