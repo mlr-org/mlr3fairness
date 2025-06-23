@@ -27,6 +27,7 @@ selected as a predicted attribute.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("rpart")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library("mlr3")
 # Create MeasureFairness to measure the Predictive Parity.
 t = tsk("adult_train")
@@ -35,6 +36,7 @@ learner$train(t)
 measure = msr("fairness", base_measure = msr("classif.ppv"))
 predictions = learner$predict(t)
 predictions$score(measure, task = t)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \link{MeasureFairnessComposite}
