@@ -67,14 +67,14 @@ This can assist in gauging the optimal model from a set of options along with es
 
 
 <dl><dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
-<dd><p>(<a href="https://mlr3.mlr-org.com/reference/PredictionClassif.html" class="external-link">PredictionClassif</a> | <a href="https://mlr3.mlr-org.com/reference/BenchmarkResult.html" class="external-link">BenchmarkResult</a> | <a href="https://mlr3.mlr-org.com/reference/ResampleResult.html" class="external-link">ResampleResult</a>)<br>
-The binary class prediction object that will be evaluated.</p><ul><li><p>If provided a <a href="https://mlr3.mlr-org.com/reference/PredictionClassif.html" class="external-link">PredictionClassif</a>.
+<dd><p>(<a href="https://mlr3.mlr-org.com/reference/PredictionClassif.html" class="external-link">mlr3::PredictionClassif</a> | <a href="https://mlr3.mlr-org.com/reference/BenchmarkResult.html" class="external-link">mlr3::BenchmarkResult</a> | <a href="https://mlr3.mlr-org.com/reference/ResampleResult.html" class="external-link">mlr3::ResampleResult</a>)<br>
+The binary class prediction object that will be evaluated.</p><ul><li><p>If provided a <a href="https://mlr3.mlr-org.com/reference/PredictionClassif.html" class="external-link">mlr3::PredictionClassif</a>.
 Then only one point will indicate the accuracy and fairness metrics for the current predictions.
-Requires also passing a <a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">Task</a>.</p></li>
-<li><p>If provided a <a href="https://mlr3.mlr-org.com/reference/ResampleResult.html" class="external-link">ResampleResult</a>.
+Requires also passing a <a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">mlr3::Task</a>.</p></li>
+<li><p>If provided a <a href="https://mlr3.mlr-org.com/reference/ResampleResult.html" class="external-link">mlr3::ResampleResult</a>.
 Then the plot will compare the accuracy and fairness metrics for the same model,
 but different resampling iterations  as well as the aggregate indicated by a cross.</p></li>
-<li><p>If provided a <a href="https://mlr3.mlr-org.com/reference/BenchmarkResult.html" class="external-link">BenchmarkResult</a>.
+<li><p>If provided a <a href="https://mlr3.mlr-org.com/reference/BenchmarkResult.html" class="external-link">mlr3::BenchmarkResult</a>.
 Then the plot will compare the accuracy and fairness metrics for all models and all resampling iterations.
 Points are colored according to the learner_id and faceted by task_id.
 The aggregated score is indicated by a cross.</p></li>
@@ -82,14 +82,14 @@ The aggregated score is indicated by a cross.</p></li>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Arguments to be passed to methods. Such as:</p><ul><li><p><code>fairness_measure</code> (<a href="https://mlr3.mlr-org.com/reference/Measure.html" class="external-link">Measure</a>)<br>
+<dd><p>Arguments to be passed to methods. Such as:</p><ul><li><p><code>fairness_measure</code> (<a href="https://mlr3.mlr-org.com/reference/Measure.html" class="external-link">mlr3::Measure</a>)<br>
 The fairness measures that will evaluated.
 Default measure set to be <code>msr("fairness.fpr")</code></p></li>
-<li><p><code>accuracy_measure</code> (<a href="https://mlr3.mlr-org.com/reference/Measure.html" class="external-link">Measure</a>)<br>
+<li><p><code>accuracy_measure</code> (<a href="https://mlr3.mlr-org.com/reference/Measure.html" class="external-link">mlr3::Measure</a>)<br>
 The accuracy measure that will evaluated.
 Default measure set to be <a href="https://mlr3.mlr-org.com/reference/MeasureClassif.html" class="external-link">msr("classif.acc")</a>.</p></li>
-<li><p><code>task</code> (<a href="https://mlr3.mlr-org.com/reference/TaskClassif.html" class="external-link">TaskClassif</a>)<br>
-The data task that contains the protected column, only required when the class of object is (<a href="https://mlr3.mlr-org.com/reference/PredictionClassif.html" class="external-link">PredictionClassif</a>)</p></li>
+<li><p><code>task</code> (<a href="https://mlr3.mlr-org.com/reference/TaskClassif.html" class="external-link">mlr3::TaskClassif</a>)<br>
+The data task that contains the protected column, only required when the class of object is (<a href="https://mlr3.mlr-org.com/reference/PredictionClassif.html" class="external-link">mlr3::PredictionClassif</a>)</p></li>
 </ul></dd>
 
 </dl></div>
@@ -101,7 +101,7 @@ The data task that contains the protected column, only required when the class o
     <h2 id="protected-attributes">Protected Attributes<a class="anchor" aria-label="anchor" href="#protected-attributes"></a></h2>
 
 
-<p>The protected attribute is specified as a <code>col_role</code> in the corresponding <code><a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">Task()</a></code>:<br><code>&lt;Task&gt;$col_roles$pta = "name_of_attribute"</code> <br>
+<p>The protected attribute is specified as a <code>col_role</code> in the corresponding <code><a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">mlr3::Task()</a></code>:<br><code>&lt;Task&gt;$col_roles$pta = "name_of_attribute"</code> <br>
 This also allows specifying more than one protected attribute,
 in which case fairness will be considered on the level of intersecting groups defined by all columns
 selected as a predicted attribute.</p>

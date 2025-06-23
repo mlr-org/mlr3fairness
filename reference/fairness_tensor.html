@@ -67,9 +67,9 @@
 
 
 <dl><dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
-<dd><p>(<code><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table()</a></code> | <a href="https://mlr3.mlr-org.com/reference/PredictionClassif.html" class="external-link">PredictionClassif</a> | <a href="https://mlr3.mlr-org.com/reference/ResampleResult.html" class="external-link">ResampleResult</a>)<br>
+<dd><p>(<code><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code> | <a href="https://mlr3.mlr-org.com/reference/PredictionClassif.html" class="external-link">mlr3::PredictionClassif</a> | <a href="https://mlr3.mlr-org.com/reference/ResampleResult.html" class="external-link">mlr3::ResampleResult</a>)<br>
 A data.table with columns <code>truth</code> and <code>prediction</code>,
-a <a href="https://mlr3.mlr-org.com/reference/PredictionClassif.html" class="external-link">PredictionClassif</a> or a <a href="https://mlr3.mlr-org.com/reference/ResampleResult.html" class="external-link">ResampleResult</a>.</p></dd>
+a <a href="https://mlr3.mlr-org.com/reference/PredictionClassif.html" class="external-link">mlr3::PredictionClassif</a> or a <a href="https://mlr3.mlr-org.com/reference/ResampleResult.html" class="external-link">mlr3::ResampleResult</a>.</p></dd>
 
 
 <dt id="arg-normalize">normalize<a class="anchor" aria-label="anchor" href="#arg-normalize"></a></dt>
@@ -86,8 +86,8 @@ Currently not used.</p></dd>
 
 
 <dt id="arg-task">task<a class="anchor" aria-label="anchor" href="#arg-task"></a></dt>
-<dd><p>(<a href="https://mlr3.mlr-org.com/reference/TaskClassif.html" class="external-link">TaskClassif</a>)<br>
-A <a href="https://mlr3.mlr-org.com/reference/TaskClassif.html" class="external-link">TaskClassif</a>. Needs <code>col_role</code> <code>"pta"</code> to be set.</p></dd>
+<dd><p>(<a href="https://mlr3.mlr-org.com/reference/TaskClassif.html" class="external-link">mlr3::TaskClassif</a>)<br>
+A <a href="https://mlr3.mlr-org.com/reference/TaskClassif.html" class="external-link">mlr3::TaskClassif</a>. Needs <code>col_role</code> <code>"pta"</code> to be set.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -98,7 +98,7 @@ A <a href="https://mlr3.mlr-org.com/reference/TaskClassif.html" class="external-
     <h2 id="protected-attributes">Protected Attributes<a class="anchor" aria-label="anchor" href="#protected-attributes"></a></h2>
 
 
-<p>The protected attribute is specified as a <code>col_role</code> in the corresponding <code><a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">Task()</a></code>:<br><code>&lt;Task&gt;$col_roles$pta = "name_of_attribute"</code> <br>
+<p>The protected attribute is specified as a <code>col_role</code> in the corresponding <code><a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">mlr3::Task()</a></code>:<br><code>&lt;Task&gt;$col_roles$pta = "name_of_attribute"</code> <br>
 This also allows specifying more than one protected attribute,
 in which case fairness will be considered on the level of intersecting groups defined by all columns
 selected as a predicted attribute.</p>
