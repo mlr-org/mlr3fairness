@@ -241,9 +241,6 @@ fairness_prediction_density(predictions, task_test)
 
 ### Other Fairness Toolkits in R
 
-- The [AI Fairness 360](https://aif360.mybluemix.net/) toolkit offers an
-  R extension that allows for bias auditing, visualization and
-  mitigation.
 - [fairmodels](https://github.com/ModelOriented/fairmodels/) integrates
   with the [DALEX](https://github.com/ModelOriented/DALEX) R-packages
   and similarly allows for bias auditing, visualization and mitigation.
