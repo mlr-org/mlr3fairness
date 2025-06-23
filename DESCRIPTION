@@ -1,7 +1,7 @@
 Type: Package
 Package: mlr3fairness
 Title: Fairness Auditing and Debiasing for 'mlr3'
-Version: 0.3.2.9000
+Version: 0.4.0
 Authors@R: c(
     person("Florian", "Pfisterer", , "pfistererf@googlemail.com", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0001-8867-762X")),
