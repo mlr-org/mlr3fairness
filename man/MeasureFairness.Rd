@@ -7,15 +7,15 @@
 This measure extends \code{\link[mlr3:Measure]{mlr3::Measure()}} with statistical group fairness:
 A common approach to quantifying a model's fairness is to compute the difference between a
 protected and an unprotected group according w.r.t. some performance metric, e.g.
-\verb{classification error} (\link{mlr_measures_classif.ce}) or \verb{false positive rate}
-(\link{mlr_measures_classif.fpr}).
+\verb{classification error} (see \code{\link[mlr3:mlr_sugar]{mlr3::msr()}} with "classif.ce") or \verb{false positive rate}
+(see \code{\link[mlr3:mlr_sugar]{mlr3::msr()}} with "classif.fpr").
 The operation for comparison (e.g., difference or quotient) can be specified using the \code{operation}
 parameter, e.g. \code{\link[=groupdiff_absdiff]{groupdiff_absdiff()}} or \code{\link[=groupdiff_tau]{groupdiff_tau()}}.
 
 Composite measures encompasing multiple fairness metrics can be built using
 \link{MeasureFairnessComposite}.
 
-Some popular predefined measures can be found in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_measures}.
+Some popular predefined measures can be found in the \link[mlr3misc:Dictionary]{dictionary} \link[mlr3:mlr_measures]{mlr3::mlr_measures}.
 }
 \section{Protected Attributes}{
 

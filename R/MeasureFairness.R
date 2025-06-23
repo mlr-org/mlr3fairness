@@ -4,15 +4,15 @@
 #' This measure extends [mlr3::Measure()] with statistical group fairness:
 #' A common approach to quantifying a model's fairness is to compute the difference between a
 #' protected and an unprotected group according w.r.t. some performance metric, e.g.
-#' `classification error` ([mlr_measures_classif.ce]) or `false positive rate`
-#' ([mlr_measures_classif.fpr]).
+#' `classification error` (see [mlr3::msr()] with "classif.ce") or `false positive rate`
+#' (see [mlr3::msr()] with "classif.fpr").
 #' The operation for comparison (e.g., difference or quotient) can be specified using the `operation`
 #' parameter, e.g. [groupdiff_absdiff()] or [groupdiff_tau()].
 #'
 #' Composite measures encompasing multiple fairness metrics can be built using
 #' [MeasureFairnessComposite].
 #'
-#' Some popular predefined measures can be found in the [dictionary][mlr3misc::Dictionary] [mlr_measures].
+#' Some popular predefined measures can be found in the [dictionary][mlr3misc::Dictionary] [mlr3::mlr_measures].
 #'
 #' @template pta
 #'
