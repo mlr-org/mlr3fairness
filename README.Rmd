@@ -22,7 +22,6 @@ Machine Learning Fairness Extension for [mlr3](https://github.com/mlr-org/mlr3).
 
 [![r-cmd-check](https://github.com/mlr-org/mlr3fairness/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/mlr-org/mlr3fairness/actions/workflows/r-cmd-check.yml)
 [![CRAN status](https://www.r-pkg.org/badges/version/mlr3fairness)](https://CRAN.R-project.org/package=mlr3fairness)
-[![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com)
 [![Mattermost](https://img.shields.io/badge/chat-mattermost-orange.svg)](https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/)
 
 ##  Installation
@@ -36,7 +35,7 @@ remotes::install_github("mlr-org/mlr3fairness")
 ## Why should I care about fairness in machine learning?
 
 Machine Learning model predictions can be skewed by a range of factors and thus might be considered unfair towards certain groups or individuals.
-An example would be the COMPAS algorithm, which is a popular commercial algorithm used by judges and parole officers for scoring criminal defendant’s
+An example would be the COMPAS algorithm, which is a popular commercial algorithm used by judges and parole officers for scoring criminal defendant's
 likelihood of reoffending (recidivism).
 [Studies](https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing) have shown, that the algorithm might be biased in favor of white defendants.
 Biases can occur in a large variety of situations where algorithms automate or support human decision making e.g. credit checks, automatic HR tools along with a variety of other domains.
@@ -250,7 +249,7 @@ Several future developments are currently planned. Contributions are highly welc
 ## Bugs, Feedback and Questions
 
 `mlr3fairness` is a free and open source software project that encourages participation and feedback.
-If you have any issues, questions, suggestions or feedback, please do not hesitate to open an “issue” about it on the GitHub page!
-In case of problems / bugs, it is often helpful if you provide a “minimum working example” that showcases the behaviour.
+If you have any issues, questions, suggestions or feedback, please do not hesitate to open an "issue" about it on the GitHub page!
+In case of problems / bugs, it is often helpful if you provide a "minimum working example" that showcases the behaviour.
 
 [^1]: The fairness report is inspired by the [Aequitas Bias report](http://aequitas.dssg.io/example.html).

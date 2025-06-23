@@ -20,7 +20,7 @@ File path or name for new file that should be created.}
 A named list of objects required for the fairness report.
 Objects are saved as \verb{<name>.rds} in the new folder created for the report.
 \itemize{
-\item \code{task} :: The \code{\link{Task}} a report should be created for.
+\item \code{task} :: The \code{\link[mlr3:Task]{mlr3::Task}} a report should be created for.
 \item \code{resample_result} ::  A \link[mlr3:ResampleResult]{mlr3::ResampleResult} result to be analyzed.
 \item \code{...} :: any other objects passed on for the report.
 }}

@@ -16,9 +16,9 @@ fairness_tensor(object, normalize = "all", ...)
 \method{fairness_tensor}{ResampleResult}(object, normalize = "all", ...)
 }
 \arguments{
-\item{object}{(\code{\link[=data.table]{data.table()}} | \link{PredictionClassif} | \link{ResampleResult})\cr
+\item{object}{(\code{\link[data.table:data.table]{data.table::data.table()}} | \link[mlr3:PredictionClassif]{mlr3::PredictionClassif} | \link[mlr3:ResampleResult]{mlr3::ResampleResult})\cr
 A data.table with columns \code{truth} and \code{prediction},
-a \link{PredictionClassif} or a \link{ResampleResult}.}
+a \link[mlr3:PredictionClassif]{mlr3::PredictionClassif} or a \link[mlr3:ResampleResult]{mlr3::ResampleResult}.}
 
 \item{normalize}{(\code{character})\cr
 How should the fairness tensor be normalized?
@@ -29,8 +29,8 @@ How should the fairness tensor be normalized?
 \item{...}{\code{any}\cr
 Currently not used.}
 
-\item{task}{(\link{TaskClassif})\cr
-A \link{TaskClassif}. Needs \code{col_role} \code{"pta"} to be set.}
+\item{task}{(\link[mlr3:TaskClassif]{mlr3::TaskClassif})\cr
+A \link[mlr3:TaskClassif]{mlr3::TaskClassif}. Needs \code{col_role} \code{"pta"} to be set.}
 }
 \value{
 \code{list()} of confusion matrix for every group in \code{"pta"}.
@@ -40,7 +40,7 @@ A fairness tensor is a list of groupwise confusion matrices.
 }
 \section{Protected Attributes}{
 
-The protected attribute is specified as a \code{col_role} in the corresponding \code{\link[=Task]{Task()}}:\cr
+The protected attribute is specified as a \code{col_role} in the corresponding \code{\link[mlr3:Task]{mlr3::Task()}}:\cr
 \verb{<Task>$col_roles$pta = "name_of_attribute"} \cr
 This also allows specifying more than one protected attribute,
 in which case fairness will be considered on the level of intersecting groups defined by all columns

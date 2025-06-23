@@ -61,7 +61,7 @@ report_modelcard = function(filename = "modelcard.Rmd", edit = FALSE, build = FA
 #' @param objects (`list()`)\cr
 #'   A named list of objects required for the fairness report.
 #'   Objects are saved as `<name>.rds` in the new folder created for the report.
-#'   * `task` :: The [`Task`] a report should be created for.
+#'   * `task` :: The [`mlr3::Task`] a report should be created for.
 #'   * `resample_result` ::  A [mlr3::ResampleResult] result to be analyzed.
 #'   * `...` :: any other objects passed on for the report.
 #' @param check_objects (`logical(1)`)\cr

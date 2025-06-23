@@ -16,7 +16,9 @@
 #' predictions$score(measure, task = t)
 MeasureSubgroup = R6::R6Class("MeasureSubgroup", inherit = Measure,
   public = list(
-    #' @template field_base_measure
+    #' @field base_measure (`mlr3::Measure()`)\cr
+    #' The base measure to be used by the fairness measures,
+    #' e.g. [mlr3::msr()] with "classif.fpr" for the false positive rate.
     base_measure = NULL,
 
     #' @field subgroup (`character`)|(`integer`)\cr
@@ -89,7 +91,7 @@ MeasureSubgroup = R6::R6Class("MeasureSubgroup", inherit = Measure,
 #' Each metric is then evaluated only on predictions made for the given specific subgroup.
 #'
 #' @template param_base_measure
-#' @param task [`Task`] \cr
+#' @param task [`mlr3::Task`] \cr
 #'   [mlr3::Task()] to instantiate measures for.
 #' @param intersect [`logical`] \cr
 #'  Should multiple pta groups be intersected? Defaults to `TRUE`.

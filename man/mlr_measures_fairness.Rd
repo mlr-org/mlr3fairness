@@ -23,7 +23,7 @@ For full flexibility, \link{MeasureFairness} can be used to construct classical
 group fairness measures based on a difference between a performance metrics across groups
 by combining a performance measure with an operation for measuring differences.
 Furthermore \link{MeasureSubgroup} can be used to measure performance in a given subgroup, or alternatively
-groupwise_metrics(measure, task) to instantiate a measure for each subgroup in a \link{Task}.
+groupwise_metrics(measure, task) to instantiate a measure for each subgroup in a \link[mlr3:Task]{mlr3::Task}.
 
 \tabular{ll}{
 \strong{key} \tab \strong{description} \cr
