@@ -25,8 +25,10 @@ Uses the awesome markdown template created by Chris Garbin
 \href{https://github.com/fau-masters-collected-works-cgarbin/model-card-template}{from Github}.
 }
 \examples{
+\dontshow{if (rlang::is_installed("rmarkdown")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
   report_file = tempfile()
   report_datasheet(report_file)
+\dontshow{\}) # examplesIf}
 }
 \references{
 Gebru, Timnit, Morgenstern, Jamie, Vecchione, Briana, Vaughan, Wortman J, Wallach, Hanna, III D, Hal, Crawford, Kate (2018).

@@ -15,7 +15,7 @@
 #' @family fairness_reports
 #' @export
 #' @return Invisibly returns the path to the newly created file(s).
-#' @examples
+#' @examplesIf rlang::is_installed("rmarkdown")
 #'   report_file = tempfile()
 #'   report_datasheet(report_file)
 report_datasheet = function(filename = "datasheet.Rmd", edit = FALSE, build = FALSE) {
@@ -39,7 +39,7 @@ report_datasheet = function(filename = "datasheet.Rmd", edit = FALSE, build = FA
 #' @family fairness_reports
 #' @export
 #' @return Invisibly returns the path to the newly created file(s).
-#' @examples
+#' @examplesIf rlang::is_installed("rmarkdown")
 #'   report_file = tempfile()
 #'   report_modelcard(report_file)
 report_modelcard = function(filename = "modelcard.Rmd", edit = FALSE, build = FALSE) {
@@ -69,7 +69,7 @@ report_modelcard = function(filename = "modelcard.Rmd", edit = FALSE, build = FA
 #' @family fairness_reports
 #' @export
 #' @return Invisibly returns the path to the newly created file(s).
-#' @examplesIf rlang::is_installed("rpart")
+#' @examplesIf rlang::is_installed("rpart") && rlang::is_installed("rmarkdown")
 #'   library("mlr3")
 #'   report_file = tempfile()
 #'   task = tsk("compas")

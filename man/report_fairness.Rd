@@ -43,7 +43,7 @@ Uses the awesome markdown template created by Chris Garbin
 \href{https://github.com/fau-masters-collected-works-cgarbin/model-card-template}{from Github}.
 }
 \examples{
-\dontshow{if (rlang::is_installed("rpart")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("rpart") && rlang::is_installed("rmarkdown")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
   library("mlr3")
   report_file = tempfile()
   task = tsk("compas")
