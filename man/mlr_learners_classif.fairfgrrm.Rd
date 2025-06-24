@@ -44,6 +44,7 @@ lrn("classif.fairfgrrm")
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("fairml")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library("mlr3")
 # stop example failing with warning if package not installed
 learner = suppressWarnings(mlr3::lrn("classif.fairfgrrm"))
@@ -51,6 +52,7 @@ print(learner)
 
 # available parameters:
 learner$param_set$ids()
+\dontshow{\}) # examplesIf}
 }
 \references{
 Scutari M, Panero F, Proissl M (2021).

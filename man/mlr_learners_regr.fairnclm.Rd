@@ -43,6 +43,7 @@ lrn("regr.fairnclm")
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("fairml")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library("mlr3")
 # stop example failing with warning if package not installed
 learner = suppressWarnings(mlr3::lrn("regr.fairnclm"))
@@ -50,6 +51,7 @@ print(learner)
 
 # available parameters:
 learner$param_set$ids()
+\dontshow{\}) # examplesIf}
 }
 \references{
 J K, A T, J H, H S (2018).

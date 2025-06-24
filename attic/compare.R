@@ -32,7 +32,7 @@
 #'     The data task that contains the protected column, only required when the class of object is ([PredictionClassif])
 #'
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("ggplot2") && rlang::is_installed("ranger")
 #' library(mlr3learners)
 #' library(ggplot2)
 #'
@@ -123,7 +123,7 @@ fairness_accuracy_tradeoff.ResampleResult = function(object, fairness_measure = 
 #'     The data task that contains the protected column, only required when object is ([PredictionClassif]).
 #'
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("ggplot2") &&  rlang::is_installed("ranger")
 #' library(mlr3learners)
 #'
 #' # Setup the Fairness Measures and tasks

@@ -5,11 +5,13 @@
 #' \CRANpkg{mlr3fairness} comes with a set of predefined 'fair learners' listed below:
 #'
 #' `r tabular(mlr_learners_fairness)`
-#' 
+#'
 #' @template pta
 #' @export
 #' @return A data.table containing an overview of available fair learners.
-#' @examples
+#' @examplesIf rlang::is_installed("fairml")
+#' # example code
+#'
 #' library("mlr3")
 #' # Available learners:
 #' mlr_learners_fairness

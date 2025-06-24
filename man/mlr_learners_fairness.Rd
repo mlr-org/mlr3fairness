@@ -40,8 +40,12 @@ selected as a predicted attribute.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("fairml")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# example code
+
 library("mlr3")
 # Available learners:
 mlr_learners_fairness
+\dontshow{\}) # examplesIf}
 }
 \keyword{datasets}
