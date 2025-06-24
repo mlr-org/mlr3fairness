@@ -26,11 +26,13 @@ Instantiates one new measure per protected attribute group in a task.
 Each metric is then evaluated only on predictions made for the given specific subgroup.
 }
 \examples{
+\dontshow{if (rlang::is_installed("rpart")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
   library("mlr3")
   t = tsk("compas")
   l = lrn("classif.rpart")
   m = groupwise_metrics(msr("classif.acc"), t)
   l$train(t)$predict(t)$score(m, t)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \link{MeasureSubgroup}

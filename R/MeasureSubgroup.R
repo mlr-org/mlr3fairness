@@ -98,7 +98,7 @@ MeasureSubgroup = R6::R6Class("MeasureSubgroup", inherit = Measure,
 #'  Only relevant if more than one `pta` columns are provided.
 #' @seealso [MeasureSubgroup]
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("rpart")
 #'   library("mlr3")
 #'   t = tsk("compas")
 #'   l = lrn("classif.rpart")
