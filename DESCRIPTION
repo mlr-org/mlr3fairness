@@ -1,7 +1,7 @@
 Type: Package
 Package: mlr3fairness
 Title: Fairness Auditing and Debiasing for 'mlr3'
-Version: 0.4.0
+Version: 0.4.1
 Authors@R: c(
     person("Florian", "Pfisterer", , "pfistererf@googlemail.com", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0001-8867-762X")),
@@ -15,7 +15,7 @@ Description: Integrates fairness auditing and bias mitigation methods for
     "Reweighing" described in 'Kamiran, Calders' (2012)
     <doi:10.1007/s10115-011-0463-8> and "Equalized Odds" described in
     'Hardt et al.' (2016)
-    <https://papers.nips.cc/paper/2016/file/9d2682367c3935defcb1f9e247a97c0d-Paper.pdf>.
+    <https://doi.org/10.48550/arXiv.1610.02413>.
     Integration with 'mlr3' allows for auditing of ML models as well as
     convenient joint tuning of machine learning algorithms and debiasing
     methods.
@@ -61,4 +61,4 @@ Config/testthat/parallel: false
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
