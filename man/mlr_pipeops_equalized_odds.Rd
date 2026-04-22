@@ -60,7 +60,7 @@ Methods inherited from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::Pip
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("rpart")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("rpart")) withAutoprint(\{ # examplesIf}
 library("mlr3")
 library("mlr3pipelines")
 
@@ -86,7 +86,7 @@ glrn$predict_newdata(task$data(cols = task$feature_names))
 Hardt M, Price E, Srebro N (2016).
 \dQuote{Equality of Opportunity in Supervised Learning.}
 In \emph{Advances in Neural Information Processing Systems}, volume 29, 3315--3323.
-\url{https://papers.nips.cc/paper/2016/file/9d2682367c3935defcb1f9e247a97c0d-Paper.pdf}.
+\url{https://doi.org/10.48550/arXiv.1610.02413}.
 
 Pleiss, Geoff, Raghavan, Manish, Wu, Felix, Kleinberg, Jon, Weinberger, Q K (2017).
 \dQuote{On Fairness and Calibration.}

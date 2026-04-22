@@ -280,5 +280,4 @@ questions, suggestions or feedback, please do not hesitate to open an
 often helpful if you provide a “minimum working example” that showcases
 the behaviour.
 
-[^1]: The fairness report is inspired by the [Aequitas Bias
-    report](http://aequitas.dssg.io/example.html).
+[^1]: The fairness report is inspired by the Aequitas Bias report.

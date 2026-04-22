@@ -32,7 +32,7 @@ selected as a predicted attribute.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("rpart")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("rpart")) withAutoprint(\{ # examplesIf}
 library("mlr3")
 # Get adult data as a data.table
 train = tsk("adult_train")$data()
