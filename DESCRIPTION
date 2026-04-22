@@ -29,7 +29,7 @@ Imports:
     checkmate,
     data.table (>= 1.13.6),
     ggplot2,
-    mlr3 (>= 0.23.0.9000),
+    mlr3,
     mlr3learners,
     mlr3measures,
     mlr3misc,
@@ -54,7 +54,7 @@ Suggests:
     rmarkdown,
     rpart,
     testthat (>= 3.1.0)
-VignetteBuilder: 
+VignetteBuilder:
     knitr
 Config/testthat/edition: 3
 Config/testthat/parallel: false

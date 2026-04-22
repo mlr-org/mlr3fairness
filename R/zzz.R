@@ -35,12 +35,17 @@ register_mlr3 = function() {
 
   # Define a set of widely used metrics. Documented in mlr_measures_fairness
   x = getFromNamespace("mlr_measures", ns = "mlr3")
-  # constructor
-  measures[["fairness"]] = MeasureFairness
-  measures[["fairness.composite"]] = MeasureFairnessComposite
-  measures[["fairness.constraint"]] = MeasureFairnessConstraint
+  # Register class generators with prototype arguments so `as.data.table(mlr_measures)`
+  # can construct a throwaway prototype for measures that have required constructor arguments.
+  x$add("fairness", MeasureFairness,
+    .prototype_args = list(base_measure = msr("classif.ce")))
+  x$add("fairness.composite", MeasureFairnessComposite,
+    .prototype_args = list(measures = list(msr("classif.ce"))))
+  x$add("fairness.constraint", MeasureFairnessConstraint,
+    .prototype_args = list(performance_measure = msr("classif.ce"), fairness_measure = msr("classif.ce")))
+  x$add("subgroup", MeasureSubgroup,
+    .prototype_args = list(base_measure = msr("classif.ce"), subgroup = "a"))
   measures[["classif.pp"]] = MeasurePositiveProbability
-  measures[["subgroup"]] = MeasureSubgroup
   # regression
   for (key in c("mse")) {
     measures[[sprintf("fairness.%s", key)]] = MeasureFairness$new(base_measure = msr(sprintf("regr.%s", key)), range = c(-Inf, Inf))
