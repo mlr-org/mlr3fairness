@@ -1,3 +1,8 @@
+# mlr3fairness (development version)
+
+* Register `MeasureFairness`, `MeasureFairnessComposite`, `MeasureFairnessConstraint` and `MeasureSubgroup`
+  with prototype arguments so `as.data.table(mlr_measures)` no longer errors.
+
 # mlr3fairness 0.4.0
 
 * compatibility adoption for `mlr3` 1.0.0
