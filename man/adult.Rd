@@ -5,6 +5,8 @@
 \alias{adult}
 \alias{mlr_tasks_adult_test}
 \alias{mlr_tasks_adult_train}
+\alias{adult_test}
+\alias{adult_train}
 \title{Adult Dataset}
 \source{
 Dua, Dheeru, Graff, Casey (2017).

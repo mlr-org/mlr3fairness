@@ -3,6 +3,8 @@
 #' @name adult
 #' @aliases mlr_tasks_adult_test
 #' @aliases mlr_tasks_adult_train
+#' @aliases adult_test
+#' @aliases adult_train
 #'
 #' @description
 #' Dataset used to predict whether income exceeds $50K/yr based on census data.
