@@ -3,8 +3,8 @@
 \docType{data}
 \name{adult}
 \alias{adult}
-\alias{adult_test}
-\alias{adult_train}
+\alias{mlr_tasks_adult_test}
+\alias{mlr_tasks_adult_train}
 \title{Adult Dataset}
 \source{
 Dua, Dheeru, Graff, Casey (2017).

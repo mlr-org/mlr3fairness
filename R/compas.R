@@ -32,7 +32,7 @@
 #' * Factorize the features that are categorical.
 #' * Add length of stay (c_jail_out - c_jail_in) in the dataset.
 #' * `Pre-processing Resource:` @url https://github.com/propublica/compas-analysis/blob/master/Compas%20Analysis.ipynb
-#' 
+#'
 #' Note: The 'is_recid' column was removed as it's a target column.
 #'
 #' @section Metadata:
@@ -63,7 +63,7 @@ NULL
 
 #' @title COMPAS Classification Task
 #'
-#' @name compas
+#' @name mlr_tasks_compas
 #' @format [R6::R6Class] inheriting from [mlr3::TaskClassif].
 #'
 #' @section Construction:
@@ -89,7 +89,7 @@ get_compas_task = function() { # nocov start
 
 #' @title COMPAS Classification Task
 #'
-#' @name compas
+#' @name mlr_tasks_compas_race_binary
 #' @format [R6::R6Class] inheriting from [mlr3::TaskClassif].
 #'
 #' @section Construction:

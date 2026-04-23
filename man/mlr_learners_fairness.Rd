@@ -40,7 +40,7 @@ selected as a predicted attribute.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("fairml")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("fairml")) withAutoprint(\{ # examplesIf}
 # example code
 
 library("mlr3")

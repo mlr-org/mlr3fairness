@@ -1,8 +1,8 @@
 #' @title Adult Dataset
 #'
 #' @name adult
-#' @aliases adult_test
-#' @aliases adult_train
+#' @aliases mlr_tasks_adult_test
+#' @aliases mlr_tasks_adult_train
 #'
 #' @description
 #' Dataset used to predict whether income exceeds $50K/yr based on census data.
@@ -72,5 +72,3 @@ get_adult_task_test = function() { # nocov start
   b$hash = task$man = "mlr3fairness::mlr_tasks_adult_test"
   task
 } # nocov end
-
-

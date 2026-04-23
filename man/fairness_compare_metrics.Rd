@@ -47,7 +47,7 @@ selected as a predicted attribute.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("rpart") && rlang::is_installed("ranger")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("rpart") && rlang::is_installed("ranger")) withAutoprint(\{ # examplesIf}
 library("mlr3")
 library("mlr3learners")
 

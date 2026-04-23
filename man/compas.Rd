@@ -5,11 +5,6 @@
 \alias{compas}
 \alias{Compas}
 \title{COMPAS Dataset}
-\format{
-\link[R6:R6Class]{R6::R6Class} inheriting from \link[mlr3:TaskClassif]{mlr3::TaskClassif}.
-
-\link[R6:R6Class]{R6::R6Class} inheriting from \link[mlr3:TaskClassif]{mlr3::TaskClassif}.
-}
 \source{
 ProPublica Analysis: \url{https://github.com/propublica/compas-analysis}
 
@@ -23,18 +18,6 @@ The data cleaning process followed the guidance in the original COMPAS repo.
 Contains 6172 observations and 14 features.
 The target column could either be "is_recid" or "two_year_recid", but often "two_year_recid" is prefered.
 The column \code{"sex"} is set as protected attribute, but more often \code{"race"} is used.
-
-Derived tasks: \cr
-\itemize{
-\item \code{compas} : A classification task for the \link{compas} data set with the protected attribute 'sex'.
-}
-
-\itemize{
-\item \code{compas_race_binary} : A classification task for the \link{compas} data set with the protected attribute 'race'.
-The observations have been filtered, keeping only observations with race
-\code{"Caucasian"} and \code{"African-American"}. The protected attribute has been set
-to \code{"race"}.
-}
 }
 \section{Using COMPAS - Known Problems}{
 
@@ -86,20 +69,6 @@ that indicate the screening date happened before the arrest date.
 \item (factor) two_year_recid: Binary variable indicate whether defendant is rearrested at within two years.
 \item (numeric) length_of_stay: The count of days stay in jail.
 }
-}
-
-\section{Construction}{
-
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{mlr_tasks$get("compas")
-tsk("compas")
-}\if{html}{\out{</div>}}
-
-
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{mlr_tasks$get("compas_race_binary")
-tsk("compas_race_binary")
-}\if{html}{\out{</div>}}
 }
 
 \examples{
