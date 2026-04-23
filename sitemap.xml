@@ -38,6 +38,8 @@
 <url><loc>https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_equalized_odds.html</loc></url>
 <url><loc>https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_explicit_pta.html</loc></url>
 <url><loc>https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_reweighing.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/reference/mlr_tasks_compas.html</loc></url>
+<url><loc>https://mlr3fairness.mlr-org.com/reference/mlr_tasks_compas_race_binary.html</loc></url>
 <url><loc>https://mlr3fairness.mlr-org.com/reference/report_datasheet.html</loc></url>
 <url><loc>https://mlr3fairness.mlr-org.com/reference/report_fairness.html</loc></url>
 <url><loc>https://mlr3fairness.mlr-org.com/reference/report_modelcard.html</loc></url>

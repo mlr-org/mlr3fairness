@@ -7,29 +7,6 @@ could either be "is_recid" or "two_year_recid", but often
 "two_year_recid" is prefered. The column `"sex"` is set as protected
 attribute, but more often `"race"` is used.
 
-Derived tasks:  
-
-- `compas` : A classification task for the compas data set with the
-  protected attribute 'sex'.
-
-&nbsp;
-
-- `compas_race_binary` : A classification task for the compas data set
-  with the protected attribute 'race'. The observations have been
-  filtered, keeping only observations with race `"Caucasian"` and
-  `"African-American"`. The protected attribute has been set to
-  `"race"`.
-
-## Format
-
-[R6::R6Class](https://r6.r-lib.org/reference/R6Class.html) inheriting
-from
-[mlr3::TaskClassif](https://mlr3.mlr-org.com/reference/TaskClassif.html).
-
-[R6::R6Class](https://r6.r-lib.org/reference/R6Class.html) inheriting
-from
-[mlr3::TaskClassif](https://mlr3.mlr-org.com/reference/TaskClassif.html).
-
 ## Source
 
 ProPublica Analysis: <https://github.com/propublica/compas-analysis>
@@ -111,14 +88,6 @@ Note: The 'is_recid' column was removed as it's a target column.
   rearrested at within two years.
 
 - (numeric) length_of_stay: The count of days stay in jail.
-
-## Construction
-
-    mlr_tasks$get("compas")
-    tsk("compas")
-
-    mlr_tasks$get("compas_race_binary")
-    tsk("compas_race_binary")
 
 ## Examples
 

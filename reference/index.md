@@ -67,11 +67,17 @@ Performance measures for fairness, based on \[Measure\].
 ## Integrated data & tasks
 
 - [`adult`](https://mlr3fairness.mlr-org.com/reference/adult.md)
+  [`mlr_tasks_adult_test`](https://mlr3fairness.mlr-org.com/reference/adult.md)
+  [`mlr_tasks_adult_train`](https://mlr3fairness.mlr-org.com/reference/adult.md)
   [`adult_test`](https://mlr3fairness.mlr-org.com/reference/adult.md)
   [`adult_train`](https://mlr3fairness.mlr-org.com/reference/adult.md) :
   Adult Dataset
 - [`compas`](https://mlr3fairness.mlr-org.com/reference/compas.md)
   [`Compas`](https://mlr3fairness.mlr-org.com/reference/compas.md) :
   COMPAS Dataset
+- [`mlr_tasks_compas`](https://mlr3fairness.mlr-org.com/reference/mlr_tasks_compas.md)
+  : COMPAS Classification Task
+- [`mlr_tasks_compas_race_binary`](https://mlr3fairness.mlr-org.com/reference/mlr_tasks_compas_race_binary.md)
+  : COMPAS Classification Task
 - [`task_summary()`](https://mlr3fairness.mlr-org.com/reference/task_summary.md)
   : Task summary for fairness report

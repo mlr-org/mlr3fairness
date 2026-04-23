@@ -12,7 +12,7 @@ Fair generalized ridge regression model implemented via package
 
 This [mlr3::Learner](https://mlr3.mlr-org.com/reference/Learner.html)
 can be instantiated via the
-[dictionary](https://mlr3misc.mlr-org.com/reference/Dictionary.html)
+[dictionary](https://rdrr.io/pkg/mlr3misc/man/Dictionary.html)
 [mlr3::mlr_learners](https://mlr3.mlr-org.com/reference/mlr_learners.html)
 or with the associated sugar function
 [`mlr3::lrn()`](https://mlr3.mlr-org.com/reference/mlr_sugar.html):
@@ -50,7 +50,7 @@ Ridge Penalty.” *arXiv preprint arXiv:2105.13817*.
 
 ## See also
 
-[Dictionary](https://mlr3misc.mlr-org.com/reference/Dictionary.html) of
+[Dictionary](https://rdrr.io/pkg/mlr3misc/man/Dictionary.html) of
 [Learners](https://mlr3.mlr-org.com/reference/Learner.html):
 [mlr3::mlr_learners](https://mlr3.mlr-org.com/reference/mlr_learners.html)
 
@@ -91,6 +91,7 @@ Inherited methods
 - [`mlr3::Learner$reset()`](https://mlr3.mlr-org.com/reference/Learner.html#method-reset)
 - [`mlr3::Learner$selected_features()`](https://mlr3.mlr-org.com/reference/Learner.html#method-selected_features)
 - [`mlr3::Learner$train()`](https://mlr3.mlr-org.com/reference/Learner.html#method-train)
+- [`mlr3::LearnerClassif$predict_newdata_fast()`](https://mlr3.mlr-org.com/reference/LearnerClassif.html#method-predict_newdata_fast)
 
 ------------------------------------------------------------------------
 

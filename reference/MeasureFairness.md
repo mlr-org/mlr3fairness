@@ -20,7 +20,7 @@ using
 [MeasureFairnessComposite](https://mlr3fairness.mlr-org.com/reference/MeasureFairnessComposite.md).
 
 Some popular predefined measures can be found in the
-[dictionary](https://mlr3misc.mlr-org.com/reference/Dictionary.html)
+[dictionary](https://rdrr.io/pkg/mlr3misc/man/Dictionary.html)
 [mlr3::mlr_measures](https://mlr3.mlr-org.com/reference/mlr_measures.html).
 
 ## Protected Attributes
@@ -70,6 +70,7 @@ Inherited methods
 - [`mlr3::Measure$aggregate()`](https://mlr3.mlr-org.com/reference/Measure.html#method-aggregate)
 - [`mlr3::Measure$format()`](https://mlr3.mlr-org.com/reference/Measure.html#method-format)
 - [`mlr3::Measure$help()`](https://mlr3.mlr-org.com/reference/Measure.html#method-help)
+- [`mlr3::Measure$obs_loss()`](https://mlr3.mlr-org.com/reference/Measure.html#method-obs_loss)
 - [`mlr3::Measure$print()`](https://mlr3.mlr-org.com/reference/Measure.html#method-print)
 - [`mlr3::Measure$score()`](https://mlr3.mlr-org.com/reference/Measure.html#method-score)
 
