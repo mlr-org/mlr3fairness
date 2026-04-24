@@ -20,7 +20,7 @@ using
 [MeasureFairnessComposite](https://mlr3fairness.mlr-org.com/reference/MeasureFairnessComposite.md).
 
 Some popular predefined measures can be found in the
-[dictionary](https://rdrr.io/pkg/mlr3misc/man/Dictionary.html)
+[dictionary](https://mlr3misc.mlr-org.com/reference/Dictionary.html)
 [mlr3::mlr_measures](https://mlr3.mlr-org.com/reference/mlr_measures.html).
 
 ## Protected Attributes

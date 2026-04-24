@@ -330,11 +330,14 @@ Performance measures for fairness, based on \[Measure\].
 
 ## Correcting Bias
 
-- [`mlr_pipeops_equalized_odds`](https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_equalized_odds.md)
-  [`PipeOpEOd`](https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_equalized_odds.md)
+- [`mlr_pipeops_EOd`](https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_EOd.md)
+  [`PipeOpEOd`](https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_EOd.md)
+  [`mlr_pipeops_equalized_odds`](https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_EOd.md)
   : Equalized Odds Debiasing
 - [`mlr_pipeops_reweighing`](https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_reweighing.md)
   [`PipeOpReweighingWeights`](https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_reweighing.md)
+  [`mlr_pipeops_reweighing_os`](https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_reweighing.md)
+  [`mlr_pipeops_reweighing_wts`](https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_reweighing.md)
   [`PipeOpReweighingOversampling`](https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_reweighing.md)
   : Reweighing to balance disparate impact metric
 - [`mlr_pipeops_explicit_pta`](https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_explicit_pta.md)

@@ -60,7 +60,7 @@ Methods inherited from
 https://mlr3book.mlr-org.com/list-pipeops.html
 
 Other PipeOps:
-[`mlr_pipeops_equalized_odds`](https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_equalized_odds.md),
+[`mlr_pipeops_EOd`](https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_EOd.md),
 [`mlr_pipeops_reweighing`](https://mlr3fairness.mlr-org.com/reference/mlr_pipeops_reweighing.md)
 
 ## Super classes

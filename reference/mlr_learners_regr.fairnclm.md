@@ -13,7 +13,7 @@ is set to 0.05 as a default.
 
 This [mlr3::Learner](https://mlr3.mlr-org.com/reference/Learner.html)
 can be instantiated via the
-[dictionary](https://rdrr.io/pkg/mlr3misc/man/Dictionary.html)
+[dictionary](https://mlr3misc.mlr-org.com/reference/Dictionary.html)
 [mlr3::mlr_learners](https://mlr3.mlr-org.com/reference/mlr_learners.html)
 or with the associated sugar function
 [`mlr3::lrn()`](https://mlr3.mlr-org.com/reference/mlr_sugar.html):
@@ -50,7 +50,7 @@ Conference on Machine Learning (ICML), PMLR 80*, 2737-2746.
 
 ## See also
 
-[Dictionary](https://rdrr.io/pkg/mlr3misc/man/Dictionary.html) of
+[Dictionary](https://mlr3misc.mlr-org.com/reference/Dictionary.html) of
 [Learners](https://mlr3.mlr-org.com/reference/Learner.html):
 [mlr3::mlr_learners](https://mlr3.mlr-org.com/reference/mlr_learners.html)
 
