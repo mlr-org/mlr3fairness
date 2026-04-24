@@ -18,6 +18,9 @@ register_mlr3 = function() {
   # nocov start
   # teach mlr3 about the new column role "pta" (protected attribute)
   x = getFromNamespace("mlr_reflections", ns = "mlr3")
+
+  x$loaded_packages = c(x$loaded_packages, "mlr3fairness")
+
   x$task_col_roles = map(x$task_col_roles, function(cr) union(cr, "pta"))
   x$task_print_col_roles$after = c(x$task_print_col_roles$after, c("Protected attribute" = "pta"))
 
@@ -112,7 +115,7 @@ register_mlr3 = function() {
 
 # static code checks should not complain about commonly used data.table columns
 # nocov start
-utils::globalVariables(c("variable", "value", "learner_id", "n_tgt", "n_pta", "pta", "task_id", 
-  "pta_cols", "wt", "N", "agg", "row_ids", "id", ".")) 
+utils::globalVariables(c("variable", "value", "learner_id", "n_tgt", "n_pta", "pta", "task_id",
+  "pta_cols", "wt", "N", "agg", "row_ids", "id", "."))
 # nocov end
 mlr3misc::leanify_package()
