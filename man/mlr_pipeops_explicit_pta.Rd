@@ -66,7 +66,7 @@ new = epta$train(list(tsk("adult_train")))
 https://mlr3book.mlr-org.com/list-pipeops.html
 
 Other PipeOps: 
-\code{\link{mlr_pipeops_equalized_odds}},
+\code{\link{mlr_pipeops_EOd}},
 \code{\link{mlr_pipeops_reweighing}}
 }
 \concept{PipeOps}

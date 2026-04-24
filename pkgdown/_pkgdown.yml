@@ -58,7 +58,7 @@ reference:
       - compare_metrics
   - title: Correcting Bias
     contents:
-      - mlr_pipeops_equalized_odds
+      - mlr_pipeops_EOd
       - mlr_pipeops_reweighing
       - mlr_pipeops_explicit_pta
   - title: Fair Learners

@@ -2,6 +2,8 @@
 #'
 #' @usage NULL
 #' @name mlr_pipeops_reweighing
+#' @aliases mlr_pipeops_reweighing_os
+#' @aliases mlr_pipeops_reweighing_wts
 #' @format \link[R6:R6Class]{R6::R6Class} object inheriting from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}/\link[mlr3pipelines:PipeOp]{mlr3pipelines::PipeOp}.
 #'
 #' @description

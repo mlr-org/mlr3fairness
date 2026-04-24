@@ -3,6 +3,8 @@
 \name{mlr_pipeops_reweighing}
 \alias{mlr_pipeops_reweighing}
 \alias{PipeOpReweighingWeights}
+\alias{mlr_pipeops_reweighing_os}
+\alias{mlr_pipeops_reweighing_wts}
 \alias{PipeOpReweighingOversampling}
 \title{Reweighing to balance disparate impact metric}
 \format{
@@ -104,7 +106,7 @@ Kamiran, Faisal, Calders, Toon (2012).
 https://mlr3book.mlr-org.com/list-pipeops.html
 
 Other PipeOps: 
-\code{\link{mlr_pipeops_equalized_odds}},
+\code{\link{mlr_pipeops_EOd}},
 \code{\link{mlr_pipeops_explicit_pta}}
 }
 \concept{PipeOps}
